@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(key: Key('home-page')),
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
-        '/set-truck-specification': (context) => const SetTruckSpecificationPage(),
+        '/set-truck-specifications': (context) => const SetTruckSpecificationPage(),
         '/box-simulation': (context) => const BoxSimulation3dPage(),
         '/delivery-simulation': (context) => const DeliverySimulationMapPage(),
       },
