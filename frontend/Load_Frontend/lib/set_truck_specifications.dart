@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SetTruckSpecificationsPage extends StatelessWidget {
-  const SetTruckSpecificationsPage({super.key});
+class SetTruckSpecificationPage extends StatelessWidget {
+  const SetTruckSpecificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
