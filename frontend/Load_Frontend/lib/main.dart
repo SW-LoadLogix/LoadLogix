@@ -101,10 +101,42 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
         ], child: SetTruckSpecificationPage());
-      // case TypographyPage.name:
+      case '/box-simulation':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: BoxSimulation3dPage());
+      case '/delivery-simulation':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: DeliverySimulationMapPage());
+      case '/delivery-list':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: DeliveryListPage());
+      case '/sign-in-up':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: SignInUpPage());
+
+        // case TypographyPage.name:
       //   return const TypographyPage();
       default:
-        return const SizedBox.shrink();
+        return const ResponsiveBreakpoints(
+          breakpoints: [
+            Breakpoint(start: 0, end: 480, name: MOBILE),
+            Breakpoint(start: 481, end: 1200, name: TABLET),
+            Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+          ],
+          child: NotFoundPage(),
+        );
     }
   }
 
