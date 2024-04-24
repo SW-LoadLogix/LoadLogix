@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'components/side_nav_bar.dart';
 import 'pages/pages.dart';
 
 
@@ -10,12 +11,8 @@ void main() {
   runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +81,14 @@ class MyApp extends StatelessWidget {
   }
   Widget buildPage(String name) {
     switch (name) {
+      case '/navtest':
+        return ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: SidebarXExampleApp());
+
+        //return SidebarXExampleApp();
       case '/':
         return const ResponsiveBreakpoints(breakpoints: [
           Breakpoint(start: 0, end: 480, name: MOBILE),

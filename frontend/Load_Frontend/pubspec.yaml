@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   responsive_framework: ^1.4.0
   animations: ^2.0.11
-
+  sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
 
   url_strategy: ^0.2.0
