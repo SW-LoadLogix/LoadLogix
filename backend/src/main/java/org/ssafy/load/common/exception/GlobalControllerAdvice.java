@@ -14,14 +14,14 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(CommonException.class)
     public ResponseEntity<?> applicationExceptionHandler(CommonException e) {
-        log.error("Error occour {}", e.toString());
+        log.error("Error occur {}", e.toString());
         return ResponseEntity.status(e.getErrorCode().getStatus())
                 .body(Response.error(e.getErrorCode().name()));
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> applicationExceptionHandler(RuntimeException e) {
-        log.error("Error occour {}", e.toString());
+        log.error("Error occur {}", e.toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Response.error(ErrorCode.INTERNAL_SERVER_ERROR.name()));
     }
