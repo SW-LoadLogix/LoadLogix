@@ -1,32 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:load_frontend/set_truck_specifications.dart';
-import 'package:load_frontend/sign_in_up.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import 'box_simulation_3d.dart';
-import 'delivery_list.dart';
-import 'delivery_simulation_map.dart';
-import 'home.dart';
-import 'not_found_page.dart';
+import 'pages/pages.dart';
+
 
 void main() {
   setPathUrlStrategy();  // 주소창에서 # 제거
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Load',
-      theme: ThemeData(
+      /*theme: ThemeData(
         useMaterial3: true,
+      ),*/
+
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
       ),
       initialRoute: '/',
+
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (context) {
+          return BouncingScrollWrapper.builder(
+              context, buildPage(settings.name ?? ''),
+              dragWithMouse: true);
+        });
+      },
+      debugShowCheckedModeBanner: false,
+
       /*** 라우트 방식 ***/
-      routes: {
+      /*routes: {
         '/': (context) => const HomePage(key: Key('home-page')),
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
@@ -36,8 +56,7 @@ class MyApp extends StatelessWidget {
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const NotFoundPage(),
-      ),
-
+      ),*/
 
       /** onGenerateRoute 방식 **/
       // onGenerateRoute: (settings) {
@@ -58,7 +77,31 @@ class MyApp extends StatelessWidget {
       //       return MaterialPageRoute(builder: (context) => const NotFoundPage());
       //   }
       // },
+
+
+
     );
   }
+  Widget buildPage(String name) {
+    switch (name) {
+      case '/':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: HomePage( key: Key('home-page')));
+      case '/set-truck-specifications':
+        return const ResponsiveBreakpoints(breakpoints: [
+          Breakpoint(start: 0, end: 480, name: MOBILE),
+          Breakpoint(start: 481, end: 1200, name: TABLET),
+          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+        ], child: SetTruckSpecificationPage());
+      // case TypographyPage.name:
+      //   return const TypographyPage();
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
 }
 

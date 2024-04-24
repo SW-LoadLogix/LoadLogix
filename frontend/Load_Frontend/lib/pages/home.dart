@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 
+class dummyData{
+  String ?type;
+  int ?a;
+  int ?b;
+  int ?c;
+  dummyData({this.type, this.a, this.b, this.c});
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({required Key key}) : super(key: key);
-  //더미데이터 사용
+
+  void testDummyData(){
+    late List<dummyData> dummyExample = [
+      dummyData(type: "A", a: 1, b: 2, c: 3),
+      dummyData(type: "B", a: 4, b: 5, c: 6),
+      dummyData(type: "C", a: 7, b: 8, c: 9),
+    ];
+
+    for(int i = 0; i < dummyExample.length; i++){
+      print("type: ${dummyExample[i].type}, a: ${dummyExample[i].a}, b: ${dummyExample[i].b}, c: ${dummyExample[i].c}");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

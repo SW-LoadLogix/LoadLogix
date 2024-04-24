@@ -12,7 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  responsive_framework: ^1.4.0
+  animations: ^2.0.11
 
   cupertino_icons: ^1.0.6
 
