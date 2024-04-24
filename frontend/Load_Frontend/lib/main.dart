@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-        ], child: SidebarXExampleApp());
+        ], child: CustomNavigationBar());// 네비게이션 바 코드 추가
 
         //return SidebarXExampleApp();
       case '/':

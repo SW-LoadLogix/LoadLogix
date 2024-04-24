@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../components/side_nav_bar.dart';
+
 class dummyData{
   String ?type;
   int ?a;
@@ -72,7 +74,8 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ],
-      )
+      ),
+      bottomNavigationBar: CustomNavigationBar(),// 네비게이션 바 import
     );
   }
 }

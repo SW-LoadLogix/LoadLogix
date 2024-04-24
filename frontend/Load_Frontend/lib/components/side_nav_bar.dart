@@ -2,69 +2,108 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-class SidebarXExampleApp extends StatelessWidget {
-  SidebarXExampleApp({Key? key}) : super(key: key);
+class CustomNavigationBar extends StatefulWidget {
+  CustomNavigationBar({Key? key}) : super(key: key);
 
-  final _controller = SidebarXController(selectedIndex: 0, extended: true);
-  final _key = GlobalKey<ScaffoldState>();
+  // final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  // final _key = GlobalKey<ScaffoldState>();
+
+  @override
+  _CustomNavigationBarState createState() => _CustomNavigationBarState();
+}
+
+class _CustomNavigationBarState extends State<CustomNavigationBar> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SidebarX Example',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: primaryColor,
-        canvasColor: canvasColor,
-        scaffoldBackgroundColor: scaffoldBackgroundColor,
-        textTheme: const TextTheme(
-          headlineSmall: TextStyle(
-            color: Colors.white,
-            fontSize: 46,
-            fontWeight: FontWeight.w800,
-          ),
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_box),
+          label: '배송리스트',
         ),
-      ),
-      home: Builder(
-        builder: (context) {
-          final isSmallScreen = MediaQuery.of(context).size.width < 600;
-          return Scaffold(
-            key: _key,
-            appBar: isSmallScreen
-                ? AppBar(
-              backgroundColor: canvasColor,
-              title: Text(_getTitleByIndex(_controller.selectedIndex)),
-              leading: IconButton(
-                onPressed: () {
-                  // if (!Platform.isAndroid && !Platform.isIOS) {
-                  //   _controller.setExtended(true);
-                  // }
-                  _key.currentState?.openDrawer();
-                },
-                icon: const Icon(Icons.menu),
-              ),
-            )
-                : null,
-            drawer: ExampleSidebarX(controller: _controller),
-            body: Row(
-              children: [
-                if (!isSmallScreen) ExampleSidebarX(controller: _controller),
-                // Expanded(
-                //   child: Center(
-                //     child: _ScreensExample(
-                //       controller: _controller,
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          );
-        },
-      ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.fire_truck),
+          label: '트럭 규격 입력',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.front_loader),
+          label: '적재 최적화 시뮬레이션',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.map),
+          label: '배송 구역 확인',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.blue,
+      onTap: _onItemTapped,
     );
   }
 }
-
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'load service sidebar',
+//       // debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primaryColor: primaryColor,
+//         canvasColor: canvasColor,
+//         scaffoldBackgroundColor: scaffoldBackgroundColor,
+//         textTheme: const TextTheme(
+//           headlineSmall: TextStyle(
+//             color: Colors.white,
+//             fontSize: 46,
+//             fontWeight: FontWeight.w800,
+//           ),
+//         ),
+//       ),
+//       home: Builder(
+//         builder: (context) {
+//           final isSmallScreen = MediaQuery.of(context).size.width < 600;
+//           return Scaffold(
+//             key: _key,
+//             appBar: isSmallScreen
+//                 ? AppBar(
+//               backgroundColor: canvasColor,
+//               title: Text(_getTitleByIndex(_controller.selectedIndex)),
+//               leading: IconButton(
+//                 onPressed: () {
+//                   // if (!Platform.isAndroid && !Platform.isIOS) {
+//                   //   _controller.setExtended(true);
+//                   // }
+//                   _key.currentState?.openDrawer();
+//                 },
+//                 icon: const Icon(Icons.menu),
+//               ),
+//             )
+//                 : null,
+//             drawer: ExampleSidebarX(controller: _controller),
+//             body: Row(
+//               children: [
+//                 if (!isSmallScreen) ExampleSidebarX(controller: _controller),
+//                 // Expanded(
+//                 //   child: Center(
+//                 //     child: _ScreensExample(
+//                 //       controller: _controller,
+//                 //     ),
+//                 //   ),
+//                 // ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+//
 class ExampleSidebarX extends StatelessWidget {
   const ExampleSidebarX({
     Key? key,
@@ -84,7 +123,7 @@ class ExampleSidebarX extends StatelessWidget {
           color: canvasColor,
           borderRadius: BorderRadius.circular(20),
         ),
-        hoverColor: scaffoldBackgroundColor,
+        hoverColor: temporaryMenuColor,
         textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
         hoverTextStyle: const TextStyle(
@@ -133,36 +172,40 @@ class ExampleSidebarX extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/avatar.png'),
+            child: Image.asset('assets/images/logo.png'),
           ),
         );
       },
       items: [
         SidebarXItem(
-          icon: Icons.home,
-          label: 'Home',
+          icon: Icons.account_box,
+          label: '배송리스트',
           onTap: () {
             debugPrint('Home');
           },
         ),
         const SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
+          icon: Icons.fire_truck,
+          label: '트럭 규격 입력',
         ),
         const SidebarXItem(
-          icon: Icons.people,
-          label: 'People',
-        ),
-        SidebarXItem(
-          icon: Icons.favorite,
-          label: 'Favorites',
-          selectable: false,
-          onTap: () => _showDisabledAlert(context),
+          icon: Icons.front_loader,
+          label: '적재 최적화 시뮬레이션',
         ),
         const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
+          icon: Icons.map,
+          label: '배송 구역 확인',
         ),
+        // SidebarXItem(
+        //   icon: Icons.map,
+        //   label: '배송 구역 확인',
+        //   selectable: false,
+        //   onTap: () => _showDisabledAlert(context),
+        // ),
+        // const SidebarXItem(
+        //   iconWidget: FlutterLogo(size: 20),
+        //   label: 'Flutter',
+        // ),
       ],
     );
   }
@@ -241,6 +284,17 @@ String _getTitleByIndex(int index) {
       return 'Not found page';
   }
 }
+
+const primaryColor = Colors.red;
+const canvasColor = Color(0xFF3AB9FF);//Color(0xFF3ab9ff);//Color(0xFF2E2E48); # 네비게이션바 바디 색
+const scaffoldBackgroundColor = Color(0xffffffff);//Color(0xFF464667); # 뷰포트 전체 바탕색
+const temporaryMenuColor = Color(0x2dceedff);
+const accentCanvasColor = Color(0x2dceedff);//Color(0xFF3ab9ff);//Color(0xFF3E3E61); # 선택되버린 후 메뉴바 고정 색
+const white = Color(0x2dceedff);
+final actionColor = Color(0x2dceedff);//Color(0xFF3ab9ff);//const Color(0xFF5F5FA7).withOpacity(0.6); # 선택된 메뉴바 테두리 색
+final divider = Divider(color: white.withOpacity(0.3), height: 1); //하단의 선 스타일
+
+/*
 const primaryColor = Color(0xFF75ddcc);
 const canvasColor = Color(0xFF256d7c);//Color(0xFF3ab9ff);//Color(0xFF2E2E48);
 const scaffoldBackgroundColor = Color(0x7E75ddcc);//Color(0xFF464667);
@@ -248,6 +302,7 @@ const accentCanvasColor = Color(0xFF359d8c);//Color(0xFF3ab9ff);//Color(0xFF3E3E
 const white = Colors.white;
 final actionColor = Color(0xbb75ddcc);//Color(0xFF3ab9ff);//const Color(0xFF5F5FA7).withOpacity(0.6);
 final divider = Divider(color: white.withOpacity(0.3), height: 1);
+*/
 /*
 const primaryColor = Color(0xFF685BFF);
 const canvasColor = Color(0xFF2E2E48);
