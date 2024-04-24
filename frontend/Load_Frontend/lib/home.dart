@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({required Key key}) : super(key: key);
-
+  //더미데이터 사용
   @override
   Widget build(BuildContext context) {
     return Scaffold(
