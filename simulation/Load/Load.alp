@@ -16,6 +16,27 @@
 		<ActiveObjectClass>
 			<Id>1713929309294</Id>
 			<Name><![CDATA[Main]]></Name>
+			<StartupCode><![CDATA[APIClient client = new APIClient();
+try{
+	List<GoodsDto> allGoods = client.getGoods();
+	System.out.println(allGoods);
+	
+	for (GoodsDto g : allGoods) {
+		Goods goods = new Goods();
+		goods.id = goods.getId();	
+		goods.width = g.getWidth();	
+		goods.length = g.getLength();	
+		goods.height = g.getHeight();	
+		goods.weight = g.getWeight();	
+	//	goods.userId = g.getUserId();	
+	//	goods.areaId = g.getAreaId();	
+		
+		goodsList.add(goods);
+	}
+	System.out.println(goodsList);
+}catch(Exception e){
+	System.out.println(e);
+}]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1713929309300</Id>
@@ -107,6 +128,23 @@
 			</ScaleRuler>
 			<CurrentLevel>1713929309301</CurrentLevel>
 			<ConnectionsId>1713929309295</ConnectionsId>
+			<Variables>
+				<Variable Class="CollectionVariable">
+					<Id>1714023186123</Id>
+					<Name><![CDATA[goodsList]]></Name>
+					<X>60</X><Y>820</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[LinkedList]]></CollectionClass>
+						<ElementClass><![CDATA[Goods]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+			</Variables>
 			<Connectors>
 				<Connector>
 					<Id>1714011224919</Id>
@@ -402,9 +440,15 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[limitArrivals]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maxArrivals]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[2]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[locationType]]></Name>
@@ -458,13 +502,13 @@
 								<EntityEmbeddedObject>
 									<ActiveObjectClass>
 										<PackageName><![CDATA[load]]></PackageName>
-										<ClassName><![CDATA[Pallet]]></ClassName>
+										<ClassName><![CDATA[Goods]]></ClassName>
 									</ActiveObjectClass>
 									<GenericParameterSubstitute>
 										<GenericParameterSubstituteReference>
 											<PackageName><![CDATA[load]]></PackageName>
-											<ClassName><![CDATA[Pallet]]></ClassName>
-											<ItemName><![CDATA[1713939939414]]></ItemName>
+											<ClassName><![CDATA[Goods]]></ClassName>
+											<ItemName><![CDATA[1714020103829]]></ItemName>
 										</GenericParameterSubstituteReference>
 									</GenericParameterSubstitute>
 									<Parameters>
@@ -542,6 +586,13 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onBeforeArrival]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[if (!goodsList.isEmpty()) {
+        Goods goods = goodsList.remove(0);
+        queue.onEnter(goods);
+        System.out.println(goods.id+" "+goods.width);
+}]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onAtExit]]></Name>
@@ -1875,6 +1926,183 @@
 						<Point><X>-5</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
 
+			<Presentation>
+				<ConveyorSimpleStation>
+					<Id>1714019996777</Id>
+					<Name><![CDATA[station]]></Name>
+					<X>197</X><Y>388</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<EmbeddedObject>
+						<ActiveObjectClass>
+							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+							<ClassName><![CDATA[ConveyorSimpleStationDescriptor]]></ClassName>
+						</ActiveObjectClass>
+						<GenericParameterSubstitute>
+							<GenericParameterSubstituteReference>
+								<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+								<ClassName><![CDATA[ConveyorSimpleStationDescriptor]]></ClassName>
+								<ItemName><![CDATA[1513941038050]]></ItemName>
+							</GenericParameterSubstituteReference>
+						</GenericParameterSubstitute>
+						<Parameters>
+							<Parameter>
+								<Name><![CDATA[delayType]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[processTime]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[capacity]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[processingMode]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[loadingMode]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[useResources]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[seizeFromOnePool]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceSets]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourcePool]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceQuantity]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[sendResources]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationType]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationNode]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationAttractor]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationX]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationY]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceDestinationZ]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[movingGoHome]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[customizeResourceChoice]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[resourceChoiceCondition]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[priority]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[taskMayPreemptOtherTasks]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[taskPreemptionPolicy]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onProcessStarted]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onProcessFinished]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onLeadingEdgeEnter]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onTrailingEdgeEnter]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onLeadingEdgeExit]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onTrailingEdgeExit]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onFailed]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onRepaired]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onTaskSuspended]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onTaskResumed]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onTaskTerminated]]></Name>
+							</Parameter>
+						</Parameters>
+						<ReplicationFlag>false</ReplicationFlag>
+						<Replication Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</Replication>
+						<CollectionType>ARRAY_LIST_BASED</CollectionType>
+						<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+						<XCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</XCode>
+						<YCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</YCode>
+						<ZCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</ZCode>
+						<ColumnCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</ColumnCode>
+						<RowCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</RowCode>
+						<LatitudeCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</LatitudeCode>
+						<LongitudeCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</LongitudeCode>
+						<LocationNameCode Class="CodeValue">
+							<Code><![CDATA[""]]></Code>
+						</LocationNameCode>
+						<InitializationType>SPECIFIED_NUMBER</InitializationType>
+						<InitializationDatabaseTableQuery>
+							<TableReference>
+							</TableReference>
+						</InitializationDatabaseTableQuery>
+						<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+						<QuantityColumn>
+						</QuantityColumn>
+					</EmbeddedObject>
+					<Offset>57.0</Offset>
+					<Length Class="UnitValue">
+						<Value Class="Double">4</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</Length>
+					<LineColor>-16777216</LineColor>
+					<FillColor>-8355712</FillColor>
+					<LineMaterial>null</LineMaterial>
+					<FillMaterial>null</FillMaterial>
+				</ConveyorSimpleStation>
+			</Presentation>
 
 				</Conveyor>
 				<TransferTable>
@@ -3002,12 +3230,12 @@
 		</ActiveObjectClass>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
-			<Id>1713939939408</Id>
-			<Name><![CDATA[Pallet]]></Name>
+			<Id>1714020103834</Id>
+			<Name><![CDATA[Goods]]></Name>
 			<Generic>false</Generic>
 			<GenericParameter>
-				<Id>1713939939414</Id>
-				<Name><![CDATA[1713939939414]]></Name>
+				<Id>1714020103829</Id>
+				<Name><![CDATA[1714020103829]]></Name>
 				<GenericParameterValue Class="CodeValue">
 					<Code><![CDATA[T extends Agent]]></Code>
 				</GenericParameterValue>
@@ -3067,7 +3295,7 @@
 			<DatasetsCreationProperties>
 				<AutoCreate>true</AutoCreate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1713945600000</OccurrenceDate>
+					<OccurrenceDate>1714032000000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
@@ -3078,7 +3306,7 @@
 					</RecurrenceCode>
 			</DatasetsCreationProperties>
 			<ScaleRuler>
-				<Id>1713939939411</Id>
+				<Id>1714020103830</Id>
 				<Name><![CDATA[scale]]></Name>
 				<X>0</X><Y>-150</Y>
 				<PublicFlag>false</PublicFlag>
@@ -3093,11 +3321,73 @@
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1713939939415</CurrentLevel>
-			<ConnectionsId>1713939939409</ConnectionsId>
+			<CurrentLevel>1714020103846</CurrentLevel>
+			<ConnectionsId>1714020103850</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1714020103836</Id>
+					<Name><![CDATA[id]]></Name>
+					<X>90</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714020103838</Id>
+					<Name><![CDATA[height]]></Name>
+					<X>90</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714020103840</Id>
+					<Name><![CDATA[width]]></Name>
+					<X>90</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714020103842</Id>
+					<Name><![CDATA[weight]]></Name>
+					<X>90</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714020103844</Id>
+					<Name><![CDATA[length]]></Name>
+					<X>90</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+			</Variables>
 			<AgentLinks>
 				<AgentLink>
-					<Id>1713939939409</Id>
+					<Id>1714020103850</Id>
 					<Name><![CDATA[connections]]></Name>
 					<X>50</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
@@ -3120,7 +3410,7 @@
 
 			<Presentation>
 				<Level>
-					<Id>1713939939415</Id>
+					<Id>1714020103846</Id>
 					<Name><![CDATA[level]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3133,8 +3423,8 @@
 
 			<Presentation>
 				<Figure3D>
-					<Id>1713939939418</Id>
-					<Name><![CDATA[box_1_closed]]></Name>
+					<Id>1714020103848</Id>
+					<Name><![CDATA[box_2_closed]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -3145,7 +3435,7 @@
 					<Label><X>0</X><Y>-10</Y></Label>
 					<ResourceReference>
 						<PackageName><![CDATA[load]]></PackageName>
-						<ClassName><![CDATA[3d/box_1_closed.dae]]></ClassName>
+						<ClassName><![CDATA[3d/box_2_closed.dae]]></ClassName>
 					</ResourceReference>
 					<ColorTable>
 						<ColorMapping>
@@ -3275,9 +3565,157 @@
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
+	<JavaClasses>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1714020093551</Id>
+			<Name><![CDATA[APIClient]]></Name>
+			<Text><![CDATA[import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class APIClient {
+
+    private final String SERVER_URL = "http://localhost:8080/api";
+
+    public List<GoodsDto> getGoods() throws Exception {
+        String url = SERVER_URL + "/simulation";
+        
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // HTTP 요청 메소드 설정 (GET 방식)
+        con.setRequestMethod("GET");
+
+        // 응답 코드 받기
+        int responseCode = con.getResponseCode();
+        //System.out.println("Response Code: " + responseCode);
+
+        // 응답 내용 받기
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        // 응답 내용 출력
+        //System.out.println("Response: " + response.toString());
+
+        // JSON을 ApiResponse 객체로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        GoodsResponse apiResponse = objectMapper.readValue(response.toString(), GoodsResponse.class);
+
+        String resultCode = apiResponse.getResultCode();
+        List<GoodsDto> result = apiResponse.getResult();
+
+
+        return result;
+    }
+}
+]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1714020093561</Id>
+			<Name><![CDATA[GoodsDto]]></Name>
+			<Text><![CDATA[/**
+ * Goods
+ */	
+
+public class GoodsDto {
+	
+	int id;
+	int width;
+	int length;
+	int weight;
+	int height;
+	int userId;
+	int areaId;
+	
+	public GoodsDto() {}
+	
+	public GoodsDto(int id, int width, int length, int height, int weight, int userId, int areaId) {
+		this.id = id;
+		this.width = width;
+		this.length = length;
+		this.height = height;
+		this.weight = weight;
+		this.userId = userId;
+		this.areaId = areaId;
+	}	
+	
+	public int getId() {
+		return id;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public int getLength() {
+		return length;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public int getAreaId() {
+		return areaId;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "GoodsDto [id=" + id + ", width=" + width + ", length=" + length + ", height="
+				+ height + ", weight=" + weight + ", userId=" + userId + ", aearId=" + areaId + "]";
+	}
+    
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1714020093564</Id>
+			<Name><![CDATA[GoodsResponse]]></Name>
+			<Text><![CDATA[/**
+ * GoodsResponse
+ */	
+public class GoodsResponse {
+	
+	private String resultCode;
+	private List<GoodsDto> result;
+	
+	public String getResultCode() {
+		return resultCode;
+	}
+
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
+	}
+
+	public List<GoodsDto> getResult() {
+		return result;
+	}
+
+	public void setResult(List<GoodsDto> result) {
+		this.result = result;
+	}
+	
+}]]></Text>
+		</JavaClass>
+	</JavaClasses>
 	<ModelResources>
 		<Resource>
-			<Path><![CDATA[3d/box_1_closed.dae]]></Path>
+			<Path><![CDATA[3d/box_2_closed.dae]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
