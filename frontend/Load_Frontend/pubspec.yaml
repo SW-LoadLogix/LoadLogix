@@ -1,0 +1,32 @@
+name: load_frontend
+description: "삼성 청년 아카데미 B308팀 자율 프로젝트"
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  responsive_framework: ^1.4.0
+  animations: ^2.0.11
+  sidebarx: ^0.17.1
+  cupertino_icons: ^1.0.6
+
+  url_strategy: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
