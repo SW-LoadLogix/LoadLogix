@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
   Widget buildPage(String name) {
     switch (name) {
       case '/navtest':
-        return ResponsiveBreakpoints(breakpoints: [
+        return const ResponsiveBreakpoints(breakpoints: [
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),

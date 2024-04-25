@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/nav_rail.dart';
 import '../components/side_nav_bar.dart';
 
 class dummyData{
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('홈 페이지'), // 앱바 타이틀
+        title: const Text('Logistic Optimize Algorithm Dive'), // 앱바 타이틀
       ),
       body:
       Column(
@@ -38,8 +39,8 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: <Widget>[
-                ListTile(title: Text("여긴 그냥 소개하는 페이지에요.")),
-                ListTile(title: Text("나중에 바뀔겁니다.")),
+                const ListTile(title: Text("여긴 그냥 소개하는 페이지에요.")),
+                const ListTile(title: Text("나중에 바뀔겁니다.")),
                 ElevatedButton(
                   onPressed: (){
                     Navigator.pushNamed(context, '/sign-in-up');
@@ -75,7 +76,26 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),// 네비게이션 바 import
+      bottomNavigationBar: const CustomNavigationBar(),// 하단 네비게이션 바 import
+      drawer: CustomNavigationDrawer(
+        onDestinationSelected: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/delivery-list');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/set-truck-specifications');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/box-simulation');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/delivery-simulation');
+              break;
+          }
+        },
+        selectedIndex: 0,
+      ),
     );
   }
 }
