@@ -16,8 +16,11 @@ dependencies:
   animations: ^2.0.11
   sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
-
+  three_dart: ^0.0.14
+  three_dart_jsm: ^0.0.9
+  flutter_gl: ^0.0.21
   url_strategy: ^0.2.0
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:
