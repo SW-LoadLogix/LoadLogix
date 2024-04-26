@@ -4,9 +4,9 @@ import 'package:sidebarx/sidebarx.dart';
 
 class SidebarComponent extends StatelessWidget {
   final Function(int) onDestinationSelected;
-  final int selectedIndex;
+  late final int selectedIndex;
 
-  const SidebarComponent({super.key,
+  SidebarComponent({super.key,
     required this.onDestinationSelected,
     required this.selectedIndex,
   });
@@ -80,7 +80,7 @@ class SidebarComponent extends StatelessWidget {
                     'LOAD',
                     textAlign: TextAlign.center, // Align text to center horizontally
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       // Define your text style here
                     ),
                   ),
@@ -96,6 +96,7 @@ class SidebarComponent extends StatelessWidget {
           label: '배송리스트',
           onTap: () {
             onDestinationSelected(0);
+            selectedIndex = 0;
           },
         ),
         SidebarXItem(
@@ -103,6 +104,7 @@ class SidebarComponent extends StatelessWidget {
           label: '트럭 규격 입력',
           onTap: () {
             onDestinationSelected(1);
+            selectedIndex = 1;
           },
         ),
         SidebarXItem(
@@ -110,6 +112,7 @@ class SidebarComponent extends StatelessWidget {
           label: '적재 최적화 시뮬레이션',
           onTap: () {
             onDestinationSelected(2);
+            selectedIndex = 2;
           },
         ),
         SidebarXItem(
@@ -117,6 +120,7 @@ class SidebarComponent extends StatelessWidget {
           label: '배송구역 확인',
           onTap: () {
             onDestinationSelected(3);
+            selectedIndex = 3;
           },
         ),
       ],
@@ -150,7 +154,7 @@ class MyNav extends StatelessWidget {
             }
             // Handle selection logic
           },
-          selectedIndex: 4, // Provide the selected index
+          selectedIndex: 0 // Provide the selected index
         ),
       ),
     );
