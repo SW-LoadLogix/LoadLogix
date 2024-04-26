@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
         ], child: SetTruckSpecificationPage());
       case '/box-simulation':
-        return const ResponsiveBreakpoints(breakpoints: [
+        return ResponsiveBreakpoints(breakpoints: const [
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),

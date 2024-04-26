@@ -6,36 +6,318 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gl/flutter_gl.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
 import 'package:flutter/scheduler.dart';
+import 'package:sidebarx/sidebarx.dart';
+import 'package:load_frontend/components/side_nav_bar.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+/* 메뉴 value */
+double heightFloorValuesLow = 0.0;
+double heightFloorValuesHigh = 100.0;
+double transparencyValue = 100.0;
+double boxStep = 5.0;
 
 
-
-class BoxSimulation3dPage extends StatelessWidget {
+class BoxSimulation3dPage extends StatefulWidget {
   final String? data;
-  const BoxSimulation3dPage({super.key, this.data});
+  BoxSimulation3dPage({super.key, this.data});
 
+  @override
+  _BoxSimulation3dPageState createState() => _BoxSimulation3dPageState();
+}
+
+class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
+  SfRangeValues _heightFloorValues = SfRangeValues(0, 100);
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-
-    if (data != null) {
-      print("data : $data");
-    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('박스 3d 시뮬레이션 페이지'), // 앱바 타이틀
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: screenSize.height),
+          child: IntrinsicHeight(
+            child: Column(
+              children: <Widget>[
+                ListTile(title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: Container(
+                        height : screenSize.height - 48, // 높이 조정
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Card(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 30,
+                                  child:TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'box floor height',
+                                    ),
+                                  ),
+                                ),
+                                SfRangeSlider(
+                                  min: 0.0,
+                                  max: 100.0,
+                                  values: _heightFloorValues,
+                                  interval: 20,
+                                  showTicks: true,
+                                  showLabels: true,
+                                  enableTooltip: true,
+                                  minorTicksPerInterval: 1,
+                                  onChanged: (SfRangeValues values){
+                                    setState(() {
+                                      _heightFloorValues = values;
+                                      heightFloorValuesLow = _heightFloorValues.start;
+                                      heightFloorValuesHigh = _heightFloorValues.end;
+                                    });
+                                  },
+                                ),
+                                Container(height: 10),
+                                Container(
+                                  height: 30,
+                                  child:TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Transparency',
+                                    ),
+                                  ),
+                                ),
+                                SfSlider(
+                                  min: 0.0,
+                                  max: 100.0,
+                                  value: transparencyValue,
+                                  interval: 20,
+                                  showTicks: true,
+                                  showLabels: true,
+                                  enableTooltip: true,
+                                  minorTicksPerInterval: 1,
+                                  onChanged: (dynamic newValue) {
+                                    setState(() {
+                                      transparencyValue = newValue;
+                                    });
+                                  },
+                                ),
+                                Container(height: 10),
+                                Container(
+                                  height: 30,
+                                  child:TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Smulation Speed',
+                                    ),
+                                  ),
+                                ),
+                                SfSlider(
+                                  min: 0.1,
+                                  max: 10.1,
+                                  value: boxStep,
+                                  interval: 2,
+                                  showTicks: true,
+                                  showLabels: true,
+                                  enableTooltip: true,
+                                  minorTicksPerInterval: 1,
+                                  onChanged: (dynamic newValue) {
+                                    setState(() {
+                                      boxStep = newValue;
+                                    });
+                                  },
+                                ),
+                                Container(height: 10),
+                              ]),
+                            ),
+                            Card(
+                              child: Column(
+                                children: [
+                                  CheckboxListTile(
+                                    title: Text('A구역 적재 시뮬레이션'),
+                                    value: true,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+
+                                      });
+                                    },
+                                  )
+                                ],
+                              )
+                            )
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 5,
+                      fit: FlexFit.tight,
+                      child: Container(
+                        height: screenSize.height - 48, // 높이 조정
+                        child: FallingBoxSimulate(),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      body: SizedBox(
+    );
+
+
+    // return Scaffold(
+    //   body: Column(
+    //     mainAxisAlignment: MainAxisAlignment.start, // 여기에 추가
+    //     children: <Widget>[
+    //       Expanded(
+    //         child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.start,
+    //           children: <Widget>[
+    //             ListTile(title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.start,
+    //               children: <Widget>[
+    //                 Expanded(
+    //                     flex: 1,
+    //                     child: Column(
+    //                         mainAxisAlignment: MainAxisAlignment.start,
+    //                         children: <Widget>[
+    //                           SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),
+    //                           SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),
+    //                           SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),SfSlider(
+    //                             min: 0.0,
+    //                             max: 100.0,
+    //                             value: _value,
+    //                             interval: 20,
+    //                             showTicks: true,
+    //                             showLabels: true,
+    //                             enableTooltip: true,
+    //                             minorTicksPerInterval: 1,
+    //                             onChanged: (dynamic newValue) {
+    //                               setState(() {
+    //                                 _value = newValue;
+    //                               });
+    //                             },
+    //                           ),
+    //                         ]
+    //                     )
+    //                 ),
+    //                 Expanded(
+    //                   flex: 5,
+    //                   child: Container(
+    //                     height: screenSize.height - 48, // Adjust height if needed
+    //                     child: FallingBoxSimulate(),
+    //                   ),
+    //                 )
+    //               ],
+    //             ),
+    //           ],
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // );
+  }
+}
+/*SizedBox(
         width: screenSize.width,
         height: screenSize.height,
         child: FallingBoxSimulate(),
+      ),*/
 
-      ),
-    );
-  }
-}
 
 class Position {
   final double x;
@@ -111,16 +393,15 @@ class BoxesContainer {
   }
 }
 
-
-
-
-
 class FallingBox {
+  bool isVisible = true; // 새로운 가시성 플래그
+
   three.Vector3? currPosition;
   three.Vector3? startPosition;
   three.Vector3? endPosition;
   three.Vector3? boxSize;
 
+  int floorHeight = 0;
   String boxColor = "green";
   bool isTransparent = false;
 
@@ -138,7 +419,7 @@ class FallingBox {
   void update() {
     if (isDone) return;  // 이미 완료된 객체는 업데이트 하지 않음
 
-    double step = 5;  // 이동 단위
+    double step = boxStep;  // 이동 단위
 
     if (currPosition != null && endPosition!= null){
       if (currPosition!.x > endPosition!.x) {
@@ -170,7 +451,6 @@ class FallingBox {
   }
 }
 
-
 class FallingBoxSimulate extends StatefulWidget {
 
   const FallingBoxSimulate({Key? key}) : super(key: key);
@@ -179,7 +459,7 @@ class FallingBoxSimulate extends StatefulWidget {
   State<FallingBoxSimulate> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixin{
+class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixin,  WidgetsBindingObserver{
   late FlutterGlPlugin three3dRender;
   three.WebGLRenderer? renderer;
   Ticker? _ticker;
@@ -213,7 +493,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
   late BoxesContainer boxesContainer;
 
   int gridSize = 6;
-  double spacing = 1.1;
+  double spacing = 1.0;
   int currentBoxIndex = 0;  // 현재 애니메이션 중인 상자 인덱스
 
   bool kIsWeb = const bool.fromEnvironment('dart.library.js_util');
@@ -229,16 +509,36 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     String? jsonData = uri.queryParameters['data'];
 
     if (jsonData != null) {
-      // print("jsonData : $jsonData");
-
-      //String jsonData = '{"boxes":[{"endPosition":[{"x":0,"y":0,"z":0}],"size":[{"x":1,"y":1,"z":1}]},{"endPosition":[{"x":1,"y":0,"z":0}],"size":[{"x":1,"y":1,"z":1}]}]}';
       Map<String, dynamic> jsonMap = jsonDecode(jsonData);
       boxesContainer = BoxesContainer.fromJson(jsonMap);
       isTestingDebug = true;
     }
 
     super.initState();
+    WidgetsBinding.instance.addObserver(this as WidgetsBindingObserver);
   }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    final mqd = MediaQuery.of(context);
+    screenSize = mqd.size;
+    width = screenSize!.width;
+    height = screenSize!.height - 60;  // 필요한 경우 높이 조정
+    updateRendererAndViewport();
+  }
+
+  void updateRendererAndViewport() {
+    if (renderer != null && screenSize != null) {
+      renderer!.setSize(screenSize!.width, screenSize!.height);
+      camera.aspect = screenSize!.width / screenSize!.height;
+      camera.updateProjectionMatrix();
+      render();  // 화면 갱신
+    }
+  }
+
+
+
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -282,14 +582,14 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("RJH 3D Box Simulation"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("RJH 3D Box Simulation"),
+      // ),
       body: Builder(
         builder: (BuildContext context) {
           initSize(context);
           return SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: _build(context));
         },
       ),
@@ -358,6 +658,36 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       transparentFlag = false;
     }
   }
+
+  Map<String, double> calculateHeightExtremes() {
+    if (boxes.isEmpty) return {'minHeight': 0.0, 'maxHeight': 0.0};
+
+    double minHeight = boxes[0].currPosition!.y;
+    double maxHeight = minHeight;
+
+    for (var box in boxes) {
+      double boxHeight = box.currPosition!.y;
+      if (boxHeight > maxHeight)
+        maxHeight = boxHeight + box.boxSize!.y;
+      if (boxHeight < minHeight) minHeight = boxHeight;
+    }
+    return {'minHeight': minHeight, 'maxHeight': maxHeight};
+  }
+
+  void updateBoxVisibility() {
+    var heightExtremes = calculateHeightExtremes();
+    double totalMinHeight = heightExtremes['minHeight']!;
+    double totalMaxHeight = heightExtremes['maxHeight']!;
+
+    double minHeight = totalMinHeight + (totalMaxHeight - totalMinHeight) * (heightFloorValuesLow / 100);
+    double maxHeight = totalMinHeight + (totalMaxHeight - totalMinHeight) * (heightFloorValuesHigh / 100);
+
+    for (var box in boxes) {
+      double boxHeight = box.currPosition!.y;
+      box.isVisible = (boxHeight >= minHeight && boxHeight <= maxHeight);
+    }
+  }
+
 
   Widget _build(BuildContext context) {
     return Column(
@@ -523,19 +853,19 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       "color": 0x00ff00,      // 색상: 녹색
       "flatShading": true,    // 플랫 셰이딩 활성화
       "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
     });
 
     edgeMaterial = three.MeshPhongMaterial({
-      "color": 0x000000,      // 색상: 녹색
+      "color": 0xFFFFFF,      // 색상: 녹색
       "flatShading": true,    // 플랫 셰이딩 활성화
       "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
       "wireframe": true,      // 와이어프레임 모드 활성화
     });
 
     transparentEdgeMaterial = three.MeshPhongMaterial({
-      "color": 0x000000,      // 색상: 녹색
+      "color": 0xFFFFFF,      // 색상: 녹색
       "flatShading": true,    // 플랫 셰이딩 활성화
       "transparent": true,    // 투명화 가능하도록 설정
       "opacity": 0.1,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
@@ -545,18 +875,20 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     greenMaterial = three.MeshPhongMaterial({
       "color": 0x00ff00,
       "flatShading": true,
-      "transparent": false,
+      "transparent": true,
+      "opacity": 1.0 * transparencyValue / 100.0,
     });
 
     redMaterial = three.MeshPhongMaterial({
       "color": 0xff0000,
       "flatShading": true,
-      "transparent": false,
+      "transparent": true,
+      "opacity": 1.0 * transparencyValue / 100.0,
     });
 
 
     int size = 6;  // 큐브의 각 차원당 크기
-    double spacing = 1.1;  // 박스 간 간격
+    double spacing = 1.0;  // 박스 간 간격
     int i = 0;
 
     mesh = three.InstancedMesh(geometry, material, size*size*size);
@@ -620,7 +952,6 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       }
     }
 
-
     print("box length : ${boxes.length}");
 
 
@@ -630,13 +961,53 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     scene.add(redMesh);
     scene.add(transparentMesh);
   }
-
-
-
   animate() {
     if (!mounted || disposed) {
       return;
     }
+
+
+    matrix = three.Matrix4();
+    //material = three.MeshNormalMaterial();
+    material = three.MeshPhongMaterial  ({
+      "color": 0x00ff00,      // 색상: 녹색
+      "flatShading": true,    // 플랫 셰이딩 활성화
+      "transparent": true,    // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+    });
+
+    edgeMaterial = three.MeshPhongMaterial({
+      "color": 0x0,      // 색상: 녹색
+      "flatShading": true,    // 플랫 셰이딩 활성화
+      "transparent": true,    // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true,      // 와이어프레임 모드 활성화
+    });
+
+    transparentEdgeMaterial = three.MeshPhongMaterial({
+      "color": 0x0,      // 색상: 녹색
+      "flatShading": true,    // 플랫 셰이딩 활성화
+      "transparent": true,    // 투명화 가능하도록 설정
+      "opacity": 0.1,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true,      // 와이어프레임 모드 활성화
+    });
+
+    greenMaterial = three.MeshPhongMaterial({
+      "color": 0x00ff00,
+      "flatShading": true,
+      "transparent": true,
+      "opacity": 1.0 * transparencyValue / 100.0,
+    });
+
+    redMaterial = three.MeshPhongMaterial({
+      "color": 0xff0000,
+      "flatShading": true,
+      "transparent": true,
+      "opacity": 1.0 * transparencyValue / 100.0,
+    });
+
+    updateBoxVisibility();
+
     if (currentBoxIndex < boxes.length) {
       FallingBox currentBox = boxes[currentBoxIndex];
       currentBox.update();
@@ -657,6 +1028,8 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     transparentMesh = three.InstancedMesh(geometry, transparentEdgeMaterial, 6*6*6);
     var quaternion = three.Quaternion();
     for(int i = 0; i < boxes.length; i++){
+      if (! boxes[i].isVisible)
+        continue;
       matrix.setPosition(boxes[i].currPosition!.x, boxes[i].currPosition!.y, boxes[i].currPosition!.z);
       matrix.compose(boxes[i].currPosition!, quaternion, boxes[i].boxSize!);
       if (boxes[i].isTransparent == true) {
@@ -708,6 +1081,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     disposed = true;
     three3dRender.dispose();
 
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 }

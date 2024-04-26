@@ -21,6 +21,7 @@ dependencies:
   flutter_gl: ^0.0.21
   url_strategy: ^0.2.0
   url_launcher: ^6.2.5
+  syncfusion_flutter_sliders: ^25.1.41
 
 dev_dependencies:
   flutter_test:
