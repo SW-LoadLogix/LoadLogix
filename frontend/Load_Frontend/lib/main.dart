@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'components/nav_rail.dart';
 import 'components/side_nav_bar.dart';
 import 'pages/pages.dart';
 
@@ -74,9 +75,23 @@ class MyApp extends StatelessWidget {
       //       return MaterialPageRoute(builder: (context) => const NotFoundPage());
       //   }
       // },
-
-
-
+      home: Scaffold(
+        body: Row(
+          children: [
+            // Add SidebarComponent here
+            const MyNav(),
+            Expanded(
+              child: Navigator(
+                onGenerateRoute: (settings) {
+                  return MaterialPageRoute(
+                    builder: (context) => buildPage(settings.name ?? ''),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
   Widget buildPage(String name) {

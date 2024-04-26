@@ -115,3 +115,36 @@ class SidebarComponent extends StatelessWidget {
     );
   }
 }
+class MyNav extends StatelessWidget {
+  const MyNav({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 250, // Adjust the width as needed
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: SidebarComponent(
+          onDestinationSelected: (index) {
+            switch (index) {
+              case 0:
+                Navigator.pushNamed(context, '/delivery-list');
+                break;
+              case 1:
+                Navigator.pushNamed(context, '/set-truck-specifications');
+                break;
+              case 2:
+                Navigator.pushNamed(context, '/box-simulation');
+                break;
+              case 3:
+                Navigator.pushNamed(context, '/delivery-simulation');
+                break;
+            }
+            // Handle selection logic
+          },
+          selectedIndex: 0, // Provide the selected index
+        ),
+      ),
+    );
+  }
+}
