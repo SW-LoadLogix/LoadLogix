@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       /*** 라우트 방식 ***/
-      /*routes: {
-        '/': (context) => const HomePage(key: Key('home-page')),
+      routes: {
+        // '/': (context) => const HomePage(key: Key('home-page')),
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
         '/set-truck-specifications': (context) => const SetTruckSpecificationPage(),
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const NotFoundPage(),
-      ),*/
+      ),
 
       /** onGenerateRoute 방식 **/
       // onGenerateRoute: (settings) {
@@ -94,6 +94,7 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
   Widget buildPage(String name) {
     switch (name) {
       case '/navtest':

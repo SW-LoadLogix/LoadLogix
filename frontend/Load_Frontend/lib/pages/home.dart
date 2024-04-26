@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  ListTile(title: Text("여긴 그냥 소개하는 페이지에요.")),
-                  ListTile(title: Text("나중에 바뀔겁니다.")),
+                  const ListTile(title: Text("여긴 그냥 소개하는 페이지에요.")),
+                  const ListTile(title: Text("나중에 바뀔겁니다.")),
                   ElevatedButton(
                     onPressed: (){
                       Navigator.pushNamed(context, '/sign-in-up');

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -18,30 +19,31 @@ class SidebarComponent extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: const Color(0xFF3AB9FF),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(40),
         ),
-        hoverColor: const Color(0xFF464667),
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-        selectedTextStyle: const TextStyle(color: Colors.white),
+        // hoverColor: const Color(0xFF464667),
+        textStyle: const TextStyle(color: Colors.white),
+        selectedTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
         hoverTextStyle: const TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w900,
         ),
         itemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(80),
           border: Border.all(color: const Color(0xFF3AB9FF)),
         ),
         selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Color(0xFF464667),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
-            )
-          ],
+          border: Border.all(color: Colors.white, width: 1.0, style: BorderStyle.solid),
+          borderRadius: BorderRadius.circular(120),
+          // color: Color(0xFF464667),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.28),
+          //     blurRadius: 30,
+          //   )
+          // ],
         ),
         iconTheme: const IconThemeData(
           color: Colors.white,
@@ -52,32 +54,38 @@ class SidebarComponent extends StatelessWidget {
           size: 20,
         ),
       ),
-      extendedTheme: const SidebarXTheme(
+      extendedTheme: SidebarXTheme(
         width: 230,
         decoration: BoxDecoration(
-          color: Color(0xFF3AB9FF),
+            color: Color(0xFF3AB9FF),
+            borderRadius: BorderRadius.circular(10)
         ),
       ),
       footerDivider: const Divider(color: Colors.white, height: 1),
       headerBuilder: (context, extended) {
-        return SizedBox(
-          height: 130,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/logo3.png'),
-                const SizedBox(height: 8), // Adjust spacing between Image and Text
-                const Text(
-                  'LOAD',
-                  textAlign: TextAlign.center, // Align text to center horizontally
-                  style: TextStyle(
-                    color: Colors.white,
-                    // Define your text style here
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/');
+          },
+          child: SizedBox(
+            height: 130,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/logo3.png'),
+                  const SizedBox(height: 8), // Adjust spacing between Image and Text
+                  const Text(
+                    'LOAD',
+                    textAlign: TextAlign.center, // Align text to center horizontally
+                    style: TextStyle(
+                      color: Colors.white,
+                      // Define your text style here
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -121,7 +129,7 @@ class MyNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 250, // Adjust the width as needed
+      width: 250,
       child: Align(
         alignment: Alignment.centerLeft,
         child: SidebarComponent(
@@ -142,7 +150,7 @@ class MyNav extends StatelessWidget {
             }
             // Handle selection logic
           },
-          selectedIndex: 0, // Provide the selected index
+          selectedIndex: 4, // Provide the selected index
         ),
       ),
     );
