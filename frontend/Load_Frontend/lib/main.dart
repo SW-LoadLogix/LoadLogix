@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -6,10 +7,23 @@ import 'components/nav_rail.dart';
 import 'components/side_nav_bar.dart';
 import 'pages/pages.dart';
 
+class SidebarState extends ChangeNotifier {
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
 
+  void setSelectedIndex(int index) {
+    _selectedIndex = index;
+    notifyListeners(); // 변경 사항을 위젯에 알림
+  }
+}
 void main() {
   setPathUrlStrategy();  // 주소창에서 # 제거
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SidebarState(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

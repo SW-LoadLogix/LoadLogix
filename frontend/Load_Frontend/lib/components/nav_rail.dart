@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import '../main.dart';
 
 class SidebarComponent extends StatelessWidget {
   final Function(int) onDestinationSelected;
@@ -132,12 +135,14 @@ class MyNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sidebarState = Provider.of<SidebarState>(context);
     return SizedBox(
       width: 250,
       child: Align(
         alignment: Alignment.centerLeft,
         child: SidebarComponent(
           onDestinationSelected: (index) {
+            sidebarState.setSelectedIndex(index); // selectedIndex 변경
             switch (index) {
               case 0:
                 Navigator.pushNamed(context, '/delivery-list');
@@ -154,7 +159,7 @@ class MyNav extends StatelessWidget {
             }
             // Handle selection logic
           },
-          selectedIndex: 0 // Provide the selected index
+          selectedIndex: sidebarState.selectedIndex, // Provide the selected index
         ),
       ),
     );

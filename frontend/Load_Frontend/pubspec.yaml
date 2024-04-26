@@ -16,6 +16,7 @@ dependencies:
   animations: ^2.0.11
   sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
+  provider: ^5.0.0
 
   url_strategy: ^0.2.0
 
