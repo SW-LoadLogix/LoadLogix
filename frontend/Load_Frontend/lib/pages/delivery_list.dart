@@ -40,13 +40,18 @@ class DeliveryListPage extends StatelessWidget {
                       ),
                       columns: [
                       DataColumn(label: Text('No')),
-                      DataColumn(label: Text('주소')),
+                        DataColumn(
+                          label: Container(
+                            width: 110, // 텍스트 너비 조정
+                            child: Text('주소', overflow: TextOverflow.ellipsis, maxLines: 2,), // 오버플로우 발생 시 '...'로 대체
+                          ),
+                        ),
                       DataColumn(label: Text('구역')),
                       DataColumn(label: Text('바코드')),
                       DataColumn(
                         label: Container(
-                          width: 80, // 텍스트 너비 조정
-                          child: Text('태백규격(cm)', overflow: TextOverflow.ellipsis), // 오버플로우 발생 시 '...'로 대체
+                          width: 120, // 텍스트 너비 조정
+                          child: Text('태백규격(cm)', overflow: TextOverflow.ellipsis, maxLines: 2,), // 오버플로우 발생 시 '...'로 대체
                         ),
                       ),
                       DataColumn(
