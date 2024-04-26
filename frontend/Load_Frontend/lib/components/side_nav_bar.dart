@@ -3,7 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class CustomNavigationBar extends StatefulWidget {
-  CustomNavigationBar({Key? key}) : super(key: key);
+  const CustomNavigationBar({super.key});
 
   // final _controller = SidebarXController(selectedIndex: 0, extended: true);
   // final _key = GlobalKey<ScaffoldState>();
@@ -19,15 +19,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     setState(() {
       _selectedIndex = index;
     });
+    // 네비게이션 상태에 따른 화면 전환 등 추가 작업 수행 가능
   }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: <BottomNavigationBarItem>[
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.account_box),
-          label: '배송리스트',
+          label: '배송 리스트',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.fire_truck),
