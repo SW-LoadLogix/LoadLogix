@@ -1,10 +1,10 @@
 /**
- * GoodsResponse
+ * APIResponse
  */	
-public class GoodsResponse {
+public class APIResponse<T> {
 	
 	private String resultCode;
-	private List<GoodsDto> result;
+	private List<T> result;
 	
 	public String getResultCode() {
 		return resultCode;
@@ -14,11 +14,11 @@ public class GoodsResponse {
 		this.resultCode = resultCode;
 	}
 
-	public List<GoodsDto> getResult() {
+	public List<T> getResult() {
 		return result;
 	}
 
-	public void setResult(List<GoodsDto> result) {
+	public void setResult(List<T> result) {
 		this.result = result;
 	}
 	

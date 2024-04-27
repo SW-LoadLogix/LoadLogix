@@ -7069,51 +7069,32 @@ public class BuildingDto {
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
-			<Id>1714207532005</Id>
-			<Name><![CDATA[DBUtil]]></Name>
-			<Text><![CDATA[
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-public class DBUtil {
+			<Id>1714207532015</Id>
+			<Name><![CDATA[APIResponse]]></Name>
+			<Text><![CDATA[/**
+ * APIResponse
+ */	
+public class APIResponse<T> {
 	
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/load_test?serverTimezone=UTC";
-	private static final String DB_ID = "ssafy";
-	private static final String DB_PWD = "ssafy";
+	private String resultCode;
+	private List<T> result;
 	
-	private static DBUtil instance = new DBUtil();
-
-	private DBUtil() {
-		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+	public String getResultCode() {
+		return resultCode;
 	}
 
-	public static DBUtil getInstance() {
-		return instance;
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
 	}
-	
 
-	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, DB_ID, DB_PWD);
+	public List<T> getResult() {
+		return result;
+	}
+
+	public void setResult(List<T> result) {
+		this.result = result;
 	}
 	
-	public void close(AutoCloseable... autoCloseables) {
-		for(AutoCloseable ac : autoCloseables) {
-			if(ac != null) {
-				try {
-					ac.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
@@ -7176,115 +7157,6 @@ public class GoodsDto {
 	}
     
 
-}]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1714207532013</Id>
-			<Name><![CDATA[GoodsImpl]]></Name>
-			<Text><![CDATA[import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-
-public class GoodsImpl {
-    
-    static private GoodsImpl instance = new GoodsImpl();
-    private GoodsImpl() {}
-    public static GoodsImpl getGoodsDao() {
-        return instance;
-    }
-
-    DBUtil dbUtil = DBUtil.getInstance();
-    
-    public List<GoodsDto> getGoods() throws SQLException {
-        String sql = "select *\r\n" + 
-                "from goods\r\n";
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        java.sql.ResultSet rs = null; // java.sql.ResultSet을 사용
-        try {
-            List<GoodsDto> list = new ArrayList<GoodsDto>();
-            conn = dbUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-            while(rs.next()) {            
-                int id = rs.getInt("id");
-                int width = rs.getInt("width");
-                int length = rs.getInt("length");
-                int height = rs.getInt("height");
-                int weight = rs.getInt("weight");
-                int userId = rs.getInt("user_Id");
-                int areaId = rs.getInt("area_Id");
-
-                GoodsDto dongCodeDto = new GoodsDto(id,width,length,height,weight,userId,areaId);
-                list.add(dongCodeDto);
-            }
-            return list;
-        } finally {
-            dbUtil.close(conn, pstmt, rs);
-        }
-    }   
-    
-    
-    public int setGoods(int id, double width, int category) throws SQLException {
-        String sql = "INSERT INTO goods_before (agent_id, width, category) VALUES (?, ?, ?)";
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        java.sql.ResultSet rs = null; // java.sql.ResultSet을 사용
-		try {
-			//DB연결
-			conn=dbUtil.getConnection();
-
-			pstmt=conn.prepareStatement(sql);
-
-			pstmt.setInt(1, id);
-			pstmt.setDouble(2, width);
-			pstmt.setInt(3, category);
-
-			int cnt = pstmt.executeUpdate();
-			return cnt;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			dbUtil.close(pstmt,conn);
-		}
-		return 0;
-    }   
-
-}
-]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1714207532015</Id>
-			<Name><![CDATA[APIResponse]]></Name>
-			<Text><![CDATA[/**
- * APIResponse
- */	
-public class APIResponse<T> {
-	
-	private String resultCode;
-	private List<T> result;
-	
-	public String getResultCode() {
-		return resultCode;
-	}
-
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
-
-	public List<T> getResult() {
-		return result;
-	}
-
-	public void setResult(List<T> result) {
-		this.result = result;
-	}
-	
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>

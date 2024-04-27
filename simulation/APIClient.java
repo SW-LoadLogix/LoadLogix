@@ -8,11 +8,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class APIClient {
 
-    private final String SERVER_URL = "http://localhost:8080/api";
+    private final String SERVER_URL = "http://localhost:8080/api/simulation";
+
+    public ArrayList<BuildingDto> getBuildingJuso() throws Exception{
+        String url = SERVER_URL + "";
+        String method = "GET";
+        StringBuffer response = getResponse(url, method);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        APIResponse<BuildingDto> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<BuildingDto>>() {});
+
+        String resultCode = apiResponse.getResultCode();
+        ArrayList<BuildingDto> result = (ArrayList) apiResponse.getResult();
+
+        return result;
+
+    }
 
     public List<GoodsDto> getGoods() throws Exception {
-        String url = SERVER_URL + "/simulation";
-        
+        String url = SERVER_URL + "/goods";
+        String method = "GET";
+        StringBuffer response = getResponse(url, method);
+
+        // JSON을 ApiResponse 객체로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        APIResponse<GoodsDto> apiResponse = objectMapper.readValue(response.toString(), APIResponse.class);
+
+        String resultCode = apiResponse.getResultCode();
+        List<GoodsDto> result = apiResponse.getResult();
+
+        return result;
+    }
+
+    public StringBuffer getResponse(String url, String method) throws Exception{
+
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -35,14 +64,6 @@ public class APIClient {
         // 응답 내용 출력
         //System.out.println("Response: " + response.toString());
 
-        // JSON을 ApiResponse 객체로 변환
-        ObjectMapper objectMapper = new ObjectMapper();
-        GoodsResponse apiResponse = objectMapper.readValue(response.toString(), GoodsResponse.class);
-
-        String resultCode = apiResponse.getResultCode();
-        List<GoodsDto> result = apiResponse.getResult();
-
-
-        return result;
+        return response;
     }
 }
