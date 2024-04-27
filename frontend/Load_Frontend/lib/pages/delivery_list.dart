@@ -12,7 +12,7 @@ class DeliveryListPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Flexible(
+          const Flexible(
             child: MyNav(),
           ),
           Flexible(
