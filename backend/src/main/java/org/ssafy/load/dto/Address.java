@@ -4,7 +4,6 @@ import org.ssafy.load.domain.AddressEntity;
 
 public record Address(
         Long id,
-        Long addressId,
         Long dongCode,
         String sidoName,
         String gugunName,
@@ -17,7 +16,6 @@ public record Address(
 ){
     static public Address of(
             Long id,
-            Long addressId,
             Long dongCode,
             String sidoName,
             String gugunName,
@@ -30,7 +28,6 @@ public record Address(
     ){
         return new Address(
                 id,
-                addressId,
                 dongCode,
                 sidoName,
                 gugunName,
@@ -46,7 +43,6 @@ public record Address(
     static public Address from(AddressEntity entity){
         return Address.of(
                 entity.getId(),
-                entity.getAddressId(),
                 entity.getDongCode(),
                 entity.getSidoName(),
                 entity.getGugunName(),

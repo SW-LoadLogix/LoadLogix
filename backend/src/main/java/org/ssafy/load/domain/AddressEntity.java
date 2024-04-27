@@ -1,12 +1,10 @@
 package org.ssafy.load.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.ssafy.load.dto.Address;
 
 @Entity
 @Table(name = "address")
@@ -18,8 +16,6 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="address_id")
-    private Long addressId;  // 도로명 주소 관리 번호
     @Column(name="dong_code")
     private Long dongCode;  // 법정동코드
     @Column(name="sido_name")
@@ -41,7 +37,6 @@ public class AddressEntity {
 
     static public AddressEntity of(
             Long id,
-            Long addressId,
             Long dongCode,
             String sidoName,
             String gugunName,
@@ -54,7 +49,6 @@ public class AddressEntity {
     ){
         return new AddressEntity(
                 id,
-                addressId,
                 dongCode,
                 sidoName,
                 gugunName,
