@@ -372,7 +372,20 @@ class __ViewState extends State<_View> with SingleTickerProviderStateMixin {
 
   Widget get _webView => Stack(
         children: <Widget>[
-          Container(color: loginTheme.backgroundColor),
+          Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                begin: Alignment.topCenter + Alignment.bottomCenter/ 3.0, // 그라디언트 시작 위치
+                end: Alignment.bottomCenter, // 그라디언트 종료 위치
+                colors: [
+                loginTheme.backgroundColor!, // 상단 색상
+                Color.lerp(loginTheme.backgroundColor!, Colors.black, 0.3)!, // 하단 색상
+                ],
+                stops: [0.0, 1.0], // 색상의 위치 조절
+                ),
+              ),
+              // color: loginTheme.backgroundColor
+          ),
           _animatedWebWelcome,
           _WebForm(
             animationController: animationController,
@@ -454,7 +467,16 @@ class __ViewState extends State<_View> with SingleTickerProviderStateMixin {
 
   Widget get _webWelcomeChild => Container(
         decoration: BoxDecoration(
-          color: loginTheme.backgroundColor,
+          //color: loginTheme.backgroundColor,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter + Alignment.bottomCenter / 3.0, // 그라디언트 시작 위치
+            end: Alignment.bottomCenter, // 그라디언트 종료 위치
+            colors: [
+              loginTheme.backgroundColor!, // 상단 색상
+              Color.lerp(loginTheme.backgroundColor!, Colors.black, 0.3)!, // 하단 색상
+            ],
+            stops: [0.0, 1.0], // 색상의 위치 조절
+          ),
           image: widget.backgroundImage == null
               ? null
               : DecorationImage(
