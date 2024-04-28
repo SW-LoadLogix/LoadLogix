@@ -5,6 +5,8 @@ import 'package:load_frontend/animated_login/src/utils/validators.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
+import '../../animated_login.dart';
+
 /// It is called on auth mode changes,
 /// triggered by [Auth.switchAuth] method.
 typedef AuthModeChangeCallback = void Function(AuthMode authMode);
@@ -111,7 +113,23 @@ class Auth extends ChangeNotifier {
   /// Switches the authentication mode and notify the listeners.
   AuthMode switchAuth() {
     notifySetMode(isLogin ? AuthMode.signup : AuthMode.login);
+    if (isLogin) {
+      topLeftRadius = 600;
+      bottomLeftRadius = 10;
+      topRightRadius = 0;
+      bottomRightRadius = 0;
+      }
+    else{
+      topLeftRadius = 0;
+      bottomLeftRadius = 0;
+      topRightRadius = 600;
+      bottomRightRadius = 10;
+
+    }
+
     onAuthModeChange?.call(mode);
+
+
     return mode;
   }
 

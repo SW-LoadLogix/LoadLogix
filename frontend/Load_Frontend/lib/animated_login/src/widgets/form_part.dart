@@ -1,5 +1,10 @@
 part of '../../animated_login.dart';
 
+double topLeftRadius = 600.0;
+double bottomLeftRadius = 10.0;
+double topRightRadius = 0.0;
+double bottomRightRadius = 0.0;
+
 class _WebForm extends StatefulWidget {
   /// Form part of the login screen.
   const _WebForm({
@@ -83,23 +88,36 @@ class __WebFormState extends State<_WebForm> {
   Widget get _webView => AnimatedBuilder(
         animation: transitionAnimation,
         child: _webViewChild,
-        builder: (BuildContext context, Widget? child) => Transform.translate(
-          offset: Offset(dynamicSize.width * transitionAnimation.value, 0),
-          child: child,
-        ),
+        builder: (BuildContext context, Widget? child) {
+          return Transform.translate(
+            offset: Offset(dynamicSize.width * transitionAnimation.value, 0),
+            child: child,
+          );
+        },
       );
 
-  Widget get _webViewChild => Container(
+  Widget get _webViewChild => AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
         width: dynamicSize.width * context.read<LoginTheme>().formWidthRatio,
         height: dynamicSize.height * 100,
-        color: Colors.white,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(topLeftRadius),
+            bottomLeft: Radius.circular(bottomLeftRadius),
+            topRight: Radius.circular(topRightRadius),
+            bottomRight: Radius.circular(bottomRightRadius)
+          ),
+        ),
         child: AnimatedBuilder(
           animation: offsetAnimation,
           child: _formColumn,
-          builder: (BuildContext context, Widget? child) => Transform.translate(
+          builder: (BuildContext context, Widget? child){
+            return Transform.translate(
             offset: Offset(dynamicSize.width * offsetAnimation.value, 0),
-            child: child,
-          ),
+            child: child);
+          },
         ),
       );
 

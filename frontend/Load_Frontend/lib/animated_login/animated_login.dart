@@ -2,6 +2,8 @@ library animated_login;
 
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:load_frontend/animated_login/src/src_shelf.dart';
 //import 'package:animated_login/src/src_shelf.dart';
 import 'package:flutter/foundation.dart';
@@ -343,7 +345,7 @@ class __ViewState extends State<_View> with SingleTickerProviderStateMixin {
     animationController = AnimationController(
       vsync: this,
       duration: context.read<LoginTheme>().animationDuration ??
-          const Duration(milliseconds: 600),
+          const Duration(milliseconds: 1000),
     );
   }
 
@@ -584,6 +586,8 @@ class __ViewState extends State<_View> with SingleTickerProviderStateMixin {
     animationController.isCompleted
         ? animationController.reverse()
         : animationController.forward();
+
+
     Provider.of<Auth>(context, listen: false).switchAuth();
   }
 
