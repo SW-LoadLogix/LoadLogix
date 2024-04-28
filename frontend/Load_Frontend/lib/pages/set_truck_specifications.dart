@@ -80,143 +80,278 @@ class SetTruckSpecificationPage extends StatelessWidget {
                 ]
             ),
 
-            Center(
-              child: Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      Material(
-                        color: Color(0xFFCEEDFF),
-                        elevation: 13,
-                        borderRadius: BorderRadius.circular(34),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: InkWell(
-                          splashColor: Colors.black26,
-                          onTap: () {},
-                          child: Column(
-                            // mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Ink.image(
-                                  image: AssetImage('assets/images/truck1.png'),
-                                  height: 220,
-                                  width: 350,
-                                  fit: BoxFit.cover
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                '1.4톤 탑차',
-                                style: textStyle2,
-                              ),
-
-                              SizedBox(height: 6),
-                            ],
-                          )
-                        )
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: 300,
-                        height: 100,// 입력 필드의 너비 지정
-                        child: TextField(
-                          decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: '차량 내부 가로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
+                  Material(
+                    color: Color(0xFFCEEDFF),
+                      elevation: 13,
+                      borderRadius: BorderRadius.circular(34),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: InkWell(
+                        splashColor: Colors.black26,
+                        onTap: () {},
+                        child: Column(
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Ink.image(
+                            image: AssetImage('assets/images/truck1.png'),
+                            height: 220,
+                            width: 350,
+                            fit: BoxFit.cover
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 40),
+                          SizedBox(height: 6),
+                          Text(
+                            '1.4톤 탑차',
+                            style: textStyle2,
+                          ),
 
-                  Column(
-                    children: [
-                      Material(
-                        color: Color(0xFFCEEDFF),
-                        elevation: 13,
-                        borderRadius: BorderRadius.circular(35),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: InkWell(
-                            splashColor: Colors.black26,
-                            onTap: () {},
-                            child: Column(
-                              // mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Ink.image(
-                                    image: AssetImage('assets/images/truck2.png'),
-                                    height: 220,
-                                    width: 350,
-                                    fit: BoxFit.cover
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  '2.5톤 탑차',
-                                  style: textStyle2,
-                                ),
-                                SizedBox(height: 6),
-                              ],
-                            )
+                          SizedBox(height: 6),
+                        ],
                         )
+                      )
                     ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: 300,
-                        height: 100,// 입력 필드의 너비 지정
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: '차량 내부 세로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
-                          ),
-                        ),
+                    SizedBox(width: 40),
+                    Material(
+                      color: Color(0xFFCEEDFF),
+                      elevation: 13,
+                      borderRadius: BorderRadius.circular(35),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: InkWell(
+                        splashColor: Colors.black26,
+                        onTap: () {},
+                        child: Column(
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Ink.image(
+                            image: AssetImage('assets/images/truck2.png'),
+                            height: 220,
+                            width: 350,
+                            fit: BoxFit.cover
+                            ),
+                            SizedBox(height: 6),
+                            Text(
+                              '2.5톤 탑차',
+                              style: textStyle2,
+                            ),
+                            SizedBox(height: 6),
+                          ],
+                        )
+                      )
+                    ),
+                    SizedBox(width: 40),
+                    Material(
+                      color: Color(0xFFCEEDFF),
+                      elevation: 13,
+                      borderRadius: BorderRadius.circular(32),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: InkWell(
+                        splashColor: Colors.black26,
+                        onTap: () {},
+                        child: Column(
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Ink.image(
+                              image: AssetImage('assets/images/truck3.png'),
+                              height: 220,
+                              width: 350,
+                              fit: BoxFit.cover
+                            ),
+                            SizedBox(height: 6),
+                            Text(
+                              '3.5톤 탑차',
+                              style: textStyle2,
+                            ),
+                            SizedBox(height: 6),
+                          ],
+                        )
+                      )
+                    ),
+                  ]
+                ),
+                SizedBox(height: 100),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                  SizedBox(
+                    width: 300,
+                    height: 100,// 입력 필드의 너비 지정
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '차량 내부 가로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
                       ),
-                    ],
+                    ),
                   ),
                   SizedBox(width: 40),
-                  Column(
-                    children: [
-                      Material(
-                          color: Color(0xFFCEEDFF),
-                          elevation: 13,
-                          borderRadius: BorderRadius.circular(32),
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: InkWell(
-                              splashColor: Colors.black26,
-                              onTap: () {},
-                              child: Column(
-                                // mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Ink.image(
-                                      image: AssetImage('assets/images/truck3.png'),
-                                      height: 220,
-                                      width: 350,
-                                      fit: BoxFit.cover
-                                  ),
-                                  SizedBox(height: 6),
-                                  Text(
-                                    '3.5톤 탑차',
-                                    style: textStyle2,
-                                  ),
-                                  SizedBox(height: 6),
-                                ],
-                              )
-                          )
+                  SizedBox(
+                    width: 300,
+                    height: 100,// 입력 필드의 너비 지정
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '차량 내부 세로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
                       ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: 300,
-                        height: 100,// 입력 필드의 너비 지정
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: '차량 높이를 입력하세요', // 예시로 표시할 힌트 텍스트
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                  SizedBox(width: 40),
+                  SizedBox(
+                    width: 300,
+                    height: 100,// 입력 필드의 너비 지정
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: '차량 높이를 입력하세요', // 예시로 표시할 힌트 텍스트
+                      ),
+                    ),
+                  ),
+
                 ],
               )
-            ),
+
+
+
+              ]
+              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         Material(
+              //           color: Color(0xFFCEEDFF),
+              //           elevation: 13,
+              //           borderRadius: BorderRadius.circular(34),
+              //           clipBehavior: Clip.antiAliasWithSaveLayer,
+              //           child: InkWell(
+              //             splashColor: Colors.black26,
+              //             onTap: () {},
+              //             child: Column(
+              //               // mainAxisSize: MainAxisSize.min,
+              //               children: [
+              //                 Ink.image(
+              //                     image: AssetImage('assets/images/truck1.png'),
+              //                     height: 220,
+              //                     width: 350,
+              //                     fit: BoxFit.cover
+              //                 ),
+              //                 SizedBox(height: 6),
+              //                 Text(
+              //                   '1.4톤 탑차',
+              //                   style: textStyle2,
+              //                 ),
+              //
+              //                 SizedBox(height: 6),
+              //               ],
+              //             )
+              //           )
+              //         ),
+              //         SizedBox(height: 20),
+              //         SizedBox(
+              //           width: 300,
+              //           height: 100,// 입력 필드의 너비 지정
+              //           child: TextField(
+              //             decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: '차량 내부 가로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(width: 40),
+              //
+              //     Column(
+              //       children: [
+              //         Material(
+              //           color: Color(0xFFCEEDFF),
+              //           elevation: 13,
+              //           borderRadius: BorderRadius.circular(35),
+              //           clipBehavior: Clip.antiAliasWithSaveLayer,
+              //           child: InkWell(
+              //               splashColor: Colors.black26,
+              //               onTap: () {},
+              //               child: Column(
+              //                 // mainAxisSize: MainAxisSize.min,
+              //                 children: [
+              //                   Ink.image(
+              //                       image: AssetImage('assets/images/truck2.png'),
+              //                       height: 220,
+              //                       width: 350,
+              //                       fit: BoxFit.cover
+              //                   ),
+              //                   SizedBox(height: 6),
+              //                   Text(
+              //                     '2.5톤 탑차',
+              //                     style: textStyle2,
+              //                   ),
+              //                   SizedBox(height: 6),
+              //                 ],
+              //               )
+              //           )
+              //       ),
+              //         SizedBox(height: 20),
+              //         SizedBox(
+              //           width: 300,
+              //           height: 100,// 입력 필드의 너비 지정
+              //           child: TextField(
+              //             decoration: InputDecoration(
+              //               border: OutlineInputBorder(),
+              //               hintText: '차량 내부 세로 길이를 입력하세요', // 예시로 표시할 힌트 텍스트
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(width: 40),
+              //     Column(
+              //       children: [
+              //         Material(
+              //             color: Color(0xFFCEEDFF),
+              //             elevation: 13,
+              //             borderRadius: BorderRadius.circular(32),
+              //             clipBehavior: Clip.antiAliasWithSaveLayer,
+              //             child: InkWell(
+              //                 splashColor: Colors.black26,
+              //                 onTap: () {},
+              //                 child: Column(
+              //                   // mainAxisSize: MainAxisSize.min,
+              //                   children: [
+              //                     Ink.image(
+              //                         image: AssetImage('assets/images/truck3.png'),
+              //                         height: 220,
+              //                         width: 350,
+              //                         fit: BoxFit.cover
+              //                     ),
+              //                     SizedBox(height: 6),
+              //                     Text(
+              //                       '3.5톤 탑차',
+              //                       style: textStyle2,
+              //                     ),
+              //                     SizedBox(height: 6),
+              //                   ],
+              //                 )
+              //             )
+              //         ),
+              //         SizedBox(height: 20),
+              //         SizedBox(
+              //           width: 300,
+              //           height: 100,// 입력 필드의 너비 지정
+              //           child: TextField(
+              //             decoration: InputDecoration(
+              //               border: OutlineInputBorder(),
+              //               hintText: '차량 높이를 입력하세요', // 예시로 표시할 힌트 텍스트
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // )
+            // ),
           ]
           )
         ],
