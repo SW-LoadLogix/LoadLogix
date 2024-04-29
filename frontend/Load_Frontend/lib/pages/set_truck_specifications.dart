@@ -312,6 +312,26 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                       ),
                     ),
                   ),
+                  SizedBox(width: 40),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 43),
+                    child: ElevatedButton(
+                      onPressed: () {print('ElevatedButton이 클릭되었습니다!');},
+                      child: Text('규격 수정하기'), // ElevatedButton 위에 표시될 텍스트
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(25), // 버튼의 안쪽 여백을 설정합니다.
+                        shape: RoundedRectangleBorder( // 버튼의 모양을 설정합니다.
+                          borderRadius: BorderRadius.circular(2), // 버튼의 모서리를 둥글게 만듭니다.
+                        ),
+                        elevation: 2, // 버튼의 그림자 높이를 설정합니다.
+                        textStyle: TextStyle( // 버튼 텍스트의 스타일을 지정합니다.
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        // backgroundColor: Color(0xFFCEEDFF),
+                      ),
+                    ),
+                  )
 
                   ],
               )
