@@ -186,7 +186,7 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                     ),
                   ]
                 ),
-                SizedBox(height: 100),
+                SizedBox(height: 80),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -317,24 +317,60 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                     margin: EdgeInsets.only(bottom: 43),
                     child: ElevatedButton(
                       onPressed: () {print('ElevatedButton이 클릭되었습니다!');},
-                      child: Text('규격 수정하기'), // ElevatedButton 위에 표시될 텍스트
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25), // 버튼의 안쪽 여백을 설정합니다.
-                        shape: RoundedRectangleBorder( // 버튼의 모양을 설정합니다.
-                          borderRadius: BorderRadius.circular(2), // 버튼의 모서리를 둥글게 만듭니다.
+                        padding: EdgeInsets.all(25),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        elevation: 2, // 버튼의 그림자 높이를 설정합니다.
-                        textStyle: TextStyle( // 버튼 텍스트의 스타일을 지정합니다.
+                        elevation: 2,
+                        backgroundColor: Color(0xFF6ECBFF),
+                        ),
+                      child: Text('규격 수정하기',
+                        style: TextStyle(
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                        // backgroundColor: Color(0xFFCEEDFF),
                       ),
                     ),
                   )
-
                   ],
-              )
+                ),
+                SizedBox(height: 20),
+                Column( // 수정된 부분
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(width: 890),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 40),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            print('ElevatedButton이 클릭되었습니다!');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(30),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            elevation: 2,
+                            backgroundColor: Color(0xFFB9CEFF),
+                          ),
+                          child: Text(
+                            '전체 시뮬레이션 확인하기',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ],
+                ),
               ]
             )
           ]
