@@ -14,15 +14,17 @@ import 'package:sidebarx/sidebarx.dart';
 import 'package:load_frontend/components/side_nav_bar.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../components/3d_overlay_widget.dart';
+
 /* 메뉴 value */
 double heightFloorValuesLow = 0.0;
 double heightFloorValuesHigh = 100.0;
 double transparencyValue = 100.0;
 double boxStep = 5.0;
 
-
 class BoxSimulation3dPage extends StatefulWidget {
   final String? data;
+
   BoxSimulation3dPage({super.key, this.data});
 
   @override
@@ -31,148 +33,163 @@ class BoxSimulation3dPage extends StatefulWidget {
 
 class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
   SfRangeValues _heightFloorValues = SfRangeValues(0, 100);
+  late OverlayWidget overlayWidget;
+  bool isOverlayVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    overlayWidget = OverlayWidget(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery
+        .of(context)
+        .size;
+
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        height: screenSize.height,
+        width: screenSize.width,
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: screenSize.height),
-          child: IntrinsicHeight(
-            child: Column(
-              children: <Widget>[
-                ListTile(title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      fit: FlexFit.tight,
-                      child: Container(
-                        height : screenSize.height - 48, // 높이 조정
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Card(
+            constraints: BoxConstraints(minHeight: screenSize.height),
+            child: IntrinsicHeight(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                      title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
+                  SafeArea(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Container(
+                            height: screenSize.height - 48, // 높이 조정
                             child: Column(
-                              children: [
-                                Container(
-                                  height: 30,
-                                  child:TextField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'box floor height',
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Card(
+                                  child: Column(children: [
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      height: 20,
+                                      child: Text('box floor height'),
                                     ),
-                                  ),
-                                ),
-                                SfRangeSlider(
-                                  min: 0.0,
-                                  max: 100.0,
-                                  values: _heightFloorValues,
-                                  interval: 20,
-                                  showTicks: true,
-                                  showLabels: true,
-                                  enableTooltip: true,
-                                  minorTicksPerInterval: 1,
-                                  onChanged: (SfRangeValues values){
-                                    setState(() {
-                                      _heightFloorValues = values;
-                                      heightFloorValuesLow = _heightFloorValues.start;
-                                      heightFloorValuesHigh = _heightFloorValues.end;
-                                    });
-                                  },
-                                ),
-                                Container(height: 10),
-                                Container(
-                                  height: 30,
-                                  child:TextField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Transparency',
+                                    SfRangeSlider(
+                                      min: 0.0,
+                                      max: 100.0,
+                                      values: _heightFloorValues,
+                                      interval: 20,
+                                      showTicks: true,
+                                      showLabels: true,
+                                      enableTooltip: true,
+                                      minorTicksPerInterval: 1,
+                                      onChanged: (SfRangeValues values) {
+                                        setState(() {
+                                          _heightFloorValues = values;
+                                          heightFloorValuesLow =
+                                              _heightFloorValues.start;
+                                          heightFloorValuesHigh =
+                                              _heightFloorValues.end;
+                                        });
+                                      },
                                     ),
-                                  ),
-                                ),
-                                SfSlider(
-                                  min: 0.0,
-                                  max: 100.0,
-                                  value: transparencyValue,
-                                  interval: 20,
-                                  showTicks: true,
-                                  showLabels: true,
-                                  enableTooltip: true,
-                                  minorTicksPerInterval: 1,
-                                  onChanged: (dynamic newValue) {
-                                    setState(() {
-                                      transparencyValue = newValue;
-                                    });
-                                  },
-                                ),
-                                Container(height: 10),
-                                Container(
-                                  height: 30,
-                                  child:TextField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Smulation Speed',
+                                    Container(height: 10),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      height: 20,
+                                      child: Text('Transparency'),
                                     ),
-                                  ),
+                                    SfSlider(
+                                      min: 0.0,
+                                      max: 100.0,
+                                      value: transparencyValue,
+                                      interval: 20,
+                                      showTicks: true,
+                                      showLabels: true,
+                                      enableTooltip: true,
+                                      minorTicksPerInterval: 1,
+                                      onChanged: (dynamic newValue) {
+                                        setState(() {
+                                          transparencyValue = newValue;
+                                        });
+                                      },
+                                    ),
+                                    Container(height: 10),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      height: 20,
+                                      child: Text(
+                                          'Smulation Speed'
+                                      ),
+                                    ),
+                                    SfSlider(
+                                      min: 0.1,
+                                      max: 10.1,
+                                      value: boxStep,
+                                      interval: 2,
+                                      showTicks: true,
+                                      showLabels: true,
+                                      enableTooltip: true,
+                                      minorTicksPerInterval: 1,
+                                      onChanged: (dynamic newValue) {
+                                        setState(() {
+                                          boxStep = newValue;
+                                        });
+                                      },
+                                    ),
+                                    Container(height: 10),
+                                  ]),
                                 ),
-                                SfSlider(
-                                  min: 0.1,
-                                  max: 10.1,
-                                  value: boxStep,
-                                  interval: 2,
-                                  showTicks: true,
-                                  showLabels: true,
-                                  enableTooltip: true,
-                                  minorTicksPerInterval: 1,
-                                  onChanged: (dynamic newValue) {
-                                    setState(() {
-                                      boxStep = newValue;
-                                    });
-                                  },
-                                ),
-                                Container(height: 10),
-                              ]),
+                                Card(
+                                    child: Column(
+                                      children: [
+                                        CheckboxListTile(
+                                          title: Text('A구역 적재 시뮬레이션'),
+                                          value: true,
+                                          onChanged: (bool? value) {
+                                            setState(() {});
+                                          },
+                                        ),
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            if (isOverlayVisible == false) {
+                                              overlayWidget.show();
+                                            }
+                                            else {
+                                              overlayWidget.remove();
+                                            }
+                                            isOverlayVisible = !isOverlayVisible;
+                                          },
+                                          child: Text('배송 상품 자세히 보기'),
+                                        ),
+                                        Container(height: 10),
+                                      ],
+                                    ))
+                              ],
                             ),
-                            Card(
-                              child: Column(
-                                children: [
-                                  CheckboxListTile(
-                                    title: Text('A구역 적재 시뮬레이션'),
-                                    value: true,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-
-                                      });
-                                    },
-                                  )
-                                ],
-                              )
-                            )
-
-
-                          ],
+                          ),
                         ),
-                      ),
+                        Flexible(
+                          flex: 5,
+                          fit: FlexFit.tight,
+                          child: Container(
+                            height: screenSize.height - 48, // 높이 조정
+                            child: FallingBoxSimulate(),
+                          ),
+                        ),
+                      ],
                     ),
-                    Flexible(
-                      flex: 5,
-                      fit: FlexFit.tight,
-                      child: Container(
-                        height: screenSize.height - 48, // 높이 조정
-                        child: FallingBoxSimulate(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+                  )
+                ],
+              ),
+            )),
       ),
     );
-
 
     // return Scaffold(
     //   body: Column(
@@ -318,7 +335,6 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
         child: FallingBoxSimulate(),
       ),*/
 
-
 class Position {
   final double x;
   final double y;
@@ -407,7 +423,12 @@ class FallingBox {
 
   bool isDone = false;
 
-  FallingBox({this.currPosition, this.startPosition, this.endPosition, this.boxSize, this.boxColor = "green", this.isTransparent = false});
+  FallingBox({this.currPosition,
+    this.startPosition,
+    this.endPosition,
+    this.boxSize,
+    this.boxColor = "green",
+    this.isTransparent = false});
 
   // 객체를 초기 위치로 설정
   void initializePosition() {
@@ -417,24 +438,22 @@ class FallingBox {
 
   // 객체 업데이트 함수, 끝 위치까지 이동
   void update() {
-    if (isDone) return;  // 이미 완료된 객체는 업데이트 하지 않음
+    if (isDone) return; // 이미 완료된 객체는 업데이트 하지 않음
 
-    double step = boxStep;  // 이동 단위
+    double step = boxStep; // 이동 단위
 
-    if (currPosition != null && endPosition!= null){
+    if (currPosition != null && endPosition != null) {
       if (currPosition!.x > endPosition!.x) {
         currPosition!.x -= step;
         if (currPosition!.x <= endPosition!.x) {
           currPosition!.x = endPosition!.x;
-          isDone = true;  // 끝 위치 도달 시 완료 처리
+          isDone = true; // 끝 위치 도달 시 완료 처리
         }
       } else {
         currPosition!.x = endPosition!.x;
-        isDone = true;  // 끝 위치 도달 시 완료 처리
+        isDone = true; // 끝 위치 도달 시 완료 처리
       }
     }
-
-
 
     // if (currPosition != null && endPosition!= null){
     //   if (currPosition!.y > endPosition!.y) {
@@ -452,14 +471,14 @@ class FallingBox {
 }
 
 class FallingBoxSimulate extends StatefulWidget {
-
   const FallingBoxSimulate({Key? key}) : super(key: key);
 
   @override
   State<FallingBoxSimulate> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixin,  WidgetsBindingObserver{
+class _MyAppState extends State<FallingBoxSimulate>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late FlutterGlPlugin three3dRender;
   three.WebGLRenderer? renderer;
   Ticker? _ticker;
@@ -484,24 +503,24 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
 
   dynamic sourceTexture;
 
-  final GlobalKey<three_jsm.DomLikeListenableState> _globalKey = GlobalKey<three_jsm.DomLikeListenableState>();
+  final GlobalKey<three_jsm.DomLikeListenableState> _globalKey =
+  GlobalKey<three_jsm.DomLikeListenableState>();
 
   late three_jsm.OrbitControls controls;
 
-  List<FallingBox> boxes = [];  // 여러 FallingBox 관리
+  List<FallingBox> boxes = []; // 여러 FallingBox 관리
 
   late BoxesContainer boxesContainer;
 
   int gridSize = 6;
   double spacing = 1.0;
-  int currentBoxIndex = 0;  // 현재 애니메이션 중인 상자 인덱스
+  int currentBoxIndex = 0; // 현재 애니메이션 중인 상자 인덱스
 
   bool kIsWeb = const bool.fromEnvironment('dart.library.js_util');
 
   bool transparentFlag = false;
 
   bool isTestingDebug = false;
-
 
   @override
   void initState() {
@@ -524,7 +543,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     final mqd = MediaQuery.of(context);
     screenSize = mqd.size;
     width = screenSize!.width;
-    height = screenSize!.height - 60;  // 필요한 경우 높이 조정
+    height = screenSize!.height - 60; // 필요한 경우 높이 조정
     updateRendererAndViewport();
   }
 
@@ -533,12 +552,9 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       renderer!.setSize(screenSize!.width, screenSize!.height);
       camera.aspect = screenSize!.width / screenSize!.height;
       camera.updateProjectionMatrix();
-      render();  // 화면 갱신
+      render(); // 화면 갱신
     }
   }
-
-
-
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -621,7 +637,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     );
   }
 
-  void reStart(){
+  void reStart() {
     print("reStart ............. ");
     currentBoxIndex = 0;
     for (int i = 0; i < boxes.length; i++) {
@@ -631,9 +647,10 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     }
   }
 
-  void changeRandomBoxColor(){
+  void changeRandomBoxColor() {
     Random random = Random();
-    List<int> randomIndices = List.generate(10, (_) => random.nextInt(boxes.length));
+    List<int> randomIndices =
+    List.generate(10, (_) => random.nextInt(boxes.length));
 
     for (int index in randomIndices) {
       print("index : $index");
@@ -642,16 +659,14 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     }
   }
 
-
   void makeTransparent() {
     print("makeTransparent ............. ");
-    if(transparentFlag == false){
-      for(int i = 0; i < boxes.length; i++) {
+    if (transparentFlag == false) {
+      for (int i = 0; i < boxes.length; i++) {
         boxes[i].isTransparent = true;
       }
       transparentFlag = true;
-    }
-    else {
+    } else {
       for (int i = 0; i < boxes.length; i++) {
         boxes[i].isTransparent = false;
       }
@@ -667,8 +682,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
 
     for (var box in boxes) {
       double boxHeight = box.currPosition!.y;
-      if (boxHeight > maxHeight)
-        maxHeight = boxHeight + box.boxSize!.y;
+      if (boxHeight > maxHeight) maxHeight = boxHeight + box.boxSize!.y;
       if (boxHeight < minHeight) minHeight = boxHeight;
     }
     return {'minHeight': minHeight, 'maxHeight': maxHeight};
@@ -679,15 +693,16 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     double totalMinHeight = heightExtremes['minHeight']!;
     double totalMaxHeight = heightExtremes['maxHeight']!;
 
-    double minHeight = totalMinHeight + (totalMaxHeight - totalMinHeight) * (heightFloorValuesLow / 100);
-    double maxHeight = totalMinHeight + (totalMaxHeight - totalMinHeight) * (heightFloorValuesHigh / 100);
+    double minHeight = totalMinHeight +
+        (totalMaxHeight - totalMinHeight) * (heightFloorValuesLow / 100);
+    double maxHeight = totalMinHeight +
+        (totalMaxHeight - totalMinHeight) * (heightFloorValuesHigh / 100);
 
     for (var box in boxes) {
       double boxHeight = box.currPosition!.y;
       box.isVisible = (boxHeight >= minHeight && boxHeight <= maxHeight);
     }
   }
-
 
   Widget _build(BuildContext context) {
     return Column(
@@ -704,7 +719,8 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
                       child: Builder(builder: (BuildContext context) {
                         if (kIsWeb) {
                           return three3dRender.isInitialized
-                              ? HtmlElementView(viewType: three3dRender.textureId!.toString())
+                              ? HtmlElementView(
+                              viewType: three3dRender.textureId!.toString())
                               : Container();
                         } else {
                           return three3dRender.isInitialized
@@ -725,7 +741,9 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
   render() {
     frameCount++;
     DateTime currentTime = DateTime.now();
-    final difference = currentTime.difference(lastUpdateTime).inMilliseconds;
+    final difference = currentTime
+        .difference(lastUpdateTime)
+        .inMilliseconds;
 
     if (difference >= 1000) {
       double fps = frameCount / (difference / 1000);
@@ -736,11 +754,9 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
 
     final gl = three3dRender.gl;
     renderer!.render(scene, camera);
-    if (verbose) {
-    }
+    if (verbose) {}
 
     gl.flush();
-
 
     if (!kIsWeb) {
       three3dRender.updateTexture(sourceTexture);
@@ -762,9 +778,13 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     //renderer!.shadowMap.enabled = false;
 
     if (!kIsWeb) {
-      var pars = three.WebGLRenderTargetOptions(
-          {"minFilter": three.LinearFilter, "magFilter": three.LinearFilter, "format": three.RGBAFormat});
-      renderTarget = three.WebGLRenderTarget((width * dpr).toInt(), (height * dpr).toInt(), pars);
+      var pars = three.WebGLRenderTargetOptions({
+        "minFilter": three.LinearFilter,
+        "magFilter": three.LinearFilter,
+        "format": three.RGBAFormat
+      });
+      renderTarget = three.WebGLRenderTarget(
+          (width * dpr).toInt(), (height * dpr).toInt(), pars);
       renderTarget.samples = 4;
       renderer!.setRenderTarget(renderTarget);
       sourceTexture = renderer!.getRenderTargetGLTexture(renderTarget);
@@ -789,7 +809,8 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     // controls.listenToKeyEvents( window );
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 
-    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+    controls.enableDamping =
+    true; // an animation loop is required when either damping or auto-rotation are enabled
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
     controls.minDistance = 10;
@@ -813,28 +834,20 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
 
     makeInstanced(geometry);
 
-
-
-
-
-
-    _ticker = createTicker(
-        _onTick
-    )..start();
+    _ticker = createTicker(_onTick)
+      ..start();
     //animate();
   }
 
-  _onTick(Duration elapsed){
+  _onTick(Duration elapsed) {
     animate();
   }
-
 
   late three.MeshPhongMaterial material;
   late three.MeshPhongMaterial edgeMaterial;
   late three.MeshPhongMaterial transparentEdgeMaterial;
   late three.MeshPhongMaterial greenMaterial;
   late three.MeshPhongMaterial redMaterial;
-
 
   late three.InstancedMesh mesh;
   late three.InstancedMesh edgeMesh;
@@ -849,27 +862,36 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
   makeInstanced(geometry) {
     matrix = three.Matrix4();
     //material = three.MeshNormalMaterial();
-    material = three.MeshPhongMaterial  ({
-      "color": 0x00ff00,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+    material = three.MeshPhongMaterial({
+      "color": 0x00ff00,
+      // 색상: 녹색
+      "flatShading": true,
+      // 플랫 셰이딩 활성화
+      "transparent": true,
+      // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,
+      // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
     });
 
     edgeMaterial = three.MeshPhongMaterial({
-      "color": 0xFFFFFF,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
-      "wireframe": true,      // 와이어프레임 모드 활성화
+      "color": 0xFFFFFF,
+      // 색상: 녹색
+      "flatShading": true,
+      // 플랫 셰이딩 활성화
+      "transparent": true,
+      // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,
+      // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true,
+      // 와이어프레임 모드 활성화
     });
 
     transparentEdgeMaterial = three.MeshPhongMaterial({
-      "color": 0xFFFFFF,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 0.1,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
-      "wireframe": true,      // 와이어프레임 모드 활성화
+      "color": 0xFFFFFF, // 색상: 녹색
+      "flatShading": true, // 플랫 셰이딩 활성화
+      "transparent": true, // 투명화 가능하도록 설정
+      "opacity": 0.1, // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true, // 와이어프레임 모드 활성화
     });
 
     greenMaterial = three.MeshPhongMaterial({
@@ -886,17 +908,17 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       "opacity": 1.0 * transparencyValue / 100.0,
     });
 
-
-    int size = 6;  // 큐브의 각 차원당 크기
-    double spacing = 1.0;  // 박스 간 간격
+    int size = 6; // 큐브의 각 차원당 크기
+    double spacing = 1.0; // 박스 간 간격
     int i = 0;
 
-    mesh = three.InstancedMesh(geometry, material, size*size*size);
-    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, size*size*size);
-    greenMesh = three.InstancedMesh(geometry, greenMaterial, size*size*size);
-    redMesh = three.InstancedMesh(geometry, redMaterial, size*size*size);
-    transparentMesh = three.InstancedMesh(geometry, transparentEdgeMaterial, size*size*size);
-
+    mesh = three.InstancedMesh(geometry, material, size * size * size);
+    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, size * size * size);
+    greenMesh =
+        three.InstancedMesh(geometry, greenMaterial, size * size * size);
+    redMesh = three.InstancedMesh(geometry, redMaterial, size * size * size);
+    transparentMesh = three.InstancedMesh(
+        geometry, transparentEdgeMaterial, size * size * size);
 
     if (!isTestingDebug) {
       for (int x = 0; x < size; x++) {
@@ -927,11 +949,9 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
         }
       }
       //size = 2;
-    }
-    else {
-      for(int i = 0; i < boxesContainer.boxes.length; i++){
+    } else {
+      for (int i = 0; i < boxesContainer.boxes.length; i++) {
         var box = boxesContainer.boxes[i];
-
 
         var posX = 25 + ((box.endPosition.x) * spacing);
         var posY = ((box.endPosition.y) * spacing);
@@ -954,42 +974,50 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
 
     print("box length : ${boxes.length}");
 
-
     scene.add(mesh);
     scene.add(edgeMesh);
     scene.add(greenMesh);
     scene.add(redMesh);
     scene.add(transparentMesh);
   }
+
   animate() {
     if (!mounted || disposed) {
       return;
     }
 
-
     matrix = three.Matrix4();
     //material = three.MeshNormalMaterial();
-    material = three.MeshPhongMaterial  ({
-      "color": 0x00ff00,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+    material = three.MeshPhongMaterial({
+      "color": 0x00ff00,
+      // 색상: 녹색
+      "flatShading": true,
+      // 플랫 셰이딩 활성화
+      "transparent": true,
+      // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,
+      // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
     });
 
     edgeMaterial = three.MeshPhongMaterial({
-      "color": 0x0,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 1.0 * transparencyValue / 100.0,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
-      "wireframe": true,      // 와이어프레임 모드 활성화
+      "color": 0x0,
+      // 색상: 녹색
+      "flatShading": true,
+      // 플랫 셰이딩 활성화
+      "transparent": true,
+      // 투명화 가능하도록 설정
+      "opacity": 1.0 * transparencyValue / 100.0,
+      // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true,
+      // 와이어프레임 모드 활성화
     });
 
     transparentEdgeMaterial = three.MeshPhongMaterial({
-      "color": 0x0,      // 색상: 녹색
-      "flatShading": true,    // 플랫 셰이딩 활성화
-      "transparent": true,    // 투명화 가능하도록 설정
-      "opacity": 0.1,          // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
-      "wireframe": true,      // 와이어프레임 모드 활성화
+      "color": 0x0, // 색상: 녹색
+      "flatShading": true, // 플랫 셰이딩 활성화
+      "transparent": true, // 투명화 가능하도록 설정
+      "opacity": 0.1, // 투명도 설정 (0.0 완전 투명, 1.0 완전 불투명)
+      "wireframe": true, // 와이어프레임 모드 활성화
     });
 
     greenMaterial = three.MeshPhongMaterial({
@@ -1012,7 +1040,7 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
       FallingBox currentBox = boxes[currentBoxIndex];
       currentBox.update();
       if (currentBox.isDone && currentBoxIndex < boxes.length) {
-        currentBoxIndex++;  // 현재 상자 완료 시 다음 상자 시작
+        currentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
       }
     }
 
@@ -1022,24 +1050,23 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     scene.remove(redMesh);
     scene.remove(transparentMesh);
 
-    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, 6*6*6);
-    greenMesh = three.InstancedMesh(geometry, greenMaterial, 6*6*6);
-    redMesh = three.InstancedMesh(geometry, redMaterial, 6*6*6);
-    transparentMesh = three.InstancedMesh(geometry, transparentEdgeMaterial, 6*6*6);
+    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, 6 * 6 * 6);
+    greenMesh = three.InstancedMesh(geometry, greenMaterial, 6 * 6 * 6);
+    redMesh = three.InstancedMesh(geometry, redMaterial, 6 * 6 * 6);
+    transparentMesh =
+        three.InstancedMesh(geometry, transparentEdgeMaterial, 6 * 6 * 6);
     var quaternion = three.Quaternion();
-    for(int i = 0; i < boxes.length; i++){
-      if (! boxes[i].isVisible)
-        continue;
-      matrix.setPosition(boxes[i].currPosition!.x, boxes[i].currPosition!.y, boxes[i].currPosition!.z);
+    for (int i = 0; i < boxes.length; i++) {
+      if (!boxes[i].isVisible) continue;
+      matrix.setPosition(boxes[i].currPosition!.x, boxes[i].currPosition!.y,
+          boxes[i].currPosition!.z);
       matrix.compose(boxes[i].currPosition!, quaternion, boxes[i].boxSize!);
       if (boxes[i].isTransparent == true) {
         transparentMesh.setMatrixAt(i, matrix.clone());
-      }
-      else {
+      } else {
         if (boxes[i].boxColor == "green") {
           greenMesh.setMatrixAt(i, matrix.clone());
-        }
-        else if (boxes[i].boxColor == "red"){
+        } else if (boxes[i].boxColor == "red") {
           redMesh.setMatrixAt(i, matrix.clone());
         }
         edgeMesh.setMatrixAt(i, matrix.clone());
@@ -1050,10 +1077,14 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     scene.add(edgeMesh);
     scene.add(transparentMesh);
 
-    int t = DateTime.now().millisecondsSinceEpoch;
+    int t = DateTime
+        .now()
+        .millisecondsSinceEpoch;
     final gl = three3dRender.gl;
     render();
-    int t1 = DateTime.now().millisecondsSinceEpoch;
+    int t1 = DateTime
+        .now()
+        .millisecondsSinceEpoch;
     if (verbose) {
       //print("render cost: ${t1 - t} ");
       //print(renderer!.info.memory);
@@ -1085,4 +1116,3 @@ class _MyAppState extends State<FallingBoxSimulate> with TickerProviderStateMixi
     super.dispose();
   }
 }
-
