@@ -113,8 +113,8 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                         children: [
                           Ink.image(
                             image: AssetImage('assets/images/truck1.png'),
-                            height: 220,
-                            width: 350,
+                            height: 180,
+                            width: 300,
                             fit: BoxFit.cover
                           ),
                           SizedBox(height: 6),
@@ -142,8 +142,8 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                           children: [
                             Ink.image(
                             image: AssetImage('assets/images/truck2.png'),
-                            height: 220,
-                            width: 350,
+                            height: 180,
+                            width: 300,
                             fit: BoxFit.cover
                             ),
                             SizedBox(height: 6),
@@ -170,8 +170,8 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                           children: [
                             Ink.image(
                               image: AssetImage('assets/images/truck3.png'),
-                              height: 220,
-                              width: 350,
+                              height: 180,
+                              width: 300,
                               fit: BoxFit.cover
                             ),
                             SizedBox(height: 6),
