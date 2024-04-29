@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/themes/login_style.dart';
+import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'components/side_nav_bar.dart';
+import 'components/nav_rail.dart';
 import 'pages/pages.dart';
 
+class SidebarState extends ChangeNotifier {
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+
+  void setSelectedIndex(int index) {
+    _selectedIndex = index;
+    notifyListeners(); // 변경 사항을 위젯에 알림
+  }
+}
 
 void main() {
   setPathUrlStrategy();  // 주소창에서 # 제거
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => SidebarState(), // SidebarState 인스턴스 생성
+    child: const MyApp(),
+  ),);
 }
 
 class MyApp extends StatelessWidget {
@@ -57,7 +70,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(key: Key('home-page')),
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
-        '/set-truck-specifications': (context) => const SetTruckSpecificationPage(),
+        '/set-truck-specifications': (context) => SetTruckSpecificationPage(),
         '/box-simulation': (context) => BoxSimulation3dPage(),
         '/delivery-simulation': (context) => const DeliverySimulationMapPage(),
       },
@@ -84,21 +97,10 @@ class MyApp extends StatelessWidget {
       //       return MaterialPageRoute(builder: (context) => const NotFoundPage());
       //   }
       // },
-
-
-
     );
   }
   Widget buildPage(String name, String? params) {
     switch (name) {
-      case '/navtest':
-        return const ResponsiveBreakpoints(breakpoints: [
-          Breakpoint(start: 0, end: 480, name: MOBILE),
-          Breakpoint(start: 481, end: 1200, name: TABLET),
-          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-        ], child: CustomNavigationBar());// 네비게이션 바 코드 추가
-
-        //return SidebarXExampleApp();
       case '/':
         return const ResponsiveBreakpoints(breakpoints: [
           Breakpoint(start: 0, end: 480, name: MOBILE),
@@ -106,7 +108,7 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
         ], child: HomePage( key: Key('home-page')));
       case '/set-truck-specifications':
-        return const ResponsiveBreakpoints(breakpoints: [
+        return ResponsiveBreakpoints(breakpoints: [
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
@@ -135,9 +137,8 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
         ], child: SignInUpPage());
-
-        // case TypographyPage.name:
-      //   return const TypographyPage();
+    // case TypographyPage.name:
+    //   return const TypographyPage();
       default:
         return const ResponsiveBreakpoints(
           breakpoints: [
@@ -150,4 +151,3 @@ class MyApp extends StatelessWidget {
     }
   }
 }
-

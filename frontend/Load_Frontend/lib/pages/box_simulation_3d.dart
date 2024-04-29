@@ -11,7 +11,6 @@ import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
 import 'package:flutter/scheduler.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:load_frontend/components/side_nav_bar.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../components/3d_overlay_widget.dart';
@@ -41,6 +40,14 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
     super.initState();
     overlayWidget = OverlayWidget(context: context);
   }
+
+  @override
+  void dispose(){
+    if (isOverlayVisible)
+      overlayWidget.remove();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
