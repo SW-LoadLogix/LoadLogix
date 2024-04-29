@@ -37,9 +37,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
 
       onGenerateRoute: (RouteSettings settings) {
+        var uri = Uri.parse(settings.name ?? '');
+        var path = uri.path;
+        var dataParam = uri.queryParameters['data'];
+
+        // print('Path: $path');
+        // print('Data parameter: $dataParam');
+
         return MaterialPageRoute(builder: (context) {
           return BouncingScrollWrapper.builder(
-              context, buildPage(settings.name ?? ''),
+              context, buildPage(path ?? '', dataParam),
               dragWithMouse: true);
         });
       },
@@ -82,7 +89,7 @@ class MyApp extends StatelessWidget {
 
     );
   }
-  Widget buildPage(String name) {
+  Widget buildPage(String name, String? params) {
     switch (name) {
       case '/navtest':
         return const ResponsiveBreakpoints(breakpoints: [
@@ -105,7 +112,7 @@ class MyApp extends StatelessWidget {
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
         ], child: SetTruckSpecificationPage());
       case '/box-simulation':
-        return const ResponsiveBreakpoints(breakpoints: [
+        return ResponsiveBreakpoints(breakpoints: const [
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
@@ -142,6 +149,5 @@ class MyApp extends StatelessWidget {
         );
     }
   }
-
 }
 
