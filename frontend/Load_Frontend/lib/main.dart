@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:load_frontend/themes/login_style.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -18,9 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Load',
-      /*theme: ThemeData(
-        useMaterial3: true,
-      ),*/
+      // theme: ThemeData(
+      //   useMaterial3: true,
+      // ),
+
+      theme: loginTheme,
 
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       /*** 라우트 방식 ***/
-      /*routes: {
+      routes: {
         '/': (context) => const HomePage(key: Key('home-page')),
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
@@ -60,7 +63,7 @@ class MyApp extends StatelessWidget {
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const NotFoundPage(),
-      ),*/
+      ),
 
       /** onGenerateRoute 방식 **/
       // onGenerateRoute: (settings) {
@@ -89,7 +92,7 @@ class MyApp extends StatelessWidget {
   Widget buildPage(String name, String? params) {
     switch (name) {
       case '/navtest':
-        return ResponsiveBreakpoints(breakpoints: [
+        return const ResponsiveBreakpoints(breakpoints: [
           Breakpoint(start: 0, end: 480, name: MOBILE),
           Breakpoint(start: 481, end: 1200, name: TABLET),
           Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
