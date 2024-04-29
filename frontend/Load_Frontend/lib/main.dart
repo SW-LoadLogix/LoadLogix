@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/sign-in-up': (context) => const SignInUpPage(),
         '/delivery-list': (context) => const DeliveryListPage(),
         '/set-truck-specifications': (context) => const SetTruckSpecificationPage(),
-        '/box-simulation': (context) => const BoxSimulation3dPage(),
+        '/box-simulation': (context) => BoxSimulation3dPage(),
         '/delivery-simulation': (context) => const DeliverySimulationMapPage(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
