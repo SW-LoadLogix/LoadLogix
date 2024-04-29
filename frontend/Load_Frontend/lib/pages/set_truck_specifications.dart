@@ -214,7 +214,7 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                             _isValid1 ? Icons.check_circle : Icons.error,
                             color: _isValid1 ? Colors.green : Colors.red,
                           ),
-                          helperText: '예: 1.6m', // 보조 텍스트
+                          helperText: '예: 1,700m', // 보조 텍스트
                           helperStyle: TextStyle( // 보조 텍스트 스타일 지정
                             fontSize: 16,
                             color: Colors.grey,
@@ -255,7 +255,7 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                             _isValid2 ? Icons.check_circle : Icons.error,
                             color: _isValid2 ? Colors.green : Colors.red,
                           ),
-                          helperText: '예: 3.1m',
+                          helperText: '예: 3,700m',
                           helperStyle: TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
@@ -296,7 +296,7 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                           _isValid3 ? Icons.check_circle : Icons.error,
                           color: _isValid3 ? Colors.green : Colors.red,
                         ),
-                        helperText: '예: 1.75m', // 보조 텍스트
+                        helperText: '예: 2,100m', // 보조 텍스트
                         helperStyle: TextStyle( // 보조 텍스트 스타일 지정
                           fontSize: 16,
                           color: Colors.grey,
