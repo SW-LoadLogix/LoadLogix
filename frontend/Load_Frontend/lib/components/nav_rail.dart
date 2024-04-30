@@ -61,7 +61,7 @@ class SidebarComponent extends StatelessWidget {
         width: 230,
         decoration: BoxDecoration(
             color: Color(0xFF3AB9FF),
-            borderRadius: BorderRadius.circular(10)
+            // borderRadius: BorderRadius.circular(10)
         ),
       ),
       footerDivider: const Divider(color: Colors.white, height: 1),

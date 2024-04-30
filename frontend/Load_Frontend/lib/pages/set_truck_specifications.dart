@@ -50,10 +50,10 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
     );
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('트럭 규격'),
-      //   backgroundColor: Color(0xFF3AB9FF),
-      // ),
+      appBar: AppBar(
+        title: Text('트럭 규격'),
+        backgroundColor: Color(0xFF3AB9FF),
+      ),
       body: Row(
         children: [
           Flexible(
