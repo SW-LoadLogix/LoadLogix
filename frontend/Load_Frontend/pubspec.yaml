@@ -38,3 +38,11 @@ flutter:
 
   assets:
     - assets/images/
+
+  fonts:
+    - family: AlumniSansPinstripe
+      fonts:
+        - asset: assets/fonts/AlumniSansPinstripe-Regular.ttf
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Medium.ttf

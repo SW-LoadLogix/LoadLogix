@@ -52,7 +52,17 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('트럭 규격'),
-        backgroundColor: Color(0xFF3AB9FF),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //       begin: Alignment.topCenter,
+        //       end: Alignment.bottomCenter,
+        //       colors: [Color(0xFF3AB9FF), Color(0xFF90D7FF)],
+        //       stops: [0.0, 0.7],
+        //     )
+        //   ),
+        // ),
+        backgroundColor: Color(0xFF90D7FF),
       ),
       body: Row(
         children: [
@@ -350,13 +360,13 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
                             print('ElevatedButton이 클릭되었습니다!');
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(30),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            elevation: 2,
-                            backgroundColor: Color(0xFFB9CEFF),
-                          ),
+                                padding: EdgeInsets.all(30),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                elevation: 2,
+                                backgroundColor: Color(0xFFB9CEFF),
+                              ),
                           child: Text(
                             '전체 시뮬레이션 확인하기',
                             style: TextStyle(

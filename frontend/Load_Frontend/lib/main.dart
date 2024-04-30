@@ -16,7 +16,10 @@ class SidebarState extends ChangeNotifier {
     notifyListeners(); // 변경 사항을 위젯에 알림
   }
 }
-
+// 전체 글꼴 설정
+// ThemeData loginTheme = ThemeData(
+//   fontFamily: 'IBMPlexMono',
+// );
 void main() {
   setPathUrlStrategy();  // 주소창에서 # 제거
   runApp(ChangeNotifierProvider(
