@@ -26,6 +26,7 @@ double boxStep = 5.0;
 @RoutePage()
 class BoxSimulation3dPage extends StatefulWidget {
   const BoxSimulation3dPage({super.key});
+
   @override
   _BoxSimulation3dPageState createState() => _BoxSimulation3dPageState();
 }
@@ -42,117 +43,116 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
   }
 
   @override
-  void dispose(){
-    if (isOverlayVisible)
-      overlayWidget.remove();
+  void dispose() {
+    if (isOverlayVisible) overlayWidget.remove();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Container(
-        height: screenSize.height,
-        width: screenSize.width,
-        child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: screenSize.height),
-            child: IntrinsicHeight(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                      title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
-                  SafeArea(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: Container(
-                            height: screenSize.height - 48, // 높이 조정
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Card(
-                                  child: Column(children: [
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      child: Text('box floor height'),
+      body: Row(children: [
+        MyNav(),
+        Expanded(
+          child: Container(
+            height: screenSize.height,
+            width: screenSize.width,
+            child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: screenSize.height),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: <Widget>[
+                      // ListTile(
+                      //     title: Text(
+                      //         "LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")
+                      // ),
+                      SafeArea(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Flexible(
+                              flex: 1,
+                              fit: FlexFit.tight,
+                              child: Container(
+                                height: screenSize.height - 48, // 높이 조정
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Card(
+                                      child: Column(children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          height: 20,
+                                          child: Text('box floor height'),
+                                        ),
+                                        SfRangeSlider(
+                                          min: 0.0,
+                                          max: 100.0,
+                                          values: _heightFloorValues,
+                                          interval: 20,
+                                          showTicks: true,
+                                          showLabels: true,
+                                          enableTooltip: true,
+                                          minorTicksPerInterval: 1,
+                                          onChanged: (SfRangeValues values) {
+                                            setState(() {
+                                              _heightFloorValues = values;
+                                              heightFloorValuesLow =
+                                                  _heightFloorValues.start;
+                                              heightFloorValuesHigh =
+                                                  _heightFloorValues.end;
+                                            });
+                                          },
+                                        ),
+                                        Container(height: 10),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          height: 20,
+                                          child: Text('Transparency'),
+                                        ),
+                                        SfSlider(
+                                          min: 0.0,
+                                          max: 100.0,
+                                          value: transparencyValue,
+                                          interval: 20,
+                                          showTicks: true,
+                                          showLabels: true,
+                                          enableTooltip: true,
+                                          minorTicksPerInterval: 1,
+                                          onChanged: (dynamic newValue) {
+                                            setState(() {
+                                              transparencyValue = newValue;
+                                            });
+                                          },
+                                        ),
+                                        Container(height: 10),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          height: 20,
+                                          child: Text('Smulation Speed'),
+                                        ),
+                                        SfSlider(
+                                          min: 0.1,
+                                          max: 10.1,
+                                          value: boxStep,
+                                          interval: 2,
+                                          showTicks: true,
+                                          showLabels: true,
+                                          enableTooltip: true,
+                                          minorTicksPerInterval: 1,
+                                          onChanged: (dynamic newValue) {
+                                            setState(() {
+                                              boxStep = newValue;
+                                            });
+                                          },
+                                        ),
+                                        Container(height: 10),
+                                      ]),
                                     ),
-                                    SfRangeSlider(
-                                      min: 0.0,
-                                      max: 100.0,
-                                      values: _heightFloorValues,
-                                      interval: 20,
-                                      showTicks: true,
-                                      showLabels: true,
-                                      enableTooltip: true,
-                                      minorTicksPerInterval: 1,
-                                      onChanged: (SfRangeValues values) {
-                                        setState(() {
-                                          _heightFloorValues = values;
-                                          heightFloorValuesLow =
-                                              _heightFloorValues.start;
-                                          heightFloorValuesHigh =
-                                              _heightFloorValues.end;
-                                        });
-                                      },
-                                    ),
-                                    Container(height: 10),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      child: Text('Transparency'),
-                                    ),
-                                    SfSlider(
-                                      min: 0.0,
-                                      max: 100.0,
-                                      value: transparencyValue,
-                                      interval: 20,
-                                      showTicks: true,
-                                      showLabels: true,
-                                      enableTooltip: true,
-                                      minorTicksPerInterval: 1,
-                                      onChanged: (dynamic newValue) {
-                                        setState(() {
-                                          transparencyValue = newValue;
-                                        });
-                                      },
-                                    ),
-                                    Container(height: 10),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      child: Text(
-                                          'Smulation Speed'
-                                      ),
-                                    ),
-                                    SfSlider(
-                                      min: 0.1,
-                                      max: 10.1,
-                                      value: boxStep,
-                                      interval: 2,
-                                      showTicks: true,
-                                      showLabels: true,
-                                      enableTooltip: true,
-                                      minorTicksPerInterval: 1,
-                                      onChanged: (dynamic newValue) {
-                                        setState(() {
-                                          boxStep = newValue;
-                                        });
-                                      },
-                                    ),
-                                    Container(height: 10),
-                                  ]),
-                                ),
-                                Card(
-                                    child: Column(
+                                    Card(
+                                        child: Column(
                                       children: [
                                         CheckboxListTile(
                                           title: Text('A구역 적재 시뮬레이션'),
@@ -161,41 +161,42 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
                                             setState(() {});
                                           },
                                         ),
-
                                         ElevatedButton(
                                           onPressed: () {
                                             if (isOverlayVisible == false) {
                                               overlayWidget.show();
-                                            }
-                                            else {
+                                            } else {
                                               overlayWidget.remove();
                                             }
-                                            isOverlayVisible = !isOverlayVisible;
+                                            isOverlayVisible =
+                                                !isOverlayVisible;
                                           },
                                           child: Text('배송 상품 자세히 보기'),
                                         ),
                                         Container(height: 10),
                                       ],
                                     ))
-                              ],
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                            Flexible(
+                              flex: 5,
+                              fit: FlexFit.tight,
+                              child: Container(
+                                height: screenSize.height - 48, // 높이 조정
+                                child: FallingBoxSimulate(),
+                              ),
+                            ),
+                          ],
                         ),
-                        Flexible(
-                          flex: 5,
-                          fit: FlexFit.tight,
-                          child: Container(
-                            height: screenSize.height - 48, // 높이 조정
-                            child: FallingBoxSimulate(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )),
-      ),
+                      )
+                    ],
+                  ),
+                )),
+          ),
+        )
+      ]),
     );
 
     // return Scaffold(
@@ -430,12 +431,13 @@ class FallingBox {
 
   bool isDone = false;
 
-  FallingBox({this.currPosition,
-    this.startPosition,
-    this.endPosition,
-    this.boxSize,
-    this.boxColor = "green",
-    this.isTransparent = false});
+  FallingBox(
+      {this.currPosition,
+      this.startPosition,
+      this.endPosition,
+      this.boxSize,
+      this.boxColor = "green",
+      this.isTransparent = false});
 
   // 객체를 초기 위치로 설정
   void initializePosition() {
@@ -511,7 +513,7 @@ class _MyAppState extends State<FallingBoxSimulate>
   dynamic sourceTexture;
 
   final GlobalKey<three_jsm.DomLikeListenableState> _globalKey =
-  GlobalKey<three_jsm.DomLikeListenableState>();
+      GlobalKey<three_jsm.DomLikeListenableState>();
 
   late three_jsm.OrbitControls controls;
 
@@ -657,7 +659,7 @@ class _MyAppState extends State<FallingBoxSimulate>
   void changeRandomBoxColor() {
     Random random = Random();
     List<int> randomIndices =
-    List.generate(10, (_) => random.nextInt(boxes.length));
+        List.generate(10, (_) => random.nextInt(boxes.length));
 
     for (int index in randomIndices) {
       print("index : $index");
@@ -727,7 +729,7 @@ class _MyAppState extends State<FallingBoxSimulate>
                         if (kIsWeb) {
                           return three3dRender.isInitialized
                               ? HtmlElementView(
-                              viewType: three3dRender.textureId!.toString())
+                                  viewType: three3dRender.textureId!.toString())
                               : Container();
                         } else {
                           return three3dRender.isInitialized
@@ -748,9 +750,7 @@ class _MyAppState extends State<FallingBoxSimulate>
   render() {
     frameCount++;
     DateTime currentTime = DateTime.now();
-    final difference = currentTime
-        .difference(lastUpdateTime)
-        .inMilliseconds;
+    final difference = currentTime.difference(lastUpdateTime).inMilliseconds;
 
     if (difference >= 1000) {
       double fps = frameCount / (difference / 1000);
@@ -817,7 +817,7 @@ class _MyAppState extends State<FallingBoxSimulate>
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 
     controls.enableDamping =
-    true; // an animation loop is required when either damping or auto-rotation are enabled
+        true; // an animation loop is required when either damping or auto-rotation are enabled
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
     controls.minDistance = 10;
@@ -841,8 +841,7 @@ class _MyAppState extends State<FallingBoxSimulate>
 
     makeInstanced(geometry);
 
-    _ticker = createTicker(_onTick)
-      ..start();
+    _ticker = createTicker(_onTick)..start();
     //animate();
   }
 
@@ -948,9 +947,9 @@ class _MyAppState extends State<FallingBoxSimulate>
                 // startPosition: three.Vector3(posX, posY, posZ),
                 // endPosition: three.Vector3(posX, posY - 25, posZ),
                 boxSize: three.Vector3(1, 1, 1)
-              //boxSize: randomVector3()
+                //boxSize: randomVector3()
 
-            );
+                );
             boxes.add(fallingBox);
           }
         }
@@ -972,9 +971,9 @@ class _MyAppState extends State<FallingBoxSimulate>
             // startPosition: three.Vector3(posX, posY, posZ),
             // endPosition: three.Vector3(posX, posY - 25, posZ),
             boxSize: three.Vector3(box.size.x, box.size.y, box.size.z)
-          //boxSize: randomVector3()
+            //boxSize: randomVector3()
 
-        );
+            );
         boxes.add(fallingBox);
       }
     }
@@ -1084,14 +1083,10 @@ class _MyAppState extends State<FallingBoxSimulate>
     scene.add(edgeMesh);
     scene.add(transparentMesh);
 
-    int t = DateTime
-        .now()
-        .millisecondsSinceEpoch;
+    int t = DateTime.now().millisecondsSinceEpoch;
     final gl = three3dRender.gl;
     render();
-    int t1 = DateTime
-        .now()
-        .millisecondsSinceEpoch;
+    int t1 = DateTime.now().millisecondsSinceEpoch;
     if (verbose) {
       //print("render cost: ${t1 - t} ");
       //print(renderer!.info.memory);
