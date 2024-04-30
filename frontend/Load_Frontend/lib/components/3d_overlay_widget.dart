@@ -23,8 +23,6 @@ class OverlayWidget {
     overlayEntry = createOverlayEntry();
   }
 
-
-
   OverlayEntry createOverlayEntry() {
     return OverlayEntry(
       builder: (context) => Positioned(

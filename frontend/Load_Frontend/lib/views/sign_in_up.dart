@@ -1,5 +1,6 @@
 //import 'package:animated_login/animated_login.dart';
 import 'package:async/async.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:load_frontend/animated_login/animated_login.dart';
@@ -7,6 +8,7 @@ import 'package:load_frontend/animated_login/animated_login.dart';
 import '../services/login_functions.dart';
 import '../utils/dialog_builders.dart';
 
+@RoutePage()
 class SignInUpPage extends StatefulWidget {
   const SignInUpPage({Key? key}) : super(key: key);
   @override

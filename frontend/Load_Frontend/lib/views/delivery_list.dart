@@ -1,9 +1,11 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'goodsdummy.dart';
 
 String toDay = DateFormat('yyyy.MM.dd').format(DateTime.now()); //today나타내기
 
+@RoutePage()
 class DeliveryListPage extends StatelessWidget {
   const DeliveryListPage({super.key});
 

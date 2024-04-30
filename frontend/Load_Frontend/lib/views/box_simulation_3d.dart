@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:html';
 
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gl/flutter_gl.dart';
+import 'package:load_frontend/components/nav_rail.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
@@ -21,11 +23,9 @@ double heightFloorValuesHigh = 100.0;
 double transparencyValue = 100.0;
 double boxStep = 5.0;
 
+@RoutePage()
 class BoxSimulation3dPage extends StatefulWidget {
-  final String? data;
-
-  BoxSimulation3dPage({super.key, this.data});
-
+  const BoxSimulation3dPage({super.key});
   @override
   _BoxSimulation3dPageState createState() => _BoxSimulation3dPageState();
 }
