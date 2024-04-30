@@ -33,48 +33,93 @@ class OverlayWidget {
             position += details.delta;
             overlayEntry.markNeedsBuild();
           },
-          child: Container(
-            width: size.width,
-            height: size.height,
-            color: Colors.white.withOpacity(0.8),
-            child: Center(
-              child: SfDataGrid(
-                source: employeeDataSource,
-                columnWidthMode: ColumnWidthMode.fill,
-                columns: <GridColumn>[
-                  GridColumn(
-                      columnName: 'id',
-                      label: Container(
-                          padding: EdgeInsets.all(16.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'ID',
-                          ))),
-                  GridColumn(
-                      columnName: 'name',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text('Name'))),
-                  GridColumn(
-                      columnName: 'designation',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Designation',
-                            overflow: TextOverflow.ellipsis,
-                          ))),
-                  GridColumn(
-                      columnName: 'salary',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text('Salary'))),
-                ],
-              ),
-            ),
-          ),
+          child:
+              Card(
+                child: Container(
+                  width: size.width,
+                  height: size.height,
+                  color: Colors.white.withOpacity(0.8),
+                  child: Center(
+                    child: SfDataGrid(
+                      source: employeeDataSource,
+                      columnWidthMode: ColumnWidthMode.fill,
+                      columns: <GridColumn>[
+                        GridColumn(
+                            columnName: 'id',
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'ID',
+                                ))),
+                        GridColumn(
+                            columnName: 'name',
+                            label: Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: Text('Name'))),
+                        GridColumn(
+                            columnName: 'designation',
+                            label: Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Designation',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'salary',
+                            label: Container(
+                                padding: EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: Text('Salary'))),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+          // Container(
+          //   width: size.width,
+          //   height: size.height,
+          //   color: Colors.white.withOpacity(0.8),
+          //   child: Center(
+          //     child: SfDataGrid(
+          //       source: employeeDataSource,
+          //       columnWidthMode: ColumnWidthMode.fill,
+          //       columns: <GridColumn>[
+          //         GridColumn(
+          //             columnName: 'id',
+          //             label: Container(
+          //                 padding: EdgeInsets.all(16.0),
+          //                 alignment: Alignment.center,
+          //                 child: Text(
+          //                   'ID',
+          //                 ))),
+          //         GridColumn(
+          //             columnName: 'name',
+          //             label: Container(
+          //                 padding: EdgeInsets.all(8.0),
+          //                 alignment: Alignment.center,
+          //                 child: Text('Name'))),
+          //         GridColumn(
+          //             columnName: 'designation',
+          //             label: Container(
+          //                 padding: EdgeInsets.all(8.0),
+          //                 alignment: Alignment.center,
+          //                 child: Text(
+          //                   'Designation',
+          //                   overflow: TextOverflow.ellipsis,
+          //                 ))),
+          //         GridColumn(
+          //             columnName: 'salary',
+          //             label: Container(
+          //                 padding: EdgeInsets.all(8.0),
+          //                 alignment: Alignment.center,
+          //                 child: Text('Salary'))),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ),
       ),
     );
