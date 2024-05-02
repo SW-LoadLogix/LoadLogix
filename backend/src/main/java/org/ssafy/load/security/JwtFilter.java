@@ -15,6 +15,8 @@ import org.ssafy.load.common.exception.CommonException;
 @RequiredArgsConstructor
 public class JwtFilter implements Filter {
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
@@ -27,7 +29,7 @@ public class JwtFilter implements Filter {
             return;
         }
 
-        if (httpRequest.getRequestURI().startsWith("/api/user")) {
+        if (httpRequest.getRequestURI().startsWith("/api/worker")) {
             String method = httpRequest.getMethod();
             if (method.equals("GET") || method.equals("POST") || method.equals("OPTIONS")) {
                 chain.doFilter(request, response);
@@ -40,23 +42,13 @@ public class JwtFilter implements Filter {
         }
         String token = authorizationHeader.substring(7); //"Bearer "이후의 토큰 추출
         try {
-            JwtTokenProvider.validateToken(token);
+            jwtTokenProvider.validateToken(token);
         } catch (Exception e) {
             throw new CommonException(ErrorCode.INVALID_TOKEN);
         }
 
-        String userId = JwtTokenProvider.getUserId(token);
+        String userId = jwtTokenProvider.getUserId(token);
         request.setAttribute("userId", userId);
         chain.doFilter(request, response);
-//        // 1. Request Header에서 JWT 토큰 추출
-//        String token = resolveToken((HttpServletRequest) request);
-//
-//        // 2. validateToken으로 토큰 유효성 검사
-//        if (token != null && jwtTokenProvider.validateToken(token)) {
-//            // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext에 저장
-//            Authentication authentication = jwtTokenProvider.getAuthentication(token);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        }
-//        chain.doFilter(request, response);
     }
 }

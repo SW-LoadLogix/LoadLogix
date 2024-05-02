@@ -16,6 +16,7 @@ import org.ssafy.load.security.JwtTokenProvider;
 @RequiredArgsConstructor
 public class WorkerService {
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
 
     public WorkerResponse signup(SignupRequest signupRequest) {
@@ -35,6 +36,6 @@ public class WorkerService {
         if (worker.isEmpty()) {
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
         }
-        return JwtTokenProvider.generateToken(worker.get().getUserId(), worker.get().getName());
+        return jwtTokenProvider.generateToken(worker.get().getUserId(), worker.get().getName());
     }
 }

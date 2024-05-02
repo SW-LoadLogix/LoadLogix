@@ -2,6 +2,7 @@ package org.ssafy.load.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ssafy.load.application.WorkerService;
@@ -18,12 +19,12 @@ public class WorkerController {
     public final WorkerService workerService;
 
     @PostMapping("/signup")
-    public Response<WorkerResponse> singup(SignupRequest signupRequest) {
+    public Response<WorkerResponse> signup(@RequestBody SignupRequest signupRequest) {
         return Response.success(workerService.signup(signupRequest));
     }
 
     @PostMapping("/login")
-    public Response<String> login(LoginRequest loginRequest) {
+    public Response<String> login(@RequestBody LoginRequest loginRequest) {
         return Response.success(workerService.login(loginRequest));
     }
 }
