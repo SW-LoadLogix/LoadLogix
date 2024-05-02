@@ -25,8 +25,8 @@ public class GoodsService {
         }
         List<Goods> goods = new ArrayList<>();
         for(GoodsEntity goodsEntity : goodsEntities){
-            System.out.println(Goods.form(goodsEntity));
-            goods.add(Goods.form(goodsEntity));
+            System.out.println(Goods.from(goodsEntity));
+            goods.add(Goods.from(goodsEntity));
         }
         return goods;
     }

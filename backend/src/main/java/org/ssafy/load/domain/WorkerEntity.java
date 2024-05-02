@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "user")
+@Table(name = "worker")
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class WorkerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,12 +20,12 @@ public class UserEntity {
     private String password;
     private String name;
 
-    public static UserEntity of(
+    public static WorkerEntity of(
             Long id,
             String userId,
             String password,
             String name
     ) {
-        return new UserEntity(id, userId, password, name);
+        return new WorkerEntity(id, userId, password, name);
     }
 }

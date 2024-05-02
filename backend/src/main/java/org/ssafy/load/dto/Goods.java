@@ -13,7 +13,7 @@ public record Goods(
         return new Goods(id, width, length, height, weight);
     }
 
-    public static Goods form(GoodsEntity entity){
+    public static Goods from(GoodsEntity entity){
         return Goods.of(
                 entity.getId(),
                 entity.getWidth(),
