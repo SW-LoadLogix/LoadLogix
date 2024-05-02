@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "address")
+@Table(name = "building_address")
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressEntity {
+public class BuildingAddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,8 +36,12 @@ public class AddressEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
+    @ManyToOne
+    @JoinColumn(name = "area_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private DeliveryAreaEntity deliveryAreaEntity;
 
-    static public AddressEntity of(
+    static public BuildingAddressEntity of(
             Long id,
             Long dongCode,
             String sidoName,
@@ -45,9 +51,10 @@ public class AddressEntity {
             int zibunSub,
             Long loadCode,
             int buildingMain,
-            int buildingSub
+            int buildingSub,
+            DeliveryAreaEntity deliveryAreaEntity
     ){
-        return new AddressEntity(
+        return new BuildingAddressEntity(
                 id,
                 dongCode,
                 sidoName,
@@ -57,7 +64,11 @@ public class AddressEntity {
                 zibunSub,
                 loadCode,
                 buildingMain,
-                buildingSub
+                buildingSub,
+                DeliveryAreaEntity.of(
+                        deliveryAreaEntity.getId(),
+                        deliveryAreaEntity.getAreaName(),
+                        deliveryAreaEntity.getConveyNo())
         );
     }
 

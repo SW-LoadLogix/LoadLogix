@@ -1,14 +1,12 @@
 package org.ssafy.load.application;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.ssafy.load.common.dto.ErrorCode;
-import org.ssafy.load.common.exception.CommonException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class DeliveryService {
 
     public List<Integer> getConveyorLine() {
