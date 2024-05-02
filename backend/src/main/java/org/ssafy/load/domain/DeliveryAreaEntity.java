@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.ssafy.load.dto.DeliveryArea;
 
 @Entity
 @Table(name = "delivery_area")
@@ -16,10 +15,12 @@ import org.ssafy.load.dto.DeliveryArea;
 public class DeliveryAreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="area_name")
     private String areaName;
-    public static DeliveryAreaEntity of(Long id, String area_name){
-        return new DeliveryAreaEntity(id, area_name);
+    @Column(name="convey_no")
+    private int conveyNo;
+    public static DeliveryAreaEntity of(Integer id, String area_name, int conveyNo){
+        return new DeliveryAreaEntity(id, area_name, conveyNo);
     }
 }
