@@ -1,5 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:load_frontend/routes/app_router.dart';
+import 'package:load_frontend/views/box_simulation_3d.dart';
+import 'package:load_frontend/views/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:three_dart/three3d/extras/core/ttf_font.dart';
@@ -72,7 +76,8 @@ class SidebarComponent extends StatelessWidget {
       headerBuilder: (context, extended) {
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/');
+            AutoRouter.of(context).push(HomeRoute());
+            //Navigator.pushNamed(context, '/');
           },
           child: SizedBox(
             height: 130,
@@ -142,32 +147,30 @@ class MyNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sidebarState = Provider.of<SidebarState>(context);
-    return SizedBox(
-      width: 250,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: SidebarComponent(
-          onDestinationSelected: (index) {
-            sidebarState.setSelectedIndex(index); // selectedIndex 변경
-            switch (index) {
-              case 0:
-                Navigator.pushNamed(context, '/delivery-list');
-                break;
-              case 1:
-                Navigator.pushNamed(context, '/set-truck-specifications');
-                break;
-              case 2:
-                Navigator.pushNamed(context, '/box-simulation');
-                break;
-              case 3:
-                Navigator.pushNamed(context, '/delivery-simulation');
-                break;
-            }
-            // Handle selection logic
-          },
-          selectedIndex: sidebarState.selectedIndex, // Provide the selected index
-        ),
-      ),
+    return SidebarComponent(
+      onDestinationSelected: (index) {
+        sidebarState.setSelectedIndex(index); // selectedIndex 변경
+        switch (index) {
+          case 0:
+            AutoRouter.of(context).push(DeliveryListRoute());
+            //Navigator.pushNamed(context, '/delivery-list');
+            break;
+          case 1:
+            AutoRouter.of(context).push(SetTruckSpecificationRoute());
+            //Navigator.pushNamed(context, '/set-truck-specifications');
+            break;
+          case 2:
+            AutoRouter.of(context).push(BoxSimulation3dRoute());
+            //Navigator.pushNamed(context, '/box-simulation');
+            break;
+          case 3:
+            AutoRouter.of(context).push(DeliverySimulationMapRoute());
+            //Navigator.pushNamed(context, '/delivery-simulation');
+            break;
+        }
+        // Handle selection logic
+      },
+      selectedIndex: sidebarState.selectedIndex, // Provide the selected index
     );
   }
 }
