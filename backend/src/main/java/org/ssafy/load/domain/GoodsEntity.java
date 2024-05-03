@@ -12,21 +12,29 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoodsEntity{
+public class GoodsEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int width;
-    private int length;
-    private int height;
     private int weight;
+    private String detailAddress;
+    private String detailJuso;
+    private int order;
+    private double x;
+    private double y;
+    private double z;
+
     public static GoodsEntity of(
-            Long id,
-            int width,
-            int length,
-            int height,
-            int weight
-    ){
-        return new GoodsEntity(id,width,length,height,weight);
+        Long id,
+        int width,
+        String detailAddress,
+        String detailJuso,
+        int order,
+        int x,
+        int y,
+        int z
+    ) {
+        return new GoodsEntity(id, width, detailAddress, detailJuso, order, x, y, z);
     }
 }

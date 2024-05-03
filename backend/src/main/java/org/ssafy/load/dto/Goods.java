@@ -3,23 +3,31 @@ package org.ssafy.load.dto;
 import org.ssafy.load.domain.GoodsEntity;
 
 public record Goods(
-        Long id,
-        int width,
-        int length,
-        int height,
-        int weight
+    Long id,
+    int weight,
+    String detailAddress,
+    String detailJuso,
+    int order,
+    double x,
+    double y,
+    double z
 ) {
-    public static Goods of(Long id, int width, int length, int height, int weight){
-        return new Goods(id, width, length, height, weight);
+
+    public static Goods of(Long id, int weight, String detailAddress, String detailJuso, int order,
+        double x, double y, double z) {
+        return new Goods(id, weight, detailAddress, detailJuso, order, x, y, z);
     }
 
-    public static Goods from(GoodsEntity entity){
+    public static Goods form(GoodsEntity entity) {
         return Goods.of(
-                entity.getId(),
-                entity.getWidth(),
-                entity.getLength(),
-                entity.getHeight(),
-                entity.getWeight()
+            entity.getId(),
+            entity.getWeight(),
+            entity.getDetailAddress(),
+            entity.getDetailJuso(),
+            entity.getOrder(),
+            entity.getX(),
+            entity.getY(),
+            entity.getZ()
         );
     }
 }

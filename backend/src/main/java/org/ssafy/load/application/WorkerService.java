@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
+import org.ssafy.load.dao.CarRepository;
 import org.ssafy.load.dao.WorkerRepository;
+import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
@@ -20,6 +22,7 @@ public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
+    private final CarRepository carRepository;
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByUserId(signUpRequest.id());
@@ -28,7 +31,7 @@ public class WorkerService {
         }
         return SignUpResponse.from(workerRepository.save(
             WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                signUpRequest.name())));
+                signUpRequest.name(), null)));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
