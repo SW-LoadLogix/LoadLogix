@@ -13,6 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkerEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,10 +22,10 @@ public class WorkerEntity {
     private String name;
 
     public static WorkerEntity of(
-            Long id,
-            String userId,
-            String password,
-            String name
+        Long id,
+        String userId,
+        String password,
+        String name
     ) {
         return new WorkerEntity(id, userId, password, name);
     }

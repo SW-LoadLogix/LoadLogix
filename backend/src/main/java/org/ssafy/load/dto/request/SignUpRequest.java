@@ -1,7 +1,7 @@
 package org.ssafy.load.dto.request;
 
-public record SignupRequest(
-    String userId,
+public record SignUpRequest(
+    String id,
     String password,
     String name
 ) {

@@ -8,7 +8,9 @@ import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.request.LoginRequest;
-import org.ssafy.load.dto.request.SignupRequest;
+import org.ssafy.load.dto.request.SignUpRequest;
+import org.ssafy.load.dto.response.LoginResponse;
+import org.ssafy.load.dto.response.SignUpResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
@@ -19,23 +21,26 @@ public class WorkerService {
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
 
-    public WorkerResponse signup(SignupRequest signupRequest) {
-        Optional<WorkerEntity> worker = workerRepository.findByUserId(signupRequest.userId());
-        if(worker.isPresent())
+    public SignUpResponse signup(SignUpRequest signUpRequest) {
+        Optional<WorkerEntity> worker = workerRepository.findByUserId(signUpRequest.id());
+        if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
-        return WorkerResponse.from(workerRepository.save(
-            WorkerEntity.of(null, signupRequest.userId(), signupRequest.password(),
-                signupRequest.name())));
+        }
+        return SignUpResponse.from(workerRepository.save(
+            WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
+                signUpRequest.name())));
     }
 
-    public String login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByUserIdAndPassword(
-            loginRequest.userId(),
+            loginRequest.id(),
             loginRequest.password());
 
         if (worker.isEmpty()) {
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
         }
-        return jwtTokenProvider.generateToken(worker.get().getUserId(), worker.get().getName());
+        return LoginResponse.of(
+            jwtTokenProvider.generateToken(worker.get().getUserId(), worker.get().getName(),
+                "worker"));
     }
 }

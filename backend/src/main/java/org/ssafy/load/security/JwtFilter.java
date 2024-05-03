@@ -48,7 +48,12 @@ public class JwtFilter implements Filter {
         }
 
         String userId = jwtTokenProvider.getUserId(token);
+        String role = jwtTokenProvider.getRole(token);
+        if (httpRequest.getRequestURI().startsWith("/api/admin") && !role.equals("admin")) {
+            throw new CommonException(ErrorCode.ACCESS_DENIED);
+        }
         request.setAttribute("userId", userId);
+        request.setAttribute("role", role);
         chain.doFilter(request, response);
     }
 }

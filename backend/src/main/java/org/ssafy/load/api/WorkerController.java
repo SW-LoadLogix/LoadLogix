@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.LoginRequest;
-import org.ssafy.load.dto.request.SignupRequest;
+import org.ssafy.load.dto.request.SignUpRequest;
+import org.ssafy.load.dto.response.LoginResponse;
+import org.ssafy.load.dto.response.SignUpResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 
 @RequiredArgsConstructor
@@ -19,12 +21,12 @@ public class WorkerController {
     public final WorkerService workerService;
 
     @PostMapping("/signup")
-    public Response<WorkerResponse> signup(@RequestBody SignupRequest signupRequest) {
+    public Response<SignUpResponse> signup(@RequestBody SignUpRequest signupRequest) {
         return Response.success(workerService.signup(signupRequest));
     }
 
     @PostMapping("/login")
-    public Response<String> login(@RequestBody LoginRequest loginRequest) {
+    public Response<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         return Response.success(workerService.login(loginRequest));
     }
 }

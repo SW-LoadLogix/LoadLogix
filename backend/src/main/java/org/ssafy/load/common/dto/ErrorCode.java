@@ -14,7 +14,9 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server error"),
     EMPTY_TABLE(HttpStatus.INTERNAL_SERVER_ERROR, "Empty db table"),
     CONVEYOR_NOT_FOUND(HttpStatus.NOT_FOUND, "Conveyor not founded"),
-    USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "User with given userId already exists");
+    USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "User with given userId already exists"),
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access denied: Insufficient permissions");
+
 
     final private HttpStatus status;
     final private String message;
