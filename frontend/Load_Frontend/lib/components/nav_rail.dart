@@ -6,6 +6,7 @@ import 'package:load_frontend/views/box_simulation_3d.dart';
 import 'package:load_frontend/views/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:three_dart/three3d/extras/core/ttf_font.dart';
 
 import '../main.dart';
 
@@ -39,7 +40,7 @@ class SidebarComponent extends StatelessWidget {
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(80),
-          border: Border.all(color: const Color(0xFF3AB9FF)),
+          // border: Border.all(color: const Color(0xFF3AB9FF)),
         ),
         selectedItemDecoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 1.0, style: BorderStyle.solid),
@@ -64,8 +65,11 @@ class SidebarComponent extends StatelessWidget {
       extendedTheme: SidebarXTheme(
         width: 230,
         decoration: BoxDecoration(
-            color: Color(0xFF3AB9FF),
-            borderRadius: BorderRadius.circular(10)
+            color: Color(0xFF90D7FF),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
         ),
       ),
       footerDivider: const Divider(color: Colors.white, height: 1),
@@ -88,7 +92,9 @@ class SidebarComponent extends StatelessWidget {
                     'LOAD',
                     textAlign: TextAlign.center, // Align text to center horizontally
                     style: TextStyle(
-                      color: Colors.black,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 14,
+                      color: Colors.blueGrey,
                       // Define your text style here
                     ),
                   ),

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../components/nav_rail.dart';
 import 'goodsdummy.dart';
 
-String toDay = DateFormat('yyyy.MM.dd').format(DateTime.now()); //today나타내기
+String toDay = DateFormat('yyyy년 MM월 dd일').format(DateTime.now()); // 현재 일자
 
 @RoutePage()
 class DeliveryListPage extends StatelessWidget {
@@ -12,9 +12,38 @@ class DeliveryListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final TextStyle textStyle = TextStyle(
+      fontSize: 16.0,
+      color: Colors.black,
+      letterSpacing: 1.2,
+      wordSpacing: 2.0,
+      height: 1.5,
+      decorationStyle: TextDecorationStyle.solid,
+      fontFamily: 'IBMPlexMono',
+      fontFamilyFallback: ['NotoSans', 'Arial'],
+    );
+
+    final TextStyle textStyle2 = TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      letterSpacing: 1.2,
+      wordSpacing: 2.0,
+      height: 1.5,
+      decorationStyle: TextDecorationStyle.solid,
+      fontFamily: 'IBMPlexMono',
+      fontFamilyFallback: ['NotoSans', 'Arial'],
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('적재 전 배송리스트'), // 앱바 타이틀
+        title: Text('적재 전 배송리스트',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ), // 앱바 타이틀
+        backgroundColor: Color(0xFF90D7FF),
       ),
       body: Row(children: [
         MyNav(),
@@ -23,49 +52,54 @@ class DeliveryListPage extends StatelessWidget {
           CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: Center(
+                child: Container(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 10),
-                    child: Text('님의 $toDay일 Loading List입니다.'),
+                    padding: const EdgeInsets.only(left: 30, top: 60),
+                    child: Text('Aishahansten 님의 $toDay Loading List입니다.',
+                      textAlign: TextAlign.left,
+                      style: textStyle,
+                    ),
                   ),
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(left: 30, top: 30, right: 60),
                 sliver: SliverToBoxAdapter(
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: DataTable(
-                        headingRowColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return Colors.blue;
-                          }, // 헤더 행의 배경색
-                        ),
-                        columns: const [
-                          DataColumn(label: Text('No')),
-                          DataColumn(label: Text('주소')),
-                          DataColumn(label: Text('구역')),
-                          DataColumn(label: Text('바코드')),
-                          DataColumn(label: Text('태백규격(cm)')),
-                          DataColumn(label: Text('상품무게(g)')),
-                        ],
-                        rows: List<DataRow>.generate(goodsList.length, (index) {
-                          final good = goodsList[index];
-                          return DataRow(
-                            cells: [
-                              DataCell(Text('${good.goodsId}')),
-                              DataCell(Text(good.area)),
-                              DataCell(Text('...')),
-                              DataCell(Text('...')),
-                              DataCell(Text(
-                                  '${good.height} x ${good.length} x ${good.width}')),
-                              DataCell(Text('${good.weight}g')),
-                            ],
-                          );
-                        }),
+
+                  child: Container(
+                    decoration: BoxDecoration(border: Border.all(
+                      width: 5.0,
+                      color: Color(0xFF1C709A),
+                    )),
+                    child: DataTable(
+                      headingRowColor:
+                          MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Color(0xFF3AB9FF);
+                        }, // 헤더 행의 배경색
                       ),
+                      columnSpacing: 25.0, // 각 컬럼의 간격을 설정하여 가운데 정렬을 흉내냅니다.
+                      columns: [
+                        DataColumn(label: Text('No', style: textStyle2)),
+                        DataColumn(label: Text('주소', style: textStyle2)),
+                        DataColumn(label: Text('가로규격(cm)', style: textStyle2)),
+                        DataColumn(label: Text('세로규격(cm)', style: textStyle2)),
+                        DataColumn(label: Text('높이규격(cm)', style: textStyle2)),
+                        DataColumn(label: Text('상품무게(g)', style: textStyle2)),
+                      ],
+                      rows: List<DataRow>.generate(goodsList.length, (index) {
+                        final good = goodsList[index];
+                        return DataRow(
+                          cells: [
+                            DataCell(Text('${good.goodsId}', style: textStyle)),
+                            DataCell(Text(good.area, style: textStyle)),
+                            DataCell(Text('${good.width}', style: textStyle)),
+                            DataCell(Text('${good.length}', style: textStyle)),
+                            DataCell(Text('${good.height}', style: textStyle)),
+                            DataCell(Text('${good.weight}g', style: textStyle)),
+                          ],
+                        );
+                      }),
                     ),
                   ),
                 ),
