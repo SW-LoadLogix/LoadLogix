@@ -20,7 +20,13 @@ public class DeliveryAreaEntity {
     private String areaName;
     @Column(name="convey_no")
     private int conveyNo;
-    public static DeliveryAreaEntity of(Integer id, String area_name, int conveyNo){
-        return new DeliveryAreaEntity(id, area_name, conveyNo);
+
+
+    @OneToOne(mappedBy = "deliveryAreaEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AreaReadyStatusEntity areaReadyStatusEntity;
+
+    public static DeliveryAreaEntity of(Integer id, String areaName, int conveyNo, AreaReadyStatusEntity areaReadyStatusEntity){
+        return new DeliveryAreaEntity(id, areaName, conveyNo, areaReadyStatusEntity);
     }
+
 }

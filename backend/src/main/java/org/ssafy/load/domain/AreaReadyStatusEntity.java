@@ -16,9 +16,22 @@ public class AreaReadyStatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private boolean state;
+    private Boolean state;
     private int count; // 구역당 할당된 개수
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
-    private DeliveryAreaEntity buildingAddressEntity;
+    private DeliveryAreaEntity deliveryAreaEntity;
+
+    public static AreaReadyStatusEntity of(Integer id, boolean state, int count, DeliveryAreaEntity deliveryAreaEntity){
+        return new AreaReadyStatusEntity(id, state ,count, deliveryAreaEntity);
+    }
+
 }
+
+
+
+
+
+
+

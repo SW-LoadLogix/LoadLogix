@@ -68,7 +68,8 @@ public class BuildingAddressEntity {
                 DeliveryAreaEntity.of(
                         deliveryAreaEntity.getId(),
                         deliveryAreaEntity.getAreaName(),
-                        deliveryAreaEntity.getConveyNo())
+                        deliveryAreaEntity.getConveyNo(),
+                        deliveryAreaEntity.getAreaReadyStatusEntity())
         );
     }
 
