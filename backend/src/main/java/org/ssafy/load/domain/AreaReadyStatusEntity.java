@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Entity
 @Table(name = "area_ready_status")
 @ToString
@@ -18,19 +16,22 @@ public class AreaReadyStatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private boolean state;
+    private Boolean state;
     private int count; // 구역당 할당된 개수
 
-    @OneToOne
-    @JoinColumn(name = "area_id") // 실제 데이터베이스의 외래키 컬럼명 지정
-    private DeliveryAreaEntity deliveryArea;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "area_id")
+    private DeliveryAreaEntity deliveryAreaEntity;
 
-    public static AreaReadyStatusEntity of(
-            Integer id,
-            boolean state,
-            int count,
-            DeliveryAreaEntity deliveryArea
-    ) {
-        return new AreaReadyStatusEntity(id, state, count, deliveryArea);
+    public static AreaReadyStatusEntity of(Integer id, boolean state, int count, DeliveryAreaEntity deliveryAreaEntity){
+        return new AreaReadyStatusEntity(id, state ,count, deliveryAreaEntity);
     }
+
 }
+
+
+
+
+
+
+
