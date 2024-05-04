@@ -10,6 +10,7 @@ import org.ssafy.load.dao.DeliveryAreaRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.ReadyStatusEntity;
 import org.ssafy.load.dto.request.ReadyAreaRequest;
+import org.ssafy.load.dto.response.StatusResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -36,18 +37,23 @@ public class ReadyStatusService {
         });
     }
 
-    public boolean setReadyCompletedWorker(Long workerId) {
+    @Transactional
+    public StatusResponse setReadyCompletedWorker(Long workerId) {
+
         return workerRepository.findById(workerId)
                 .map(workerEntity -> {
                     ReadyStatusEntity readyStatusEntity = workerEntity.getDeliveryArea().getReadyStatus();
                     if (readyStatusEntity == null) {
                         throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
                     }
+                    if(!readyStatusEntity.getAreaStatus()){
+                        return StatusResponse.of(false, "Not Ready");
+                    }
                     if (!readyStatusEntity.getWorkerState()) {
                         readyStatusRepository.save(readyStatusEntity.withUpdatedWorkerState(true));
-                        return true;
+                        return StatusResponse.of(false, "Loading Soon");
                     }
-                    return false;
+                    return StatusResponse.of(false, "Already Waiting");
                 })
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
     }

@@ -10,6 +10,7 @@ import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
+import org.ssafy.load.dto.response.StatusResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class WorkerController {
     }
 
     @PutMapping("/ready")
-    public Response<Boolean> setWorkerReady(@RequestHeader(name="Authorization") String token){
+    public Response<StatusResponse> setWorkerReady(@RequestHeader(name="Authorization") String token){
         Long workerId = jwtTokenProvider.getId(token);
         return Response.success(readyStatusService.setReadyCompletedWorker(workerId));
     }
