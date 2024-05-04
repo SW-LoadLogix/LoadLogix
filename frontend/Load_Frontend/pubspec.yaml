@@ -27,6 +27,7 @@ dependencies:
   syncfusion_flutter_datagrid: ^25.1.41
   url_launcher: ^6.1.12
   auto_route: ^7.2.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -34,11 +35,14 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   auto_route_generator: ^7.1.1
   build_runner: ^2.1.4
+  json_serializable: ^6.8.0
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/
+    - assets/3dmodels/3d-model.obj
+    - assets/textures/truck.mtl
 
   fonts:
     - family: AlumniSansPinstripe

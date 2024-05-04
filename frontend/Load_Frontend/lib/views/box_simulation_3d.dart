@@ -16,6 +16,7 @@ import 'package:sidebarx/sidebarx.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../components/3d_overlay_widget.dart';
+import '../services/goods_functions.dart';
 
 /* 메뉴 value */
 double heightFloorValuesLow = 0.0;
@@ -64,10 +65,6 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
                 child: IntrinsicHeight(
                   child: Column(
                     children: <Widget>[
-                      // ListTile(
-                      //     title: Text(
-                      //         "LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")
-                      // ),
                       SafeArea(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -198,150 +195,8 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
         )
       ]),
     );
-
-    // return Scaffold(
-    //   body: Column(
-    //     mainAxisAlignment: MainAxisAlignment.start, // 여기에 추가
-    //     children: <Widget>[
-    //       Expanded(
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.start,
-    //           children: <Widget>[
-    //             ListTile(title: Text("LOAD가 도출한 금일 배송 상품의 적제 최적화 시뮬레이션을 확인해보세요.")),
-    //             Row(
-    //               mainAxisAlignment: MainAxisAlignment.start,
-    //               children: <Widget>[
-    //                 Expanded(
-    //                     flex: 1,
-    //                     child: Column(
-    //                         mainAxisAlignment: MainAxisAlignment.start,
-    //                         children: <Widget>[
-    //                           SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),
-    //                           SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),
-    //                           SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),SfSlider(
-    //                             min: 0.0,
-    //                             max: 100.0,
-    //                             value: _value,
-    //                             interval: 20,
-    //                             showTicks: true,
-    //                             showLabels: true,
-    //                             enableTooltip: true,
-    //                             minorTicksPerInterval: 1,
-    //                             onChanged: (dynamic newValue) {
-    //                               setState(() {
-    //                                 _value = newValue;
-    //                               });
-    //                             },
-    //                           ),
-    //                         ]
-    //                     )
-    //                 ),
-    //                 Expanded(
-    //                   flex: 5,
-    //                   child: Container(
-    //                     height: screenSize.height - 48, // Adjust height if needed
-    //                     child: FallingBoxSimulate(),
-    //                   ),
-    //                 )
-    //               ],
-    //             ),
-    //           ],
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 }
-/*SizedBox(
-        width: screenSize.width,
-        height: screenSize.height,
-        child: FallingBoxSimulate(),
-      ),*/
 
 class Position {
   final double x;
@@ -425,6 +280,8 @@ class FallingBox {
   three.Vector3? endPosition;
   three.Vector3? boxSize;
 
+
+
   int floorHeight = 0;
   String boxColor = "green";
   bool isTransparent = false;
@@ -463,19 +320,6 @@ class FallingBox {
         isDone = true; // 끝 위치 도달 시 완료 처리
       }
     }
-
-    // if (currPosition != null && endPosition!= null){
-    //   if (currPosition!.y > endPosition!.y) {
-    //     currPosition!.y -= step;
-    //     if (currPosition!.y <= endPosition!.y) {
-    //       currPosition!.y = endPosition!.y;
-    //       isDone = true;  // 끝 위치 도달 시 완료 처리
-    //     }
-    //   } else {
-    //     currPosition!.y = endPosition!.y;
-    //     isDone = true;  // 끝 위치 도달 시 완료 처리
-    //   }
-    // }
   }
 }
 
@@ -865,6 +709,8 @@ class _MyAppState extends State<FallingBoxSimulate>
 
   late three.BoxGeometry geometry = three.BoxGeometry(1, 1, 1);
 
+  GoodsService goodsService = GoodsService();
+
   makeInstanced(geometry) {
     matrix = three.Matrix4();
     //material = three.MeshNormalMaterial();
@@ -927,33 +773,51 @@ class _MyAppState extends State<FallingBoxSimulate>
         geometry, transparentEdgeMaterial, size * size * size);
 
     if (!isTestingDebug) {
-      for (int x = 0; x < size; x++) {
-        for (int y = 0; y < size; y++) {
-          for (int z = 0; z < size; z++) {
-            /* 수정된 좌표 계산 */
-            var posX = 25 + ((x - size * 0.5 + 0.5) * spacing);
-            var posY = ((y - size * 0.5 + 0.5) * spacing);
-            var posZ = ((z - size * 0.5 + 0.5) * spacing);
-            // var posX = ((x - size * 0.5 + 0.5) * spacing);
-            // var posY = 25 + ((y - size * 0.5 + 0.5) * spacing);
-            // var posZ = ((z - size * 0.5 + 0.5) * spacing);
-            //matrix.setPosition(posX, posY, posZ);
+      var goodsList = goodsService.getGoods();
 
-            var fallingBox = FallingBox(
-                currPosition: three.Vector3(posX, posY, posZ),
-                startPosition: three.Vector3(posX, posY, posZ),
-                endPosition: three.Vector3(posX - 25, posY, posZ),
-                // currPosition: three.Vector3(posX, posY, posZ),
-                // startPosition: three.Vector3(posX, posY, posZ),
-                // endPosition: three.Vector3(posX, posY - 25, posZ),
-                boxSize: three.Vector3(1, 1, 1)
-                //boxSize: randomVector3()
+      goodsList.then((value) {
+        for (var goods in value) {
+          var posX = 25 + ((goods.position.x) * spacing);
+          var posY = ((goods.position.y) * spacing);
+          var posZ = ((goods.position.z) * spacing);
 
-                );
-            boxes.add(fallingBox);
-          }
+          var fallingBox = FallingBox(
+              currPosition: three.Vector3(posX, posY, posZ),
+              startPosition: three.Vector3(posX, posY, posZ),
+              endPosition: three.Vector3(posX - 25, posY, posZ),
+              boxSize: three.Vector3(1, 1, 1));
+
+          boxes.add(fallingBox);
         }
-      }
+      });
+
+      // for (int x = 0; x < size; x++) {
+      //   for (int y = 0; y < size; y++) {
+      //     for (int z = 0; z < size; z++) {
+      //       /* 수정된 좌표 계산 */
+      //       var posX = 25 + ((x - size * 0.5 + 0.5) * spacing);
+      //       var posY = ((y - size * 0.5 + 0.5) * spacing);
+      //       var posZ = ((z - size * 0.5 + 0.5) * spacing);
+      //       // var posX = ((x - size * 0.5 + 0.5) * spacing);
+      //       // var posY = 25 + ((y - size * 0.5 + 0.5) * spacing);
+      //       // var posZ = ((z - size * 0.5 + 0.5) * spacing);
+      //       //matrix.setPosition(posX, posY, posZ);
+      //
+      //       var fallingBox = FallingBox(
+      //           currPosition: three.Vector3(posX, posY, posZ),
+      //           startPosition: three.Vector3(posX, posY, posZ),
+      //           endPosition: three.Vector3(posX - 25, posY, posZ),
+      //           // currPosition: three.Vector3(posX, posY, posZ),
+      //           // startPosition: three.Vector3(posX, posY, posZ),
+      //           // endPosition: three.Vector3(posX, posY - 25, posZ),
+      //           boxSize: three.Vector3(1, 1, 1)
+      //           //boxSize: randomVector3()
+      //
+      //           );
+      //       boxes.add(fallingBox);
+      //     }
+      //   }
+      // }
       //size = 2;
     } else {
       for (int i = 0; i < boxesContainer.boxes.length; i++) {
