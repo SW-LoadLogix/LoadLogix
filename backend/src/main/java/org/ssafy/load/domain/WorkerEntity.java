@@ -31,8 +31,6 @@ public class WorkerEntity {
     @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeliveryAreaEntity deliveryArea;
 
-    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private WorkerReadyStatusEntity workerReadyStatus;
 
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LoadTaskEntity> loadTaskEntities = new ArrayList<>();
@@ -44,9 +42,8 @@ public class WorkerEntity {
             String name,
             CarEntity car,
             DeliveryAreaEntity deliveryArea,
-            WorkerReadyStatusEntity workerReadyStatus,
             List<LoadTaskEntity> loadTaskEntities
     ) {
-        return new WorkerEntity(id, loginId, password, name, car, deliveryArea, workerReadyStatus, loadTaskEntities);
+        return new WorkerEntity(id, loginId, password, name, car, deliveryArea, loadTaskEntities);
     }
 }
