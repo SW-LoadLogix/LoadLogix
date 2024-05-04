@@ -29,12 +29,11 @@ public class WorkerController {
         return Response.success(workerService.login(loginRequest));
     }
 
-    // Todo : 예지, 정인 token에서 worker id 파싱되면 아래 코드 수정
     @PutMapping("/ready")
     public Response<Boolean> setWorkerReady(
-            //@RequestHeader(name="Authorized") String token
+            @RequestHeader(name="Authorized") String token
             ){
-        //Long workerId = jwtTokenProvider.getWorkerId(token);
-        return Response.success(workerService.setReadyCompletedWorker(1L));
+        Long id = jwtTokenProvider.getId(token);
+        return Response.success(workerService.setReadyCompletedWorker(id));
     }
 }
