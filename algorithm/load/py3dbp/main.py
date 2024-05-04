@@ -11,7 +11,7 @@ DEFAULT_NUMBER_OF_DECIMALS = 0
 
 
 class Item:
-    def __init__(self, name, WHD, weight, target, floor):
+    def __init__(self, name, WHD, weight, target, type, floor=0):
         self.name = name
         self.width = WHD[0]
         self.height = WHD[1]
@@ -20,6 +20,7 @@ class Item:
         self.position = START_POSITION
         self.number_of_decimals = DEFAULT_NUMBER_OF_DECIMALS
         self.target = target
+        self.type = type
         self.floor = floor
 
     def formatNumbers(self, number_of_decimals):
@@ -31,7 +32,7 @@ class Item:
         self.number_of_decimals = number_of_decimals
 
     def getVolume(self):
-        return set2Decimal(self.width * self.height * self.depth, self.number_of_decimals)
+        return set2Decimal(self.width * self.height, self.number_of_decimals)
 
     def getMaxArea(self):
         a = sorted([self.width, self.height, self.depth], reverse=True) if self.updown == True else [self.width,
@@ -149,8 +150,6 @@ class Packer:
             if not response:
                 bin.unfitted_items.append(item)
             return
-        if(item.name == 'r'):
-            print("hello")
         sameItem = []
         for bin_item in bin.items:
             if bin_item.target == item.target:
@@ -168,10 +167,10 @@ class Packer:
                         print(ib.name, "의 앞으로", item.name, "를 적재")
                         pivot = [ib.position[0], ib.position[1] + h, ib.position[2]]
                     elif axis == Axis.DEPTH:
-                        print(ib.name, "의 위로", item.name, "를 적재, 밑의 공간 : ", ib.target, "쌓으려는 공간: ", item.target)
+                        print(ib.name, "의 위로", item.name)
                         pivot = [ib.position[0], ib.position[1], ib.position[2] + d]
                     elif axis == Axis.LEFT:
-                        print(ib.name, "의 왼쪽으로", item.name, "를 적재, 밑의 공간 : ", ib.target, "쌓으려는 공간: ", item.target)
+                        print(ib.name, "의 왼쪽으로", item.name)
                         pivot = [ib.position[0]-item.width, ib.position[1] , ib.position[2]]
 
                     if bin.putItem(item, pivot, ib, axis):
@@ -262,6 +261,11 @@ class Painter:
             p6 = Rectangle((x, z), dx, dz, fc=color, ec='black', alpha=alpha)
 
             ax.add_patch(p)
+            ax.add_patch(p2)
+            ax.add_patch(p3)
+            ax.add_patch(p4)
+            ax.add_patch(p5)
+            ax.add_patch(p6)
 
             if text != "":
                 ax.text((x + dx / 2), (y + dy / 2), (z + dz / 2), str(text), color='black', fontsize=fontsize,
@@ -290,7 +294,12 @@ class Painter:
         for item in self.items:
             x, y, z = item.position
             [w, h, d] = item.getDimension()
-            color = "#FFAADD"
+            if(item.floor <= 1.0):
+                color = "#0000FF"
+            elif(item.floor<=2.0):
+                color = "#00FF00"
+            else:
+                color = "#FF0000"
             text = item.name if write_num else ""
 
             self._plotCube(axGlob, float(x), float(y), float(z), float(w), float(h), float(d), color=color, mode=2,
@@ -302,7 +311,8 @@ class Painter:
         self.setAxesEqual(axGlob)
 
         # Adjust view angle
-        axGlob.view_init(elev=90, azim=0)  # 예시: elev=30, azim=60 값을 원하는 대로 변경
+        # axGlob.view_init(elev=0, azim=90)  # 예시: elev=30, azim=60 값을 원하는 대로 변경
+        axGlob.view_init(elev=30, azim=60)
         return plt
 
     def setAxesEqual(self, ax):
