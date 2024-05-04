@@ -20,7 +20,7 @@ public class AreaReadyStatusService {
     @Transactional
     public void setReadyCompletedArea(ReadyAreaRequest readyAreaRequest){
         deliveryAreaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((deliveryAreaEntity) -> {
-            AreaReadyStatusEntity areaReadyStatusEntity = deliveryAreaEntity.getAreaReadyStatusEntity();
+            AreaReadyStatusEntity areaReadyStatusEntity = deliveryAreaEntity.getAreaReadyStatus();
 
             AreaReadyStatus areaReadyStatus = AreaReadyStatus.from(areaReadyStatusEntity);
 

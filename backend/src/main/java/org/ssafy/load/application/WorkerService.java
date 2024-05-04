@@ -29,7 +29,7 @@ public class WorkerService {
         }
         return SignUpResponse.from(workerRepository.save(
             WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                signUpRequest.name(), null)));
+                signUpRequest.name(), null, null, null, null)));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {

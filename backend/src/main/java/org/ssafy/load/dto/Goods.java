@@ -24,7 +24,7 @@ public record Goods(
             entity.getWeight(),
             entity.getDetailAddress(),
             entity.getDetailJuso(),
-            entity.getOrder(),
+            entity.getOrdering(),
             entity.getX(),
             entity.getY(),
             entity.getZ()

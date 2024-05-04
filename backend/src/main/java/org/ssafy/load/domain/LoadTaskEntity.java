@@ -22,7 +22,7 @@ public class LoadTaskEntity {
     private Long id;
     private boolean complete;
 
-    @OneToMany(mappedBy = "load_task", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
     @ManyToOne

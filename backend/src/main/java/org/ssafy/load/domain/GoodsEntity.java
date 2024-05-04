@@ -22,7 +22,7 @@ public class GoodsEntity {
     private int weight;
     private String detailAddress;
     private String detailJuso;
-    private int order;
+    private int ordering;
     private double x;
     private double y;
     private double z;
@@ -53,7 +53,7 @@ public class GoodsEntity {
             int weight,
             String detailAddress,
             String detailJuso,
-            int order,
+            int ordering,
             int x,
             int y,
             int z,
@@ -62,6 +62,6 @@ public class GoodsEntity {
             LoadTaskEntity loadTask,
             LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, detailJuso, order, x, y, z, boxType, buildingAddress, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, buildingAddress, loadTask, createdAt);
     }
 }

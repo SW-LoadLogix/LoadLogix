@@ -13,11 +13,11 @@ public record DeliveryArea(
     }
 
     public static DeliveryArea from(DeliveryAreaEntity entity){
-        return DeliveryArea.of(entity.getId(), entity.getAreaName(), entity.getConveyNo(), AreaReadyStatus.from(entity.getAreaReadyStatusEntity()));
+        return DeliveryArea.of(entity.getId(), entity.getAreaName(), entity.getConveyNo(), AreaReadyStatus.from(entity.getAreaReadyStatus()));
     }
 
     public DeliveryAreaEntity toEntity(AreaReadyStatusEntity areaReadyStatusEntity){
-        return DeliveryAreaEntity.of(this.id, this.areaName, this.conveyNo, areaReadyStatusEntity);
+        return DeliveryAreaEntity.of(this.id, this.areaName, this.conveyNo, null, areaReadyStatusEntity, null);
     }
 
 }
