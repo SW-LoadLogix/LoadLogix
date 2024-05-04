@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.ReadyStatusRepository;
-import org.ssafy.load.dao.DeliveryAreaRepository;
+import org.ssafy.load.dao.AreaRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.ReadyStatusEntity;
 import org.ssafy.load.dto.request.ReadyAreaRequest;
@@ -16,13 +16,13 @@ import org.ssafy.load.dto.response.StatusResponse;
 @RequiredArgsConstructor
 public class ReadyStatusService {
     private final ReadyStatusRepository readyStatusRepository;
-    private final DeliveryAreaRepository deliveryAreaRepository;
+    private final AreaRepository areaRepository;
     private final WorkerRepository workerRepository;
 
     @Transactional
     public void setReadyCompletedArea(ReadyAreaRequest readyAreaRequest){
-        deliveryAreaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((deliveryAreaEntity) -> {
-            ReadyStatusEntity readyStatusEntity = deliveryAreaEntity.getReadyStatus();
+        areaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((areaEntity) -> {
+            ReadyStatusEntity readyStatusEntity = areaEntity.getReadyStatus();
 
             if (readyStatusEntity == null) {
                 throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -42,7 +42,7 @@ public class ReadyStatusService {
 
         return workerRepository.findById(workerId)
                 .map(workerEntity -> {
-                    ReadyStatusEntity readyStatusEntity = workerEntity.getDeliveryArea().getReadyStatus();
+                    ReadyStatusEntity readyStatusEntity = workerEntity.getArea().getReadyStatus();
                     if (readyStatusEntity == null) {
                         throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
                     }

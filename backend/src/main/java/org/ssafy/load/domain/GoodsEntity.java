@@ -32,8 +32,8 @@ public class GoodsEntity {
     private BoxTypeEntity boxType;
 
     @ManyToOne
-    @JoinColumn(name = "building_address_id")
-    private BuildingAddressEntity buildingAddress;
+    @JoinColumn(name = "building_id")
+    private BuildingEntity building;
 
     @ManyToOne
     @JoinColumn(name = "load_task_id")
@@ -58,10 +58,10 @@ public class GoodsEntity {
             int y,
             int z,
             BoxTypeEntity boxType,
-            BuildingAddressEntity buildingAddress,
+            BuildingEntity building,
             LoadTaskEntity loadTask,
             LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, buildingAddress, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, building, loadTask, createdAt);
     }
 }
