@@ -1,12 +1,6 @@
 package org.ssafy.load.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,17 +22,13 @@ public class CarEntity {
     private int width;
     private String type;
 
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
-    private WorkerEntity worker;
-
     public static CarEntity of(
-        Long id,
-        int height,
-        int length,
-        int width,
-        String type,
-        WorkerEntity worker
+            Long id,
+            int height,
+            int length,
+            int width,
+            String type
     ) {
-        return new CarEntity(id, height, length, width, type, worker);
+        return new CarEntity(id, height, length, width, type);
     }
 }

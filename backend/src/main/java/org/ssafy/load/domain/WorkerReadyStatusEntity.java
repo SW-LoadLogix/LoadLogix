@@ -15,19 +15,27 @@ import lombok.ToString;
 public class WorkerReadyStatusEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean state;
+    private Boolean state;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "worker_id")
     private WorkerEntity worker;
 
     public static WorkerReadyStatusEntity of(
             Long id,
-            boolean state,
+            Boolean state,
             WorkerEntity worker
     ){
         return new WorkerReadyStatusEntity(id, state, worker);
     }
+
+    public WorkerReadyStatusEntity withUpdateState(Boolean state){
+        return WorkerReadyStatusEntity.of(
+                this.id,
+                state,
+                this.worker
+        );
+    };
 }

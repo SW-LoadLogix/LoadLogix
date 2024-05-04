@@ -26,17 +26,14 @@ public class BoxTypeEntity {
     private int length;
     private int width;
 
-    @OneToOne(mappedBy = "boxType", cascade = CascadeType.ALL)
-    private GoodsEntity goods;
 
     public static BoxTypeEntity of(
             Long id,
             BoxType type,
             int height,
             int length,
-            int width,
-            GoodsEntity goods
+            int width
     ) {
-        return new BoxTypeEntity(id, type, height, length, width, goods);
+        return new BoxTypeEntity(id, type, height, length, width);
     }
 }
