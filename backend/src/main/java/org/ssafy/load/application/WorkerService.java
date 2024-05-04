@@ -41,7 +41,7 @@ public class WorkerService {
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
         }
         return LoginResponse.of(
-            jwtTokenProvider.generateToken(worker.get().getLoginId(), worker.get().getName(),
+            jwtTokenProvider.generateToken(worker.get().getId(), worker.get().getName(),
                 "worker"));
     }
 }
