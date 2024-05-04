@@ -21,6 +21,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const BoxSimulation3dPage(),
       );
     },
+    BoxSimulation3dSecondRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BoxSimulation3dSecondPage(),
+      );
+    },
     DeliveryListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -70,6 +76,20 @@ class BoxSimulation3dRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'BoxSimulation3dRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BoxSimulation3dSecondPage]
+class BoxSimulation3dSecondRoute extends PageRouteInfo<void> {
+  const BoxSimulation3dSecondRoute({List<PageRouteInfo>? children})
+      : super(
+          BoxSimulation3dSecondRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BoxSimulation3dSecondRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

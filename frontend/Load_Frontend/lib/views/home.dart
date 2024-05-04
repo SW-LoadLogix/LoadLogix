@@ -54,6 +54,13 @@ class HomePage extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        AutoRouter.of(context).push(BoxSimulation3dSecondRoute());
+                        //Navigator.pushNamed(context, '/box-simulation');
+                      },
+                      child: const Text('박스 시뮬레이션 페이지2로 이동'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
                         AutoRouter.of(context)
                             .push(DeliverySimulationMapRoute());
                         // Navigator.pushNamed(context, '/delivery-simulation');

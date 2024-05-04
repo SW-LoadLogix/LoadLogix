@@ -8,7 +8,6 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.3.3 <4.0.0'
 
-
 dependencies:
   flutter:
     sdk: flutter
@@ -40,3 +39,5 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/3dmodels/3d-model.obj
+    - assets/textures/truck.mtl

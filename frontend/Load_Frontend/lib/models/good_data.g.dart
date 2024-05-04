@@ -6,7 +6,7 @@ part of 'good_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GoodData _$GoodDataFromJson(Map<String, dynamic> json) => GoodData(
+GoodsData _$GoodsDataFromJson(Map<String, dynamic> json) => GoodsData(
       goodsId: (json['goodsId'] as num).toInt(),
       type: json['type'] as String,
       position: Vector3.fromJson(json['position'] as Map<String, dynamic>),
@@ -15,7 +15,7 @@ GoodData _$GoodDataFromJson(Map<String, dynamic> json) => GoodData(
       detailAddress: json['detailAddress'] as String,
     );
 
-Map<String, dynamic> _$GoodDataToJson(GoodData instance) => <String, dynamic>{
+Map<String, dynamic> _$GoodsDataToJson(GoodsData instance) => <String, dynamic>{
       'goodsId': instance.goodsId,
       'type': instance.type,
       'position': instance.position,

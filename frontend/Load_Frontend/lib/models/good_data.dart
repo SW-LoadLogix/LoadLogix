@@ -6,8 +6,8 @@ import 'package:load_frontend/models/vector3.dart';
 part 'good_data.g.dart';
 
 @JsonSerializable()
-class GoodData{
-  const GoodData({
+class GoodsData{
+  const GoodsData({
     required this.goodsId,
     required this.type,
     required this.position,
@@ -25,10 +25,10 @@ class GoodData{
   final String detailAddress;
 
   // JSON 맵핑 메소드
-  factory GoodData.fromJson(Map<String, dynamic> json) => _$GoodDataFromJson(json);
-  Map<String, dynamic> toJson() => _$GoodDataToJson(this);
+  factory GoodsData.fromJson(Map<String, dynamic> json) => _$GoodsDataFromJson(json);
+  Map<String, dynamic> toJson() => _$GoodsDataToJson(this);
 
   @override
-  String toString() => 'GoodData($goodsId, $type, $position, $weight, $areaId, $detailAddress)';
+  String toString() => 'GoodsData($goodsId, $type, $position, $weight, $areaId, $detailAddress)';
 
 }
