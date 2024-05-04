@@ -9,7 +9,7 @@ import org.ssafy.load.dao.AreaReadyStatusRepository;
 import org.ssafy.load.dao.DeliveryAreaRepository;
 import org.ssafy.load.domain.AreaReadyStatusEntity;
 import org.ssafy.load.dto.AreaReadyStatus;
-import org.ssafy.load.dto.response.ReadyAreaRequest;
+import org.ssafy.load.dto.request.ReadyAreaRequest;
 
 @Service
 @RequiredArgsConstructor
