@@ -13,7 +13,7 @@ import org.ssafy.load.dto.request.ReadyAreaRequest;
 
 @Service
 @RequiredArgsConstructor
-public class AreaReadStatusService {
+public class AreaReadyStatusService {
     private final AreaReadyStatusRepository areaReadyStatusRepository;
     private final DeliveryAreaRepository deliveryAreaRepository;
 

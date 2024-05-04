@@ -2,7 +2,7 @@ package org.ssafy.load.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.ssafy.load.application.AreaReadStatusService;
+import org.ssafy.load.application.AreaReadyStatusService;
 import org.ssafy.load.application.BuildingAddressService;
 import org.ssafy.load.application.DeliveryService;
 import org.ssafy.load.common.dto.Response;
@@ -17,7 +17,7 @@ public class SimulationController {
 
     public final BuildingAddressService buildingAddressService;
     public final DeliveryService deliveryService;
-    public final AreaReadStatusService areaReadStatusService;
+    public final AreaReadyStatusService areaReadyStatusService;
 
 
 
@@ -28,7 +28,7 @@ public class SimulationController {
 
     @PutMapping("/ready")
     public Response<Void> setReadyCompletedArea(@RequestBody ReadyAreaRequest readyAreaRequest) {
-        areaReadStatusService.setReadyCompletedArea(readyAreaRequest);
+        areaReadyStatusService.setReadyCompletedArea(readyAreaRequest);
         return Response.success();
     }
 
