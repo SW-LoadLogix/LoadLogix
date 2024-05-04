@@ -29,7 +29,7 @@ public class DeliveryAreaEntity {
     private WorkerEntity worker ;
 
     @OneToOne(mappedBy = "deliveryArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AreaReadyStatusEntity areaReadyStatus;
+    private ReadyStatusEntity readyStatus;
 
     @OneToMany(mappedBy = "deliveryArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BuildingAddressEntity> buildingAddressEntities = new ArrayList<>();
@@ -39,9 +39,9 @@ public class DeliveryAreaEntity {
             String areaName,
             int conveyNo,
             WorkerEntity worker,
-            AreaReadyStatusEntity areaReadyStatus,
+            ReadyStatusEntity readyStatus,
             List<BuildingAddressEntity> buildingAddressEntities){
-        return new DeliveryAreaEntity(id, areaName, conveyNo, worker, areaReadyStatus, buildingAddressEntities);
+        return new DeliveryAreaEntity(id, areaName, conveyNo, worker, readyStatus, buildingAddressEntities);
     }
 
 }
