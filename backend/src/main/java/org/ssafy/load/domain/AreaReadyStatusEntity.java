@@ -21,10 +21,10 @@ public class AreaReadyStatusEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
-    private DeliveryAreaEntity deliveryAreaEntity;
+    private DeliveryAreaEntity deliveryArea;
 
-    public static AreaReadyStatusEntity of(Integer id, boolean state, int count, DeliveryAreaEntity deliveryAreaEntity){
-        return new AreaReadyStatusEntity(id, state ,count, deliveryAreaEntity);
+    public static AreaReadyStatusEntity of(Integer id, boolean state, int count, DeliveryAreaEntity deliveryArea){
+        return new AreaReadyStatusEntity(id, state ,count, deliveryArea);
     }
 
 }
