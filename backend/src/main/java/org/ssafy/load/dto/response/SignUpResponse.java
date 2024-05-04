@@ -15,7 +15,7 @@ public record SignUpResponse(
     public static SignUpResponse from(WorkerEntity entity) {
         return SignUpResponse.of(
             entity.getId(),
-            entity.getUserId(),
+            entity.getLoginId(),
             entity.getName()
         );
     }
