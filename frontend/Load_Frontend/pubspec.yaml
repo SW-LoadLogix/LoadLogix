@@ -21,20 +21,22 @@ dependencies:
   flutter_gl: ^0.0.21
   provider: ^6.0.5
   intl: ^0.19.0
+  flutter_staggered_grid_view: ^0.4.0
 
   url_strategy: ^0.2.0
   syncfusion_flutter_sliders: ^25.1.41
   syncfusion_flutter_datagrid: ^25.1.41
   url_launcher: ^6.1.12
-  auto_route: ^7.2.0
   json_annotation: ^4.9.0
+  auto_route: ^8.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  auto_route_generator: ^7.1.1
+  auto_route_generator: ^8.0.0
   build_runner: ^2.1.4
+  fl_chart: ^0.36.4
   json_serializable: ^6.8.0
 flutter:
   uses-material-design: true
@@ -51,3 +53,6 @@ flutter:
     - family: IBMPlexMono
       fonts:
         - asset: assets/fonts/IBMPlexMono-Medium.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito-Regular.ttf

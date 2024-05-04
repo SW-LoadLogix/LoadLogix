@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../constaints.dart';
+
 var loginTheme = ThemeData(
-  primaryColor: Color.fromARGB(255, 0x3A,0xB9,0xFF),//Colors.blue,
-  colorScheme: const ColorScheme.light(primary:  Color.fromARGB(255, 0x3A,0xB9,0xFF)),//const ColorScheme.light(primary: Colors.blue),
-  useMaterial3: true,
+  fontFamily: 'Nunito',
+  primaryColor: primary,
+  colorScheme: const ColorScheme.light(primary:  primary),
+  textTheme: TextTheme().apply(bodyColor: textColor),
+  primaryColorDark: primaryAncient,
+  primaryColorLight: primaryLight,
+
+  //primaryColor: primary,//Color.fromARGB(255, 0x3A,0xB9,0xFF),//Colors.blue,
+  //colorScheme: const ColorScheme.light(primary:  primary),//Color.fromARGB(255, 0x3A,0xB9,0xFF)),//const ColorScheme.light(primary: Colors.blue),
+  //useMaterial3: true,
   // textTheme: const TextTheme(
   //     decorationColor: Color.fromARGB(255, 0, 0, 255),
   // ),

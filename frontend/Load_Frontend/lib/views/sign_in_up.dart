@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:load_frontend/animated_login/animated_login.dart';
 
+import '../constaints.dart';
 import '../services/login_functions.dart';
 import '../utils/dialog_builders.dart';
 
@@ -105,12 +106,12 @@ class _LoginScreenState extends State<SignInUpPage> {
           languageDialogTheme: LanguageDialogTheme(
               optionMargin: EdgeInsets.symmetric(horizontal: 80)),
         ),
-        loadingSocialButtonColor: Color.fromARGB(255, 0x3A,0xB9,0xFF),
+        loadingSocialButtonColor: primary,//Color.fromARGB(255, 0x3A,0xB9,0xFF),
         //Colors.blue,
         loadingButtonColor: Colors.white,
         privacyPolicyStyle: const TextStyle(color: Colors.black87),
         privacyPolicyLinkStyle: const TextStyle(
-            color: Color.fromARGB(255, 0x3A,0xB9,0xFF), //Colors.blue,
+            color: primary,//Color.fromARGB(255, 0x3A,0xB9,0xFF), //Colors.blue,
             decoration: TextDecoration.underline),
       );
 
@@ -120,12 +121,12 @@ class _LoginScreenState extends State<SignInUpPage> {
   LoginViewTheme get _mobileTheme =>
       LoginViewTheme(
         // showLabelTexts: false,
-        backgroundColor: const Color.fromARGB(255, 0x3A,0xB9,0xFF),
+        backgroundColor: primary,//const Color.fromARGB(255, 0x3A,0xB9,0xFF),
         //Colors.blue, // const Color(0xFF6666FF),
         formFieldBackgroundColor: Colors.white,
         formWidthRatio: 60,
         actionButtonStyle: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all(Colors.blue),
+          foregroundColor: MaterialStateProperty.all(primary),
         ),
         animatedComponentOrder: const <AnimatedComponent>[
           /*AnimatedComponent(
