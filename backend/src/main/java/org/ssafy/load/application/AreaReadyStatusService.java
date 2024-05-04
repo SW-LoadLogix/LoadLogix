@@ -23,7 +23,9 @@ public class AreaReadyStatusService {
             AreaReadyStatusEntity areaReadyStatusEntity = deliveryAreaEntity.getAreaReadyStatus();
 
             AreaReadyStatus areaReadyStatus = AreaReadyStatus.from(areaReadyStatusEntity);
-
+            if (areaReadyStatus == null) {
+                throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+            }
             if (areaReadyStatus.state()) {
                 return;
             }

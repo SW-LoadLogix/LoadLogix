@@ -1,10 +1,7 @@
 package org.ssafy.load.api;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.LoginRequest;
@@ -12,6 +9,7 @@ import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
+import org.ssafy.load.security.JwtTokenProvider;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,6 +17,7 @@ import org.ssafy.load.dto.response.WorkerResponse;
 public class WorkerController {
 
     public final WorkerService workerService;
+    public final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     public Response<SignUpResponse> signup(@RequestBody SignUpRequest signupRequest) {
@@ -28,5 +27,14 @@ public class WorkerController {
     @PostMapping("/login")
     public Response<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         return Response.success(workerService.login(loginRequest));
+    }
+
+    // Todo : 예지, 정인 token에서 worker id 파싱되면 아래 코드 수정
+    @PutMapping("/ready")
+    public Response<Boolean> setWorkerReady(
+            //@RequestHeader(name="Authorized") String token
+            ){
+        //Long workerId = jwtTokenProvider.getWorkerId(token);
+        return Response.success(workerService.setReadyCompletedWorker(1L));
     }
 }

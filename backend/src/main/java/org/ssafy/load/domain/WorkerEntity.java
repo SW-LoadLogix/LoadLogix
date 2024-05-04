@@ -24,28 +24,28 @@ public class WorkerEntity {
     private String password;
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private CarEntity car;
 
-    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeliveryAreaEntity deliveryArea;
 
-    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WorkerReadyStatusEntity workerReadyStatus;
 
-    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LoadTaskEntity> loadTaskEntities = new ArrayList<>();
 
     public static WorkerEntity of(
-        Long id,
-        String loginId,
-        String password,
-        String name,
-        CarEntity car,
-        DeliveryAreaEntity deliveryArea,
-        WorkerReadyStatusEntity workerReadyStatus,
-        List<LoadTaskEntity> loadTaskEntities
+            Long id,
+            String loginId,
+            String password,
+            String name,
+            CarEntity car,
+            DeliveryAreaEntity deliveryArea,
+            WorkerReadyStatusEntity workerReadyStatus,
+            List<LoadTaskEntity> loadTaskEntities
     ) {
         return new WorkerEntity(id, loginId, password, name, car, deliveryArea, workerReadyStatus, loadTaskEntities);
     }

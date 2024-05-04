@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class LoadTaskEntity {
     @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
     private WorkerEntity worker;
 
