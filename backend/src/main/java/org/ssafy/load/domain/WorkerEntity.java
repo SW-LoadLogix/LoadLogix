@@ -29,7 +29,7 @@ public class WorkerEntity {
     private CarEntity car;
 
     @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private DeliveryAreaEntity deliveryArea;
+    private AreaEntity area;
 
 
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,9 +41,9 @@ public class WorkerEntity {
             String password,
             String name,
             CarEntity car,
-            DeliveryAreaEntity deliveryArea,
+            AreaEntity area,
             List<LoadTaskEntity> loadTaskEntities
     ) {
-        return new WorkerEntity(id, loginId, password, name, car, deliveryArea, loadTaskEntities);
+        return new WorkerEntity(id, loginId, password, name, car, area, loadTaskEntities);
     }
 }

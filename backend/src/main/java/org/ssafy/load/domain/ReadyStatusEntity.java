@@ -23,17 +23,17 @@ public class ReadyStatusEntity {
     private Boolean workerState;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
-    private DeliveryAreaEntity deliveryArea;
+    private AreaEntity area;
 
-    public static ReadyStatusEntity of(Integer id, Boolean areaStatus, int count, Boolean workerState ,DeliveryAreaEntity deliveryArea){
-        return new ReadyStatusEntity(id, areaStatus ,count, workerState, deliveryArea);
+    public static ReadyStatusEntity of(Integer id, Boolean areaStatus, int count, Boolean workerState ,AreaEntity area){
+        return new ReadyStatusEntity(id, areaStatus ,count, workerState, area);
     }
 
     public ReadyStatusEntity withUpdatedAreaStateAndCount(boolean areaStatus, int count) {
-        return new ReadyStatusEntity(this.id, areaStatus, count, this.workerState, this.deliveryArea);
+        return new ReadyStatusEntity(this.id, areaStatus, count, this.workerState, this.area);
     }
     public ReadyStatusEntity withUpdatedWorkerState(boolean workerStatus) {
-        return new ReadyStatusEntity(this.id, this.areaStatus, this.count, workerStatus, this.deliveryArea);
+        return new ReadyStatusEntity(this.id, this.areaStatus, this.count, workerStatus, this.area);
     }
 }
 

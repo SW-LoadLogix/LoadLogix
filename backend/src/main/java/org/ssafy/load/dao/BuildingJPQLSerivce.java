@@ -1,4 +1,4 @@
-package org.ssafy.load.application;
+package org.ssafy.load.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ public class BuildingJPQLSerivce {
     private EntityManager entityManager;
 
     public List<Object[]> getBuildingCountsByArea() {
-        String jpql = "SELECT ba.deliveryAreaEntity.id, COUNT( ba.deliveryAreaEntity.id) FROM BuildingAddressEntity ba GROUP BY ba.deliveryAreaEntity.id";
+        String jpql = "SELECT ba.areaEntity.id, COUNT( ba.areaEntity.id) FROM BuildingEntity ba GROUP BY ba.areaEntity.id";
         return entityManager.createQuery(jpql).getResultList();
     }
 }
