@@ -1,5 +1,6 @@
 package org.ssafy.load.application;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
@@ -46,8 +47,8 @@ public class WorkerService {
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
         }
         return LoginResponse.of(
-                jwtTokenProvider.generateToken(worker.get().getLoginId(), worker.get().getName(),
-                        "worker"));
+            jwtTokenProvider.generateToken(worker.get().getId(), worker.get().getName(),
+                "worker"));
     }
 
     public boolean setReadyCompletedWorker(Long workerId) {
