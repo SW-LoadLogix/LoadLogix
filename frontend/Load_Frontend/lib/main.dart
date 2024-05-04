@@ -18,12 +18,6 @@ class MyApp extends StatelessWidget {
     AppRouter appRouter = AppRouter();
     return MaterialApp.router(
       theme:loginTheme,
-      // ThemeData(
-      //     fontFamily: 'Nunito',
-      //     primaryColor: primary,
-      //     colorScheme: const ColorScheme.light(primary:  primary),
-      //     textTheme: TextTheme().apply(bodyColor: textColor)
-      // ),
       routerConfig: appRouter.config(),
     );
   }
