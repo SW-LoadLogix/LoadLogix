@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "delivery_area")
+@Table(name = "area")
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryAreaEntity {
+public class AreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,20 +28,20 @@ public class DeliveryAreaEntity {
     @JoinColumn(name = "worker_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private WorkerEntity worker ;
 
-    @OneToOne(mappedBy = "deliveryArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AreaReadyStatusEntity areaReadyStatus;
+    @OneToOne(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ReadyStatusEntity readyStatus;
 
-    @OneToMany(mappedBy = "deliveryArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BuildingAddressEntity> buildingAddressEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<BuildingEntity> buildingEntities = new ArrayList<>();
 
-    public static DeliveryAreaEntity of(
+    public static AreaEntity of(
             Integer id,
             String areaName,
             int conveyNo,
             WorkerEntity worker,
-            AreaReadyStatusEntity areaReadyStatus,
-            List<BuildingAddressEntity> buildingAddressEntities){
-        return new DeliveryAreaEntity(id, areaName, conveyNo, worker, areaReadyStatus, buildingAddressEntities);
+            ReadyStatusEntity readyStatus,
+            List<BuildingEntity> buildingEntities){
+        return new AreaEntity(id, areaName, conveyNo, worker, readyStatus, buildingEntities);
     }
 
 }

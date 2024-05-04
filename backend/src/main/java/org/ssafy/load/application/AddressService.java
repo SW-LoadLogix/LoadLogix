@@ -2,16 +2,14 @@ package org.ssafy.load.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.ssafy.load.dao.BuildingAddressRepository;
-import org.ssafy.load.domain.BuildingAddressEntity;
-import org.ssafy.load.dto.response.BuildingResponse;
+import org.ssafy.load.dao.BuildingJPQLSerivce;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BuildingAddressService {
+public class AddressService {
     private final BuildingJPQLSerivce buildingJPQLSerivce;
 
     public List<Integer> getAreaAndBuildingCount(){

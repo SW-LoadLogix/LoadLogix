@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "building_address")
+@Table(name = "building")
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuildingAddressEntity {
+public class BuildingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,12 +43,12 @@ public class BuildingAddressEntity {
     @ManyToOne
     @JoinColumn(name = "area_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private DeliveryAreaEntity deliveryArea;
+    private AreaEntity area;
 
-    @OneToMany(mappedBy = "buildingAddress", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
-    static public BuildingAddressEntity of(
+    static public BuildingEntity of(
             Long id,
             Long dongCode,
             String sidoName,
@@ -59,10 +59,10 @@ public class BuildingAddressEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
-            DeliveryAreaEntity deliveryArea,
+            AreaEntity area,
             List<GoodsEntity> goodsEntities
     ){
-        return new BuildingAddressEntity(
+        return new BuildingEntity(
                 id,
                 dongCode,
                 sidoName,
@@ -73,7 +73,7 @@ public class BuildingAddressEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
-                deliveryArea,
+                area,
                 goodsEntities
         );
     }
