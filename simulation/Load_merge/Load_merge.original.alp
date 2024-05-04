@@ -34,7 +34,8 @@ int conveyorLine = 0;
 int[] cnt = new int[5];
 
 ]]></AdditionalClassCode>
-			<StartupCode><![CDATA[try{
+			<StartupCode><![CDATA[APIClient client = new APIClient();
+try{
 	buildingCounts = client.getBuildingCount();	
 }catch(Exception e){
 	System.out.println(e);
@@ -45,24 +46,10 @@ settingGoodsCountPerArea.add(0);
 settingGoodsCountPerArea.add(3);
 settingGoodsCountPerArea.add(5);
 settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-
 
 //SSE
 //Thread sseThread = new Thread(new SSEListener());
@@ -159,21 +146,6 @@ checkGoodsForArea.add(0);
 			<CurrentLevel>1714366606325</CurrentLevel>
 			<ConnectionsId>1714366606319</ConnectionsId>
 			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1714796210146</Id>
-					<Name><![CDATA[client]]></Name>
-					<X>-220</X><Y>900</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[APIClient]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new APIClient();]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1714366754036</Id>
 					<Name><![CDATA[rackStore1]]></Name>
@@ -2641,11 +2613,39 @@ checkGoodsForArea.add(0);
 						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(1) == checkGoodsForArea.get(1)
 ]]></Condition>
 					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
+					<Action><![CDATA[readyCompletedGoods(1, settingGoodsCountPerArea.get(1)); ]]></Action>
+				</Event>
+				<Event>
+					<Id>1714703222603</Id>
+					<Name><![CDATA[readyArea1Event1]]></Name>
+					<X>1073.3333333333333</X><Y>498.66666666666674</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(1) == checkGoodsForArea.get(1)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[System.out.println("dddd");]]></Action>
 				</Event>
 				<Event>
 					<Id>1714705965181</Id>
@@ -2677,11 +2677,7 @@ checkGoodsForArea.add(0);
 						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(2) == checkGoodsForArea.get(2)
 ]]></Condition>
 					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
+					<Action><![CDATA[System.out.println("dddd");]]></Action>
 				</Event>
 				<Event>
 					<Id>1714705967806</Id>
@@ -2713,11 +2709,7 @@ checkGoodsForArea.add(0);
 						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(3) == checkGoodsForArea.get(3)
 ]]></Condition>
 					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
+					<Action><![CDATA[System.out.println("dddd");]]></Action>
 				</Event>
 				<Event>
 					<Id>1714705972157</Id>
@@ -2749,191 +2741,7 @@ checkGoodsForArea.add(0);
 						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
 ]]></Condition>
 					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
-				</Event>
-				<Event>
-					<Id>1714798532606</Id>
-					<Name><![CDATA[readyAreaEvent5]]></Name>
-					<X>-220</X><Y>1180</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="condition" Mode="occuresOnce">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1714723200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
-					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
-				</Event>
-				<Event>
-					<Id>1714798548037</Id>
-					<Name><![CDATA[readyAreaEvent6]]></Name>
-					<X>-220</X><Y>1220</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="condition" Mode="occuresOnce">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1714723200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
-					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
-				</Event>
-				<Event>
-					<Id>1714798560959</Id>
-					<Name><![CDATA[readyAreaEvent7]]></Name>
-					<X>-220</X><Y>1250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="condition" Mode="occuresOnce">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1714723200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
-					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
-				</Event>
-				<Event>
-					<Id>1714798572112</Id>
-					<Name><![CDATA[readyAreaEvent8]]></Name>
-					<X>-220</X><Y>1280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="condition" Mode="occuresOnce">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1714723200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
-					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
-				</Event>
-				<Event>
-					<Id>1714798583998</Id>
-					<Name><![CDATA[readyAreaEvent9]]></Name>
-					<X>-220</X><Y>1320</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="condition" Mode="occuresOnce">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1714723200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
-					</Properties>
-					<Action><![CDATA[try{
-	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9)); 
-}catch(Exception e){
-	System.out.println(e);
-}]]></Action>
+					<Action><![CDATA[System.out.println("dddd");]]></Action>
 				</Event>
 			</Events>
 			<AgentLinks>
@@ -22168,7 +21976,6 @@ else
 			<Name><![CDATA[APIClient]]></Name>
 			<Text><![CDATA[import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -22179,16 +21986,12 @@ public class APIClient {
 
     private final String SERVER_URL = "http://localhost:8081/api/simulation";
     
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count) throws Exception{
+    public ArrayList<Integer> readyCompletedGoods(int areaId, int goodsCount) throws Exception{
         String url = SERVER_URL + "/ready";
         String method = "PUT";
-        
-        ReadyRequest requestBody = new ReadyRequest(areaId, count);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestBody = objectMapper.writeValueAsString(requestBody);
-        
-        StringBuffer response = getResponse(url, method, jsonRequestBody);
+        StringBuffer response = getResponse(url, method);
 
+        ObjectMapper objectMapper = new ObjectMapper();
         APIResponse<Integer> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<Integer>>() {});
 
         String resultCode = apiResponse.getResultCode();
@@ -22201,7 +22004,7 @@ public class APIClient {
     public ArrayList<Integer> getBuildingCount() throws Exception{
         String url = SERVER_URL + "";
         String method = "GET";
-        StringBuffer response = getResponse(url, method, null);
+        StringBuffer response = getResponse(url, method);
 
         ObjectMapper objectMapper = new ObjectMapper();
         APIResponse<Integer> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<Integer>>() {});
@@ -22216,7 +22019,7 @@ public class APIClient {
     public List<Integer> getConveyorLine() throws Exception {
         String url = SERVER_URL + "/conveyorLines";
         String method = "GET";
-        StringBuffer response = getResponse(url, method, null);
+        StringBuffer response = getResponse(url, method);
 
         // JSON을 ApiResponse 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
@@ -22228,24 +22031,13 @@ public class APIClient {
         return result;
     }
     
-    public StringBuffer getResponse(String url, String method, String jsonRequestBody) throws Exception{
+    public StringBuffer getResponse(String url, String method) throws Exception{
     	
     	URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        con.setRequestMethod(method);
-        
-        if ("PUT".equals(method) || "POST".equals(method)) {
-            con.setDoOutput(true);
-            con.setRequestProperty("Content-Type", "application/json; utf-8");
-
-            if (jsonRequestBody != null) {
-                try (OutputStream os = con.getOutputStream()) {
-                    byte[] input = jsonRequestBody.getBytes("utf-8");
-                    os.write(input, 0, input.length);
-                }
-            }
-        }
+        // HTTP 요청 메소드 설정 (GET 방식)
+        con.setRequestMethod("GET");
 
         // 응답 코드 받기
         int responseCode = con.getResponseCode();
@@ -22501,39 +22293,6 @@ public class InitialInfoDto implements Serializable {
 	}
 	
 
-}]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1714797244543</Id>
-			<Name><![CDATA[ReadyRequest]]></Name>
-			<Text><![CDATA[/**
- * ReadyRequest
- */	
-public class ReadyRequest {
-    private int areaId;
-    private int count;
-
-    public ReadyRequest(int areaId, int count) {
-        this.areaId = areaId;
-        this.count = count;
-    }
-
-    public int getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(int areaId) {
-        this.areaId = areaId;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>
