@@ -6,6 +6,6 @@ import org.ssafy.load.domain.WorkerEntity;
 
 public interface WorkerRepository extends JpaRepository<WorkerEntity, Long> {
 
-    Optional<WorkerEntity> findByUserIdAndPassword(String userId, String password);
-    Optional<WorkerEntity> findByUserId(String userId);
+    Optional<WorkerEntity> findByLoginIdAndPassword(String loginId, String password);
+    Optional<WorkerEntity> findByLoginId(String loginId);
 }

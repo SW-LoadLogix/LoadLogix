@@ -15,7 +15,7 @@ public record WorkerResponse(
     public static WorkerResponse from(WorkerEntity entity) {
         return WorkerResponse.of(
             entity.getId(),
-            entity.getUserId(),
+            entity.getLoginId(),
             entity.getName()
         );
     }

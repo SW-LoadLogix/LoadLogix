@@ -8,6 +8,9 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "building_address")
 @ToString
@@ -36,10 +39,15 @@ public class BuildingAddressEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
+
     @ManyToOne
     @JoinColumn(name = "area_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private DeliveryAreaEntity deliveryAreaEntity;
+    private DeliveryAreaEntity deliveryArea;
+
+    @OneToMany(mappedBy = "building_address", cascade = CascadeType.ALL)
+    private List<GoodsEntity> goodsEntities = new ArrayList<>();
+
 
     static public BuildingAddressEntity of(
             Long id,
@@ -52,7 +60,8 @@ public class BuildingAddressEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
-            DeliveryAreaEntity deliveryAreaEntity
+            DeliveryAreaEntity deliveryArea,
+            List<GoodsEntity> goodsEntities
     ){
         return new BuildingAddressEntity(
                 id,
@@ -65,11 +74,8 @@ public class BuildingAddressEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
-                DeliveryAreaEntity.of(
-                        deliveryAreaEntity.getId(),
-                        deliveryAreaEntity.getAreaName(),
-                        deliveryAreaEntity.getConveyNo())
+                deliveryArea,
+                goodsEntities
         );
     }
-
 }
