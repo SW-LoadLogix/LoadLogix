@@ -1,6 +1,8 @@
 package org.ssafy.load.application;
 
 import java.util.Optional;
+
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
@@ -8,6 +10,7 @@ import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.CarRepository;
 import org.ssafy.load.dao.WorkerReadyStatusRepository;
 import org.ssafy.load.dao.WorkerRepository;
+import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.domain.WorkerReadyStatusEntity;
 import org.ssafy.load.dto.request.LoginRequest;
@@ -21,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -33,9 +37,10 @@ public class WorkerService {
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
+        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null));
         return SignUpResponse.from(workerRepository.save(
                 WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                        signUpRequest.name(), null, null, null, null)));
+                        signUpRequest.name(), car, null, null, null)));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
