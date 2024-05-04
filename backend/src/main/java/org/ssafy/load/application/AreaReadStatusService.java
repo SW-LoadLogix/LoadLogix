@@ -16,22 +16,25 @@ import org.ssafy.load.dto.response.ReadyAreaRequest;
 public class AreaReadStatusService {
     private final AreaReadyStatusRepository areaReadyStatusRepository;
     private final DeliveryAreaRepository deliveryAreaRepository;
+
     @Transactional
     public void setReadyCompletedArea(ReadyAreaRequest readyAreaRequest){
-        deliveryAreaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((deliveryAreaEntity)->{
+        deliveryAreaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((deliveryAreaEntity) -> {
             AreaReadyStatusEntity areaReadyStatusEntity = deliveryAreaEntity.getAreaReadyStatusEntity();
+
             AreaReadyStatus areaReadyStatus = AreaReadyStatus.from(areaReadyStatusEntity);
-            if(areaReadyStatus.state()){
-                // 예외처리 이미 대기 중
+
+            if (areaReadyStatus.state()) {
                 return;
             }
-            areaReadyStatusRepository.save(
-                    areaReadyStatus.withStateAndCount(true, readyAreaRequest.count())
-                            .toEntity()
-            );
 
+            areaReadyStatusEntity = areaReadyStatus.withUpdatedStateAndCount(true, readyAreaRequest.count())
+                    .toEntity(deliveryAreaEntity);
+
+            areaReadyStatusRepository.save(areaReadyStatusEntity);
         }, () -> {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
         });
     }
+
 }
