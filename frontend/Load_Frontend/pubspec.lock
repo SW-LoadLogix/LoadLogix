@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "22600aa1e926be775fa5fe7e6894e7fb3df9efda8891c73f70fb3262399a432d"
+      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.10"
+    version: "3.5.1"
   args:
     dependency: transitive
     description:
@@ -53,18 +53,18 @@ packages:
     dependency: "direct main"
     description:
       name: auto_route
-      sha256: eb33554581a0a4aa7e6da0f13a44291a55bf71359012f1d9feb41634ff908ff8
+      sha256: "6cad3f408863ffff2b5757967c802b18415dac4acb1b40c5cdd45d0a26e5080f"
       url: "https://pub.dev"
     source: hosted
-    version: "7.9.2"
+    version: "8.1.3"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
-      sha256: "11067a3bcd643812518fe26c0c9ec073990286cabfd9d74b6da9ef9b913c4d22"
+      sha256: ba28133d3a3bf0a66772bcc98dade5843753cd9f1a8fb4802b842895515b67d3
       url: "https://pub.dev"
     source: hosted
-    version: "7.3.2"
+    version: "8.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -225,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -257,6 +265,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  fl_chart:
+    dependency: "direct dev"
+    description:
+      name: fl_chart
+      sha256: "0c8baa9d4db70817d27099efb99e40e4164448bb86f73217216ef65b3976bc4f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.36.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -310,6 +326,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      sha256: f0b6d8c0fa7b4b444985cdde68492c0138a4fb6fc57a641b24cb234b7ee0f5c4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -520,6 +544,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.1"
   petitparser:
     dependency: transitive
     description:
@@ -536,14 +568,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "79fbafed02cfdbe85ef3fd06c7f4bc2cbcba0177e61b765264853d4253b21744"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.0"
   pool:
     dependency: transitive
     description:
@@ -665,26 +689,26 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "708425f534ef04253334763c8b75acc79eaec2d9b325bcd862575ea0a2207d87"
+      sha256: fc61878342caee6da7979ca0ca9bb178f1eb5ca9b836dada34b83caa39e4bfed
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.41"
+    version: "25.1.42"
   syncfusion_flutter_datagrid:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_datagrid
-      sha256: "43ddc9dbebe14c836f6e4236bd20534f48b3e26672d757a9cedc99a16fa82fc1"
+      sha256: "1b21b1217ddab9b43ba62282a3e0fcf0d04e631e729aad074e926f80ae42fb2c"
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.41"
+    version: "25.1.42"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: d857926063f0536808ae7c1708f750718cc68a92e61110e91cc68cbc0c6dc613
+      sha256: cd351cb8391b9ee69043bcd1f28a518ae559bf165b2f8aa906592a007dad86ca
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.41"
+    version: "25.1.42"
   term_glyph:
     dependency: transitive
     description:

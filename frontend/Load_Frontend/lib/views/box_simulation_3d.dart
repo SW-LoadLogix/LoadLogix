@@ -54,7 +54,7 @@ class _BoxSimulation3dPageState extends State<BoxSimulation3dPage> {
 
     return Scaffold(
       body: Row(children: [
-        MyNav(),
+        //MyNav(),
         Expanded(
           child: Container(
             height: screenSize.height,
