@@ -7,7 +7,15 @@ import '../constaints.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
-  MainLayout({Key? key, required this.child}) : super(key: key);
+  final String topBarTitle;
+  final bool isFixed;
+
+  MainLayout(
+      {Key? key,
+      required this.child,
+      required this.topBarTitle,
+      required this.isFixed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +29,27 @@ class MainLayout extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                TopBar(_showDesktop),
-                Expanded(
-                    child: SingleChildScrollView(
-                        child: Padding(
-                  child: this.child,
-                  padding: EdgeInsets.all(componentPadding),
-                )))
+                TopBar(showDesktop: _showDesktop, name: topBarTitle),
+                !isFixed
+                    ? Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            child: child,
+                            padding: EdgeInsets.all(componentPadding),
+                          ),
+                        ),
+                      )
+                    : SafeArea(
+                        child: child,
+                      ),
               ],
             ),
           ),
           Container(
             width: _showDesktop ? newsPageWidth : 0,
-            child: NewsList(_showDesktop),
+            child:
+                //대시보드 우측에 들어감
+                NewsList(_showDesktop),
           )
         ],
       ),

@@ -7,6 +7,7 @@ import '../model.dart';
 final List<MenuItem> menuItems = [
   MenuItem('Home', Icons.home_outlined),
   MenuItem('Dashboard', Icons.dashboard_outlined),
+  MenuItem('Simulation 3d', Icons.dashboard_outlined),
   MenuItem('User', Icons.person),
   MenuItem('Contact', Icons.contact_mail),
 ];
