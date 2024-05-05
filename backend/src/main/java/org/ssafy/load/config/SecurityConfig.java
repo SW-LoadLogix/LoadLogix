@@ -21,7 +21,6 @@ public class SecurityConfig {
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/worker/info");
         filterRegistrationBean.addUrlPatterns("/worker/ready");
-        filterRegistrationBean.addUrlPatterns("/admin/*");
         filterRegistrationBean.addUrlPatterns("/goods/*");
         filterRegistrationBean.addUrlPatterns("/car/*");
         return filterRegistrationBean;
