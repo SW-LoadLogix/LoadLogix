@@ -16,7 +16,7 @@ class DeliverySimulationMapPage extends StatelessWidget {
       ),
       body: Row(
           children: [
-            MyNav(),
+            //MyNav(),
             Expanded(
               flex: 1,
               child: Padding(

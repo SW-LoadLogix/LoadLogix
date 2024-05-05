@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           title: const Text('홈 페이지'), // 앱바 타이틀
         ),
         body: Row(children: [
-          MyNav(),
+          //MyNav(),
           Expanded(
               child: Column(
             children: <Widget>[
@@ -31,6 +31,12 @@ class HomePage extends StatelessWidget {
                         AutoRouter.of(context).push(SignInUpRoute());
                       },
                       child: const Text('로그인 페이지로 이동'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        AutoRouter.of(context).push(DashboardRoute());
+                      },
+                      child: const Text('대시보드 페이지로 이동'),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -51,6 +57,13 @@ class HomePage extends StatelessWidget {
                         //Navigator.pushNamed(context, '/box-simulation');
                       },
                       child: const Text('박스 시뮬레이션 페이지로 이동'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        AutoRouter.of(context).push(BoxSimulation3dSecondRoute());
+                        //Navigator.pushNamed(context, '/box-simulation');
+                      },
+                      child: const Text('박스 시뮬레이션 페이지2로 이동'),
                     ),
                     ElevatedButton(
                       onPressed: () {

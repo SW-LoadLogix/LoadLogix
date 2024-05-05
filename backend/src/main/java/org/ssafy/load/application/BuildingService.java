@@ -27,21 +27,6 @@ public class BuildingService {
     private final PathTimeRepository pathTimeRepository;
     private final PathTimeCal pathTimeCal;
 
-    public List<Integer> getAreaAndBuildingCount() {
-        buildingRepository.getBuildingCountsByArea();
-
-        List<Object[]> result = buildingRepository.getBuildingCountsByArea();
-        List<Integer> response = new ArrayList<>();
-        int prevNo = 0;
-        for(Object[] row : result ){
-            Integer areaId = (Integer) row[0];
-            Long count = (Long) row[1];
-            response.add((int) (prevNo + count));
-            prevNo += count;
-        }
-        return response;
-    }
-
     @Transactional
     public void registBuilding(BuildingRegistRequest buildingRegistRequest) {
         Optional<AreaEntity> areaEntityOptional = areaRepository.findById(buildingRegistRequest.area_id());

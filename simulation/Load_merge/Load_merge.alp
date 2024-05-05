@@ -34,12 +34,35 @@ int conveyorLine = 0;
 int[] cnt = new int[5];
 
 ]]></AdditionalClassCode>
-			<StartupCode><![CDATA[APIClient client = new APIClient();
-try{
+			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
 }catch(Exception e){
 	System.out.println(e);
 }
+
+// setting 값 가져오기
+settingGoodsCountPerArea.add(0);
+settingGoodsCountPerArea.add(3);
+settingGoodsCountPerArea.add(5);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+
 
 //SSE
 //Thread sseThread = new Thread(new SSEListener());
@@ -136,10 +159,25 @@ try{
 			<CurrentLevel>1714366606325</CurrentLevel>
 			<ConnectionsId>1714366606319</ConnectionsId>
 			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1714796210146</Id>
+					<Name><![CDATA[client]]></Name>
+					<X>-220</X><Y>900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[APIClient]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new APIClient();]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1714366754036</Id>
 					<Name><![CDATA[rackStore1]]></Name>
-					<X>-160</X><Y>760</Y>
+					<X>-220</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -154,7 +192,7 @@ try{
 				<Variable Class="CollectionVariable">
 					<Id>1714610327478</Id>
 					<Name><![CDATA[rackStore2]]></Name>
-					<X>-160</X><Y>800</Y>
+					<X>-220</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -169,7 +207,7 @@ try{
 				<Variable Class="CollectionVariable">
 					<Id>1714610330501</Id>
 					<Name><![CDATA[rackStore3]]></Name>
-					<X>-160</X><Y>840</Y>
+					<X>-220</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -184,7 +222,7 @@ try{
 				<Variable Class="CollectionVariable">
 					<Id>1714610333198</Id>
 					<Name><![CDATA[rackStore4]]></Name>
-					<X>-160</X><Y>870</Y>
+					<X>-220</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -199,10 +237,40 @@ try{
 				<Variable Class="CollectionVariable">
 					<Id>1714653471968</Id>
 					<Name><![CDATA[buildingCounts]]></Name>
-					<X>-160</X><Y>700</Y>
+					<X>-220</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1714697788519</Id>
+					<Name><![CDATA[settingGoodsCountPerArea]]></Name>
+					<X>-220</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1714699515792</Id>
+					<Name><![CDATA[checkGoodsForArea]]></Name>
+					<X>-220</X><Y>970</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2542,6 +2610,332 @@ try{
 					</Points>
 				</Connector>
 			</Connectors>
+			<Events>
+				<Event>
+					<Id>1714695818428</Id>
+					<Name><![CDATA[readyAreaEvent1]]></Name>
+					<X>-220</X><Y>1020</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(1) == checkGoodsForArea.get(1)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714705965181</Id>
+					<Name><![CDATA[readyAreaEvent2]]></Name>
+					<X>-220</X><Y>1060</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(2) == checkGoodsForArea.get(2)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714705967806</Id>
+					<Name><![CDATA[readyAreaEvent3]]></Name>
+					<X>-220</X><Y>1100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(3) == checkGoodsForArea.get(3)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714705972157</Id>
+					<Name><![CDATA[readyAreaEvent4]]></Name>
+					<X>-220</X><Y>1140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714798532606</Id>
+					<Name><![CDATA[readyAreaEvent5]]></Name>
+					<X>-220</X><Y>1180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714798548037</Id>
+					<Name><![CDATA[readyAreaEvent6]]></Name>
+					<X>-220</X><Y>1220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714798560959</Id>
+					<Name><![CDATA[readyAreaEvent7]]></Name>
+					<X>-220</X><Y>1250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714798572112</Id>
+					<Name><![CDATA[readyAreaEvent8]]></Name>
+					<X>-220</X><Y>1280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+				<Event>
+					<Id>1714798583998</Id>
+					<Name><![CDATA[readyAreaEvent9]]></Name>
+					<X>-220</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714723200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
+]]></Condition>
+					</Properties>
+					<Action><![CDATA[try{
+	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9)); 
+}catch(Exception e){
+	System.out.println(e);
+}]]></Action>
+				</Event>
+			</Events>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1714366606319</Id>
@@ -2900,7 +3294,7 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.Info.setText("main: "+ agent.buildingMain+ ", sub :" + agent.buildingSub);]]></Code>
+								<Code><![CDATA[agent.Info.setText("deliveryAreaId: "+ agent.deliveryAreaId+ ", buildingAddressId :" + agent.buildingAddressId);]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4041,7 +4435,11 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);]]></Code>
+								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
+// 구역별 저장
+int idx = agent.deliveryAreaId;
+checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
+System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4231,7 +4629,11 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore3, agent);]]></Code>
+								<Code><![CDATA[addAgentFromRack(rackStore3, agent);
+// 구역별 저장
+int idx = agent.deliveryAreaId;
+checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
+System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4421,7 +4823,11 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore4, agent);]]></Code>
+								<Code><![CDATA[addAgentFromRack(rackStore4, agent);
+// 구역별 저장
+int idx = agent.deliveryAreaId;
+checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
+System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4514,25 +4920,25 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[condition1]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.buildingMain < 1526]]></Code>
+								<Code><![CDATA[agent.deliveryAreaId == 1 || agent.deliveryAreaId == 2 || agent.deliveryAreaId == 3]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[condition2]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.buildingMain < 1529]]></Code>
+								<Code><![CDATA[agent.deliveryAreaId == 4 || agent.deliveryAreaId == 5 || agent.deliveryAreaId == 6]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[condition3]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.buildingMain < 1559]]></Code>
+								<Code><![CDATA[agent.deliveryAreaId == 7 || agent.deliveryAreaId == 8 || agent.deliveryAreaId == 9]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[condition4]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.buildingMain < 1605]]></Code>
+								<Code><![CDATA[agent.deliveryAreaId == 10 || agent.deliveryAreaId == 11 || agent.deliveryAreaId == 12]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4736,7 +5142,9 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[//for(Goods goods : rackStore1){
+								<Code><![CDATA[
+
+//for(Goods goods : rackStore1){
 //	if(goods.id == 1){
 //		Goods removedAgent = removeAgentByIdFromRack(rackStore1, goods);
 //		System.out.println("rack pick");
@@ -6420,7 +6828,12 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore1, agent);]]></Code>
+								<Code><![CDATA[addAgentFromRack(rackStore1, agent);
+
+// 구역별 저장
+int idx = agent.deliveryAreaId;
+checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
+System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -11142,11 +11555,6 @@ System.out.println(agent.type+" "+agent.deliveryAreaId+" "+agent.buildingAddress
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[System.out.println("atStore: "+agent);
-System.out.println("size: "+rackStore1.size());
-]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -11349,11 +11757,6 @@ System.out.println("size: "+rackStore1.size());
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[System.out.println("atStore: "+agent);
-System.out.println("size: "+rackStore1.size());
-]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -11625,11 +12028,6 @@ System.out.println("size: "+rackStore1.size());
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[System.out.println("atStore: "+agent);
-System.out.println("size: "+rackStore1.size());
-]]></Code>
-							</Value>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -12261,12 +12659,11 @@ System.out.println("size: "+rackStore1.size());
 				<Rectangle>
 					<Id>1714366976600</Id>
 					<Name><![CDATA[rectangle]]></Name>
-					<X>0</X><Y>0</Y>
+					<X>0</X><Y>-80</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -12275,8 +12672,8 @@ System.out.println("size: "+rackStore1.size());
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>1110</Width>
-					<Height>660</Height>
+					<Width>1140</Width>
+					<Height>740</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1906451</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -19392,7 +19789,7 @@ System.out.println("size: "+rackStore1.size());
 				<Network>
 					<Id>1714368336547</Id>
 					<Name><![CDATA[network]]></Name>
-					<X>338.065</X><Y>167.799</Y>
+					<X>368.065</X><Y>172.799</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19400,42 +19797,10 @@ System.out.println("size: "+rackStore1.size());
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 
 			<Presentation>
-  				<PalletRack TargetId="1714368334810">
-					<Id>1714366943182</Id>
-					<Name><![CDATA[rack1]]></Name>
-					<X>338.065</X><Y>167.799</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>10</Z>
-					<LineColor>-14774017</LineColor>
-					<FillColor>-1644806</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<Width>97.3134328358209</Width>
-					<Height>18.978401727861772</Height>	
-					<RightHeight>18.978401727861772</RightHeight>
-					<AisleHeight>20</AisleHeight>
-					<RightAisleHeight>20</RightAisleHeight>
-					<Rotation>90</Rotation>
-					<CellsDefinitionType>NUMBER_OF_CELLS</CellsDefinitionType>
-					<NumberOfCells>10</NumberOfCells>
-					<NumberOfDeepPositions>1</NumberOfDeepPositions>
-					<NumberOfLevels>5</NumberOfLevels>
-					<LevelHeight>10</LevelHeight>
-					<CellWidth>9.73134328358209</CellWidth>
-					<Type>oneAisle</Type>
-					<Direction>noDirection</Direction>
-					<AisleBelow>true</AisleBelow>
-					<DrawLegs>true</DrawLegs>
-					<CellsBetweenLegs>2</CellsBetweenLegs>
-					<IsObstacle>true</IsObstacle>
-				</PalletRack>
 				<Path>
 					<Id>1714368334810</Id>
 					<Name><![CDATA[path]]></Name>
-					<X>310</X><Y>265</Y>
+					<X>345</X><Y>265</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19471,6 +19836,38 @@ System.out.println("size: "+rackStore1.size());
 					<LimitNumberOfTransporters>false</LimitNumberOfTransporters>
 					<LimitNumberOfTransportersValue>10</LimitNumberOfTransportersValue>
 				</Path>
+  				<PalletRack TargetId="1714368334810">
+					<Id>1714366943182</Id>
+					<Name><![CDATA[rack1]]></Name>
+					<X>373.065</X><Y>167.799</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>10</Z>
+					<LineColor>-14774017</LineColor>
+					<FillColor>-1644806</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Width>97.3134328358209</Width>
+					<Height>18.978401727861772</Height>	
+					<RightHeight>18.978401727861772</RightHeight>
+					<AisleHeight>20</AisleHeight>
+					<RightAisleHeight>20</RightAisleHeight>
+					<Rotation>90</Rotation>
+					<CellsDefinitionType>NUMBER_OF_CELLS</CellsDefinitionType>
+					<NumberOfCells>22</NumberOfCells>
+					<NumberOfDeepPositions>1</NumberOfDeepPositions>
+					<NumberOfLevels>20</NumberOfLevels>
+					<LevelHeight>10</LevelHeight>
+					<CellWidth>9.73134328358209</CellWidth>
+					<Type>twoStorages</Type>
+					<Direction>noDirection</Direction>
+					<AisleBelow>true</AisleBelow>
+					<DrawLegs>true</DrawLegs>
+					<CellsBetweenLegs>2</CellsBetweenLegs>
+					<IsObstacle>true</IsObstacle>
+				</PalletRack>
 			</Presentation>
 
 					<Z>0</Z>
@@ -19501,17 +19898,17 @@ System.out.println("size: "+rackStore1.size());
 					<FillMaterial>null</FillMaterial>
 					<Width>97.3134328358209</Width>
 					<Height>18.978401727861772</Height>	
-					<RightHeight>20</RightHeight>
+					<RightHeight>18.978401727861772</RightHeight>
 					<AisleHeight>20</AisleHeight>
 					<RightAisleHeight>20</RightAisleHeight>
 					<Rotation>90</Rotation>
 					<CellsDefinitionType>NUMBER_OF_CELLS</CellsDefinitionType>
-					<NumberOfCells>10</NumberOfCells>
+					<NumberOfCells>22</NumberOfCells>
 					<NumberOfDeepPositions>1</NumberOfDeepPositions>
-					<NumberOfLevels>5</NumberOfLevels>
+					<NumberOfLevels>20</NumberOfLevels>
 					<LevelHeight>10</LevelHeight>
 					<CellWidth>9.73134328358209</CellWidth>
-					<Type>oneAisle</Type>
+					<Type>twoStorages</Type>
 					<Direction>noDirection</Direction>
 					<AisleBelow>true</AisleBelow>
 					<DrawLegs>true</DrawLegs>
@@ -19541,6 +19938,9 @@ System.out.println("size: "+rackStore1.size());
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-28</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-3</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-53</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-55</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-30</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-80</Y><Z>0</Z></Point>
@@ -19587,17 +19987,17 @@ System.out.println("size: "+rackStore1.size());
 					<FillMaterial>null</FillMaterial>
 					<Width>97.3134328358209</Width>
 					<Height>18.978401727861772</Height>	
-					<RightHeight>20</RightHeight>
+					<RightHeight>18.978401727861772</RightHeight>
 					<AisleHeight>20</AisleHeight>
 					<RightAisleHeight>20</RightAisleHeight>
 					<Rotation>90</Rotation>
 					<CellsDefinitionType>NUMBER_OF_CELLS</CellsDefinitionType>
-					<NumberOfCells>10</NumberOfCells>
+					<NumberOfCells>22</NumberOfCells>
 					<NumberOfDeepPositions>1</NumberOfDeepPositions>
-					<NumberOfLevels>5</NumberOfLevels>
+					<NumberOfLevels>20</NumberOfLevels>
 					<LevelHeight>10</LevelHeight>
 					<CellWidth>20</CellWidth>
-					<Type>oneAisle</Type>
+					<Type>twoStorages</Type>
 					<Direction>noDirection</Direction>
 					<AisleBelow>true</AisleBelow>
 					<DrawLegs>true</DrawLegs>
@@ -19670,17 +20070,17 @@ System.out.println("size: "+rackStore1.size());
 					<FillMaterial>null</FillMaterial>
 					<Width>97.3134328358209</Width>
 					<Height>18.978401727861772</Height>	
-					<RightHeight>20</RightHeight>
+					<RightHeight>18.978401727861772</RightHeight>
 					<AisleHeight>20</AisleHeight>
 					<RightAisleHeight>20</RightAisleHeight>
 					<Rotation>90</Rotation>
 					<CellsDefinitionType>NUMBER_OF_CELLS</CellsDefinitionType>
-					<NumberOfCells>10</NumberOfCells>
+					<NumberOfCells>22</NumberOfCells>
 					<NumberOfDeepPositions>1</NumberOfDeepPositions>
-					<NumberOfLevels>5</NumberOfLevels>
+					<NumberOfLevels>20</NumberOfLevels>
 					<LevelHeight>10</LevelHeight>
-					<CellWidth>20</CellWidth>
-					<Type>oneAisle</Type>
+					<CellWidth>4.423337856173678</CellWidth>
+					<Type>twoStorages</Type>
 					<Direction>noDirection</Direction>
 					<AisleBelow>true</AisleBelow>
 					<DrawLegs>true</DrawLegs>
@@ -19710,6 +20110,9 @@ System.out.println("size: "+rackStore1.size());
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>25</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-62</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-37</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-87</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-95</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-70</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
@@ -20598,6 +21001,15 @@ else
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 					</SpeedLimitValue>
 				</PointNode>
+				<Camera3D>
+					<Id>1714695376524</Id>
+					<Name><![CDATA[camera1]]></Name>
+					<X>940</X><Y>-40</Y><Z>100</Z>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<ShowLabel>false</ShowLabel>
+					<RotationX>0.0</RotationX>
+					<RotationZ>120.0</RotationZ>
+				</Camera3D>
 			</Presentation>
 
 				</Level>
@@ -21756,6 +22168,7 @@ else
 			<Name><![CDATA[APIClient]]></Name>
 			<Text><![CDATA[import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -21766,11 +22179,29 @@ public class APIClient {
 
     private final String SERVER_URL = "http://localhost:8081/api/simulation";
     
+    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count) throws Exception{
+        String url = SERVER_URL + "/ready";
+        String method = "PUT";
+        
+        ReadyRequest requestBody = new ReadyRequest(areaId, count);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestBody = objectMapper.writeValueAsString(requestBody);
+        
+        StringBuffer response = getResponse(url, method, jsonRequestBody);
+
+        APIResponse<Integer> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<Integer>>() {});
+
+        String resultCode = apiResponse.getResultCode();
+        ArrayList<Integer> result = (ArrayList) apiResponse.getResult();
+        
+    	return result;
+    	
+    }
 
     public ArrayList<Integer> getBuildingCount() throws Exception{
         String url = SERVER_URL + "";
         String method = "GET";
-        StringBuffer response = getResponse(url, method);
+        StringBuffer response = getResponse(url, method, null);
 
         ObjectMapper objectMapper = new ObjectMapper();
         APIResponse<Integer> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<Integer>>() {});
@@ -21781,11 +22212,11 @@ public class APIClient {
     	return result;
     	
     }
-
+    
     public List<Integer> getConveyorLine() throws Exception {
         String url = SERVER_URL + "/conveyorLines";
         String method = "GET";
-        StringBuffer response = getResponse(url, method);
+        StringBuffer response = getResponse(url, method, null);
 
         // JSON을 ApiResponse 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
@@ -21797,13 +22228,24 @@ public class APIClient {
         return result;
     }
     
-    public StringBuffer getResponse(String url, String method) throws Exception{
+    public StringBuffer getResponse(String url, String method, String jsonRequestBody) throws Exception{
     	
     	URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        // HTTP 요청 메소드 설정 (GET 방식)
-        con.setRequestMethod("GET");
+        con.setRequestMethod(method);
+        
+        if ("PUT".equals(method) || "POST".equals(method)) {
+            con.setDoOutput(true);
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+
+            if (jsonRequestBody != null) {
+                try (OutputStream os = con.getOutputStream()) {
+                    byte[] input = jsonRequestBody.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+            }
+        }
 
         // 응답 코드 받기
         int responseCode = con.getResponseCode();
@@ -22059,6 +22501,39 @@ public class InitialInfoDto implements Serializable {
 	}
 	
 
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1714797244543</Id>
+			<Name><![CDATA[ReadyRequest]]></Name>
+			<Text><![CDATA[/**
+ * ReadyRequest
+ */	
+public class ReadyRequest {
+    private int areaId;
+    private int count;
+
+    public ReadyRequest(int areaId, int count) {
+        this.areaId = areaId;
+        this.count = count;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>

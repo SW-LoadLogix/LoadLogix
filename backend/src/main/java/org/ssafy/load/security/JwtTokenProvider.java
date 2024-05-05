@@ -29,12 +29,12 @@ public class JwtTokenProvider {
 
 
     // Member 정보를 가지고 AccessToken을 생성하는 메서드
-    public String generateToken(String userId, String name, String role) {
+    public String generateToken(Long id, String name, String role) {
 
         long now = System.currentTimeMillis();
 
         Claims claims = Jwts.claims();
-        claims.put("userId", userId);
+        claims.put("id", id);
         claims.put("name", name);
         claims.put("role", role);
 
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
-    public String getUserId(String token) {
+    public Long getId(String token) {
         Base64.Decoder decoder = Base64.getDecoder();
         String[] splitToken = token.split("\\.");
         String json = new String(decoder.decode(splitToken[1]));
@@ -62,7 +62,7 @@ public class JwtTokenProvider {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Map<String, Object> map = objectMapper.readValue(json, Map.class);
-            return (String) map.get("userId");
+            return (Long) map.get("id");
         } catch (JsonProcessingException e) {
             throw new JWTException(e);
         }
@@ -82,21 +82,20 @@ public class JwtTokenProvider {
         }
     }
 
-    public Optional<WorkerEntity> getWorker(HttpServletRequest httpRequest){
-        String authorizationHeader = httpRequest.getHeader("Authorization");
-
-        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new CommonException(ErrorCode.INVALID_TOKEN);
-        }
-
-        String token = authorizationHeader.substring(7);
-        try {
-            validateToken(token);
-        } catch (Exception e) {
-            throw new CommonException(ErrorCode.INVALID_TOKEN);
-        }
-
-        String userId = getUserId(token);
-        return workerRepository.findByUserId(userId);
-    }
+//    public Long getIdFromHttpRequest(HttpServletRequest httpRequest){
+//        String authorizationHeader = httpRequest.getHeader("Authorization");
+//
+//        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+//            throw new CommonException(ErrorCode.INVALID_TOKEN);
+//        }
+//
+//        String token = authorizationHeader.substring(7);
+//        try {
+//            validateToken(token);
+//        } catch (Exception e) {
+//            throw new CommonException(ErrorCode.INVALID_TOKEN);
+//        }
+//
+//        return getId(token);
+//    }
 }

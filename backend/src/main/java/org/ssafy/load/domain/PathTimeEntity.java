@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.nio.file.Path;
-import java.util.List;
-
 @Entity
 @Table(name = "path_time")
 @ToString
@@ -22,21 +19,20 @@ public class PathTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "building_id1")
-    private BuildingEntity srcBuilding;
+    private BuildingEntity building1;
 
     @ManyToOne
     @JoinColumn(name = "building_id2")
-    private BuildingEntity desBuilding;
-
+    private BuildingEntity building2;
     private Long duration;
 
     public static PathTimeEntity of(
             Long id,
-            BuildingEntity srcBuilding,
-            BuildingEntity desBuilding,
+            BuildingEntity building1,
+            BuildingEntity building2,
             Long duration
     ) {
-        return new PathTimeEntity(id, srcBuilding, desBuilding, duration);
+        return new PathTimeEntity(id, building1, building2, duration);
     }
 
     public static PathTimeEntity createNewEntity(

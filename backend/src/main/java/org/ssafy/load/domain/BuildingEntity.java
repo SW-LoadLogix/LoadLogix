@@ -9,6 +9,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "building")
 @ToString
@@ -37,10 +40,14 @@ public class BuildingEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
+
     @ManyToOne
     @JoinColumn(name = "area_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private AreaEntity deliveryAreaEntity;
+    private AreaEntity area;
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
     static public BuildingEntity of(
             Long id,
@@ -53,7 +60,8 @@ public class BuildingEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
-            AreaEntity areaEntity
+            AreaEntity area,
+            List<GoodsEntity> goodsEntities
     ){
         return new BuildingEntity(
                 id,
@@ -66,11 +74,12 @@ public class BuildingEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
-                areaEntity
+                area,
+                goodsEntities
         );
     }
 
-    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, AreaEntity areaEntity) {
+    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, AreaEntity area) {
         return of(
                 null,
                 buildingAddressRegistRequest.dongCode(),
@@ -82,8 +91,8 @@ public class BuildingEntity {
                 buildingAddressRegistRequest.loadCode(),
                 buildingAddressRegistRequest.buildingMain(),
                 buildingAddressRegistRequest.buildingSub(),
-                areaEntity
+                area,
+                null
         );
     }
-
 }
