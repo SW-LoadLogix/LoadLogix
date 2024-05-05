@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.CarRepository;
-import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
@@ -14,7 +13,7 @@ import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
-import org.ssafy.load.dto.response.WorkerResponse;
+import org.ssafy.load.dto.response.WorkerInfoResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
 import java.util.Optional;
@@ -52,10 +51,10 @@ public class WorkerService {
                         "worker"));
     }
 
-    public WorkerResponse getWorkerInfo(Long workerId){
+    public WorkerInfoResponse getWorkerInfo(Long workerId){
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
         if (worker.isEmpty())
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        return WorkerResponse.from(worker.get());
+        return WorkerInfoResponse.from(worker.get());
     }
 }

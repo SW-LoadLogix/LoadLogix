@@ -20,6 +20,7 @@ public class SecurityConfig {
         filterRegistrationBean.setFilter(new JwtFilter(jwtTokenProvider));
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/worker/info");
+        filterRegistrationBean.addUrlPatterns("/worker/ready");
         filterRegistrationBean.addUrlPatterns("/admin/*");
         filterRegistrationBean.addUrlPatterns("/goods/*");
         return filterRegistrationBean;
