@@ -24,7 +24,7 @@ public class WorkerEntity {
     private String password;
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private CarEntity car;
 
