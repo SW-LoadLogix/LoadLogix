@@ -231,7 +231,7 @@ class _PolicyCheckboxRow extends StatelessWidget {
             text: loginTexts.privacyPolicyText,
             style: loginTheme.privacyPolicyLinkStyle ??
                 const TextStyle(
-                  color: Colors.blue,
+                  color: textColor,
                   decoration: TextDecoration.underline,
                 ),
             recognizer: TapGestureRecognizer()
@@ -242,7 +242,7 @@ class _PolicyCheckboxRow extends StatelessWidget {
             text: loginTexts.termsConditionsText,
             style: loginTheme.privacyPolicyLinkStyle ??
                 const TextStyle(
-                  color: Colors.blue,
+                  color: textColor,
                   decoration: TextDecoration.underline,
                 ),
             recognizer: TapGestureRecognizer()

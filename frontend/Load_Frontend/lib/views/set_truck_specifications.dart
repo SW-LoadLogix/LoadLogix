@@ -60,7 +60,7 @@ class _SetTruckSpecificationPageState extends State<SetTruckSpecificationPage> {
         ),
         body: Row(
           children: [
-            MyNav(),
+            //MyNav(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 40.0),

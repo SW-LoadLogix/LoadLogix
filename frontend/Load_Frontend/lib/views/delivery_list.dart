@@ -46,7 +46,7 @@ class DeliveryListPage extends StatelessWidget {
         backgroundColor: Color(0xFF90D7FF),
       ),
       body: Row(children: [
-        MyNav(),
+        //MyNav(),
         Expanded(
           child:
           CustomScrollView(
