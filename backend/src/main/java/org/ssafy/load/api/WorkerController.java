@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import org.ssafy.load.application.ReadyStatusService;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
