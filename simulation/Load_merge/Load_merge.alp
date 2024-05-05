@@ -42,7 +42,7 @@ int[] cnt = new int[5];
 
 // setting 값 가져오기
 settingGoodsCountPerArea.add(0);
-settingGoodsCountPerArea.add(3);
+settingGoodsCountPerArea.add(2);
 settingGoodsCountPerArea.add(5);
 settingGoodsCountPerArea.add(6);
 settingGoodsCountPerArea.add(6);
@@ -65,8 +65,8 @@ checkGoodsForArea.add(0);
 
 
 //SSE
-//Thread sseThread = new Thread(new SSEListener());
-//sseThread.start();]]></StartupCode>
+Thread sseThread = new Thread(new SSEListener());
+sseThread.start();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1714366606324</Id>
@@ -22401,8 +22401,10 @@ public class SSEListener implements Runnable {
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("data:")) {
                     String data = line.substring(5).trim();
-                    // 수신된 데이터 처리
-                    System.out.println("Received data: " + data);
+                    if(!data.equals("0")) {
+                    	System.out.println("[적재 시작 신호 받음]");
+                    	
+                    }
                 }
             }
 
