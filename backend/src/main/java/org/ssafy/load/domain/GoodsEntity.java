@@ -20,6 +20,7 @@ public class GoodsEntity{
     private int length;
     private int height;
     private int weight;
+
     public static GoodsEntity of(
             Long id,
             int width,
@@ -27,6 +28,6 @@ public class GoodsEntity{
             int height,
             int weight
     ){
-        return new GoodsEntity(id,width,length,height,weight);
+        return new GoodsEntity(id, width, length, height, weight);
     }
 }

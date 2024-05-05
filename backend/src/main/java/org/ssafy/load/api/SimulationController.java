@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ssafy.load.application.BuildingAddressService;
+import org.ssafy.load.application.BuildingService;
 import org.ssafy.load.application.DeliveryService;
 import org.ssafy.load.common.dto.Response;
 
@@ -15,13 +15,13 @@ import java.util.List;
 @RequestMapping("/simulation")
 public class SimulationController {
 
-    public final BuildingAddressService buildingAddressService;
+    public final BuildingService buildingService;
     public final DeliveryService deliveryService;
 
 
     @GetMapping
     public Response<List<Integer>> getAreaAndBuildingCount() {
-        return Response.success(buildingAddressService.getAreaAndBuildingCount());
+        return Response.success(buildingService.getAreaAndBuildingCount());
     }
 
     @GetMapping("/conveyorLines")

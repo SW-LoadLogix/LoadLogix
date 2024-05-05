@@ -1,6 +1,5 @@
 package org.ssafy.load.application;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

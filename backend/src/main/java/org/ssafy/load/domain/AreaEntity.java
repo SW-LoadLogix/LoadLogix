@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryAreaEntity {
+public class AreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,7 +20,8 @@ public class DeliveryAreaEntity {
     private String areaName;
     @Column(name="convey_no")
     private int conveyNo;
-    public static DeliveryAreaEntity of(Integer id, String area_name, int conveyNo){
-        return new DeliveryAreaEntity(id, area_name, conveyNo);
+
+    public static AreaEntity of(Integer id, String area_name, int conveyNo){
+        return new AreaEntity(id, area_name, conveyNo);
     }
 }

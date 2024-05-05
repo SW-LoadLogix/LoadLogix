@@ -20,5 +20,5 @@ public class AreaReadyStatusEntity {
     private int count; // 구역당 할당된 개수
     @OneToOne
     @JoinColumn(name = "area_id")
-    private DeliveryAreaEntity buildingAddressEntity;
+    private AreaEntity buildingAddressEntity;
 }

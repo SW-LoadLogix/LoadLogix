@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.ssafy.load.dto.request.BuildingRegistRequest;
 
 @Entity
-@Table(name = "building_address")
+@Table(name = "building")
 @ToString
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuildingAddressEntity {
+public class BuildingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,11 +38,11 @@ public class BuildingAddressEntity {
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
     @ManyToOne
-    @JoinColumn(name = "area_id", nullable = true)
+    @JoinColumn(name = "area_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private DeliveryAreaEntity deliveryAreaEntity;
+    private AreaEntity deliveryAreaEntity;
 
-    static public BuildingAddressEntity of(
+    static public BuildingEntity of(
             Long id,
             Long dongCode,
             String sidoName,
@@ -52,9 +53,9 @@ public class BuildingAddressEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
-            DeliveryAreaEntity deliveryAreaEntity
+            AreaEntity areaEntity
     ){
-        return new BuildingAddressEntity(
+        return new BuildingEntity(
                 id,
                 dongCode,
                 sidoName,
@@ -65,10 +66,23 @@ public class BuildingAddressEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
-                DeliveryAreaEntity.of(
-                        deliveryAreaEntity.getId(),
-                        deliveryAreaEntity.getAreaName(),
-                        deliveryAreaEntity.getConveyNo())
+                areaEntity
+        );
+    }
+
+    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, AreaEntity areaEntity) {
+        return of(
+                null,
+                buildingAddressRegistRequest.dongCode(),
+                buildingAddressRegistRequest.sidoName(),
+                buildingAddressRegistRequest.gugunName(),
+                buildingAddressRegistRequest.dongName(),
+                buildingAddressRegistRequest.zibunMain(),
+                buildingAddressRegistRequest.zibunSub(),
+                buildingAddressRegistRequest.loadCode(),
+                buildingAddressRegistRequest.buildingMain(),
+                buildingAddressRegistRequest.buildingSub(),
+                areaEntity
         );
     }
 
