@@ -19,7 +19,8 @@ public class SecurityConfig {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new JwtFilter(jwtTokenProvider));
         filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/test/*");
+        filterRegistrationBean.addUrlPatterns("/admin/*");
+        filterRegistrationBean.addUrlPatterns("/goods/*");
         return filterRegistrationBean;
     }
 }

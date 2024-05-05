@@ -62,7 +62,8 @@ public class JwtTokenProvider {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Map<String, Object> map = objectMapper.readValue(json, Map.class);
-            return (Long) map.get("id");
+            Number id = (Number) map.get("id");
+            return id.longValue();
         } catch (JsonProcessingException e) {
             throw new JWTException(e);
         }
