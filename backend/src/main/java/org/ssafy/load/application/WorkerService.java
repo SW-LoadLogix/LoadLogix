@@ -1,5 +1,6 @@
 package org.ssafy.load.application;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
@@ -13,12 +14,14 @@ import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
+import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -49,4 +52,10 @@ public class WorkerService {
                         "worker"));
     }
 
+    public WorkerResponse getWorkerInfo(Long workerId){
+        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
+        if (worker.isEmpty())
+            throw new CommonException(ErrorCode.USER_NOT_FOUND);
+        return WorkerResponse.from(worker.get());
+    }
 }

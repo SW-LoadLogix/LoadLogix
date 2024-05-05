@@ -51,16 +51,14 @@ public class GoodsService {
                             .append(goodsEntities.getFirst().getBuilding().getGugunName() + " ")
                             .append(goodsEntities.getFirst().getBuilding().getDongName() + " ")
                             .append(goodsEntities.getFirst().getBuilding().getZibunMain() + " ")
-                            .append(goodsEntities.getFirst().getBuilding().getZibunSub() + " ")
-                            .append(goodsEntities.getFirst().getBuilding().getBuildingMain() + " ")
-                            .append(goodsEntities.getFirst().getBuilding().getBuildingSub());
+                            .append(goodsEntities.getFirst().getBuilding().getZibunSub() + " ");
                     String address = sb.toString();
                     List<Goods> goods = goodsEntities.stream()
                             .map(g -> new Goods(
                                     g.getId(),
                                     String.valueOf(g.getBoxType().getType()),
                                     g.getWeight(),
-                                    g.getDetailAddress() + " " + g.getDetailJuso()))
+                                    g.getDetailAddress()))
                             .toList();
                     return new Building(address, goodsEntities.size(), goods);
                 }).toList();
