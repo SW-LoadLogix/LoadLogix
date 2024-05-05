@@ -22,7 +22,6 @@ public class SimulationController {
     public final DeliveryService deliveryService;
     public final ReadyStatusService areaReadyStatusService;
 
-
     @GetMapping
     public Response<List<Integer>> getAreaAndBuildingCount() {
         return Response.success(addressService.getAreaAndBuildingCount());
