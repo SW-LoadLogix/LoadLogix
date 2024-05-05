@@ -21,7 +21,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BuildingService {
-
     private final AreaRepository areaRepository;
     private final BuildingRepository buildingRepository;
     private final PathTimeRepository pathTimeRepository;

@@ -30,7 +30,7 @@ public class PathTimeCal {
                 desCoordinate.latitude(), desCoordinate.longitude());
     }
 
-    public long calculatePathTime(double originLatitude, double originLongitude, double desLatitude, double desLongitude) {
+    private long calculatePathTime(double originLatitude, double originLongitude, double desLatitude, double desLongitude) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String url = "https://apis-navi.kakaomobility.com/v1/directions?" +
                 "origin={originLatitude},{originLongitude}&destination={desLatitude},{desLongitude}";
@@ -53,7 +53,7 @@ public class PathTimeCal {
         }
     }
 
-    public Coordinate toCoordinate(String address) {
+    private Coordinate toCoordinate(String address) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + address;
 
