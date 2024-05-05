@@ -4,17 +4,18 @@ import org.ssafy.load.domain.CarEntity;
 
 public record CarResponse(
     int width,
-    int height,
-    int length
+    int length,
+    int height
 ) {
     public static CarResponse of(
         int width,
-        int height,
-        int length){
-        return new CarResponse(width, height, length);
+        int length,
+        int height
+    ){
+        return new CarResponse(width, length, height);
     }
 
     public static CarResponse from (CarEntity entity){
-        return new CarResponse(entity.getWidth(), entity.getHeight(), entity.getLength());
+        return new CarResponse(entity.getWidth(), entity.getLength(), entity.getHeight());
     }
 }

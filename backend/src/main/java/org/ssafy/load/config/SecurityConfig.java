@@ -23,6 +23,7 @@ public class SecurityConfig {
         filterRegistrationBean.addUrlPatterns("/worker/ready");
         filterRegistrationBean.addUrlPatterns("/admin/*");
         filterRegistrationBean.addUrlPatterns("/goods/*");
+        filterRegistrationBean.addUrlPatterns("/car/*");
         return filterRegistrationBean;
     }
 }
