@@ -14,7 +14,6 @@ import org.ssafy.load.domain.PathTimeEntity;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 import org.ssafy.load.util.PathTimeCal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +27,11 @@ public class BuildingService {
 
     @Transactional
     public void registBuilding(BuildingRegistRequest buildingRegistRequest) {
-        Optional<AreaEntity> areaEntityOptional = areaRepository.findById(buildingRegistRequest.area_id());
-        AreaEntity areaEntity = areaEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.ACCESS_DENIED));
+        System.out.println(buildingRegistRequest.areaId());
+        Optional<AreaEntity> areaEntityOptional = areaRepository.findById(buildingRegistRequest.areaId());
+        AreaEntity areaEntity = areaEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
 
-        List<BuildingEntity> buildingEntityList = buildingRepository.findByAreaEntity(areaEntity);
+        List<BuildingEntity> buildingEntityList = buildingRepository.findByArea(areaEntity);
         BuildingEntity srcBuilding = buildingRepository.save(BuildingEntity.createNewEntity(buildingRegistRequest, areaEntity));
 
         String sourceAddress = new StringBuilder()

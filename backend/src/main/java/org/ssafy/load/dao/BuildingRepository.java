@@ -12,5 +12,5 @@ public interface BuildingRepository extends JpaRepository<BuildingEntity, Long> 
     @Query("SELECT b.area.id, COUNT(b.area.id) FROM BuildingEntity b GROUP BY b.area.id")
     List<Object[]> getBuildingCountsByArea();
 
-    List<BuildingEntity> findByAreaEntity(AreaEntity areaEntity);
+    List<BuildingEntity> findByArea(AreaEntity area);
 }

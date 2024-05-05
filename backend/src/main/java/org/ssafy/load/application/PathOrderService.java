@@ -19,7 +19,7 @@ public class PathOrderService {
     private final BuildingRepository buildingRepository;
     private final LoadTaskRepository loadTaskRepository;
 
-    public void CalPathOrder(Set<BuildingEntity> buildingEntitySet) {
+    public void calPathOrder(Set<BuildingEntity> buildingEntitySet) {
 
 
     }

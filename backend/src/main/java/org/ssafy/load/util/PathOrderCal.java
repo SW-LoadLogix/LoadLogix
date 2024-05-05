@@ -1,55 +1,74 @@
 package org.ssafy.load.util;
 
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.ssafy.load.common.dto.ErrorCode;
+import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dto.Building;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class PathOrderCal {
-    private static final int INVAILD = 1_000_000_000;
-    private final int maxVisit;
-    private final int[][] dp;
+    private static final int INVALID = 1_000_000_000;
+    private int maxVisit;
+    private int[][] dp;
 
     private final int[][] pathTimeMatrix;
     private final int buildingNum;
     private final List<Building> buildingList;
 
     public PathOrderCal(int[][] pathTimeMatrix, int buildingNum, List<Building> buildingList) {
+        if(buildingNum > 20) {
+            log.error("N of TSP algorithm cannot be more than 20");
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
         this.pathTimeMatrix = pathTimeMatrix;
         this.buildingNum = buildingNum;
         this.buildingList = buildingList;
-        this.maxVisit = (1 << buildingNum) - 1;
-        dp = new int[buildingNum][maxVisit + 1];
-
-        for(int i=0; i<buildingNum; i++) {
-            Arrays.fill(dp[i], -1);
-        }
     }
 
     public List<Building> getPathOrder() {
-        return getDp(0, 1);
+        maxVisit = (1 << buildingNum) - 1;
+        dp = new int[buildingNum][maxVisit + 1];
+        for(int i=0; i<buildingNum; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+
+        List<Integer> indexOrderList = new ArrayList<>();
+        List<Building> orderedBuildingList = new ArrayList<>();
+
+        getDp(0, 1, indexOrderList); //Building 0 is start vertex
+        indexOrderList.add(0);
+
+        for(int index : indexOrderList.reversed()) {
+            orderedBuildingList.add(buildingList.get(index));
+        }
+        return orderedBuildingList;
     }
 
-    private int getDp(int from, int visit, List<Integer> orders) {
-        //다 방문됬으면 주의사항 체크
+    private int getDp(int from, int visit, List<Integer> indexOrderList) {
         if(visit == maxVisit) {
-            if(pathTimeMatrix[from][0] == 0) return INVAILD;
+            if(pathTimeMatrix[from][0] == 0) return INVALID;
             return pathTimeMatrix[from][0];
         }
 
-        //이미 메모이제이션 됬으면
         if(dp[from][visit] != -1) return dp[from][visit];
 
-        //출석
-        dp[from][visit] = INVAILD;
-        int
+        dp[from][visit] = INVALID;
+        int targetTo = 0;
 
-        for(int to=0; to<buildingNum; to++) {
+        for(int to=1; to<buildingNum; to++) {
             if(pathTimeMatrix[from][to] != 0 && (visit & (1<<to)) == 0) {
-                dp[from][visit] = Math.min(dp[from][visit], getDp(to, visit | (1<<to)) + pathTimeMatrix[from][to]);
+                int value = getDp(to, visit | (1<<to), indexOrderList) + pathTimeMatrix[from][to];
+                if(dp[from][visit] > value) {
+                    targetTo = to;
+                    dp[from][visit] = value;
+                }
             }
         }
+        indexOrderList.add(targetTo);
         return dp[from][visit];
     }
 }
