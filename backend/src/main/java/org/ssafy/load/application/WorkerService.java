@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
+import org.ssafy.load.dao.CarRepository;
 import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dao.WorkerRepository;
+import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
@@ -21,15 +23,17 @@ public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
+    private final CarRepository carRepository;
+
     public SignUpResponse signup(SignUpRequest signUpRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByLoginId(signUpRequest.id());
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        return null;
-//        return SignUpResponse.from(workerRepository.save(
-//                WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-//                        signUpRequest.name(), null, null, null, null)));
+        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null));
+        return SignUpResponse.from(workerRepository.save(
+                WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
+                        signUpRequest.name(), car, null, null)));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {

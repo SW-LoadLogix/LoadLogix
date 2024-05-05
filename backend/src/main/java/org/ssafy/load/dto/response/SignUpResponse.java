@@ -4,12 +4,12 @@ import org.ssafy.load.domain.WorkerEntity;
 
 public record SignUpResponse(
     Long id,
-    String userId,
+    String loginId,
     String name
 ) {
 
-    public static SignUpResponse of(Long id, String userId, String name) {
-        return new SignUpResponse(id, userId, name);
+    public static SignUpResponse of(Long id, String loginId, String name) {
+        return new SignUpResponse(id, loginId, name);
     }
 
     public static SignUpResponse from(WorkerEntity entity) {

@@ -17,7 +17,7 @@ public class BoxTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     private BoxType type;
@@ -28,7 +28,7 @@ public class BoxTypeEntity {
 
 
     public static BoxTypeEntity of(
-            Long id,
+            Integer id,
             BoxType type,
             int height,
             int length,
