@@ -47,8 +47,8 @@ public class BuildingService {
         Optional<AreaEntity> areaEntityOptional = areaRepository.findById(buildingRegistRequest.area_id());
         AreaEntity areaEntity = areaEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.ACCESS_DENIED));
 
-        BuildingEntity srcBuilding = buildingRepository.save(BuildingEntity.createNewEntity(buildingRegistRequest, areaEntity));
         List<BuildingEntity> buildingEntityList = buildingRepository.findByAreaEntity(areaEntity);
+        BuildingEntity srcBuilding = buildingRepository.save(BuildingEntity.createNewEntity(buildingRegistRequest, areaEntity));
 
         String sourceAddress = new StringBuilder()
                 .append(srcBuilding.getSidoName())
