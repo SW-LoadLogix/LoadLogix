@@ -12,7 +12,7 @@ public class BuildingJPQLSerivce {
     private EntityManager entityManager;
 
     public List<Object[]> getBuildingCountsByArea() {
-        String jpql = "SELECT ba.areaEntity.id, COUNT( ba.areaEntity.id) FROM BuildingEntity ba GROUP BY ba.areaEntity.id";
+        String jpql = "SELECT ba.area.id, COUNT( ba.area.id) FROM BuildingEntity ba GROUP BY ba.area.id";
         return entityManager.createQuery(jpql).getResultList();
     }
 }

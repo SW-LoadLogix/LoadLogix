@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dao.AreaRepository;
+import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.ReadyStatusEntity;
 import org.ssafy.load.dto.request.ReadyAreaRequest;
 import org.ssafy.load.dto.response.StatusResponse;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -56,5 +58,17 @@ public class ReadyStatusService {
                     return StatusResponse.of(false, "Already Waiting");
                 })
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
+    @Transactional
+    public Integer getReadyStatus(){
+        List<ReadyStatusEntity> readyStatusEntityList = readyStatusRepository.findAll();
+        for(ReadyStatusEntity readyStatusEntity : readyStatusEntityList){
+
+            if(readyStatusEntity.getAreaStatus() == true && readyStatusEntity.getWorkerState() == true){
+                readyStatusRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
+                return readyStatusEntity.getArea().getId();
+            }
+        }
+        return 0;
     }
 }

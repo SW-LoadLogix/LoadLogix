@@ -35,6 +35,10 @@ public class ReadyStatusEntity {
     public ReadyStatusEntity withUpdatedWorkerState(boolean workerStatus) {
         return new ReadyStatusEntity(this.id, this.areaStatus, this.count, workerStatus, this.area);
     }
+    public ReadyStatusEntity withUpdatedBothStatus(boolean areaStatus,int  count, boolean workerStatus) {
+        return new ReadyStatusEntity(this.id, areaStatus, count, workerStatus, this.area);
+    }
+
 }
 
 
