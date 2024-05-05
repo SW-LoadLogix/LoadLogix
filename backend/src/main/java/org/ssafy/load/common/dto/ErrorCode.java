@@ -17,7 +17,8 @@ public enum ErrorCode {
     USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "User with given userId already exists"),
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access denied: Insufficient permissions"),
     AREA_NOT_FOUND(HttpStatus.NOT_FOUND, "Area not founded"),
-    BUILDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Building not founded");
+    BUILDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Building not founded"),
+    CAR_NOT_FOUND(HttpStatus.NOT_FOUND, "Car not founded");
 
 
     final private HttpStatus status;

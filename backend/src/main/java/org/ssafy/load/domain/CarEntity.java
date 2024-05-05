@@ -31,4 +31,10 @@ public class CarEntity {
     ) {
         return new CarEntity(id, height, length, width, type);
     }
+
+    public void updateCar(int height, int length, int width) {
+        this.height = height;
+        this.length = length;
+        this.width = width;
+    }
 }
