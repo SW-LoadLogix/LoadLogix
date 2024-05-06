@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +37,6 @@ public class GoodsEntity {
     @ManyToOne
     @JoinColumn(name = "load_task_id")
     private LoadTaskEntity loadTask;
-
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

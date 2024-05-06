@@ -19,8 +19,6 @@ public class SimulationController {
     public final DeliveryService deliveryService;
     public final ReadyStatusService readyStatusService;
 
-
-
     @GetMapping
     public Response<List<Integer>> getAreaAndBuildingCount() {
         return Response.success(addressService.getAreaAndBuildingCount());
@@ -36,5 +34,4 @@ public class SimulationController {
     public Response<List<Integer>> getConveyorLine() {
         return Response.success(deliveryService.getConveyorLine());
     }
-
 }
