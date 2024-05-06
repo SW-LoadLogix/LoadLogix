@@ -26,15 +26,15 @@ public class AreaEntity {
     private WorkerEntity worker ;
 
     @OneToOne(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private ReadyStatusEntity readyStatus;
+    private LoadTaskEntity loadTask;
 
     public static AreaEntity of(
             Integer id,
             String areaName,
             int conveyNo,
             WorkerEntity worker,
-            ReadyStatusEntity readyStatus){
-        return new AreaEntity(id, areaName, conveyNo, worker, readyStatus);
+            LoadTaskEntity loadTask){
+        return new AreaEntity(id, areaName, conveyNo, worker, loadTask);
     }
 
 }

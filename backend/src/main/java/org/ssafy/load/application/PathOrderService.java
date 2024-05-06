@@ -6,11 +6,8 @@ import org.ssafy.load.dao.AreaRepository;
 import org.ssafy.load.dao.BuildingRepository;
 import org.ssafy.load.dao.LoadTaskRepository;
 import org.ssafy.load.domain.BuildingEntity;
-import org.ssafy.load.domain.GoodsEntity;
 
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 @RequiredArgsConstructor
