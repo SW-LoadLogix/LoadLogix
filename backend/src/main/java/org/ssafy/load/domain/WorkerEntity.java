@@ -29,9 +29,6 @@ public class WorkerEntity {
 
     @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AreaEntity area;
-    
-    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LoadTaskEntity> loadTaskEntities = new ArrayList<>();
 
     public static WorkerEntity of(
             Long id,
@@ -39,9 +36,8 @@ public class WorkerEntity {
             String password,
             String name,
             CarEntity car,
-            AreaEntity area,
-            List<LoadTaskEntity> loadTaskEntities
+            AreaEntity area
     ) {
-        return new WorkerEntity(id, loginId, password, name, car, area, loadTaskEntities);
+        return new WorkerEntity(id, loginId, password, name, car, area);
     }
 }

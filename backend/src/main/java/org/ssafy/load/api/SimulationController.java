@@ -6,7 +6,7 @@ import org.ssafy.load.application.AddressService;
 import org.ssafy.load.application.DeliveryService;
 import org.ssafy.load.application.ReadyStatusService;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.dto.request.ReadyAreaRequest;
+import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class SimulationController {
     }
 
     @PutMapping("/ready")
-    public Response<Void> setReadyCompletedArea(@RequestBody ReadyAreaRequest readyAreaRequest) {
-        readyStatusService.setReadyCompletedArea(readyAreaRequest);
+    public Response<Void> setReadyCompletedArea(@RequestBody ReadyRequest readyRequest) {
+        readyStatusService.setReadyCompletedArea(readyRequest);
         return Response.success();
     }
 

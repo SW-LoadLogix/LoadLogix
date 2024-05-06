@@ -6,10 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.AreaRepository;
-import org.ssafy.load.dao.ReadyStatusRepository;
+import org.ssafy.load.dao.LoadTaskRepository;
 import org.ssafy.load.dao.WorkerRepository;
-import org.ssafy.load.domain.ReadyStatusEntity;
-import org.ssafy.load.dto.request.ReadyAreaRequest;
+import org.ssafy.load.domain.LoadTaskEntity;
+import org.ssafy.load.dto.request.ReadyRequest;
 import org.ssafy.load.dto.response.StatusResponse;
 
 import java.util.List;
@@ -17,14 +17,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReadyStatusService {
-    private final ReadyStatusRepository readyStatusRepository;
+    private final LoadTaskRepository loadTaskRepository;
     private final AreaRepository areaRepository;
     private final WorkerRepository workerRepository;
 
     @Transactional
-    public void setReadyCompletedArea(ReadyAreaRequest readyAreaRequest){
+    public void setReadyCompletedArea(ReadyRequest readyAreaRequest){
         areaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((areaEntity) -> {
-            ReadyStatusEntity readyStatusEntity = areaEntity.getReadyStatus();
+            LoadTaskEntity readyStatusEntity = areaEntity.getLoadTask();
 
             if (readyStatusEntity == null) {
                 throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -32,7 +32,7 @@ public class ReadyStatusService {
             if (readyStatusEntity.getAreaStatus()) {
                 return;
             }
-            readyStatusRepository.save(
+            loadTaskRepository.save(
                     readyStatusEntity.withUpdatedAreaStateAndCount(true, readyAreaRequest.count()));
         }, () -> {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -44,7 +44,7 @@ public class ReadyStatusService {
 
         return workerRepository.findById(workerId)
                 .map(workerEntity -> {
-                    ReadyStatusEntity readyStatusEntity = workerEntity.getArea().getReadyStatus();
+                    LoadTaskEntity readyStatusEntity = workerEntity.getArea().getLoadTask();
                     if (readyStatusEntity == null) {
                         throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
                     }
@@ -52,7 +52,7 @@ public class ReadyStatusService {
                         return StatusResponse.of(false, "Not Ready");
                     }
                     if (!readyStatusEntity.getWorkerState()) {
-                        readyStatusRepository.save(readyStatusEntity.withUpdatedWorkerState(true));
+                        loadTaskRepository.save(readyStatusEntity.withUpdatedWorkerState(true));
                         return StatusResponse.of(false, "Loading Soon");
                     }
                     return StatusResponse.of(false, "Already Waiting");
@@ -61,11 +61,11 @@ public class ReadyStatusService {
     }
     @Transactional
     public Integer getReadyStatus(){
-        List<ReadyStatusEntity> readyStatusEntityList = readyStatusRepository.findAll();
-        for(ReadyStatusEntity readyStatusEntity : readyStatusEntityList){
+        List<LoadTaskEntity> readyStatusEntityList = loadTaskRepository.findAll();
+        for(LoadTaskEntity readyStatusEntity : readyStatusEntityList){
 
             if(readyStatusEntity.getAreaStatus() == true && readyStatusEntity.getWorkerState() == true){
-                readyStatusRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
+                loadTaskRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
                 return readyStatusEntity.getArea().getId();
             }
         }
