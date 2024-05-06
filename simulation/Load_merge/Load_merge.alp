@@ -30,9 +30,68 @@ public void addAgentFromRack(LinkedList<Goods> rackStore, Goods targetAgent){
 	rackStore.add(targetAgent); 
 }
 
-int conveyorLine = 0;
-int[] cnt = new int[5];
+public void startSSEListener() {
+    SSEListener listener = new SSEListener(this);
+    new Thread(listener).start();
+}
 
+public LinkedList<Goods> getRackStore(int area){
+	LinkedList<Goods> selectedRackStore = null;
+	LinkedList<Goods> response = null;
+	boolean one = true;
+    switch (area) {
+        case 1:
+            selectedRackStore = mainInstance.rackStore1;
+            break;
+        case 2:
+        case 3:
+        	selectedRackStore = mainInstance.rackStore2;
+            one = false;
+            break;
+        case 4:
+        	selectedRackStore = mainInstance.rackStore3;
+            break;
+        case 5:
+        case 6:
+        	selectedRackStore = mainInstance.rackStore4;
+            one = false;
+            break;
+        case 7:
+        	selectedRackStore = mainInstance.rackStore5;
+            break;
+        case 8:
+        case 9:
+        	selectedRackStore = mainInstance.rackStore6;
+            one = false;
+            break;
+    }
+    
+    if(!one) {
+        for(Goods goods : selectedRackStore) {
+        	if(data == goods.areaId) {
+            	response.add(goods);
+        	}
+        }
+    }
+    
+    return response;
+}
+
+public LinkedList<Goods> startLoad(int conveyor, int area){
+	 if(area == 1) enterInject(conveyor, enter1, getRackStore(area));
+	 else if(area == 2 || area == 3) enterInject(conveyor, enter2, getRackStore(area));
+	 else if(area == 4) enterInject(conveyor, enter3, getRackStore(area));
+	 else if(area == 5 || area == 6) enterInject(conveyor, enter4, getRackStore(area));
+	 else if(area == 7) enterInject(conveyor, enter5, getRackStore(area));
+	 else if(area == 8 || area == 9) enterInject(conveyor, enter6, getRackStore(area));
+}
+public void enterInject(int conveyor, Enter enter, LikedList<Goods> pickList){
+	for(Goods goods : pickList){
+		goods.toConveyorLine = conveyor;
+		enter.inject(goods);
+	}
+	
+}
 ]]></AdditionalClassCode>
 			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
@@ -41,32 +100,16 @@ int[] cnt = new int[5];
 }
 
 // setting 값 가져오기
-settingGoodsCountPerArea.add(0);
-settingGoodsCountPerArea.add(2);
-settingGoodsCountPerArea.add(5);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-settingGoodsCountPerArea.add(6);
-
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-checkGoodsForArea.add(0);
-
+int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
+int[] checkGoodsForArea = new int[10];
 
 //SSE
-Thread sseThread = new Thread(new SSEListener());
-sseThread.start();]]></StartupCode>
+startSSEListener();
+
+
+int[] goodsCntForVehicle = new int[5];
+boolean[] readyVehicleToConvey = new boolean[5];
+]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1714366606324</Id>
@@ -170,7 +213,7 @@ sseThread.start();]]></StartupCode>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[APIClient]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new APIClient();]]></Code>
+							<Code><![CDATA[APIClient.getInstance();]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -297,7 +340,7 @@ sseThread.start();]]></StartupCode>
 				<Variable Class="CollectionVariable">
 					<Id>1714896587763</Id>
 					<Name><![CDATA[rackStore6]]></Name>
-					<X>-340</X><Y>959</Y>
+					<X>-390</X><Y>1110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3301,7 +3344,8 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1)); 
+	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1), getRackStore(1)); 
+	
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3337,7 +3381,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2)); 
+	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), , getRackStore(2)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3373,7 +3417,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3)); 
+	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), , getRackStore(3)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3409,7 +3453,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4)); 
+	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4), getRackStore(4)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3445,7 +3489,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5)); 
+	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5), getRackStore(5)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3481,7 +3525,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6)); 
+	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6), getRackStore(6)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3517,7 +3561,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7)); 
+	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7), getRackStore(7)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3553,7 +3597,7 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8)); 
+	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8), getRackStore(8)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3589,10 +3633,134 @@ sseThread.start();]]></StartupCode>
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9)); 
+	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9), getRackStore(9)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
+				</Event>
+				<Event>
+					<Id>1714978763588</Id>
+					<Name><![CDATA[setVehicle1]]></Name>
+					<X>-590</X><Y>890</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714982400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[readyVehicleToConvey[1]]]></Condition>
+					</Properties>
+					<Action><![CDATA[sourceDeliveryTruck1.inject(1);]]></Action>
+				</Event>
+				<Event>
+					<Id>1714979184961</Id>
+					<Name><![CDATA[setVehicle2]]></Name>
+					<X>-590</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714982400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[readyVehicleToConvey[2]]]></Condition>
+					</Properties>
+					<Action><![CDATA[sourceDeliveryTruck2.inject(2);]]></Action>
+				</Event>
+				<Event>
+					<Id>1714979188696</Id>
+					<Name><![CDATA[setVehicle3]]></Name>
+					<X>-590</X><Y>950</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714982400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[readyVehicleToConvey[3]]]></Condition>
+					</Properties>
+					<Action><![CDATA[sourceDeliveryTruck3.inject(3);]]></Action>
+				</Event>
+				<Event>
+					<Id>1714979192017</Id>
+					<Name><![CDATA[setVehicle4]]></Name>
+					<X>-590</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="condition" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1714982400000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[readyVehicleToConvey[4]]]></Condition>
+					</Properties>
+					<Action><![CDATA[sourceDeliveryTruck4.inject(4);]]></Action>
 				</Event>
 			</Events>
 			<AgentLinks>
@@ -9309,6 +9477,9 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[readyVehicleToConvey[1] = false;]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -9379,7 +9550,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
+								<Code><![CDATA[1.5*goodsCntForVehicle[1]]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -10050,6 +10221,9 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[readyVehicleToConvey[2] = false;]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -10120,7 +10294,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
+								<Code><![CDATA[1.5*goodsCntForVehicle[2]]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -10791,6 +10965,9 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[readyVehicleToConvey[3] = false;]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -10861,7 +11038,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
+								<Code><![CDATA[1.5*goodsCntForVehicle[3]]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -11532,6 +11709,9 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[readyVehicleToConvey[4] = false;]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -11602,7 +11782,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
+								<Code><![CDATA[1.5*goodsCntForVehicle[4]]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -24374,16 +24554,7 @@ for(Goods goods : rackStore1){
 		enter1.take(goods);
 		cnt[conveyorLine]++;
 	}
-}
-
-if(conveyorLine == 1)
-	sourceDeliveryTruck1.inject(1);
-else if(conveyorLine == 2)
-	sourceDeliveryTruck2.inject(1);
-else if(conveyorLine == 3)
-	sourceDeliveryTruck3.inject(1);
-else
-	sourceDeliveryTruck4.inject(1);]]></ActionCode>
+}]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -26982,11 +27153,16 @@ public class APIClient {
 
     private final String SERVER_URL = "http://localhost:8081/api/simulation";
     
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count) throws Exception{
+    private static APIClient instance = new APIClient();
+    public static APIClient getInstance() {
+    	return instance;
+    }
+    
+    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count, LinkedList<Goods> responseRackStore) throws Exception{
         String url = SERVER_URL + "/ready";
-        String method = "PUT";
+        String method = "POST";
         
-        ReadyRequest requestBody = new ReadyRequest(areaId, count);
+        ReadyRequest requestBody = new ReadyRequest(areaId, count, responseRackStore);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonRequestBody = objectMapper.writeValueAsString(requestBody);
         
@@ -27000,7 +27176,7 @@ public class APIClient {
     	return result;
     	
     }
-
+    
     public ArrayList<Integer> getBuildingCount() throws Exception{
         String url = SERVER_URL + "";
         String method = "GET";
@@ -27178,10 +27354,13 @@ import java.net.URL;
 
 public class SSEListener implements Runnable {
     private String sseUrl;
+    private Main mainInstance;
 
-    public SSEListener() {
+    public SSEListener(Main mainInstance) {
         this.sseUrl = "http://localhost:8081/api/simulation/start";
+        this.mainInstance = mainInstance; 
     }
+
 
     @Override
     public void run() {
@@ -27203,11 +27382,20 @@ public class SSEListener implements Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("data:")) {
-                    String data = line.substring(5).trim();
-                    if(!data.equals("0")) {
-                    	System.out.println("[적재 시작 신호 받음]");
-                    	
-                    }
+                    String json  = line.substring(5).trim();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                	LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
+
+                	System.out.println("Received AreaData: area_id=" + data.getAreaId() + ", conveyNo=" + data.getConveyNo()+", vehicle=" + data.getReadyVehicle()");
+
+                	// 차량 준비
+                	if(data.getReadyVehicle()) {
+            			mainInstance.readyVehicleToConvey[data.getConveyNo()] = true;
+                	}
+                	// 적재 시작
+                	if(data.getAreadId()!=0) {
+                		mainInstance.startLoad(data.getConveyNo(), data.getAreadId());
+                	}	
                 }
             }
 
@@ -27216,6 +27404,8 @@ public class SSEListener implements Runnable {
             e.printStackTrace();
         }
     }
+    
+
 }                    ]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
@@ -27318,10 +27508,12 @@ public class InitialInfoDto implements Serializable {
 public class ReadyRequest {
     private int areaId;
     private int count;
-
-    public ReadyRequest(int areaId, int count) {
+    private LinkedList<Goods> goods;
+    
+    public ReadyRequest(int areaId, int count, LinkedList<Goods> goods) {
         this.areaId = areaId;
         this.count = count;
+        this.goods = goods;
     }
 
     public int getAreaId() {
@@ -27339,6 +27531,57 @@ public class ReadyRequest {
     public void setCount(int count) {
         this.count = count;
     }
+    public LinkedList<Goods> getGoods() {
+        return goods;
+    }
+
+    public void setGoods(LinkedList<Goods> goods) {
+        this.goods = goods;
+    }
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1714977088046</Id>
+			<Name><![CDATA[LoadStartRequest]]></Name>
+			<Text><![CDATA[/**
+ * LoadStartResponse
+ */	
+public class LoadStartRequest {
+
+    private int areaId;
+    private int conveyNo;
+    private boolean readyVehicle;
+    
+    public LoadStartRequest(int areaId, int conveyNo, boolean readyVehicle) {
+        this.areaId = areaId;
+        this.conveyNo = conveyNo;
+        this.readyVehicle = readyVehicle;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
+    }
+
+    public int getConveyNo() {
+        return conveyNo;
+    }
+
+    public void setConveyNo(int conveyNo) {
+        this.conveyNo = conveyNo;
+    }
+    public boolean getReadyVehicle() {
+        return readyVehicle;
+    }
+
+    public void setReadyVehicle(boolean readyVehicle) {
+        this.readyVehicle = readyVehicle;
+    }
+    
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>
