@@ -30,6 +30,11 @@ public void addAgentFromRack(LinkedList<Goods> rackStore, Goods targetAgent){
 	rackStore.add(targetAgent); 
 }
 
+public void startSSEListener() {
+    SSEListener listener = new SSEListener(this);
+    new Thread(listener).start();
+}
+
 int conveyorLine = 0;
 int[] cnt = new int[5];
 
@@ -65,8 +70,7 @@ checkGoodsForArea.add(0);
 
 
 //SSE
-Thread sseThread = new Thread(new SSEListener());
-sseThread.start();]]></StartupCode>
+startSSEListener();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1714366606324</Id>
@@ -170,7 +174,7 @@ sseThread.start();]]></StartupCode>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[APIClient]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new APIClient();]]></Code>
+							<Code><![CDATA[APIClient.getInstance();]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -297,7 +301,7 @@ sseThread.start();]]></StartupCode>
 				<Variable Class="CollectionVariable">
 					<Id>1714896587763</Id>
 					<Name><![CDATA[rackStore6]]></Name>
-					<X>-340</X><Y>959</Y>
+					<X>-390</X><Y>1110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26982,6 +26986,29 @@ public class APIClient {
 
     private final String SERVER_URL = "http://localhost:8081/api/simulation";
     
+    private static APIClient instance = new APIClient();
+    public static APIClient getInstance() {
+    	return instance;
+    }
+   
+    public ArrayList<Integer> doLoad(LinkedList<Goods> responseRackStore) throws Exception{
+        String url = SERVER_URL + "/load";
+        String method = "POST";
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestBody = objectMapper.writeValueAsString(responseRackStore);
+        
+        StringBuffer response = getResponse(url, method, jsonRequestBody);
+
+        APIResponse<Integer> apiResponse = objectMapper.readValue(response.toString(), new TypeReference<APIResponse<Integer>>() {});
+
+        String resultCode = apiResponse.getResultCode();
+        ArrayList<Integer> result = (ArrayList) apiResponse.getResult();
+        
+    	return result;
+    	
+    }
+    
     public ArrayList<Integer> setReadyCompletedArea(int areaId, int count) throws Exception{
         String url = SERVER_URL + "/ready";
         String method = "PUT";
@@ -27178,10 +27205,13 @@ import java.net.URL;
 
 public class SSEListener implements Runnable {
     private String sseUrl;
+    private Main mainInstance;
 
-    public SSEListener() {
+    public SSEListener(Main mainInstance) {
         this.sseUrl = "http://localhost:8081/api/simulation/start";
+        this.mainInstance = mainInstance; 
     }
+
 
     @Override
     public void run() {
@@ -27204,10 +27234,16 @@ public class SSEListener implements Runnable {
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("data:")) {
                     String data = line.substring(5).trim();
-                    if(!data.equals("0")) {
-                    	System.out.println("[적재 시작 신호 받음]");
-                    	
+                    try {
+                        int intValue = Integer.parseInt(data); // 문자열을 정수로 변환
+                        if(!data.equals("0")) {
+                        	System.out.println("[적재 시작 신호 받음]");
+                        	APIClient.getInstance().doLoad(getRackStore(intValue));
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Invalid integer received: " + data);
                     }
+                    
                 }
             }
 
@@ -27215,6 +27251,48 @@ public class SSEListener implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public LinkedList<Goods> getRackStore(int data){
+    	LinkedList<Goods> selectedRackStore = null;
+    	LinkedList<Goods> response = null;
+    	boolean one = true;
+        switch (data) {
+            case 1:
+                selectedRackStore = mainInstance.rackStore1;
+                break;
+            case 2:
+            case 3:
+            	selectedRackStore = mainInstance.rackStore2;
+                one = false;
+                break;
+            case 4:
+            	selectedRackStore = mainInstance.rackStore3;
+                break;
+            case 5:
+            case 6:
+            	selectedRackStore = mainInstance.rackStore4;
+                one = false;
+                break;
+            case 7:
+            	selectedRackStore = mainInstance.rackStore5;
+                break;
+            case 8:
+            case 9:
+            	selectedRackStore = mainInstance.rackStore6;
+                one = false;
+                break;
+        }
+        
+        if(!one) {
+            for(Goods goods : selectedRackStore) {
+            	if(data == goods.areaId) {
+                	response.add(goods);
+            	}
+            }
+        }
+        
+        return response;
     }
 }                    ]]></Text>
 		</JavaClass>
