@@ -9,7 +9,7 @@ import org.ssafy.load.dao.AreaRepository;
 import org.ssafy.load.dao.ReadyStatusRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.ReadyStatusEntity;
-import org.ssafy.load.dto.request.ReadyAreaRequest;
+import org.ssafy.load.dto.request.ReadyRequest;
 import org.ssafy.load.dto.response.StatusResponse;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class ReadyStatusService {
     private final WorkerRepository workerRepository;
 
     @Transactional
-    public void setReadyCompletedArea(ReadyAreaRequest readyAreaRequest){
+    public void setReadyCompletedArea(ReadyRequest readyAreaRequest){
         areaRepository.findById(readyAreaRequest.areaId()).ifPresentOrElse((areaEntity) -> {
             ReadyStatusEntity readyStatusEntity = areaEntity.getReadyStatus();
 
