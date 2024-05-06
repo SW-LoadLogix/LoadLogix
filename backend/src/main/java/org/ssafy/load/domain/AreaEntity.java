@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 @Entity
 @Table(name = "area")
 @ToString
@@ -32,16 +28,13 @@ public class AreaEntity {
     @OneToOne(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ReadyStatusEntity readyStatus;
 
-    @OneToMany(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BuildingEntity> buildingEntities = new ArrayList<>();
-
     public static AreaEntity of(
             Integer id,
             String areaName,
             int conveyNo,
             WorkerEntity worker,
-            ReadyStatusEntity readyStatus,
-            List<BuildingEntity> buildingEntities) {
-        return new AreaEntity(id, areaName, conveyNo, worker, readyStatus, buildingEntities);
+            ReadyStatusEntity readyStatus){
+        return new AreaEntity(id, areaName, conveyNo, worker, readyStatus);
     }
+
 }

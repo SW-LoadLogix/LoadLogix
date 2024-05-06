@@ -59,11 +59,13 @@ public class ReadyStatusService {
                 })
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
     }
+    @Transactional
     public Integer getReadyStatus(){
         List<ReadyStatusEntity> readyStatusEntityList = readyStatusRepository.findAll();
         for(ReadyStatusEntity readyStatusEntity : readyStatusEntityList){
 
             if(readyStatusEntity.getAreaStatus() == true && readyStatusEntity.getWorkerState() == true){
+                readyStatusRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
                 return readyStatusEntity.getArea().getId();
             }
         }

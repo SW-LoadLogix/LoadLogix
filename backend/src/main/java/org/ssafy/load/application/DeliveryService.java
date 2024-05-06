@@ -1,11 +1,13 @@
 package org.ssafy.load.application;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class DeliveryService {
 
     public List<Integer> getConveyorLine() {

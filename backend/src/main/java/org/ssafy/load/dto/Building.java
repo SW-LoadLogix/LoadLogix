@@ -1,5 +1,10 @@
 package org.ssafy.load.dto;
 
-public class Building {
+import java.util.List;
 
+public record Building(
+        String address,
+        int totalGoods,
+        List<Goods> goods
+) {
 }

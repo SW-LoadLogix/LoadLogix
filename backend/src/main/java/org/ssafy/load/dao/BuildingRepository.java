@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public interface BuildingRepository extends JpaRepository<BuildingEntity, Long> {
-    @Query("SELECT b.area.id, COUNT(b.area.id) FROM BuildingEntity b GROUP BY b.area.id")
-    List<Object[]> getBuildingCountsByArea();
+    @Query("SELECT b.id FROM BuildingEntity b WHERE b.area.id = :areaId")
+    List<Long> findIdsByAreaId(Integer areaId);
 
     List<BuildingEntity> findByArea(AreaEntity area);
 }

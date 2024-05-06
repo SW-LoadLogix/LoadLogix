@@ -1,4 +1,4 @@
-package org.ssafy.load.dao;
+package org.ssafy.load.application;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

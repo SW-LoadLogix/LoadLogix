@@ -14,17 +14,21 @@ import org.ssafy.load.common.type.BoxType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoxTypeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+
     @Enumerated(EnumType.STRING)
     private BoxType type;
+
     private int height;
     private int length;
     private int width;
 
+
     public static BoxTypeEntity of(
-            Long id,
+            Integer id,
             BoxType type,
             int height,
             int length,
