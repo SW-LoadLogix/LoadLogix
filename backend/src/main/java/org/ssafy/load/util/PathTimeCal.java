@@ -48,8 +48,7 @@ public class PathTimeCal {
             JsonNode jsonNode = objectMapper.readTree(responseEntity.getBody());
             return jsonNode.get("routes").get(0).get("summary").get("duration").asLong();
         } catch (Exception e) {
-            log.error(e.getMessage());
-            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
@@ -73,8 +72,7 @@ public class PathTimeCal {
             return new Coordinate(x, y);
         }
         catch (Exception e) {
-            log.error(e.getMessage());
-            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class PathOrderService {
+public class PathService {
     private final AreaRepository areaRepository;
     private final BuildingRepository buildingRepository;
     private final LoadTaskRepository loadTaskRepository;

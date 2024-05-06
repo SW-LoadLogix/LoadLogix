@@ -21,8 +21,7 @@ public class PathOrderCal {
 
     public PathOrderCal(int[][] pathTimeMatrix, int buildingNum, List<Building> buildingList) {
         if(buildingNum > 20) {
-            log.error("N of TSP algorithm cannot be more than 20");
-            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, "N of TSP algorithm cannot be more than 20");
         }
         this.pathTimeMatrix = pathTimeMatrix;
         this.buildingNum = buildingNum;
