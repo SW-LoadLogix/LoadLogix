@@ -5,10 +5,10 @@ import 'package:load_frontend/widgets/sidebar_menu_item.dart';
 import '../model.dart';
 
 final List<MenuItem> menuItems = [
-  MenuItem('Home', Icons.home_outlined),
-  MenuItem('Dashboard', Icons.dashboard_outlined),
-  MenuItem('User', Icons.person),
-  MenuItem('Contact', Icons.contact_mail),
+  MenuItem('홈', Icons.home_outlined),
+  MenuItem('배송관리 대시보드', Icons.dashboard_outlined),
+  MenuItem('3D 시뮬레이션', Icons.threed_rotation),
+  // MenuItem('Contact', Icons.contact_mail),
 ];
 
 class SideBar extends StatelessWidget {
@@ -51,7 +51,6 @@ class SideBar extends StatelessWidget {
           Center(
             child: Image.asset('assets/images/logo3.png'),
           ),
-
           SizedBox(
             height: 24,
           ),

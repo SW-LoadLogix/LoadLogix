@@ -18,30 +18,36 @@ class StatusList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              'Weekly',
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(width: 14),
-            Text('Monthly',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                )),
-            SizedBox(
-              width: 14,
-            ),
-            Text('Yearly',
-                style: TextStyle(
-                  fontSize: 16,
-                )),
-          ],
+        Text(
+          "김보경 기사님 2024-05-05 배송관리",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          textAlign: TextAlign.left,
         ),
+        // Row(
+        //   children: [
+        //     Text(
+        //       'Weekly',
+        //       style: TextStyle(
+        //         fontSize: 16,
+        //       ),
+        //     ),
+        //     SizedBox(width: 14),
+        //     Text('Monthly',
+        //         style: TextStyle(
+        //           fontSize: 16,
+        //           fontWeight: FontWeight.bold,
+        //         )),
+        //     SizedBox(
+        //       width: 14,
+        //     ),
+        //     Text('Yearly',
+        //         style: TextStyle(
+        //           fontSize: 16,
+        //         )),
+        //   ],
+        // ),
         SizedBox(
           height: componentPadding,
         ),
