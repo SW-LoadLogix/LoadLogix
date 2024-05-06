@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.ssafy.load.dto.Coordinate;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 
 import java.util.ArrayList;
@@ -40,6 +41,10 @@ public class BuildingEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
+    @Column(name="latitude")
+    private double latitude;
+    @Column(name="longitude")
+    private double longitude;
 
     @ManyToOne
     @JoinColumn(name = "area_id")
@@ -60,6 +65,8 @@ public class BuildingEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
+            double latitude,
+            double longitude,
             AreaEntity area,
             List<GoodsEntity> goodsEntities
     ){
@@ -74,12 +81,14 @@ public class BuildingEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
+                latitude,
+                longitude,
                 area,
                 goodsEntities
         );
     }
 
-    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, AreaEntity area) {
+    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, Coordinate coordinate, AreaEntity area) {
         return of(
                 null,
                 buildingAddressRegistRequest.dongCode(),
@@ -91,6 +100,8 @@ public class BuildingEntity {
                 buildingAddressRegistRequest.loadCode(),
                 buildingAddressRegistRequest.buildingMain(),
                 buildingAddressRegistRequest.buildingSub(),
+                coordinate.latitude(),
+                coordinate.longitude(),
                 area,
                 null
         );

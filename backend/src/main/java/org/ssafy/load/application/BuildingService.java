@@ -11,6 +11,7 @@ import org.ssafy.load.dao.PathTimeRepository;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.BuildingEntity;
 import org.ssafy.load.domain.PathTimeEntity;
+import org.ssafy.load.dto.Coordinate;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 import org.ssafy.load.util.PathTimeCal;
 
@@ -32,18 +33,20 @@ public class BuildingService {
         AreaEntity areaEntity = areaEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
 
         List<BuildingEntity> buildingEntityList = buildingRepository.findByArea(areaEntity);
-        BuildingEntity srcBuilding = buildingRepository.save(BuildingEntity.createNewEntity(buildingRegistRequest, areaEntity));
 
         String sourceAddress = new StringBuilder()
-                .append(srcBuilding.getSidoName())
+                .append(buildingRegistRequest.sidoName())
                 .append(" ")
-                .append(srcBuilding.getGugunName())
+                .append(buildingRegistRequest.gugunName())
                 .append(" ")
-                .append(srcBuilding.getDongName())
+                .append(buildingRegistRequest.dongName())
                 .append(" ")
-                .append(srcBuilding.getZibunMain())
+                .append(buildingRegistRequest.zibunMain())
                 .append("-")
-                .append(srcBuilding.getZibunSub()).toString();
+                .append(buildingRegistRequest.zibunSub()).toString();
+
+        Coordinate coordinate = pathTimeCal.toCoordinate(sourceAddress);
+        BuildingEntity srcBuilding = buildingRepository.save(BuildingEntity.createNewEntity(buildingRegistRequest, coordinate, areaEntity));
 
         for(BuildingEntity desBuilding : buildingEntityList) {
             String desAddress = new StringBuilder()
