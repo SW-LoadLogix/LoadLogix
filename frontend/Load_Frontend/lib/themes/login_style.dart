@@ -5,10 +5,13 @@ import '../constaints.dart';
 var loginTheme = ThemeData(
   fontFamily: 'Nunito',
   primaryColor: primary,
-  colorScheme: const ColorScheme.light(primary:  primary),
-  textTheme: TextTheme().apply(bodyColor: textColor),
   primaryColorDark: primaryAncient,
   primaryColorLight: primaryLight,
+
+  colorScheme: ColorScheme.fromSeed(seedColor: primary),
+  //const ColorScheme.light(primary:  primary),
+  textTheme: TextTheme().apply(bodyColor: textColor),
+
 
   //primaryColor: primary,//Color.fromARGB(255, 0x3A,0xB9,0xFF),//Colors.blue,
   //colorScheme: const ColorScheme.light(primary:  primary),//Color.fromARGB(255, 0x3A,0xB9,0xFF)),//const ColorScheme.light(primary: Colors.blue),
