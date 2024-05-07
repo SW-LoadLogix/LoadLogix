@@ -3,8 +3,11 @@ import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/views/news.dart';
 
 class TopBar extends StatelessWidget {
-  final bool _showDesktop;
-  const TopBar([this._showDesktop = false]);
+  final bool showDesktop;
+  final String name;
+
+  TopBar({required this.showDesktop, required this.name});
+  //const TopBar([this._showDesktop = false, this.name]);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class TopBar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Dashboard',
+                    name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -54,7 +57,7 @@ class TopBar extends StatelessWidget {
               ),
               onPressed: () {},
             ),
-            this._showDesktop
+            this.showDesktop
                 ? SizedBox.shrink()
                 : IconButton(
                     icon: Icon(
