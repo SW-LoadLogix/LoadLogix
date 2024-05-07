@@ -26,7 +26,7 @@ public class SimulationController {
         return Response.success(addressService.getAreaAndBuildingCount());
     }
 
-    @PutMapping("/ready")
+    @PostMapping("/ready")
     public Response<Void> setReadyCompletedArea(@RequestBody ReadyRequest readyRequest) {
         loadTaskService.setReadyCompletedArea(readyRequest);
         return Response.success();

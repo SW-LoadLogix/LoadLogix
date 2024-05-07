@@ -2,7 +2,7 @@ package org.ssafy.load.application;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import org.ssafy.load.dto.request.LoadStartRequest;
+import org.ssafy.load.dto.response.LoadStartResponse;
 
 @Service
 public class SseService {
@@ -13,7 +13,7 @@ public class SseService {
         return sseEmitter;
     }
 
-    public void sendEvent(LoadStartRequest data) {
+    public void sendEvent(LoadStartResponse data) {
 
         // 요청마다 새로운 SseEmitter 생성
         SseEmitter emitter = new SseEmitter();

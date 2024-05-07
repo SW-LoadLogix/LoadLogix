@@ -11,7 +11,7 @@ import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
 import org.ssafy.load.dto.request.GoodsRequest;
-import org.ssafy.load.dto.request.LoadStartRequest;
+import org.ssafy.load.dto.response.LoadStartResponse;
 import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class LoadTaskService {
                     for(LoadTaskEntity loadTaskEntity : loadTaskEntities){
                         if (loadTaskEntity != null || (!loadTaskEntity.getAreaStatus() && loadTaskEntity.getWorkerState() && loadTaskEntity.getComplete())) {
                             loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
-                            sseService.sendEvent(LoadStartRequest.of(
+                            sseService.sendEvent(LoadStartResponse.of(
                                     areaEntity.getId(),
                                     areaEntity.getConveyNo(),
                                     true
