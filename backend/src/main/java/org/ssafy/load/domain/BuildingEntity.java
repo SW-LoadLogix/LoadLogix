@@ -42,9 +42,9 @@ public class BuildingEntity {
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
     @Column(name="latitude")
-    private double latitude;
+    private Double latitude;
     @Column(name="longitude")
-    private double longitude;
+    private Double longitude;
 
     @ManyToOne
     @JoinColumn(name = "area_id")

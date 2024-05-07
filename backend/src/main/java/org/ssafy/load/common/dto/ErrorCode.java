@@ -20,7 +20,9 @@ public enum ErrorCode {
     BUILDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Building not founded"),
     CAR_NOT_FOUND(HttpStatus.NOT_FOUND, "Car not founded"),
     INVALID_PK(HttpStatus.BAD_REQUEST,"PK is invalid"),
-    INVALID_DATA(HttpStatus.BAD_REQUEST,"Invalid Data");
+    INVALID_DATA(HttpStatus.BAD_REQUEST,"Invalid Data"),
+    LOAD_TASK_NOT_FOUND(HttpStatus.NOT_FOUND, "Load task not founded"),
+    INVALID_LOAD_TASK(HttpStatus.BAD_REQUEST,"Load task is invalid");
 
     final private HttpStatus status;
     final private String message;
