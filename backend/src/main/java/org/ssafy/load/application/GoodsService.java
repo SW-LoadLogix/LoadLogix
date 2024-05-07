@@ -117,6 +117,8 @@ public class GoodsService {
                 new Position(g.getX(), g.getY(), g.getZ()),
                 g.getWeight(),
                 g.getBuilding().getId(),
+                g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"
+                    + g.getBuilding().getZibunSub(),
                 g.getDetailAddress()
             )).toList();
         return new SortedGoodsResponse(goods);

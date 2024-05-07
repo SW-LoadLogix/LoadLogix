@@ -6,6 +6,7 @@ public record SortedGoods(
     Position position,
     int weight,
     Long buildingId,
+    String buildingName,
     String detailAddress
 ) {
 
