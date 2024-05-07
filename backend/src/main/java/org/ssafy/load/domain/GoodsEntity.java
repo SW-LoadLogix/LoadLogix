@@ -26,7 +26,7 @@ public class GoodsEntity {
     private double y;
     private double z;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
