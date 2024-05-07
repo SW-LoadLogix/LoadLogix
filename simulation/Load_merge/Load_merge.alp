@@ -41,34 +41,34 @@ public LinkedList<Goods> getRackStore(int area){
 	boolean one = true;
     switch (area) {
         case 1:
-            selectedRackStore = mainInstance.rackStore1;
+            selectedRackStore = rackStore1;
             break;
         case 2:
         case 3:
-        	selectedRackStore = mainInstance.rackStore2;
+        	selectedRackStore = rackStore2;
             one = false;
             break;
         case 4:
-        	selectedRackStore = mainInstance.rackStore3;
+        	selectedRackStore = rackStore3;
             break;
         case 5:
         case 6:
-        	selectedRackStore = mainInstance.rackStore4;
+        	selectedRackStore = rackStore4;
             one = false;
             break;
         case 7:
-        	selectedRackStore = mainInstance.rackStore5;
+        	selectedRackStore = rackStore5;
             break;
         case 8:
         case 9:
-        	selectedRackStore = mainInstance.rackStore6;
+        	selectedRackStore = rackStore6;
             one = false;
             break;
     }
     
     if(!one) {
         for(Goods goods : selectedRackStore) {
-        	if(data == goods.areaId) {
+        	if(area == goods.areaId) {
             	response.add(goods);
         	}
         }
@@ -77,7 +77,7 @@ public LinkedList<Goods> getRackStore(int area){
     return response;
 }
 
-public LinkedList<Goods> startLoad(int conveyor, int area){
+public void startLoad(int conveyor, int area){
 	 if(area == 1) enterInject(conveyor, enter1, getRackStore(area));
 	 else if(area == 2 || area == 3) enterInject(conveyor, enter2, getRackStore(area));
 	 else if(area == 4) enterInject(conveyor, enter3, getRackStore(area));
@@ -85,13 +85,18 @@ public LinkedList<Goods> startLoad(int conveyor, int area){
 	 else if(area == 7) enterInject(conveyor, enter5, getRackStore(area));
 	 else if(area == 8 || area == 9) enterInject(conveyor, enter6, getRackStore(area));
 }
-public void enterInject(int conveyor, Enter enter, LikedList<Goods> pickList){
+public void enterInject(int conveyor, Enter<Goods> enter, LinkedList<Goods> pickList){
 	for(Goods goods : pickList){
 		goods.toConveyorLine = conveyor;
-		enter.inject(goods);
+		enter.take(goods);
 	}
 	
 }
+
+
+
+int[] goodsCntForVehicle = new int[5];
+boolean[] readyVehicleToConvey = new boolean[5];
 ]]></AdditionalClassCode>
 			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
@@ -100,15 +105,36 @@ public void enterInject(int conveyor, Enter enter, LikedList<Goods> pickList){
 }
 
 // setting 값 가져오기
-int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
-int[] checkGoodsForArea = new int[10];
+settingGoodsCountPerArea.add(0);
+settingGoodsCountPerArea.add(2);
+settingGoodsCountPerArea.add(5);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+settingGoodsCountPerArea.add(6);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+checkGoodsForArea.add(0);
+
+//int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
+//int[] checkGoodsForArea = new int[10];
 
 //SSE
 startSSEListener();
 
 
-int[] goodsCntForVehicle = new int[5];
-boolean[] readyVehicleToConvey = new boolean[5];
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -3381,7 +3407,7 @@ boolean[] readyVehicleToConvey = new boolean[5];
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), , getRackStore(2)); 
+	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), getRackStore(2)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3417,7 +3443,7 @@ boolean[] readyVehicleToConvey = new boolean[5];
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), , getRackStore(3)); 
+	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), getRackStore(3)); 
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -24523,44 +24549,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 
 					<Z>0</Z>
 				</ConveyorNetwork>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1714466216601</Id>
-					<Name><![CDATA[button]]></Name>
-					<X>720</X><Y>640</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[APIClient client = new APIClient();
-try{
-	conveyorLine = client.getConveyorLine().get(0);
-	System.out.println("button click "+conveyorLine);
-}catch(Exception e){
-	System.out.println(e);
-}
-cnt[conveyorLine] = 0;
-
-for(Goods goods : rackStore1){
-	System.out.println(goods);
-	if(goods.id == 1){
-		//System.out.println("if");
-		goods.toConveyorLine = conveyorLine;
-		enter1.take(goods);
-		cnt[conveyorLine]++;
-	}
-}]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[button]]></LabelText>
-					</ExtendedProperties>
-				</Control>
 				<Network>
 					<Id>1714491548482</Id>
 					<Name><![CDATA[network4]]></Name>
@@ -26203,7 +26191,7 @@ for(Goods goods : rackStore1){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
+						<Type><![CDATA[long]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -27386,15 +27374,15 @@ public class SSEListener implements Runnable {
                     ObjectMapper objectMapper = new ObjectMapper();
                 	LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
 
-                	System.out.println("Received AreaData: area_id=" + data.getAreaId() + ", conveyNo=" + data.getConveyNo()+", vehicle=" + data.getReadyVehicle()");
+                	System.out.println("Received AreaData: area_id=" + data.getAreaId() + ", conveyNo=" + data.getConveyNo()+", vehicle=" + data.getReadyVehicle());
 
                 	// 차량 준비
                 	if(data.getReadyVehicle()) {
             			mainInstance.readyVehicleToConvey[data.getConveyNo()] = true;
                 	}
                 	// 적재 시작
-                	if(data.getAreadId()!=0) {
-                		mainInstance.startLoad(data.getConveyNo(), data.getAreadId());
+                	if(data.getAreaId()!=0) {
+                		mainInstance.startLoad(data.getConveyNo(), data.getAreaId());
                 	}	
                 }
             }
