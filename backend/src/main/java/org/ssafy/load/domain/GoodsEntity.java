@@ -19,8 +19,8 @@ public class GoodsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int weight;
+    @Column(name = "detail_address")
     private String detailAddress;
-    private String detailJuso;
     private int ordering;
     private double x;
     private double y;
@@ -50,7 +50,6 @@ public class GoodsEntity {
             Long id,
             int weight,
             String detailAddress,
-            String detailJuso,
             int ordering,
             int x,
             int y,
@@ -60,6 +59,6 @@ public class GoodsEntity {
             LoadTaskEntity loadTask,
             LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, building, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building, loadTask, createdAt);
     }
 }
