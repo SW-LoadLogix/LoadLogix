@@ -19,7 +19,8 @@ public enum ErrorCode {
     AREA_NOT_FOUND(HttpStatus.NOT_FOUND, "Area not founded"),
     BUILDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Building not founded"),
     CAR_NOT_FOUND(HttpStatus.NOT_FOUND, "Car not founded"),
-    INVALID_PK(HttpStatus.BAD_REQUEST,"PK is invalid");
+    INVALID_PK(HttpStatus.BAD_REQUEST,"PK is invalid"),
+    INVALID_DATA(HttpStatus.BAD_REQUEST,"Invalid Data");
 
     final private HttpStatus status;
     final private String message;
