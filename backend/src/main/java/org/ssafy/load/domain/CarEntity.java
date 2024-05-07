@@ -20,15 +20,17 @@ public class CarEntity {
     private int length;
     private int width;
     private String type;
+    private Integer maxPayload;
 
     public static CarEntity of(
             Long id,
             int height,
             int length,
             int width,
-            String type
+            String type,
+            Integer maxPayload
     ) {
-        return new CarEntity(id, height, length, width, type);
+        return new CarEntity(id, height, length, width, type, maxPayload);
     }
 
     public void updateCar(int height, int length, int width) {

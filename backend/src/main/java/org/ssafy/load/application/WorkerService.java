@@ -32,7 +32,7 @@ public class WorkerService {
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null));
+        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null,null));
         return SignUpResponse.from(workerRepository.save(
                 WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
                         signUpRequest.name(), car, null)));
