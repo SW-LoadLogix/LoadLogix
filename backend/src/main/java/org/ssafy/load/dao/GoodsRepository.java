@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByBuildingId(Long buildingId);
+
+    List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingAsc(Integer loadTaskId);
 }

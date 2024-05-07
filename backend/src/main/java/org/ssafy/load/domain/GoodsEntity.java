@@ -21,7 +21,7 @@ public class GoodsEntity {
     private int weight;
     private String detailAddress;
     private String detailJuso;
-    private int ordering;
+    private Integer ordering;
     private double x;
     private double y;
     private double z;
