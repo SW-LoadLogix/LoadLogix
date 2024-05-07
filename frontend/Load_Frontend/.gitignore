@@ -153,3 +153,12 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,rust,windows
 
+# history file 
+
+.history/
+*.history/
+../.history/
+*../.history/
+../../.history/
+*../../.history/
+*../../.history/

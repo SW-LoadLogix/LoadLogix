@@ -25,7 +25,7 @@ dependencies:
 
   url_strategy: ^0.2.0
   syncfusion_flutter_sliders: ^25.1.41
-  syncfusion_flutter_datagrid: ^25.1.41
+  syncfusion_flutter_datagrid: ^25.1.42
   url_launcher: ^6.1.12
   json_annotation: ^4.9.0
   auto_route: ^8.0.0

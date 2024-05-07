@@ -1,97 +1,182 @@
+// order_table.dart
 import 'package:flutter/material.dart';
-import 'package:load_frontend/constaints.dart';
-import '../model.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'dummy.dart';
+// import 'dart:ffi';
 
-final orders = <Order>[
-  Order(
-      Icons.checkroom_outlined, 'Black T-shirt', 2, 'Delivered', '12/09/2021'),
-  Order(Icons.pool_outlined, 'Black T-shirt', 3, 'Delivered', '12/09/2021'),
-  Order(Icons.dry_cleaning_outlined, 'Black T-shirt', 4, 'Delivered',
-      '12/09/2021'),
-  Order(Icons.beach_access_outlined, 'Black T-shirt', 6, 'Delivered',
-      '12/09/2021'),
-  Order(
-      Icons.checkroom_outlined, 'Black T-shirt', 2, 'Delivered', '12/09/2021'),
-];
+class _OrderTableState extends State<OrderTable> {
+  late OrderDataSource orderDataSource;
 
-final columnNames = ['', '', 'Time', ''];
-
-class OrderTable extends StatelessWidget {
-  const OrderTable({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    // 데이터 소스 초기화
+    orderDataSource = OrderDataSource(areaData: dummyData);
+    // 'building_address'를 기준으로 그룹핑을 추가
+    orderDataSource.sortedColumns.add(SortColumnDetails(
+      name: 'address',
+      sortDirection: DataGridSortDirection.ascending,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<DataColumn> columns =
-        columnNames.map((e) => DataColumn(label: Text(e))).toList();
-    final List<DataRow> rows = orders
-        .map((order) => DataRow(cells: [
-              DataCell(Row(
-                children: [
-                  Container(
-                    child: Icon(
-                      order.icon,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 14,
-                              spreadRadius: 2,
-                              offset: Offset(0, 4),
-                              color: Color.fromRGBO(147, 198, 176, 0.2))
-                        ]),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
+    return Container(
+      height: 400,
+      child: SfTheme(
+        data: SfThemeData(
+          dataGridThemeData: SfDataGridThemeData(
+            headerColor: Color(0xFF89B5A2), // 헤더 배경색을 변경합니다.
+            // Changes the header background color.
+          ),
+        ),
+        child: SfDataGrid(
+          source: orderDataSource,
+          columnWidthMode: ColumnWidthMode.fill, // 열 크기 조절
+          allowSorting: true, // 전체 정렬
+          allowMultiColumnSorting: true,
+          allowExpandCollapseGroup: true,
+          groupCaptionTitleFormat:
+              '{ColumnName} : {Key} - {ItemsCount} Item(s)',
+          columns: <GridColumn>[
+            GridColumn(
+                columnName: 'goods_id',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
                     child: Text(
-                      order.name,
+                      'ID',
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: textColor),
-                    ),
-                  )
-                ],
-              )),
-              DataCell(Text(
-                order.packs.toString() + ' Packs',
-              )),
-              DataCell(Text(
-                order.date,
-                style: TextStyle(fontStyle: FontStyle.italic),
-              )),
-              DataCell(Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                          width: 1, color: Theme.of(context).primaryColor)),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    )),
+                width: 60),
+            GridColumn(
+                columnName: 'address',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
                     child: Text(
-                      order.status,
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor, fontSize: 12),
-                    ),
-                  )))
-            ]))
-        .toList();
-    return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: DataTable(
-        dataRowHeight: 70,
-        columns: columns,
-        columnSpacing: 6,
-        rows: rows,
-        headingRowHeight: 0,
-        dividerThickness: 0,
+                      '배송 상세 주소',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                width: 300),
+            // GridColumn(
+            //     columnName: 'building_address',
+            //     label: Container(
+            //         padding: EdgeInsets.all(8),
+            //         alignment: Alignment.center,
+            //         child: Text(
+            //           '빌딩주소',
+            //           overflow: TextOverflow.ellipsis,
+            //         )),
+            //     autoFitPadding: EdgeInsets.all(16)),
+            GridColumn(
+                columnName: 'boxHeight',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '높이',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                autoFitPadding: EdgeInsets.all(16)),
+            GridColumn(
+                columnName: 'boxLength',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '길이',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                autoFitPadding: EdgeInsets.all(16)),
+            GridColumn(
+                columnName: 'boxWidth',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '폭',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                autoFitPadding: EdgeInsets.all(16)),
+            GridColumn(
+                columnName: 'weight',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '택배 무게 (g)',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                width: 100),
+          ],
+        ),
       ),
     );
   }
+}
+
+// DataGrid 데이터 소스 클래스를 제공하는 클래스
+class OrderDataSource extends DataGridSource {
+  List<DataGridRow> dataGridRows = [];
+  List<String> groupingColumnNames = ['address'];
+
+  OrderDataSource({required List<Area> areaData}) {
+    dataGridRows = areaData.expand((area) {
+      return area.buildings.expand((building) {
+        return building.goods.map((good) => DataGridRow(cells: [
+              DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
+              // DataGridCell<String>(
+              //     columnName: 'building_address', value: building.address),
+              DataGridCell<String>(columnName: 'address', value: good.address),
+              DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
+              DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
+              DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
+              DataGridCell<int>(columnName: 'weight', value: good.weight),
+            ]));
+      });
+    }).toList();
+  }
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
+  // 각 행을 그리드 행으로 빌드하는 메서드
+  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        // 행의 배경색을 설정합니다.
+        color: Color(0xffCCECDF), // 모든 행 배경색
+        // color: dataGridRows.indexOf(row) % 2 == 0
+        //     ? Colors.grey[200] // 짝수 행 배경색
+        //     : Colors.white, // 홀수 행 배경색
+        cells: row.getCells().map<Widget>((e) {
+          return Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(8),
+            child: Text(e.value.toString(), overflow: TextOverflow.ellipsis),
+          );
+        }).toList());
+  }
+
+  // 그룹화된 행에 나타날 위젯을 정의
+  @override
+  Widget? buildGroupCaptionCellWidget(
+      RowColumnIndex rowColumnIndex, String summaryValue) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+        child: Text(
+          summaryValue,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ));
+  }
+}
+
+// OrderTable 위젯 - 데이터 그리드를 보여주는 위젯
+class OrderTable extends StatefulWidget {
+  const OrderTable({Key? key}) : super(key: key);
+
+  @override
+  _OrderTableState createState() => _OrderTableState();
 }

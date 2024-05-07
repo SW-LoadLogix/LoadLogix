@@ -23,16 +23,16 @@ class _DashboardPageState extends State<DashboardPage> {
         topBarTitle: 'Dashboard',
         isFixed: false,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        /* 대시보드 가운데에 들어감 */
-        // StatusList(),
-        // Charts(),
-        // SizedBox(
-        //   height: componentPadding,
-        // ),
-        // OrderTable(),
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            /* 대시보드 가운데에 들어감 */
+            StatusList(),
+            Charts(),
+            SizedBox(
+              height: componentPadding,
+            ),
+            OrderTable(),
+          ],
+        ));
   }
 }
