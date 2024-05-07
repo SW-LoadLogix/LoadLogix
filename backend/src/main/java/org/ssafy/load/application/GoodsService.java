@@ -1,7 +1,6 @@
 package org.ssafy.load.application;
 
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
@@ -18,6 +17,7 @@ import org.ssafy.load.dto.response.GoodsResponse;
 
 import java.util.List;
 import java.util.Optional;
+import org.ssafy.load.dto.SortedGoods;
 import org.ssafy.load.dto.response.SortedGoodsResponse;
 
 @Service
@@ -77,7 +77,7 @@ public class GoodsService {
         return new GoodsResponse(area.get().getAreaName(), total, buildings);
     }
 
-    public List<SortedGoodsResponse> getSortedGoods(Long workerId) {
+    public SortedGoodsResponse getSortedGoods(Long workerId) {
         //배송 기사 조회
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
         if (worker.isEmpty()) {
@@ -110,8 +110,8 @@ public class GoodsService {
         List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
             loadTaskId);
 
-        List<SortedGoodsResponse> goods = goodsEntities.stream()
-            .map(g -> new SortedGoodsResponse(
+        List<SortedGoods> goods = goodsEntities.stream()
+            .map(g -> new SortedGoods(
                 g.getId(),
                 String.valueOf(g.getBoxType().getType()),
                 new Position(g.getX(), g.getY(), g.getZ()),
@@ -119,6 +119,6 @@ public class GoodsService {
                 g.getBuilding().getId(),
                 g.getDetailAddress()
             )).toList();
-        return goods;
+        return new SortedGoodsResponse(goods);
     }
 }
