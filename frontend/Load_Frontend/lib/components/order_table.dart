@@ -15,7 +15,7 @@ class _OrderTableState extends State<OrderTable> {
     orderDataSource = OrderDataSource(areaData: dummyData);
     // 'building_address'를 기준으로 그룹핑을 추가
     orderDataSource.sortedColumns.add(SortColumnDetails(
-      name: 'address',
+      name: 'building_address',
       sortDirection: DataGridSortDirection.ascending,
     ));
   }
@@ -60,16 +60,16 @@ class _OrderTableState extends State<OrderTable> {
                       overflow: TextOverflow.ellipsis,
                     )),
                 width: 300),
-            // GridColumn(
-            //     columnName: 'building_address',
-            //     label: Container(
-            //         padding: EdgeInsets.all(8),
-            //         alignment: Alignment.center,
-            //         child: Text(
-            //           '빌딩주소',
-            //           overflow: TextOverflow.ellipsis,
-            //         )),
-            //     autoFitPadding: EdgeInsets.all(16)),
+            GridColumn(
+                columnName: 'building_address',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '빌딩주소',
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                autoFitPadding: EdgeInsets.all(16)),
             GridColumn(
                 columnName: 'boxHeight',
                 label: Container(
@@ -120,16 +120,16 @@ class _OrderTableState extends State<OrderTable> {
 // DataGrid 데이터 소스 클래스를 제공하는 클래스
 class OrderDataSource extends DataGridSource {
   List<DataGridRow> dataGridRows = [];
-  List<String> groupingColumnNames = ['address'];
+  List<String> groupingColumnNames = ['building_address'];
 
   OrderDataSource({required List<Area> areaData}) {
     dataGridRows = areaData.expand((area) {
       return area.buildings.expand((building) {
         return building.goods.map((good) => DataGridRow(cells: [
               DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
-              // DataGridCell<String>(
-              //     columnName: 'building_address', value: building.address),
               DataGridCell<String>(columnName: 'address', value: good.address),
+              DataGridCell<String>(
+                  columnName: 'building_address', value: building.address),
               DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
               DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
               DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
