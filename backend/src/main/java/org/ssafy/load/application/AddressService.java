@@ -2,10 +2,6 @@ package org.ssafy.load.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.ssafy.load.dao.AddressRepository;
-import org.ssafy.load.domain.AddressEntity;
-import org.ssafy.load.dto.Address;
-import org.ssafy.load.dto.response.BuildingResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +9,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AddressService {
-    private final AddressRepository addressRepository;
+    private final BuildingJPQLSerivce buildingJPQLSerivce;
 
-    public List<BuildingResponse> getBuildingJuso(){
-        List<AddressEntity> addressList = addressRepository.findAll();
-        List<BuildingResponse> buildingList = new ArrayList<>();
-        for(AddressEntity entity : addressList){
-            System.out.println(entity);
-            buildingList.add(BuildingResponse.fromBuilding(entity));
+    public List<Integer> getAreaAndBuildingCount(){
+        List<Object[]> result = buildingJPQLSerivce.getBuildingCountsByArea();
+        List<Integer> response = new ArrayList<>();
+        int prevNo = 0;
+        for(Object[] row : result ){
+            Integer areaId = (Integer) row[0];
+            Long count = (Long) row[1];
+            response.add((int) (prevNo + count));
+            prevNo += count;
         }
-        return buildingList;
+        return response;
     }
-
 
 }

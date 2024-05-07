@@ -13,7 +13,13 @@ public enum ErrorCode {
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "Request is invalid"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server error"),
     EMPTY_TABLE(HttpStatus.INTERNAL_SERVER_ERROR, "Empty db table"),
-    CONVEYOR_NOT_FOUND(HttpStatus.NOT_FOUND, "Conveyor not founded");
+    CONVEYOR_NOT_FOUND(HttpStatus.NOT_FOUND, "Conveyor not founded"),
+    USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "User with given userId already exists"),
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access denied: Insufficient permissions"),
+    AREA_NOT_FOUND(HttpStatus.NOT_FOUND, "Area not founded"),
+    BUILDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Building not founded"),
+    CAR_NOT_FOUND(HttpStatus.NOT_FOUND, "Car not founded"),
+    INVALID_PK(HttpStatus.BAD_REQUEST,"PK is invalid");
 
     final private HttpStatus status;
     final private String message;

@@ -1,17 +1,12 @@
 package org.ssafy.load.api;
 
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.ssafy.load.application.AddressService;
 import org.ssafy.load.application.DeliveryService;
-import org.ssafy.load.application.GoodsService;
+import org.ssafy.load.application.ReadyStatusService;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.dto.Address;
-import org.ssafy.load.dto.Goods;
-import org.ssafy.load.dto.response.BuildingResponse;
+import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
 
@@ -20,23 +15,23 @@ import java.util.List;
 @RequestMapping("/simulation")
 public class SimulationController {
 
-    public final GoodsService goodsService;
     public final AddressService addressService;
     public final DeliveryService deliveryService;
-
-    @GetMapping("/goods")
-    public Response<List<Goods>> getGoods() {
-        return Response.success(goodsService.getGoods());
-    }
+    public final ReadyStatusService readyStatusService;
 
     @GetMapping
-    public Response<List<BuildingResponse>> getBuildingJuso() {
-        return Response.success(addressService.getBuildingJuso());
+    public Response<List<Integer>> getAreaAndBuildingCount() {
+        return Response.success(addressService.getAreaAndBuildingCount());
+    }
+
+    @PutMapping("/ready")
+    public Response<Void> setReadyCompletedArea(@RequestBody ReadyRequest readyRequest) {
+        readyStatusService.setReadyCompletedArea(readyRequest);
+        return Response.success();
     }
 
     @GetMapping("/conveyorLines")
     public Response<List<Integer>> getConveyorLine() {
         return Response.success(deliveryService.getConveyorLine());
     }
-
 }
