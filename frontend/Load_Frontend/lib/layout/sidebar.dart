@@ -35,7 +35,7 @@ class SideBar extends StatelessWidget {
             height: 45,
             child: Center(
               child: Text(
-                'C',
+                'L',
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

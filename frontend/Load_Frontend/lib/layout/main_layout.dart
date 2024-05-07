@@ -4,6 +4,7 @@ import 'package:load_frontend/layout/sidebar.dart';
 import 'package:load_frontend/layout/topbar.dart';
 
 import '../constaints.dart';
+import '../views/box_simulation/sim_right_sidebar.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
@@ -17,10 +18,15 @@ class MainLayout extends StatelessWidget {
       required this.isFixed})
       : super(key: key);
 
+
+
+
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
     final _showDesktop = _size.width >= screenXxl;
+    final _isSimulationPage = topBarTitle == '3D Simulation Dashboard';
+
     return Scaffold(
         body: SafeArea(
       child: Row(
@@ -39,18 +45,18 @@ class MainLayout extends StatelessWidget {
                           ),
                         ),
                       )
-                    : SafeArea(
+                    : Expanded(
                         child: child,
                       ),
               ],
             ),
           ),
+          _isSimulationPage ? SimSidebarPage(_showDesktop) :
           Container(
             width: _showDesktop ? newsPageWidth : 0,
             child:
-                //대시보드 우측에 들어감
-                NewsList(_showDesktop),
-          )
+            NewsList(_showDesktop),
+          ),
         ],
       ),
     ));
