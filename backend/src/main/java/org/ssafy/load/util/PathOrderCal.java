@@ -3,6 +3,7 @@ package org.ssafy.load.util;
 import lombok.extern.slf4j.Slf4j;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
+import org.ssafy.load.domain.BuildingEntity;
 import org.ssafy.load.dto.Building;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ public class PathOrderCal {
 
     private final int[][] pathTimeMatrix;
     private final int buildingNum;
-    private final List<Building> buildingList;
+    private final List<BuildingEntity> buildingList;
 
-    public PathOrderCal(int[][] pathTimeMatrix, int buildingNum, List<Building> buildingList) {
+    public PathOrderCal(int[][] pathTimeMatrix, int buildingNum, List<BuildingEntity> buildingList) {
         if(buildingNum > 20) {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, "N of TSP algorithm cannot be more than 20");
         }
@@ -28,7 +29,7 @@ public class PathOrderCal {
         this.buildingList = buildingList;
     }
 
-    public List<Building> getPathOrder() {
+    public List<BuildingEntity> getPathOrder() {
         maxVisit = (1 << buildingNum) - 1;
         dp = new int[buildingNum][maxVisit + 1];
         for(int i=0; i<buildingNum; i++) {
@@ -36,7 +37,7 @@ public class PathOrderCal {
         }
 
         List<Integer> indexOrderList = new ArrayList<>();
-        List<Building> orderedBuildingList = new ArrayList<>();
+        List<BuildingEntity> orderedBuildingList = new ArrayList<>();
 
         getDp(0, 1, indexOrderList); //Building 0 is start vertex
         indexOrderList.add(0);

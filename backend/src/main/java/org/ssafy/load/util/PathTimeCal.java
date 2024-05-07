@@ -23,14 +23,14 @@ public class PathTimeCal {
 
     private final RestTemplateBuilder restTemplateBuilder;
 
-    public long getPathTime(String sourceAddress, String desAddress) {
+    public int getPathTime(String sourceAddress, String desAddress) {
         Coordinate sourceCoordinate = toCoordinate(sourceAddress);
         Coordinate desCoordinate = toCoordinate(desAddress);
         return calculatePathTime(sourceCoordinate.latitude(), sourceCoordinate.longitude(),
                 desCoordinate.latitude(), desCoordinate.longitude());
     }
 
-    public long calculatePathTime(double originLatitude, double originLongitude, double desLatitude, double desLongitude) {
+    public int calculatePathTime(double originLatitude, double originLongitude, double desLatitude, double desLongitude) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String url = "https://apis-navi.kakaomobility.com/v1/directions?" +
                 "origin={originLatitude},{originLongitude}&destination={desLatitude},{desLongitude}";
@@ -46,7 +46,12 @@ public class PathTimeCal {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(responseEntity.getBody());
-            return jsonNode.get("routes").get(0).get("summary").get("duration").asLong();
+
+            //출발지와 도착지가 5m 이내로 설정된 경우
+            if(jsonNode.get("routes").get(0).get("result_code").asInt() == 104)  {
+                return 0;
+            }
+            return jsonNode.get("routes").get(0).get("summary").get("duration").asInt();
         } catch (Exception e) {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }

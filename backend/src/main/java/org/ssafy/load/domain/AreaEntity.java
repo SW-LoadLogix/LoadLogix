@@ -23,7 +23,7 @@ public class AreaEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id") // 실제 데이터베이스의 외래키 컬럼명 지정
-    private WorkerEntity worker ;
+    private WorkerEntity worker;
 
     @OneToOne(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private LoadTaskEntity loadTask;

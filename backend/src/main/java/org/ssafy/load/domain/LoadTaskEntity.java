@@ -37,7 +37,6 @@ public class LoadTaskEntity {
     @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
-
     @PrePersist
     public void onPrePersist() {
         this.createdAt = LocalDateTime.now();

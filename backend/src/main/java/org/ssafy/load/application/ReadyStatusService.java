@@ -59,6 +59,7 @@ public class ReadyStatusService {
                 })
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
     }
+
     @Transactional
     public Integer getReadyStatus(){
         List<LoadTaskEntity> readyStatusEntityList = loadTaskRepository.findAll();

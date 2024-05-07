@@ -7,5 +7,5 @@ import org.ssafy.load.domain.LoadTaskEntity;
 import java.util.Optional;
 
 public interface LoadTaskRepository extends JpaRepository<LoadTaskEntity, Integer> {
-    Optional<LoadTaskEntity> findFirstByCompleteIsFalseOrderByCreatedAt();
+    Optional<LoadTaskEntity> findFirstByAreaStatusIsTrueAndCompleteIsFalseOrderByCreatedAt();
 }

@@ -20,11 +20,10 @@ public class GoodsEntity {
     private Long id;
     private int weight;
     private String detailAddress;
-    private String detailJuso;
-    private int ordering;
-    private double x;
-    private double y;
-    private double z;
+    private Integer ordering;
+    private Double x;
+    private Double y;
+    private Double z;
 
     @OneToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
@@ -50,16 +49,15 @@ public class GoodsEntity {
             Long id,
             int weight,
             String detailAddress,
-            String detailJuso,
-            int ordering,
-            int x,
-            int y,
-            int z,
+            Integer ordering,
+            Double x,
+            Double y,
+            Double z,
             BoxTypeEntity boxType,
             BuildingEntity building,
             LoadTaskEntity loadTask,
             LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, building, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building, loadTask, createdAt);
     }
 }
