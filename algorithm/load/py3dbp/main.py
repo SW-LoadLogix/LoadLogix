@@ -2,16 +2,18 @@ import copy
 import matplotlib.pyplot as plt
 from .auxiliary_methods import intersect, set2Decimal
 from .constants import Axis
-from matplotlib.patches import Rectangle, Circle
+from matplotlib.patches import Rectangle
 import mpl_toolkits.mplot3d.art3d as art3d
 import numpy as np
+import math
+
 
 START_POSITION = [0, 0, 0]
 DEFAULT_NUMBER_OF_DECIMALS = 0
 
 
 class Item:
-    def __init__(self, name, WHD, weight, target, type, floor=0):
+    def __init__(self, name, WHD, weight, target, type, floor=0, denyInfo=0, originDepth = 0):
         self.name = name
         self.width = WHD[0]
         self.height = WHD[1]
@@ -22,6 +24,8 @@ class Item:
         self.target = target
         self.type = type
         self.floor = floor
+        self.denyInfo = denyInfo
+        self.originDepth = originDepth
 
     def formatNumbers(self, number_of_decimals):
         ''' '''
@@ -59,6 +63,7 @@ class Bin:
         self.number_of_decimals = DEFAULT_NUMBER_OF_DECIMALS
         # used to put gravity distribution
         self.gravity = []
+        self.maxBoxSize = []
 
     def formatNumbers(self, number_of_decimals):
         self.width = set2Decimal(self.width, number_of_decimals)
@@ -91,25 +96,29 @@ class Bin:
         valid_item_position = item.position
         item.position = pivot
         dimension = item.getDimension()
-
+        #범위 검사
         if(
                 pivot[0] < 0 or
                 self.width < pivot[0] + dimension[0] or
                 self.height < pivot[1] + dimension[1] or
                 self.depth < pivot[2] + dimension[2]
         ):
+            item.denyInfo = 1
             return False
 
         fit = True
+        # 박스 크기 검사
         for current_item_in_bin in self.items:
             if intersect(current_item_in_bin, item):
                 fit = False
+                item.denyInfo = 1
                 break
 
         if fit:
-            # cal total weight
+            #무게 검사
             if self.getTotalWeight() + item.weight > self.max_weight:
                 fit = False
+                item.denyInfo = 2
                 return fit
 
             if fit:
@@ -120,12 +129,19 @@ class Bin:
                 else:
                     item.floor = ib.floor
                 self.items.append(copy.deepcopy(item))
+                item.denyInfo = 0
 
         else:
             item.position = valid_item_position
 
         return fit
 
+    def clearBin(self):
+        ''' clear item which in bin '''
+        self.items = []
+        self.fit_items = np.array([[0, self.width, 0, self.height, 0, 0]])
+        self.unfitted_items = []
+        return
 
 class Packer:
     def __init__(self):
@@ -205,32 +221,91 @@ class Packer:
         if not fitted:
             bin.unfitted_items.append(item)
 
-    def pack(self, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):
-        # Decimal로 변경
-        for item in self.items:
-            item.formatNumbers(number_of_decimals)
+    def pack2Bin2(self, bin, item):
+        fitted = False
+        # first put item on (0,0,0) , if corner exist ,first add corner in box.
+        if not bin.items:
+            response = bin.putItem(item, START_POSITION)
 
-        # Item : sorted by volumn -> sorted by loadbear -> sorted by level -> binding
+            if not response:
+                bin.unfitted_items.append(item)
+            return
+
+        for axis in range(0, 4):
+            items_in_bin = bin.items
+            for ib in items_in_bin:
+                pivot = [0, 0, 0]
+                w, h, d = ib.getDimension()
+                if axis == Axis.DEPTH:
+                    print(ib.name, "의 위로", item.name)
+                    pivot = [ib.position[0], ib.position[1], ib.position[2] + d]
+                elif axis == Axis.WIDTH:
+                    print(ib.name, "의 옆으로", item.name, "를 적재")
+                    pivot = [ib.position[0] + w, ib.position[1], ib.position[2]]
+                elif axis == Axis.LEFT:
+                    print(ib.name, "의 왼쪽으로", item.name)
+                    pivot = [ib.position[0]-item.width, ib.position[1], ib.position[2]]
+                elif axis == Axis.HEIGHT:
+                    print(ib.name, "의 앞으로", item.name, "를 적재")
+                    pivot = [ib.position[0], ib.position[1] + h, ib.position[2]]
+
+                if bin.putItem(item, pivot, ib, axis):
+                    fitted = True
+                    break
+            if fitted:
+                break
+        if not fitted:
+            bin.unfitted_items.append(item)
+
+    def pack(self, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):
+
         self.items.sort(key=lambda item: (-item.target, item.weight, -item.getVolume()))
-        # self.items.sort(key=lambda item: item.weight, reverse=True)
-        # self.items.sort(key=lambda item: item.getVolume(), reverse=bigger_first)
-        # self.items.sort(key=lambda item: item.level, reverse=False)
-        # sorted by binding
 
         for idx, bin in enumerate(self.bins):
             # pack item to bin
             for item in self.items:
                 self.pack2Bin(bin, item)
 
-        if self.items != []:
-            self.unfit_items = copy.deepcopy(self.items)
-            self.items = []
-        # for item in self.items.copy():
-        #     if item in bin.unfitted_items:
-        #         self.items.remove(item)
+        flag = False
+        for item in self.bins[0].unfitted_items:
+            #범위를 초과하여 적재를 못한 물품이 있는지 검사
+            if item.denyInfo == 1:
+                flag = True
+                break
+        if flag:
+            print("!!!!!!!!!!!!!!!!!2번째 로직 실행!!!!!!!!!!!!!!!!!!!!!!!")
+            self.bins[0].clearBin()
+            for item in self.items:
+                self.pack2Bin2(self.bins[0], item)
 
+    def pack2(self, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):
+        totalVolume = 0.0
+        # Decimal로 변경
+        for item in self.items:
+            item.formatNumbers(number_of_decimals)
+            totalVolume += float(item.getVolume())
 
-import matplotlib.pyplot as plt
+        totalVolume = math.ceil(totalVolume / 10) * 10
+        totalVolume /= float(self.items[0].getVolume())
+        print("!!!!!!!!!!!!!!!!사용량!!!!!!!!!!!!!!!!!!!!!!!")
+        print(totalVolume)
+        self.bins[0].originDepth = self.bins[0].depth
+        if totalVolume < 22.0:
+            self.bins[0].depth = 34.0
+        elif totalVolume < 44.0:
+            self.bins[0].depth = 34.0 * 2
+        elif totalVolume < 66.0:
+            self.bins[0].depth = 34.0 * 3
+        elif totalVolume < 88.0:
+            self.bins[0].depth = 34.0 * 4
+        # Item : sorted by volumn -> sorted by loadbear -> sorted by level -> binding
+        self.items.sort(key=lambda item: (-item.target, item.weight, -item.getVolume()))
+
+        for idx, bin in enumerate(self.bins):
+            # pack item to bin
+            for item in self.items:
+                self.pack2Bin2(bin, item)
+        self.bins[0].depth = self.bins[0].originDepth
 
 class Painter:
 
