@@ -3,7 +3,8 @@ import requests
 import time
 from py3dbp import Packer, Bin, Item, Painter
 from decimal import Decimal
-boxSize = [(22, 22, 9), (27, 27, 15),(35,35, 10), (34,34, 21), (41,41, 28), (48, 48, 34)]
+
+boxSize = [(22, 22, 9), (27, 27, 15), (35, 35, 10), (34, 34, 21), (41, 41, 28), (48, 48, 34)]
 while (True):
     def event_stream(url):
         with requests.get(url, stream=True) as response:
@@ -11,67 +12,67 @@ while (True):
                 if line:
                     # print(line)
                     yield line.decode('utf-8')
+
+
     try:
         if __name__ == "__main__":
-            url = 'http://localhost:8081/api/load'
+            url = 'http://192.168.31.245:8081/api/load/task'
             for event in event_stream(url):
                 start = time.time()
-                #서버로 부터 받은 json 객체 변환
+                # 서버로 부터 받은 json 객체 변환
                 print(event)
                 # json_str = event.split('data:')[1]
                 event_data = json.loads(event)
 
-                if not event_data:
+                if not event_data['result']:
                     print("json 비어있습니다")
-                    time.sleep(5)
+                    time.sleep(3)
                 else:
                     packer = Packer()
-                    taskId = event_data['taskId']
+                    taskId = event_data['result']['task_id']
                     # print(event_data)
                     box = Bin(
-                        WHD=(event_data['car']['width'], event_data['car']['height'], event_data['car']['depth']),
-                        max_weight=event_data['car']['weight']
+                        WHD=(event_data['result']['car']['width'], event_data['result']['car']['height'],
+                             event_data['result']['car']['depth']),
+                        max_weight=event_data['result']['car']['max_weight']
                     )
                     packer.addBin(box)
-                    deliverOrder = event_data['buildingIdOrder']
-                    for item in event_data['goods']:
+                    deliverOrder = event_data['result']['building_id_order']
+                    for item in event_data['result']['goods']:
                         packer.addItem(Item(
-                            name=item['goodsId'],
+                            name=item['goods_id'],
                             WHD=boxSize[int(item['type'][1])],
                             weight=item['weight'],
-                            type = item['type'],
-                            target=deliverOrder.index(item["buildingId"]),
+                            type=item['type'],
+                            target=deliverOrder.index(item["building_id"]),
                         ))
 
                     # print(deliverOrder)
                     packer.pack(
                         number_of_decimals=0
                     )
-                    #json 형식으로 만들기
+                    # json 형식으로 만들기
                     goods = []
                     for item in packer.bins[0].items:
                         goods.append({
                             "goods_id": item.name,
-                            "position":{
-                                "x" :int(item.position[0]),
+                            "position": {
+                                "x": int(item.position[0]),
                                 "y": int(item.position[1]),
                                 "z": int(item.position[2])
                             },
-                            "type":item.type
                         })
-
 
                     result = {
                         "task_id": taskId,
-                        "goods" : goods
+                        "goods": goods
                     }
+
                     loadResponse = json.dumps(result, indent=4)
                     print(loadResponse)
 
                     stop = time.time()
                     print('used time : ', stop - start)
-
-
 
                     # draw results
                     painter = Painter(box)
@@ -83,7 +84,7 @@ while (True):
                     )
                     fig.show()
                     # Post 요청을 보낼 URL
-                    post_url = 'http://localhost:8081/api/load'
+                    post_url = 'http://192.168.31.245:8081/api/load/task/result'
 
                     # POST 요청 보내기
                     response = requests.post(post_url, data=loadResponse, headers={'Content-Type': 'application/json'})
