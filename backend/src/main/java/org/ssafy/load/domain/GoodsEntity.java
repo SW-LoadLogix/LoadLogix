@@ -15,10 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int weight;
+    @Column(name = "detail_address")
     private String detailAddress;
     private Integer ordering;
     private Double x;
@@ -46,19 +48,20 @@ public class GoodsEntity {
     }
 
     public static GoodsEntity of(
-            Long id,
-            int weight,
-            String detailAddress,
-            Integer ordering,
-            Double x,
-            Double y,
-            Double z,
-            BoxTypeEntity boxType,
-            BuildingEntity building,
-            LoadTaskEntity loadTask,
-            LocalDateTime createdAt
+        Long id,
+        int weight,
+        String detailAddress,
+        Integer ordering,
+        Double x,
+        Double y,
+        Double z,
+        BoxTypeEntity boxType,
+        BuildingEntity building,
+        LoadTaskEntity loadTask,
+        LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
+            loadTask, createdAt);
     }
 
     public void setBoxPosition(double x, double y, double z) {
