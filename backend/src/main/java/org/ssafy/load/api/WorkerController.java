@@ -32,9 +32,9 @@ public class WorkerController {
     }
 
     @PutMapping("/ready")
-    public Response<StatusResponse> setWorkerReady(@RequestHeader(name="Authorization") String token){
-        Long workerId = jwtTokenProvider.getId(token);
-        return Response.success(loadTaskService.setReadyCompletedWorker(workerId));
+    public Response<Boolean> setWorkerReady(){
+//        Long workerId = jwtTokenProvider.getId(token);
+        return Response.success(loadTaskService.setReadyCompletedWorker(1L));
     }
 
     @GetMapping("/info")

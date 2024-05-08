@@ -10,4 +10,6 @@ public interface LoadTaskRepository extends JpaRepository<LoadTaskEntity, Intege
 
     @Query("SELECT lt.id FROM LoadTaskEntity lt WHERE lt.complete = true and lt.area.id = :areaId ORDER BY lt.createdAt DESC")
     List<Integer> findMostRecentCompletedTaskIds(Integer areaId);
+
+    List<LoadTaskEntity> findAllByAreaIdOrderByCreatedAtDesc(Integer areaId);
 }

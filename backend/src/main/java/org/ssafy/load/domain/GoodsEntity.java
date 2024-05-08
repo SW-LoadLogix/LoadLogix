@@ -23,9 +23,9 @@ public class GoodsEntity {
     @Column(name = "detail_address")
     private String detailAddress;
     private Integer ordering;
-    private double x;
-    private double y;
-    private double z;
+    private Double x;
+    private Double y;
+    private Double z;
 
     @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
@@ -52,9 +52,9 @@ public class GoodsEntity {
         int weight,
         String detailAddress,
         Integer ordering,
-        double x,
-        double y,
-        double z,
+        Double x,
+        Double y,
+        Double z,
         BoxTypeEntity boxType,
         BuildingEntity building,
         LoadTaskEntity loadTask,
