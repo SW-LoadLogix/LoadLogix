@@ -1,7 +1,5 @@
 package org.ssafy.load.application;
 
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -96,7 +94,6 @@ public class TaskService {
 
     @Transactional
     public void LoadResultRegist(LoadResultRequest loadResultRequest) {
-        System.out.println("결과확인!!!!! : " + loadResultRequest);
         Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findById(loadResultRequest.taskId());
         LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
 
