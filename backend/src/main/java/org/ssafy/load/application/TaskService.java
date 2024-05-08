@@ -1,5 +1,7 @@
 package org.ssafy.load.application;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -49,16 +51,36 @@ public class TaskService {
         BuildingEntity SSAFYBuildingEntity = SSAFYBuildingOptional.orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, "start point is not exist"));
 
         List<BuildingEntity> buildingEntityList = buildingRepository.findByLoadTask(loadTaskEntityOptional.get());
-        buildingEntityList.add(0, SSAFYBuildingEntity);
+        buildingEntityList.addFirst(SSAFYBuildingEntity);
         buildingEntityList = pathService.calPathOrder(buildingEntityList);
 
-        LoadTaskCarResponse loadTaskCarResponse = new LoadTaskCarResponse(carEntity.getWidth(), carEntity.getHeight(), carEntity.getLength(), carEntity.getMaxPayload());
-        List<LoadTaskGoodsResponse> loadTaskGoodsResponseList = new ArrayList<>();
+        //응답 생성
+        LoadTaskCarResponse car = new LoadTaskCarResponse(
+                carEntity.getWidth(),
+                carEntity.getHeight(),
+                carEntity.getLength(),
+                carEntity.getMaxPayload());
+
+        List<LoadTaskGoodsResponse> goods = new ArrayList<>();
         for(GoodsEntity goodsEntity : goodsEntityList) {
-            loadTaskGoodsResponseList.add(new LoadTaskGoodsResponse(goodsEntity.getId(), goodsEntity.getBoxType().toString(), goodsEntity.))
+            goods.add(new LoadTaskGoodsResponse(
+                    goodsEntity.getId(),
+                    goodsEntity.getBoxType().getType().toString(),
+                    goodsEntity.getWeight(),
+                    goodsEntity.getBuilding().getId())
+            );
         }
 
-        LoadTaskResponse loadTaskResponse = new LoadTaskResponse(loadTaskEntity.getId(), )
-        return null;
+        List<Long> buildingIdOrder = new ArrayList<>();
+        for(BuildingEntity buildingEntity : buildingEntityList) {
+            buildingIdOrder.add(buildingEntity.getId());
+        }
+
+        return new LoadTaskResponse(
+                loadTaskEntity.getId(),
+                car,
+                goods,
+                buildingIdOrder
+        );
     }
 }
