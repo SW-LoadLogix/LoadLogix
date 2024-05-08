@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.ssafy.load.application.AddressService;
 import org.ssafy.load.application.DeliveryService;
-import org.ssafy.load.application.ReadyStatusService;
+import org.ssafy.load.application.LoadTaskService;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.dto.request.ReadyAreaRequest;
+import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
 
@@ -17,9 +17,7 @@ public class SimulationController {
 
     public final AddressService addressService;
     public final DeliveryService deliveryService;
-    public final ReadyStatusService readyStatusService;
-
-
+    public final LoadTaskService loadTaskService;
 
     @GetMapping
     public Response<List<Integer>> getAreaAndBuildingCount() {
@@ -27,8 +25,8 @@ public class SimulationController {
     }
 
     @PutMapping("/ready")
-    public Response<Void> setReadyCompletedArea(@RequestBody ReadyAreaRequest readyAreaRequest) {
-        readyStatusService.setReadyCompletedArea(readyAreaRequest);
+    public Response<Void> setReadyCompletedArea(@RequestBody ReadyRequest readyRequest) {
+        loadTaskService.setReadyCompletedArea(readyRequest);
         return Response.success();
     }
 
@@ -36,5 +34,4 @@ public class SimulationController {
     public Response<List<Integer>> getConveyorLine() {
         return Response.success(deliveryService.getConveyorLine());
     }
-
 }

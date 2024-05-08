@@ -24,7 +24,6 @@ public class PathTimeEntity {
     @ManyToOne
     @JoinColumn(name = "building_id2")
     private BuildingEntity building2;
-
     private Long duration;
 
     public static PathTimeEntity of(
@@ -34,5 +33,13 @@ public class PathTimeEntity {
             Long duration
     ) {
         return new PathTimeEntity(id, building1, building2, duration);
+    }
+
+    public static PathTimeEntity createNewEntity(
+            BuildingEntity srcBuilding,
+            BuildingEntity desBuilding,
+            Long duration
+    ) {
+        return PathTimeEntity.of(null, srcBuilding, desBuilding, duration);
     }
 }

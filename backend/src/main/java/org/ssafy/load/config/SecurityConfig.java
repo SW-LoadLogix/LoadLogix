@@ -19,11 +19,11 @@ public class SecurityConfig {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new JwtFilter(jwtTokenProvider));
         filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/worker/info");
-        filterRegistrationBean.addUrlPatterns("/worker/ready");
-        filterRegistrationBean.addUrlPatterns("/admin/*");
-        filterRegistrationBean.addUrlPatterns("/goods/*");
-        filterRegistrationBean.addUrlPatterns("/car/*");
+//        filterRegistrationBean.addUrlPatterns("/worker/info");
+//        filterRegistrationBean.addUrlPatterns("/worker/ready");
+//        filterRegistrationBean.addUrlPatterns("/goods/*");
+//        filterRegistrationBean.addUrlPatterns("/car/*");
+        filterRegistrationBean.addUrlPatterns("/test");
         return filterRegistrationBean;
     }
 }

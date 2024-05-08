@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:load_frontend/views/dashboard_simulation3d.dart';
 import 'package:load_frontend/views/pages.dart';
 
 part 'app_router.gr.dart';
@@ -19,13 +20,15 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
         path: '/dashboard',
         page: DashboardRoute.page
-        // children:[
-        //
-        // ]
+    ),
+    AutoRoute(
+        path: '/dashboard-simulation3d',
+        page: DashboardSimulation3dRoute.page
     ),
     AutoRoute(path: '/sign-in-up',page: SignInUpRoute.page),
     AutoRoute(path: '/delivery-list',page: DeliveryListRoute.page),
     AutoRoute(path: '/set-truck-specifications',page: SetTruckSpecificationRoute.page),
+    AutoRoute(path: '/set-truck-specifications2',page: BoxSimulation3dSecondRoute.page),
     AutoRoute(path: '/box-simulation',page: BoxSimulation3dRoute.page),
     AutoRoute(path: '/delivery-simulation',page: DeliverySimulationMapRoute.page),
     AutoRoute(path: '*', page: NotFoundRoute.page),

@@ -21,3 +21,5 @@ const double componentPadding = 24.0;
 
 // Default App Padding
 const appPadding = 16.0;
+
+const double rightsideBarDesktopWidth = 300;

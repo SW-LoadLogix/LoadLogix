@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.ssafy.load.dto.Coordinate;
+import org.ssafy.load.dto.request.BuildingRegistRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +41,13 @@ public class BuildingEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
+    @Column(name="latitude")
+    private Double latitude;
+    @Column(name="longitude")
+    private Double longitude;
 
     @ManyToOne
-    @JoinColumn(name = "area_id", nullable = true)
+    @JoinColumn(name = "area_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private AreaEntity area;
 
@@ -59,6 +65,8 @@ public class BuildingEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
+            double latitude,
+            double longitude,
             AreaEntity area,
             List<GoodsEntity> goodsEntities
     ){
@@ -73,9 +81,29 @@ public class BuildingEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
+                latitude,
+                longitude,
                 area,
                 goodsEntities
         );
     }
 
+    static public BuildingEntity createNewEntity(BuildingRegistRequest buildingAddressRegistRequest, Coordinate coordinate, AreaEntity area) {
+        return of(
+                null,
+                buildingAddressRegistRequest.dongCode(),
+                buildingAddressRegistRequest.sidoName(),
+                buildingAddressRegistRequest.gugunName(),
+                buildingAddressRegistRequest.dongName(),
+                buildingAddressRegistRequest.zibunMain(),
+                buildingAddressRegistRequest.zibunSub(),
+                buildingAddressRegistRequest.loadCode(),
+                buildingAddressRegistRequest.buildingMain(),
+                buildingAddressRegistRequest.buildingSub(),
+                coordinate.latitude(),
+                coordinate.longitude(),
+                area,
+                null
+        );
+    }
 }
