@@ -20,14 +20,14 @@ public class GoodsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int weight;
+    @Column(name = "detail_address")
     private String detailAddress;
-    private String detailJuso;
-    private int ordering;
+    private Integer ordering;
     private double x;
     private double y;
     private double z;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
@@ -39,7 +39,6 @@ public class GoodsEntity {
     @JoinColumn(name = "load_task_id")
     private LoadTaskEntity loadTask;
 
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -49,19 +48,19 @@ public class GoodsEntity {
     }
 
     public static GoodsEntity of(
-            Long id,
-            int weight,
-            String detailAddress,
-            String detailJuso,
-            int ordering,
-            int x,
-            int y,
-            int z,
-            BoxTypeEntity boxType,
-            BuildingEntity building,
-            LoadTaskEntity loadTask,
-            LocalDateTime createdAt
+        Long id,
+        int weight,
+        String detailAddress,
+        Integer ordering,
+        double x,
+        double y,
+        double z,
+        BoxTypeEntity boxType,
+        BuildingEntity building,
+        LoadTaskEntity loadTask,
+        LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, detailJuso, ordering, x, y, z, boxType, building, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
+            loadTask, createdAt);
     }
 }

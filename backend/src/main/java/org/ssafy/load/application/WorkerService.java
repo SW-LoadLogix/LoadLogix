@@ -35,7 +35,7 @@ public class WorkerService {
         CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null));
         return SignUpResponse.from(workerRepository.save(
                 WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                        signUpRequest.name(), car, null, null)));
+                        signUpRequest.name(), car, null)));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {

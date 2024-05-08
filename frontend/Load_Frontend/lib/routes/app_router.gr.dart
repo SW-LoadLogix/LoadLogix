@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const DashboardPage(),
       );
     },
+    DashboardSimulation3dRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DashboardSimulation3dPage(),
+      );
+    },
     DeliveryListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -110,6 +116,20 @@ class DashboardRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'DashboardRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DashboardSimulation3dPage]
+class DashboardSimulation3dRoute extends PageRouteInfo<void> {
+  const DashboardSimulation3dRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardSimulation3dRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardSimulation3dRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -6,8 +6,11 @@ import '../views/box_simulation_3d.dart';
 import '../views/delivery_simulation_map.dart';
 
 class TopBar extends StatelessWidget {
-  final bool _showDesktop;
-  const TopBar([this._showDesktop = false]);
+  final bool showDesktop;
+  final String name;
+
+  TopBar({required this.showDesktop, required this.name});
+  //const TopBar([this._showDesktop = false, this.name]);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class TopBar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Logistics Optimize Algorithm Dive',
+                    name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -71,7 +74,7 @@ class TopBar extends StatelessWidget {
               ),
               onPressed: () {},
             ),
-            this._showDesktop
+            this.showDesktop
                 ? SizedBox.shrink()
                 : IconButton(
                     icon: Icon(
