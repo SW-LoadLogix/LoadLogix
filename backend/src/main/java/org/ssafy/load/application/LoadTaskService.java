@@ -46,9 +46,9 @@ public class LoadTaskService {
                         goods.weight(),
                         goods.detailAddress(),
                         0,
-                        0,
-                        0,
-                        0,
+                        null,
+                        null,
+                        null,
                         boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         buildingRepository.findById(goods.buildingId()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         loadTaskEntity,
@@ -90,7 +90,7 @@ public class LoadTaskService {
         List<LoadTaskEntity> readyStatusEntityList = loadTaskRepository.findAll();
         for(LoadTaskEntity readyStatusEntity : readyStatusEntityList){
 
-            if(readyStatusEntity.getAreaStatus() == true && readyStatusEntity.getWorkerState() == true){
+            if(readyStatusEntity.getAreaStatus() && readyStatusEntity.getWorkerState()){
                 loadTaskRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
                 return readyStatusEntity.getArea().getId();
             }

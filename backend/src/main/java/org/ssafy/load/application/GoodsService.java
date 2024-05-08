@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
+import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
@@ -13,6 +14,8 @@ import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
+import org.ssafy.load.dto.request.CreateGoodsRequest;
+import org.ssafy.load.dto.response.CreateGoodsResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 
 import java.util.List;
@@ -30,6 +33,7 @@ public class GoodsService {
     private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
     private final LoadTaskRepository loadTaskRepository;
+    private final BoxTypeRepository boxTypeRepository;
 
     public GoodsResponse getOriginGoods(Long workerId) {
         //배송 기사 조회
@@ -122,5 +126,19 @@ public class GoodsService {
                 g.getDetailAddress()
             )).toList();
         return new SortedGoodsResponse(goods);
+    }
+
+    public CreateGoodsResponse createGoods(CreateGoodsRequest createGoodsRequest) {
+        return CreateGoodsResponse.from(goodsRepository.save(GoodsEntity.of(
+            null,
+            createGoodsRequest.weight(),
+            createGoodsRequest.detailAddress(),
+            null, null, null, null,
+            boxTypeRepository.findByType(BoxType.valueOf("L" + createGoodsRequest.type()))
+                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+            buildingRepository.findById(createGoodsRequest.buildingId())
+                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+            null,null
+            )));
     }
 }
