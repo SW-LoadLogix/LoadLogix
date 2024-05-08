@@ -12,35 +12,17 @@ final List<BussinessStatus> statusList = [
   BussinessStatus('Customers', '11234', Icons.people_outline_outlined),
 ];
 
-
 class StatusList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              'Weekly',
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(width: 14),
-            Text('Monthly',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                )),
-            SizedBox(
-              width: 14,
-            ),
-            Text('Yearly',
-                style: TextStyle(
-                  fontSize: 16,
-                )),
-          ],
+        Text(
+          "김보경 기사님 2024-05-05 배송관리",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          textAlign: TextAlign.left,
         ),
         SizedBox(
           height: componentPadding,
@@ -52,7 +34,8 @@ class StatusList extends StatelessWidget {
             mainAxisSpacing: componentPadding,
             crossAxisSpacing: componentPadding,
             itemCount: statusList.length,
-            itemBuilder: (context, index) => StatusCard(statusList[index]),
+            itemBuilder: (context, index) =>
+                StatusCard(index), //index 별로 컴포넌트 구분
             staggeredTileBuilder: (index) {
               if (_size.width > screenXxl) return StaggeredTile.fit(1);
               if (_size.width > screenSm) return StaggeredTile.fit(2);

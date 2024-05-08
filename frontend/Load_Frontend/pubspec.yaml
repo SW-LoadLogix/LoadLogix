@@ -1,13 +1,12 @@
 name: load_frontend
 description: "삼성 청년 아카데미 B308팀 자율 프로젝트"
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
-
+  sdk: ">=3.3.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -29,6 +28,7 @@ dependencies:
   url_launcher: ^6.1.12
   json_annotation: ^4.9.0
   auto_route: ^8.0.0
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +45,9 @@ flutter:
     - assets/images/
     - assets/3dmodels/3d-model.obj
     - assets/textures/truck.mtl
+    - assets/gif/트럭시뮬gif.gif
+    - assets/gif/truckgif.gif
+    - assets/gif/truck43.gif
 
   fonts:
     - family: AlumniSansPinstripe

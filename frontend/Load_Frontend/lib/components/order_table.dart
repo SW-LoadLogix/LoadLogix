@@ -60,16 +60,16 @@ class _OrderTableState extends State<OrderTable> {
                       overflow: TextOverflow.ellipsis,
                     )),
                 width: 300),
-            GridColumn(
-                columnName: 'building_address',
-                label: Container(
-                    padding: EdgeInsets.all(8),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '빌딩주소',
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                autoFitPadding: EdgeInsets.all(16)),
+            // GridColumn(
+            //     columnName: 'building_address',
+            //     label: Container(
+            //         padding: EdgeInsets.all(8),
+            //         alignment: Alignment.center,
+            //         child: Text(
+            //           '빌딩주소',
+            //           overflow: TextOverflow.ellipsis,
+            //         )),
+            //     autoFitPadding: EdgeInsets.all(16)),
             GridColumn(
                 columnName: 'boxHeight',
                 label: Container(
@@ -128,8 +128,8 @@ class OrderDataSource extends DataGridSource {
         return building.goods.map((good) => DataGridRow(cells: [
               DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
               DataGridCell<String>(columnName: 'address', value: good.address),
-              DataGridCell<String>(
-                  columnName: 'building_address', value: building.address),
+              // DataGridCell<String>(
+              //     columnName: 'building_address', value: building.address),
               DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
               DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
               DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
