@@ -7,31 +7,31 @@ import 'package:load_frontend/widgets/news_item.dart';
 final news = <News>[
   News(
     '택배개수 : 37개',
-    'T빌딩',
+    '봉명동 447-6',
     'assets/images/1.png',
     '30%',
   ),
   News(
     '택배개수 : 22개',
-    'A빌딩',
+    '덕명동 27-6',
     'assets/images/nav1.png',
     '25%',
   ),
   News(
     '택배개수 : 17개',
-    '447-6',
+    '도안동 22',
     'assets/images/nav2.png',
     '8%',
   ),
   News(
     '택배개수 : 3개',
-    '삼성화재 빌딩',
+    '봉명동 22-5',
     'assets/images/nav3.png',
     '12%',
   ),
   News(
     '택배개수 : 7개',
-    '대한상공회의소 빌딩',
+    '갈마동 390-22',
     'assets/images/nav4.png',
     '26%',
   ),

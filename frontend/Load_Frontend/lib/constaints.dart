@@ -18,3 +18,6 @@ const double topBarHeight = 80;
 const double sideBarDesktopWidth = 220;
 const double sideBarMobileWidth = 70;
 const double componentPadding = 24.0;
+
+// Default App Padding
+const appPadding = 16.0;

@@ -25,29 +25,6 @@ class StatusList extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           textAlign: TextAlign.left,
         ),
-        // Row(
-        //   children: [
-        //     Text(
-        //       'Weekly',
-        //       style: TextStyle(
-        //         fontSize: 16,
-        //       ),
-        //     ),
-        //     SizedBox(width: 14),
-        //     Text('Monthly',
-        //         style: TextStyle(
-        //           fontSize: 16,
-        //           fontWeight: FontWeight.bold,
-        //         )),
-        //     SizedBox(
-        //       width: 14,
-        //     ),
-        //     Text('Yearly',
-        //         style: TextStyle(
-        //           fontSize: 16,
-        //         )),
-        //   ],
-        // ),
         SizedBox(
           height: componentPadding,
         ),
@@ -58,7 +35,7 @@ class StatusList extends StatelessWidget {
             mainAxisSpacing: componentPadding,
             crossAxisSpacing: componentPadding,
             itemCount: statusList.length,
-            itemBuilder: (context, index) => StatusCard(statusList[index]),
+            itemBuilder: (context, index) => StatusCard(index), //index 별로 컴포넌트 구분
             staggeredTileBuilder: (index) {
               if (_size.width > screenXxl) return StaggeredTile.fit(1);
               if (_size.width > screenSm) return StaggeredTile.fit(2);
