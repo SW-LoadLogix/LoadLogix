@@ -52,10 +52,12 @@ public class LoadTaskEntity {
     public LoadTaskEntity withUpdatedWorkerState(boolean workerStatus) {
         return new LoadTaskEntity(this.id, this.areaStatus, this.count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
     }
-    public LoadTaskEntity withUpdatedBothStatus(boolean areaStatus,int  count, boolean workerStatus) {
+    public LoadTaskEntity withUpdatedBothStatus(boolean areaStatus, int count, boolean workerStatus) {
         return new LoadTaskEntity(this.id, areaStatus, count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
     }
-
+    public void withUpdatedComplete() {
+        complete = true;
+    }
 }
 
 

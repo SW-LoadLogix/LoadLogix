@@ -11,10 +11,10 @@ import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.BuildingRepository;
 import org.ssafy.load.dao.GoodsRepository;
 import org.ssafy.load.dao.LoadTaskRepository;
-import org.ssafy.load.domain.BuildingEntity;
-import org.ssafy.load.domain.CarEntity;
-import org.ssafy.load.domain.GoodsEntity;
-import org.ssafy.load.domain.LoadTaskEntity;
+import org.ssafy.load.dao.PathRepository;
+import org.ssafy.load.domain.*;
+import org.ssafy.load.dto.request.LoadResultGoodsRequest;
+import org.ssafy.load.dto.request.LoadResultRequest;
 import org.ssafy.load.dto.response.LoadTaskCarResponse;
 import org.ssafy.load.dto.response.LoadTaskGoodsResponse;
 import org.ssafy.load.dto.response.LoadTaskResponse;
@@ -32,11 +32,13 @@ public class TaskService {
     private final LoadTaskRepository loadTaskRepository;
     private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
+    private final PathRepository pathRepository;
 
     @Transactional
     public LoadTaskResponse getLoadingTask() {
         Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findFirstByAreaStatusIsTrueAndCompleteIsFalseOrderByCreatedAt();
 
+        //작업 없음
         if(loadTaskEntityOptional.isEmpty()) {
             return null;
         }
@@ -50,11 +52,24 @@ public class TaskService {
         Optional<BuildingEntity> SSAFYBuildingOptional = buildingRepository.findByZibunMainAndZibunSubAndArea(124, 0, loadTaskEntity.getArea());
         BuildingEntity SSAFYBuildingEntity = SSAFYBuildingOptional.orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, "start point is not exist"));
 
+        //경로 알고리즘 동작
         List<BuildingEntity> buildingEntityList = buildingRepository.findByLoadTask(loadTaskEntityOptional.get());
         buildingEntityList.addFirst(SSAFYBuildingEntity);
         buildingEntityList = pathService.calPathOrder(buildingEntityList);
 
+        //경로 저장
+        if(pathRepository.countByLoadTask(loadTaskEntity) == 0) {
+            for(int order = 0; order < buildingEntityList.size(); order++) {
+                pathRepository.save(PathEntity.createNewEntity(order + 1, loadTaskEntity, buildingEntityList.get(order)));
+            }
+        }
+
         //응답 생성
+        List<Long> buildingIdOrder = new ArrayList<>();
+        for(BuildingEntity buildingEntity : buildingEntityList) {
+            buildingIdOrder.add(buildingEntity.getId());
+        }
+
         LoadTaskCarResponse car = new LoadTaskCarResponse(
                 carEntity.getWidth(),
                 carEntity.getHeight(),
@@ -71,16 +86,30 @@ public class TaskService {
             );
         }
 
-        List<Long> buildingIdOrder = new ArrayList<>();
-        for(BuildingEntity buildingEntity : buildingEntityList) {
-            buildingIdOrder.add(buildingEntity.getId());
-        }
-
         return new LoadTaskResponse(
                 loadTaskEntity.getId(),
                 car,
                 goods,
                 buildingIdOrder
         );
+    }
+
+    @Transactional
+    public void LoadResultRegist(LoadResultRequest loadResultRequest) {
+        System.out.println("결과확인!!!!! : " + loadResultRequest);
+        Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findById(loadResultRequest.taskId());
+        LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
+
+        for(LoadResultGoodsRequest item : loadResultRequest.goods()) {
+            int x = item.loadResultPositionRequest().x();
+            int y = item.loadResultPositionRequest().y();
+            int z = item.loadResultPositionRequest().z();
+
+            Optional<GoodsEntity> goodsEntityOptional = goodsRepository.findById(item.goodsId());
+            GoodsEntity goodsEntity = goodsEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
+            goodsEntity.setBoxPosition(x, y, z);
+        }
+
+        loadTaskEntity.withUpdatedComplete();
     }
 }

@@ -25,7 +25,7 @@ public class GoodsEntity {
     private Double y;
     private Double z;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
@@ -59,5 +59,11 @@ public class GoodsEntity {
             LocalDateTime createdAt
     ) {
         return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building, loadTask, createdAt);
+    }
+
+    public void setBoxPosition(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }

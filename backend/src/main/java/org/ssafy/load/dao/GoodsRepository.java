@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByBuildingId(Long buildingId);
-    @Query("select goods from GoodsEntity goods join fetch goods.building, goods.boxType join goods.loadTask")
+    @Query("select goods from GoodsEntity goods join fetch goods.building join fetch goods.boxType join goods.loadTask")
     List<GoodsEntity> findByLoadTask(LoadTaskEntity loadTask);
 }
 
