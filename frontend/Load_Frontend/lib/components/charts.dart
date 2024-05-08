@@ -3,6 +3,8 @@ import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/widgets/bar_chart.dart';
 import 'package:load_frontend/widgets/pie_chart.dart';
 
+import '../widgets/components/map.dart';
+
 class Charts extends StatelessWidget {
   const Charts({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class Charts extends StatelessWidget {
           ),
           Flexible(
             flex: 1,
-            child: MyPieChart(),
+            child: MyGoogleMap(),
           ),
         ],
       );
@@ -30,7 +32,7 @@ class Charts extends StatelessWidget {
         SizedBox(
           height: componentPadding,
         ),
-        MyPieChart(),
+        MyGoogleMap(),
       ],
     );
   }
