@@ -26,12 +26,12 @@ class _DashboardPageState extends State<DashboardPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         /* 대시보드 가운데에 들어감 */
-        // StatusList(),
-        // Charts(),
-        // SizedBox(
-        //   height: componentPadding,
-        // ),
-        // OrderTable(),
+        StatusList(),
+        Charts(),
+        SizedBox(
+          height: componentPadding,
+        ),
+        OrderTable(),
       ],
     ));
   }
