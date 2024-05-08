@@ -33,6 +33,7 @@ dependencies:
   google_maps_flutter: ^2.2.8
   flutter_dotenv: ^5.1.0
   flutter_config: ^2.0.2
+  loading_animation_widget: ^1.2.1
 
 
 
@@ -51,7 +52,7 @@ flutter:
     - assets/images/
     - assets/3dmodels/3d-model.obj
     - assets/textures/truck.mtl
-
+    - .env
   fonts:
     - family: AlumniSansPinstripe
       fonts:
