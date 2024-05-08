@@ -29,6 +29,7 @@ public class LoadTaskService {
 
     @Transactional
     public void setReadyCompletedArea(ReadyRequest readyRequest){
+        System.out.println(readyRequest);
         areaRepository.findById(readyRequest.areaId()).ifPresentOrElse((areaEntity) -> {
             LoadTaskEntity loadTaskEntity = loadTaskRepository.save(
                             LoadTaskEntity.of(
@@ -48,10 +49,10 @@ public class LoadTaskService {
                         null,
                         goods.weight(),
                         goods.detailAddress(),
-                        0,
-                        0,
-                        0,
-                        0,
+                        null,
+                        null,
+                        null,
+                        null,
                         boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         buildingRepository.findById(goods.buildingId()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         loadTaskEntity,
@@ -72,13 +73,17 @@ public class LoadTaskService {
         return workerRepository.findById(workerId)
                 .map(workerEntity -> {
                     AreaEntity areaEntity = workerEntity.getArea();
-                    List<LoadTaskEntity> loadTaskEntities = areaEntity.getLoadTaskEntities();
+                    int areaId = areaEntity.getId();
+                    int conveyNo = areaEntity.getConveyNo();
+                    List<LoadTaskEntity> loadTaskEntities = loadTaskRepository.findAllByAreaIdOrderByCreatedAtDesc(areaId);
                     for(LoadTaskEntity loadTaskEntity : loadTaskEntities){
-                        if (loadTaskEntity != null || (!loadTaskEntity.getAreaStatus() && loadTaskEntity.getWorkerState() && loadTaskEntity.getComplete())) {
+                        System.out.println(loadTaskEntity.getAreaStatus() +" "+loadTaskEntity.getWorkerState()+" "+loadTaskEntity.getComplete());
+
+                        if (loadTaskEntity!=null && !loadTaskEntity.getWorkerState() && loadTaskEntity.getAreaStatus() && loadTaskEntity.getComplete()) {
                             loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
-                            sseService.sendEvent(LoadStartResponse.of(
-                                    areaEntity.getId(),
-                                    areaEntity.getConveyNo(),
+                            sseService.sendEvent("1", LoadStartResponse.of(
+                                    areaId,
+                                    conveyNo,
                                     true
                             ));
                             return true;

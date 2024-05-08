@@ -1,6 +1,7 @@
 package org.ssafy.load.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.ssafy.load.application.AddressService;
@@ -55,9 +56,8 @@ public class SimulationController {
 //
 //        return emitter;
 //    }
-    @GetMapping("/ready")
-    public SseEmitter streamSse() {
-        return sseService.createEmitter();
+    @GetMapping(value = "/start", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter streamSse() {return sseService.createEmitter("1");
     }
 
 }
