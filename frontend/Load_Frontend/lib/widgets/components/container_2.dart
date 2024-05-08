@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constaints.dart';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 class Container2 extends StatelessWidget {
   final bool isHover;
 
@@ -39,17 +39,11 @@ class Container2 extends StatelessWidget {
           SizedBox(
             height: 18,
           ),
-
-          Positioned(
-            child: Container(
-              height: 9,
-              width: 150,
-              decoration: BoxDecoration(
-                  color: isHover ? Colors.white : Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(4)),
+          Center(
+            child: LoadingAnimationWidget.inkDrop(
+              color: Colors.blue,
+              size: 50,
             ),
-            bottom: 0,
-            left: 0,
           ),
         ],
       ),
