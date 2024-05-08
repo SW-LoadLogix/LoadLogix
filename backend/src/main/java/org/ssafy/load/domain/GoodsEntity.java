@@ -63,4 +63,10 @@ public class GoodsEntity {
         return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
             loadTask, createdAt);
     }
+
+    public void setBoxPosition(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }

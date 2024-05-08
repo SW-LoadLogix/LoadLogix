@@ -37,7 +37,6 @@ public class LoadTaskEntity {
     @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
-
     @PrePersist
     public void onPrePersist() {
         this.createdAt = LocalDateTime.now();
@@ -51,4 +50,14 @@ public class LoadTaskEntity {
         return new LoadTaskEntity(this.id, this.areaStatus, this.count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
     }
 
+    public void withUpdatedComplete() {
+        complete = true;
+    }
 }
+
+
+
+
+
+
+
