@@ -7,7 +7,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gl/flutter_gl.dart';
 import 'package:load_frontend/constaints.dart';
+import 'package:load_frontend/views/box_simulation/selected_box_overlay_widget.dart';
 import 'package:load_frontend/views/box_simulation/simulation_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
 import 'package:three_dart_jsm/three_dart_jsm/loaders/mtl_loader.dart';
@@ -32,6 +34,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   Ticker? _ticker;
   three.Raycaster raycaster = three.Raycaster();
 
+  late SelectedBoxOverlayWidget selectedBoxOverlayWidget;// = SelectedBoxOverlayWidget();
   int? fboId;
   late double width;
   late double height;
@@ -78,12 +81,14 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     "color": 0xFFFFFFFF,
     "flatShading": true,
     "transparent": true,
-    "opacity": 1.0,
+    "opacity": 0.8,
     "depthTest": false,
+    //'vertexColors': true,
   });
   three.BoxGeometry selectedGeometry = three.BoxGeometry(1, 1, 1);
 
   late three.Mesh selectedMesh;
+  late three.Mesh selectedEdgeMesh;
 
 
   late three.MeshPhongMaterial edgeMaterial = three.MeshPhongMaterial({
@@ -336,6 +341,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   initState() {
+    selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context);
     super.initState();
   }
 
@@ -345,6 +351,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     if (_ticker != null) {
       _ticker!.dispose(); // Ticker가 활성화된 경우 해제
     }
+    if (isSelected) {
+      print("remove ovelray");
+      if (selectedBoxOverlayWidget.isShowing){
+        selectedBoxOverlayWidget.remove();
+      }
+    }
+
     three3dRender.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -717,6 +730,18 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
 
 
+  three.Vector2 worldToScreen(three.Vector3 worldCoords, three.Camera camera, double screenWidth, double screenHeight) {
+    // 월드 좌표를 카메라 관점의 좌표로 변환
+    worldCoords.project(camera);
+
+    // 변환된 좌표를 스크린 좌표로 매핑
+    return three.Vector2(
+        (worldCoords.x + 1) * screenWidth / 2,
+        -(worldCoords.y - 1) * screenHeight / 2
+    );
+  }
+
+
 
   /**********************************************************/
   /**
@@ -816,6 +841,11 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     if (isClickOrTaped){
       if (isSelected){
         scene.remove(selectedMesh);
+        scene.remove(selectedEdgeMesh);
+        if (selectedBoxOverlayWidget.isShowing){
+          selectedBoxOverlayWidget.remove();
+        }
+        //selectedBoxOverlayWidget.remove();
       }
       isSelected = false;
       isClickOrTaped = false;
@@ -874,12 +904,38 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
 
                 //selectedGeometry = adjustBoxGeometryPivot(selectedGeometry, -1 * selectedBox.boxSize.x, -1 * selectedBox.boxSize.y, -1 * selectedBox.boxSize.z);
+
+                selectedEdgeMesh = three.Mesh(
+                    selectedGeometry,
+                    three.MeshPhongMaterial({
+                      "color": 0xFF000000,
+                      "flatShading": true,
+                      "transparent": true,
+                      "opacity": 1.0,
+                      "wireframe": true,
+                      "side": three.DoubleSide,
+                      'depthTest': false, // 깊이 테스트 비활성화
+                      'depthWrite': false, // 깊이 버퍼에 쓰기 비활성화
+                     // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
+
+                    })
+                );
+
                 selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
                 selectedMesh.position.set(
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
                     selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
                 scene.add(selectedMesh);
+                selectedEdgeMesh.position.set(
+                    selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
+                    selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
+                    selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
+                scene.add(selectedEdgeMesh);
+                selectedBoxOverlayWidget.show();
+
+                GoodsStore goodsStore = context.read<GoodsStore>();
+                goodsStore.setSelectedGoodsId(selectedBox.goodsId);
                 break;
               }
             }

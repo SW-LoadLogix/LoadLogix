@@ -39,21 +39,21 @@ class SimSidebarPage extends StatelessWidget {
               children: [
                 _isDesktop
                     ? Expanded(
-                        child: Center(
-                        child: Text(
-                          'Simulation Control',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
-                        ),
-                      ))
-                    : IconButton(
-                        icon: Icon(
-                          Icons.menu_open,
-                        ),
-                        onPressed: () {
-                          //Navigator.pop(context);
-                        },
+                    child: Center(
+                      child: Text(
+                        'Simulation Control',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
                       ),
+                    ))
+                    : IconButton(
+                  icon: Icon(
+                    Icons.menu_open,
+                  ),
+                  onPressed: () {
+                    //Navigator.pop(context);
+                  },
+                ),
               ],
             ),
           ),
@@ -61,35 +61,9 @@ class SimSidebarPage extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 6,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 1.3,
-                      child: BuildingsPieChart(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Container(
-                        width: double.infinity,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -102,44 +76,136 @@ class SimSidebarPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: SingleChildScrollView(
-                          child: GoodsExpansionPanel(),
-                        ))),
-                SizedBox(
-                  height: 12,
-                ),
-                Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 1,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
+                        child: AspectRatio(
+                          aspectRatio: 1.3,
+                          child: BuildingsPieChart(),
                         ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SimulationController(),
-                            ],
-                          ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: double.infinity,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10)),
+                                      color: primaryAncient.withOpacity(0.6),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Goods: ${goodsStore.goods.length}',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    )),
+                                Expanded(
+                                  // 내용을 스크롤 가능하게 만듭니다.
+                                    child: SingleChildScrollView(
+                                      child: GoodsExpansionPanel(),
+                                    ))
+                              ],
+                            )
                         )
-                    )
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-              ]
-            )
-          )
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: double.infinity,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10)),
+                                      color: primaryAncient.withOpacity(0.6),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Control',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    )),
+                                Expanded(
+                                  // 내용을 스크롤 가능하게 만듭니다.
+                                    child: SingleChildScrollView(
+                                      child: SimulationController(),
+                                    ))
+                              ],
+                            )
+                        )
+                    ),
+                    // Flexible(
+                    //     flex: 2,
+                    //     fit: FlexFit.tight,
+                    //     child: Container(
+                    //         width: double.infinity,
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           borderRadius: BorderRadius.circular(10),
+                    //           boxShadow: [
+                    //             BoxShadow(
+                    //               color: Colors.grey.withOpacity(0.2),
+                    //               spreadRadius: 1,
+                    //               blurRadius: 6,
+                    //               offset: Offset(0, 3),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         child: SingleChildScrollView(
+                    //           child: Column(
+                    //             children: [
+                    //               SimulationController(),
+                    //             ],
+                    //           ),
+                    //         ))),
+                    SizedBox(
+                      height: 12,
+                    ),
+                  ]))
         ],
       ),
     );

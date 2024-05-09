@@ -23,17 +23,17 @@ class Box {
     // boxSize =
     //     three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
     // return;
-    if (type == 'S1') {
+    if (type == 'L1') {
       boxSize = three.Vector3(22 * gScale, 22 * gScale, 9 * gScale);
-    } else if (type == 'S2') {
+    } else if (type == 'L2') {
       boxSize = three.Vector3(27 * gScale, 27 * gScale, 15 * gScale);
-    } else if (type == 'S3') {
+    } else if (type == 'L3') {
       boxSize = three.Vector3(35 * gScale, 35 * gScale, 10 * gScale);
-    } else if (type == 'S4') {
+    } else if (type == 'L4') {
       boxSize = three.Vector3(34 * gScale, 34 * gScale, 21 * gScale);
-    } else if (type == 'S5') {
+    } else if (type == 'L5') {
       boxSize = three.Vector3(41 * gScale, 41 * gScale, 28 * gScale);
-    } else if (type == 'S6') {
+    } else if (type == 'L6') {
       boxSize = three.Vector3(48 * gScale, 48 * gScale, 34 * gScale);
     }
   }
