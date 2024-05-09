@@ -45,4 +45,9 @@ public class AdminController {
     public Response<List<GoodsOutputResponse>> getGoodsList(){
         return Response.success(goodsService.getGoodsList());
     }
+
+    @GetMapping("/loads")
+    public Response<List<GoodsOutputResponse>> getLoadedGoodsList(){
+        return Response.success(goodsService.getLoadedGoodsList());
+    }
 }

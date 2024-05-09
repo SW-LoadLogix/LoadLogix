@@ -188,4 +188,22 @@ public class GoodsService {
                     good.getCreatedAt());
             }).toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<GoodsOutputResponse> getLoadedGoodsList() {
+        List<GoodsEntity> goods = goodsRepository.findAllLoadedGoodsByCreatedAtIsToday();
+        return goods.stream()
+            .map(good -> {
+                BuildingEntity building = good.getBuilding();
+                AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
+
+                return new GoodsOutputResponse(
+                    area.getAreaName(),
+                    good.getDetailAddress(),
+                    area.getWorker().getId(),
+                    good.getWeight(),
+                    String.valueOf(good.getBoxType().getType()),
+                    good.getCreatedAt());
+            }).toList();
+    }
 }
