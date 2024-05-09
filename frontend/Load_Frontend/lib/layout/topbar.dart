@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/views/news.dart';
 
+import '../views/box_simulation_3d.dart';
+import '../views/delivery_simulation_map.dart';
+
 class TopBar extends StatelessWidget {
   final bool showDesktop;
   final String name;
@@ -45,14 +48,28 @@ class TopBar extends StatelessWidget {
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             IconButton(
               icon: Icon(
-                Icons.search,
+                Icons.local_shipping,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {},
             ),
             IconButton(
               icon: Icon(
-                Icons.notifications_outlined,
+                Icons.conveyor_belt,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.forklift,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.view_in_ar,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {},
