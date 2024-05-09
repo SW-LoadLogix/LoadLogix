@@ -220,9 +220,9 @@ class SelectedBoxOverlayWidget {
                                 TextDetailRow(
                                     title: "Weight:",
                                     value:
-                                        "${Provider.of<GoodsStore>(context).selectedGoods?.weight.toString() ?? "Unknown"} kg"),
+                                        "${Provider.of<GoodsStore>(context).selectedGoods?.weight.toString() ?? "Unknown"} g"),
                                 TextDetailRow(
-                                    title: "Building ID:",
+                                    title: "Building ID(region):",
                                     value:
                                         "${Provider.of<GoodsStore>(context).selectedGoods?.buildingId ?? "Unknown"}"),
                                 TextDetailRow(

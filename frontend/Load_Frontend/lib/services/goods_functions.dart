@@ -33,7 +33,7 @@ class GoodsService {
 
                 weight: random.nextInt(1000),
                 buildingId: random.nextInt(5),
-                buildingName: 'goodsId${goodsId++}',
+                buildingName: 'Building Name ${goodsId++}',
                 detailAddress: '서울시 강남구 삼성동 123-456'));
           }
         }

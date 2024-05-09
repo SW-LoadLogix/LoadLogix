@@ -13,10 +13,6 @@ class GoodsExpansionPanel extends StatelessWidget {
 
     return Column(
       children: [
-        // Text(
-        //   'Goods: ${goodsStore.goods.length}',
-        //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        // ),
         ...groupedGoods.entries.map((entry) {
           int buildingId = entry.key;
           List<GoodsData> goods = entry.value;
@@ -38,7 +34,7 @@ class GoodsExpansionPanel extends StatelessWidget {
                       goodsStore.toggleGood(buildingId, good.goodsId);
                     },
                   ),
-                  title: Text(good.buildingName),
+                  title: Text("Goods ID ${good.goodsId}"),
                   subtitle: Text('Type: ${good.type}, Weight: ${good.weight}'),
                 ),
               );
