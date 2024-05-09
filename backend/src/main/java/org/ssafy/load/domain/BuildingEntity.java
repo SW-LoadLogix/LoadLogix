@@ -52,7 +52,7 @@ public class BuildingEntity {
     private AreaEntity area;
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
-    private List<GoodsEntity> goodsEntities = new ArrayList<>();
+    private List<GoodsEntity> goodsEntities;
 
     static public BuildingEntity of(
             Long id,
