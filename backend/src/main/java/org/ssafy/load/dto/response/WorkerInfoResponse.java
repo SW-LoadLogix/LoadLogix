@@ -11,6 +11,17 @@ public record WorkerInfoResponse(
         int carWidth
 ) {
     public static WorkerInfoResponse from(WorkerEntity entity) {
+        if(entity.getCar() == null) {
+            return new WorkerInfoResponse(
+                    entity.getName(),
+                    entity.getArea().getAreaName(),
+                    entity.getArea().getConveyNo(),
+                    0,
+                    0,
+                    0
+            );
+        }
+
         return new WorkerInfoResponse(
                 entity.getName(),
                 entity.getArea().getAreaName(),

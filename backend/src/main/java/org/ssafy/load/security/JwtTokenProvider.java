@@ -81,21 +81,4 @@ public class JwtTokenProvider {
             throw new JWTException(e);
         }
     }
-
-//    public Long getIdFromHttpRequest(HttpServletRequest httpRequest){
-//        String authorizationHeader = httpRequest.getHeader("Authorization");
-//
-//        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-//            throw new CommonException(ErrorCode.INVALID_TOKEN);
-//        }
-//
-//        String token = authorizationHeader.substring(7);
-//        try {
-//            validateToken(token);
-//        } catch (Exception e) {
-//            throw new CommonException(ErrorCode.INVALID_TOKEN);
-//        }
-//
-//        return getId(token);
-//    }
 }

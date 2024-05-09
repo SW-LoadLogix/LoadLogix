@@ -43,6 +43,7 @@ public class WorkerService {
                 loginRequest.password());
 
         WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        if(worker.getArea() == null) throw new CommonException(ErrorCode.USER_NOT_FOUND);
 
         return LoginResponse.of(jwtTokenProvider.generateToken(worker.getId(), worker.getName(),"worker"));
     }
