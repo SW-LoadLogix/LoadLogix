@@ -353,7 +353,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     }
     if (isSelected) {
       print("remove ovelray");
-      selectedBoxOverlayWidget.remove();
+      if (selectedBoxOverlayWidget.isShowing){
+        selectedBoxOverlayWidget.remove();
+      }
     }
 
     three3dRender.dispose();
@@ -840,7 +842,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       if (isSelected){
         scene.remove(selectedMesh);
         scene.remove(selectedEdgeMesh);
-        selectedBoxOverlayWidget.remove();
+        if (selectedBoxOverlayWidget.isShowing){
+          selectedBoxOverlayWidget.remove();
+        }
+        //selectedBoxOverlayWidget.remove();
       }
       isSelected = false;
       isClickOrTaped = false;

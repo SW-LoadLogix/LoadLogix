@@ -172,31 +172,44 @@ class SelectedBoxOverlayWidget {
                     ),
                     child: Column(
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            color: primaryAncient.withOpacity(0.6),
-                          ),
-                          child: Center(
-                              child: DefaultTextStyle(
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            child: Text(
-                              'Selected Goods',
-                              style: TextStyle(
-                                color: textColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                        Stack(
+                          children: [
+                            Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  color: primaryAncient.withOpacity(0.6),
+                                ),
+                                child: Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      child: Text(
+                                        'Selected Goods',
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
+                                )),
+                            Positioned(
+                              right: 5,
+                              top: 5,
+                              child: IconButton(
+                                icon: Icon(Icons.close, color: Colors.black),
+                                onPressed: () {
+                                  remove(); // Close the overlay
+                                },
                               ),
-                            ),
-                          )),
+                            )
+                          ],
                         ),
                         Divider(height: 2),
                         Expanded(
