@@ -22,4 +22,7 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() and load_task_id is not null", nativeQuery = true)
     long countLoadedGoodsByCreatedAtIsToday();
+
+    @Query(value = "SELECT DATE(created_at) as date, COUNT(*) as count FROM goods WHERE DATE(created_at) >= CURDATE() - INTERVAL 6 DAY AND DATE(created_at) <= CURDATE() GROUP BY DATE(created_at) ORDER BY date", nativeQuery = true)
+    List<Object[]> countGoodsByDateForLastSixDays();
 }
