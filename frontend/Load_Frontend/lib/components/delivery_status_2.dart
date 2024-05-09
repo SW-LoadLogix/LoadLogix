@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:msh_checkbox/msh_checkbox.dart';
 
-import '../../constaints.dart';
+import '../constaints.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class Container2 extends StatefulWidget {
+class DeliveryStatus2 extends StatefulWidget {
   final bool isHover;
 
-  const Container2({
+  const DeliveryStatus2({
     Key? key,
     required this.isHover,
   }) : super(key: key);
@@ -16,7 +16,7 @@ class Container2 extends StatefulWidget {
   _Container2State createState() => _Container2State();
 }
 
-class _Container2State extends State<Container2> {
+class _Container2State extends State<DeliveryStatus2> {
 
   String message = "적재 알고리즘을 위한 배송 상품이 준비중입니다";
   bool isLoading = true; // API 호출되었을 때 여부를 관리하는 변수 추가

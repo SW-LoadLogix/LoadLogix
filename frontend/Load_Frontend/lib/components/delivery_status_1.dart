@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../constaints.dart';
+import '../constaints.dart';
 
-class Container1 extends StatelessWidget {
+class DeliveryStatus1 extends StatelessWidget {
   final bool isHover;
 
-  const Container1({
+  const DeliveryStatus1({
     Key? key,
     required this.isHover,
   }) : super(key: key);

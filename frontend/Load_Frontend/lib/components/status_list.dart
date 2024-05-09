@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:load_frontend/model.dart';
-import 'package:load_frontend/widgets/status_card.dart';
+import 'package:load_frontend/components/status_card.dart';
 
 import '../constaints.dart';
 

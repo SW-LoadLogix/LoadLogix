@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
 
-import 'components/container_1.dart';
-import 'components/container_2.dart';
-import 'components/container_3.dart';
-import 'components/container_4.dart';
+import 'delivery_status_1.dart';
+import 'delivery_status_2.dart';
+import 'delivery_status_3.dart';
+import 'delivery_status_4.dart';
 
 class StatusCard extends StatefulWidget {
 
@@ -53,13 +53,13 @@ class _StatusCardState extends State<StatusCard> {
   Widget _eachComponent() {
     switch (widget.index % 4) {
       case 0:
-        return Container1(isHover: _isHover);
+        return DeliveryStatus1(isHover: _isHover);
       case 1:
-        return Container2(isHover: _isHover);
+        return DeliveryStatus2(isHover: _isHover);
       case 2:
-        return Container3(isHover: _isHover);
+        return DeliveryStatus3(isHover: _isHover);
       case 3:
-        return Container4(isHover: _isHover);
+        return DeliveryStatus4(isHover: _isHover);
 
       // return Container(
       //   color: Colors.yellow, // 예시용 색상

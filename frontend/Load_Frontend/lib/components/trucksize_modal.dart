@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constaints.dart';
+import '../constaints.dart';
 
 class TruckSizeModal extends StatelessWidget {
   final TextEditingController widthController = TextEditingController();

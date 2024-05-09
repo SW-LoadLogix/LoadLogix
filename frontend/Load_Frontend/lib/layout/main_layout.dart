@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:load_frontend/components/news_list.dart';
+import 'package:load_frontend/components/building_fraction.dart';
 import 'package:load_frontend/layout/sidebar.dart';
 import 'package:load_frontend/layout/topbar.dart';
 
@@ -55,7 +55,7 @@ class MainLayout extends StatelessWidget {
           Container(
             width: _showDesktop ? newsPageWidth : 0,
             child:
-            NewsList(_showDesktop),
+            BuildingList(_showDesktop),
           ),
         ],
       ),
