@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
-import 'package:load_frontend/model.dart';
+
+import 'components/container_1.dart';
+import 'components/container_2.dart';
+
 
 class StatusCard extends StatefulWidget {
-  final BussinessStatus data;
 
-  const StatusCard(this.data);
+  final int index;
+  const StatusCard(this.index);
 
   @override
   _StatusCardState createState() => _StatusCardState();
@@ -40,46 +43,29 @@ class _StatusCardState extends State<StatusCard> {
             color: _isHover ? primary : Colors.white),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Icon(
-                  this.widget.data.icon,
-                  color: _isHover ? primary : Colors.white,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: _isHover ? Colors.white : primary,
-                ),
-                width: 56,
-                height: 56,
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              Text(
-                this.widget.data.value.toString(),
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: _isHover ? Colors.white : primary),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Text(
-                this.widget.data.name,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: _isHover ? Colors.white : primary),
-              )
-            ],
-          ),
+          child: _eachComponent(),
         ),
       ),
     );
+  }
+
+  Widget _eachComponent() {
+    switch(widget.index % 4) {
+      case 0:
+        return Container1(isHover: _isHover);
+      case 1:
+        return Container2(isHover: _isHover);
+      case 2:
+
+      case 3:
+        return Container(
+          color: Colors.yellow, // 예시용 색상
+          child: Center(child: Text('Component 4')),
+        );
+      default:
+        return Container(); // 기본적으로 빈 컨테이너 반환
+    }
+
+
   }
 }
