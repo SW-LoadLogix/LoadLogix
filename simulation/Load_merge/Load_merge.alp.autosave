@@ -35,74 +35,6 @@ public void startSSEListener() {
     new Thread(listener).start();
 }
 
-<<<<<<< HEAD
-public LinkedList<Goods> getRackStore(int area){
-	LinkedList<Goods> selectedRackStore = null;
-	LinkedList<Goods> response = null;
-	boolean one = true;
-    switch (area) {
-        case 1:
-            selectedRackStore = rackStore1;
-            break;
-        case 2:
-        case 3:
-        	selectedRackStore = rackStore2;
-            one = false;
-            break;
-        case 4:
-        	selectedRackStore = rackStore3;
-            break;
-        case 5:
-        case 6:
-        	selectedRackStore = rackStore4;
-            one = false;
-            break;
-        case 7:
-        	selectedRackStore = rackStore5;
-            break;
-        case 8:
-        case 9:
-        	selectedRackStore = rackStore6;
-            one = false;
-            break;
-    }
-    
-    if(!one) {
-        for(Goods goods : selectedRackStore) {
-        	if(area == goods.areaId) {
-            	response.add(goods);
-        	}
-        }
-    }
-    
-    return response;
-}
-
-public void startLoad(int conveyor, int area){
-	 if(area == 1) enterInject(conveyor, enter1, getRackStore(area));
-	 else if(area == 2 || area == 3) enterInject(conveyor, enter2, getRackStore(area));
-	 else if(area == 4) enterInject(conveyor, enter3, getRackStore(area));
-	 else if(area == 5 || area == 6) enterInject(conveyor, enter4, getRackStore(area));
-	 else if(area == 7) enterInject(conveyor, enter5, getRackStore(area));
-	 else if(area == 8 || area == 9) enterInject(conveyor, enter6, getRackStore(area));
-}
-public void enterInject(int conveyor, Enter<Goods> enter, LinkedList<Goods> pickList){
-	for(Goods goods : pickList){
-		goods.toConveyorLine = conveyor;
-		enter.take(goods);
-	}
-	
-}
-
-
-
-int[] goodsCntForVehicle = new int[5];
-boolean[] readyVehicleToConvey = new boolean[5];
-=======
-<<<<<<< Updated upstream
->>>>>>> feature/simul/46-start-load
-]]></AdditionalClassCode>
-=======
 public LinkedList<GoodsRequest> getRackStore(int area){
 	LinkedList<Goods> selectedRackStore = new LinkedList<>();
 	LinkedList<GoodsRequest> response = new LinkedList<>();
@@ -192,7 +124,6 @@ public void enterInject(int conveyor, Enter<Goods> enter, int area){
 int[] goodsCntForVehicle = new int[5];
 boolean[] readyVehicleToConvey = new boolean[5];
  ]]></AdditionalClassCode>
->>>>>>> Stashed changes
 			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
 }catch(Exception e){
@@ -210,15 +141,6 @@ settingGoodsCountPerArea.add(6);
 settingGoodsCountPerArea.add(6);
 settingGoodsCountPerArea.add(6);
 settingGoodsCountPerArea.add(6);
-<<<<<<< HEAD
-settingGoodsCountPerArea.add(6);
-checkGoodsForArea.add(0);
-=======
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
@@ -230,35 +152,16 @@ checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 
-<<<<<<< HEAD
-//int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
-//int[] checkGoodsForArea = new int[10];
-
-//SSE
-startSSEListener();
-
-
-]]></StartupCode>
-=======
-<<<<<<< Updated upstream
-=======
 
 //int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
 //int[] checkGoodsForArea = new int[10];
->>>>>>> Stashed changes
 
 
 //SSE
-<<<<<<< Updated upstream
-Thread sseThread = new Thread(new SSEListener());
-sseThread.start();]]></StartupCode>
-=======
-SSEListener sseListener = new SSEListener(this);
-Thread thread = new Thread(sseListener);
-thread.start();
+//SSEListener sseListener = new SSEListener(this);
+//Thread thread = new Thread(sseListener);
+//thread.start();
 ]]></StartupCode>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1714366606324</Id>
@@ -978,39 +881,6 @@ thread.start();
 					</Points>
 				</Connector>
 				<Connector>
-					<Id>1714466127555</Id>
-					<Name><![CDATA[connector5]]></Name>
-					<X>1010</X><Y>850</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[atStore1]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Exit]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[goodStore1]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackStore]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>-50</X><Y>0</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
 					<Id>1714367220009</Id>
 					<Name><![CDATA[connector27]]></Name>
 					<X>740</X><Y>850</Y>
@@ -1077,39 +947,6 @@ thread.start();
 					</Points>
 				</Connector>
 				<Connector>
-					<Id>1714470540550</Id>
-					<Name><![CDATA[connector2]]></Name>
-					<X>870</X><Y>850</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[conveyorExit1]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[ConveyorExit]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[goodStore1]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackStore]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>50</X><Y>0</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
 					<Id>1714471001647</Id>
 					<Name><![CDATA[connector6]]></Name>
 					<X>1090</X><Y>1370</Y>
@@ -1173,72 +1010,6 @@ thread.start();
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
 						<Point><X>30</X><Y>0</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1714480073794</Id>
-					<Name><![CDATA[connector9]]></Name>
-					<X>860</X><Y>1370</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[queue3]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Queue]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[goodPick1]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackPick]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>30</X><Y>0</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1714480513945</Id>
-					<Name><![CDATA[connector7]]></Name>
-					<X>1000</X><Y>1370</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[conveyorEnter1]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[ConveyorEnter]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[goodPick1]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackPick]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>-70</X><Y>0</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
@@ -1440,141 +1211,6 @@ thread.start();
 					</Points>
 				</Connector>
 				<Connector>
-<<<<<<< Updated upstream
-					<Id>1714489866460</Id>
-					<Name><![CDATA[connector16]]></Name>
-					<X>1540</X><Y>1440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[convey1]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[Convey]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[sink3]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Sink]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>210</X><Y>110</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1714489869428</Id>
-					<Name><![CDATA[connector17]]></Name>
-					<X>1540</X><Y>1510</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[convey2]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[Convey]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[sink3]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Sink]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>210</X><Y>40</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1714489873262</Id>
-					<Name><![CDATA[connector18]]></Name>
-					<X>1540</X><Y>1580</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[convey3]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[Convey]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[sink3]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Sink]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>210</X><Y>-30</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-					<Id>1714489876580</Id>
-					<Name><![CDATA[connector19]]></Name>
-					<X>1540</X><Y>1650</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<SourceEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[convey4]]></ItemName>
-					</SourceEmbeddedObjectReference>
-					<SourceConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-						<ClassName><![CDATA[Convey]]></ClassName>
-						<ItemName><![CDATA[out]]></ItemName>
-					</SourceConnectableItemReference>
-					<TargetEmbeddedObjectReference>
-						<PackageName><![CDATA[load_merge]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[sink3]]></ItemName>
-					</TargetEmbeddedObjectReference>
-					<TargetConnectableItemReference>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[Sink]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
-					</TargetConnectableItemReference>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>210</X><Y>-100</Y></Point>
-					</Points>
-				</Connector>
-				<Connector>
-=======
->>>>>>> Stashed changes
 					<Id>1714491003864</Id>
 					<Name><![CDATA[connector15]]></Name>
 					<X>1540</X><Y>1720</Y>
@@ -2700,11 +2336,6 @@ thread.start();
 						<Point><X>940</X><Y>1460</Y></Point>
 					</Points>
 				</Connector>
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> feature/simul/46-start-load
 				<Connector>
 					<Id>1714896289586</Id>
 					<Name><![CDATA[connector70]]></Name>
@@ -3336,8 +2967,6 @@ thread.start();
 						<Point><X>850</X><Y>1770</Y></Point>
 					</Points>
 				</Connector>
-<<<<<<< HEAD
-=======
 				<Connector>
 					<Id>1715135201564</Id>
 					<Name><![CDATA[connector33]]></Name>
@@ -3734,8 +3363,138 @@ thread.start();
 						<Point><X>1540</X><Y>1580</Y></Point>
 					</Points>
 				</Connector>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
+				<Connector>
+					<Id>1715213757897</Id>
+					<Name><![CDATA[connector2]]></Name>
+					<X>870</X><Y>850</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<SourceEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[conveyorExit1]]></ItemName>
+					</SourceEmbeddedObjectReference>
+					<SourceConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[ConveyorExit]]></ClassName>
+						<ItemName><![CDATA[out]]></ItemName>
+					</SourceConnectableItemReference>
+					<TargetEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[store1]]></ItemName>
+					</TargetEmbeddedObjectReference>
+					<TargetConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Store]]></ClassName>
+						<ItemName><![CDATA[in]]></ItemName>
+					</TargetConnectableItemReference>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>50</X><Y>0</Y></Point>
+					</Points>
+				</Connector>
+				<Connector>
+					<Id>1715213765504</Id>
+					<Name><![CDATA[connector5]]></Name>
+					<X>960</X><Y>850</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<SourceEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[store1]]></ItemName>
+					</SourceEmbeddedObjectReference>
+					<SourceConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Store]]></ClassName>
+						<ItemName><![CDATA[out]]></ItemName>
+					</SourceConnectableItemReference>
+					<TargetEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[atStore1]]></ItemName>
+					</TargetEmbeddedObjectReference>
+					<TargetConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
+						<ClassName><![CDATA[Exit]]></ClassName>
+						<ItemName><![CDATA[in]]></ItemName>
+					</TargetConnectableItemReference>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>50</X><Y>0</Y></Point>
+					</Points>
+				</Connector>
+				<Connector>
+					<Id>1715213794745</Id>
+					<Name><![CDATA[connector7]]></Name>
+					<X>860</X><Y>1370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<SourceEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[queue3]]></ItemName>
+					</SourceEmbeddedObjectReference>
+					<SourceConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
+						<ClassName><![CDATA[Queue]]></ClassName>
+						<ItemName><![CDATA[out]]></ItemName>
+					</SourceConnectableItemReference>
+					<TargetEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[retrieve1]]></ItemName>
+					</TargetEmbeddedObjectReference>
+					<TargetConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Retrieve]]></ClassName>
+						<ItemName><![CDATA[in]]></ItemName>
+					</TargetConnectableItemReference>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>40</X><Y>0</Y></Point>
+					</Points>
+				</Connector>
+				<Connector>
+					<Id>1715213797801</Id>
+					<Name><![CDATA[connector9]]></Name>
+					<X>940</X><Y>1370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<SourceEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[retrieve1]]></ItemName>
+					</SourceEmbeddedObjectReference>
+					<SourceConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Retrieve]]></ClassName>
+						<ItemName><![CDATA[out]]></ItemName>
+					</SourceConnectableItemReference>
+					<TargetEmbeddedObjectReference>
+						<PackageName><![CDATA[load_merge]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+						<ItemName><![CDATA[conveyorEnter1]]></ItemName>
+					</TargetEmbeddedObjectReference>
+					<TargetConnectableItemReference>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[ConveyorEnter]]></ClassName>
+						<ItemName><![CDATA[in]]></ItemName>
+					</TargetConnectableItemReference>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>60</X><Y>0</Y></Point>
+					</Points>
+				</Connector>
 			</Connectors>
 			<Events>
 				<Event>
@@ -3769,19 +3528,10 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1), getRackStore(1)); 
-	
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1)); 
-=======
 	System.out.println("readyAreaEvent1");
 	checkGoodsForArea.set(1,0);
 	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1), getRackStore(1)); 
 	readyAreaEvent1.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3817,19 +3567,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), getRackStore(2)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2)); 
-=======
 		System.out.println("readyAreaEvent2");
 	
 	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), getRackStore(2)); 
 	checkGoodsForArea.set(2,0);
 	readyAreaEvent2.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3865,19 +3607,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), getRackStore(3)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3)); 
-=======
 	System.out.println("readyAreaEvent3");
 
 	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), getRackStore(3)); 
 	checkGoodsForArea.set(3,0);
 	readyAreaEvent3.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3913,19 +3647,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4), getRackStore(4)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4)); 
-=======
 	System.out.println("readyAreaEvent4");
 
 	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4), getRackStore(4)); 
 	checkGoodsForArea.set(4,0);
 	readyAreaEvent4.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3961,19 +3687,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5), getRackStore(5)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5)); 
-=======
 	System.out.println("readyAreaEvent5");
 
 	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5), getRackStore(5)); 
 	checkGoodsForArea.set(5,0);
 	readyAreaEvent5.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4009,19 +3727,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6), getRackStore(6)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6)); 
-=======
 	System.out.println("readyAreaEvent6");
 
 	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6), getRackStore(6)); 
 	checkGoodsForArea.set(6,0);
 	readyAreaEvent6.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4057,19 +3767,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7), getRackStore(7)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7)); 
-=======
 	System.out.println("readyAreaEvent7");
 
 	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7), getRackStore(7)); 
 	checkGoodsForArea.set(7,0);
 	readyAreaEvent7.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4105,19 +3807,11 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8), getRackStore(8)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8)); 
-=======
 	System.out.println("readyAreaEvent8");
 
 	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8), getRackStore(8)); 
 	checkGoodsForArea.set(8,0);
 	readyAreaEvent8.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4153,28 +3847,15 @@ thread.start();
 ]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-<<<<<<< HEAD
-	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9), getRackStore(9)); 
-=======
-<<<<<<< Updated upstream
-	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9)); 
-=======
 	System.out.println("readyAreaEvent9");
 
 	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9), getRackStore(9)); 
 	checkGoodsForArea.set(9,0);
 	readyAreaEvent9.restart();
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
 				</Event>
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> feature/simul/46-start-load
 				<Event>
 					<Id>1714978763588</Id>
 					<Name><![CDATA[setVehicle1]]></Name>
@@ -4204,15 +3885,11 @@ thread.start();
 						</RecurrenceCode>
 						<Condition><![CDATA[readyVehicleToConvey[1]]]></Condition>
 					</Properties>
-<<<<<<< HEAD
-					<Action><![CDATA[sourceDeliveryTruck1.inject(1);]]></Action>
-=======
 					<Action><![CDATA[sourceDeliveryTruck1.inject(1);
 readyVehicleToConvey[1]=false;
 	System.out.println("setVehicle1");
 
 setVehicle1.restart();]]></Action>
->>>>>>> feature/simul/46-start-load
 				</Event>
 				<Event>
 					<Id>1714979184961</Id>
@@ -4243,15 +3920,11 @@ setVehicle1.restart();]]></Action>
 						</RecurrenceCode>
 						<Condition><![CDATA[readyVehicleToConvey[2]]]></Condition>
 					</Properties>
-<<<<<<< HEAD
-					<Action><![CDATA[sourceDeliveryTruck2.inject(2);]]></Action>
-=======
 					<Action><![CDATA[sourceDeliveryTruck2.inject(2);
 readyVehicleToConvey[2]=false;
 	System.out.println("setVehicle2");
 
 setVehicle2.restart();]]></Action>
->>>>>>> feature/simul/46-start-load
 				</Event>
 				<Event>
 					<Id>1714979188696</Id>
@@ -4282,15 +3955,11 @@ setVehicle2.restart();]]></Action>
 						</RecurrenceCode>
 						<Condition><![CDATA[readyVehicleToConvey[3]]]></Condition>
 					</Properties>
-<<<<<<< HEAD
-					<Action><![CDATA[sourceDeliveryTruck3.inject(3);]]></Action>
-=======
 					<Action><![CDATA[sourceDeliveryTruck3.inject(3);
 readyVehicleToConvey[3]=false;
 	System.out.println("setVehicle3");
 
 setVehicle3.restart();]]></Action>
->>>>>>> feature/simul/46-start-load
 				</Event>
 				<Event>
 					<Id>1714979192017</Id>
@@ -4321,18 +3990,12 @@ setVehicle3.restart();]]></Action>
 						</RecurrenceCode>
 						<Condition><![CDATA[readyVehicleToConvey[4]]]></Condition>
 					</Properties>
-<<<<<<< HEAD
-					<Action><![CDATA[sourceDeliveryTruck4.inject(4);]]></Action>
-				</Event>
-=======
 					<Action><![CDATA[sourceDeliveryTruck4.inject(4);
 readyVehicleToConvey[4]=false;
 	System.out.println("setVehicle4");
 
 setVehicle4.restart();]]></Action>
 				</Event>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 			</Events>
 			<AgentLinks>
 				<AgentLink>
@@ -6416,203 +6079,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					</QuantityColumn>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>1714379890202</Id>
-					<Name><![CDATA[goodPick1]]></Name>
-					<X>890</X><Y>1350</Y>
-					<Label><X>-15</X><Y>-15</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackPick]]></ClassName>
-					</ActiveObjectClass>
-					<GenericParameterSubstitute>
-						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-							<ClassName><![CDATA[RackPick]]></ClassName>
-							<ItemName><![CDATA[1412336243176]]></ItemName>
-						</GenericParameterSubstituteReference>
-					</GenericParameterSubstitute>
-					<Parameters>
-						<Parameter>
-							<Name><![CDATA[rackSystem]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[rack1]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationNode]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[dropZone1]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationAttractor]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationResource]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationAgent]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationX]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationY]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[destinationZ]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[useDelay]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[delayTime]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[movementDestination]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[dropTimePerLevel]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[useResources]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceSets]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[seizePolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[moveWithSpeedOfResourceUnit]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[movingResource]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[priority]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[taskMayPreemptOtherTasks]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[taskPreemptionPolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[terminatedTasksEnter]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[suspendResumeEntities]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourcesGoHome]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPolicyType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPriority]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPreemptionPolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[customizeResourceChoice]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceChoiceCondition]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceSelectionMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceRating]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceComparison]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[
-
-//for(Goods goods : rackStore1){
-//	if(goods.id == 1){
-//		Goods removedAgent = removeAgentByIdFromRack(rackStore1, goods);
-//		System.out.println("rack pick");
-//		System.out.println(removedAgent);
-//	}
-//}]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onResourcesArrived]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onDelayStarts]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onDelayEnds]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onExit]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskTerminated]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskSuspended]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskResumed]]></Name>
-						</Parameter>
-					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
-					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
-					</Replication>
-					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-					<XCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</XCode>
-					<YCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</YCode>
-					<ZCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ZCode>
-					<ColumnCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ColumnCode>
-					<RowCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
-					<LocationNameCode Class="CodeValue">
-						<Code><![CDATA[""]]></Code>
-					</LocationNameCode>
-					<InitializationType>SPECIFIED_NUMBER</InitializationType>
-					<InitializationDatabaseTableQuery>
-						<TableReference>
-						</TableReference>
-					</InitializationDatabaseTableQuery>
-					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-					<QuantityColumn>
-					</QuantityColumn>
-				</EmbeddedObject>
-				<EmbeddedObject>
 					<Id>1714379890246</Id>
 					<Name><![CDATA[fromLine1]]></Name>
 					<X>1090</X><Y>1360</Y>
@@ -8027,17 +7493,8 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1714379890552</Id>
-<<<<<<< Updated upstream
-					<Name><![CDATA[sink3]]></Name>
-<<<<<<< HEAD
-					<X>1750</X><Y>1540</Y>
-=======
-					<X>1770</X><Y>1400</Y>
-=======
 					<Name><![CDATA[endSink1]]></Name>
 					<X>1610</X><Y>1430</Y>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 					<Label><X>-10</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8092,210 +7549,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
 					<InitializationType>SPECIFIED_NUMBER</InitializationType>
-					<InitializationDatabaseTableQuery>
-						<TableReference>
-						</TableReference>
-					</InitializationDatabaseTableQuery>
-					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-					<QuantityColumn>
-					</QuantityColumn>
-				</EmbeddedObject>
-				<EmbeddedObject>
-					<Id>1714457570220</Id>
-					<Name><![CDATA[goodStore1]]></Name>
-					<X>920</X><Y>830</Y>
-					<Label><X>-20</X><Y>-15</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-						<ClassName><![CDATA[RackStore]]></ClassName>
-					</ActiveObjectClass>
-					<GenericParameterSubstitute>
-						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[com.anylogic.libraries.processmodeling]]></PackageName>
-							<ClassName><![CDATA[RackStore]]></ClassName>
-							<ItemName><![CDATA[1412336243181]]></ItemName>
-						</GenericParameterSubstituteReference>
-					</GenericParameterSubstitute>
-					<Parameters>
-						<Parameter>
-							<Name><![CDATA[rackSystem]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[rack1]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[autoChooseCell]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[row]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[position]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[level]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[leftAisle]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[closeToFront]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[movementDestination]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[elevationTimePerLevel]]></Name>
-							<Value Class="CodeUnitValue">
-								<Code><![CDATA[10]]></Code>
-								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[useDelay]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[delayTime]]></Name>
-							<Value Class="CodeUnitValue">
-								<Code><![CDATA[triangular( 0.5, 1, 1.5 )]]></Code>
-								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[entityLocationQueue]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[pickingZone1]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[useResources]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceSets]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[{ 
-  { }
-}]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[seizePolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[moveWithSpeedOfResourceUnit]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[movingResource]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[priority]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[taskMayPreemptOtherTasks]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[taskPreemptionPolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[terminatedTasksEnter]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[suspendResumeEntities]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourcesGoHome]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPolicyType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPriority]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[wrapUpTaskPreemptionPolicy]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[customizeResourceChoice]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceChoiceCondition]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceSelectionMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceRating]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[resourceComparison]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore1, agent);
-
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onResourcesArrived]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onDelayStarts]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onDelayEnds]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onExit]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskTerminated]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskSuspended]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[onTaskResumed]]></Name>
-						</Parameter>
-					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
-					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
-					</Replication>
-					<CollectionType>LINKED_HASH_SET_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-					<XCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</XCode>
-					<YCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</YCode>
-					<ZCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ZCode>
-					<ColumnCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ColumnCode>
-					<RowCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
-					<LocationNameCode Class="CodeValue">
-						<Code><![CDATA[""]]></Code>
-					</LocationNameCode>
-					<InitializationType>EMPTY</InitializationType>
 					<InitializationDatabaseTableQuery>
 						<TableReference>
 						</TableReference>
@@ -10057,9 +9310,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[readyVehicleToConvey[1] = false;]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -10130,17 +9380,8 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-<<<<<<< HEAD
-								<Code><![CDATA[1.5*goodsCntForVehicle[1]]]></Code>
-=======
-<<<<<<< Updated upstream
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
->>>>>>> feature/simul/46-start-load
-								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-=======
 								<Code><![CDATA[30*settingGoodsCountPerArea.get(1)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
->>>>>>> Stashed changes
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -10807,9 +10048,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[readyVehicleToConvey[2] = false;]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -10880,15 +10118,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-<<<<<<< HEAD
-								<Code><![CDATA[1.5*goodsCntForVehicle[2]]]></Code>
-=======
-<<<<<<< Updated upstream
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
-=======
 								<Code><![CDATA[1.5*settingGoodsCountPerArea.get(2)]]></Code>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -11556,9 +10786,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[readyVehicleToConvey[3] = false;]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -11629,15 +10856,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-<<<<<<< HEAD
-								<Code><![CDATA[1.5*goodsCntForVehicle[3]]]></Code>
-=======
-<<<<<<< Updated upstream
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
-=======
 								<Code><![CDATA[1.5*settingGoodsCountPerArea.get(3)]]></Code>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -12305,9 +11524,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[readyVehicleToConvey[4] = false;]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -12378,15 +11594,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-<<<<<<< HEAD
-								<Code><![CDATA[1.5*goodsCntForVehicle[4]]]></Code>
-=======
-<<<<<<< Updated upstream
-								<Code><![CDATA[1.5*cnt[conveyorLine]]]></Code>
-=======
 								<Code><![CDATA[1.5*settingGoodsCountPerArea.get(4)]]></Code>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 								<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 							</Value>
 						</Parameter>
@@ -14080,11 +13288,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<QuantityColumn>
 					</QuantityColumn>
 				</EmbeddedObject>
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> feature/simul/46-start-load
 				<EmbeddedObject>
 					<Id>1714895954516</Id>
 					<Name><![CDATA[organize1]]></Name>
@@ -16509,8 +15712,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<QuantityColumn>
 					</QuantityColumn>
 				</EmbeddedObject>
-<<<<<<< HEAD
-=======
 				<EmbeddedObject>
 					<Id>1715135199647</Id>
 					<Name><![CDATA[queue1]]></Name>
@@ -17153,8 +16354,636 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<QuantityColumn>
 					</QuantityColumn>
 				</EmbeddedObject>
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
+				<EmbeddedObject>
+					<Id>1715213703436</Id>
+					<Name><![CDATA[store1]]></Name>
+					<X>920</X><Y>840</Y>
+					<Label><X>-5</X><Y>-25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Store]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+							<ClassName><![CDATA[Store]]></ClassName>
+							<ItemName><![CDATA[1608133547886]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[resourceType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourcePool]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[fleet]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadingTime]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationPathOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationPathOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationAttractor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationNode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationConveyorOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationConveyorOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationPositionOnConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationConveyorStation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationX]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationY]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationZ]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationInNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[seizeDestinationLevel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[slottingPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[storage]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[storage]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[slot]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[moveAgentTo]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[elevationSpeed]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[storingTime]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[priority]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[taskMayPreemptOtherTasks]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseMovingPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationPathOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationPathOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationAttractor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationNode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationConveyorOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationConveyorOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationPositionOnConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationConveyorStation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationX]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationY]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationZ]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationInNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseDestinationLevel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[releaseReturnPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[movingGoHome]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPolicyType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPriority]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpUsageState]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[customizeTransporterChoice]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterChoiceCondition]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[dispatchingPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterComparison]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterRating]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[customizeResourceChoice]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceChoiceCondition]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceSelectionMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceRating]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceComparison]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onEnter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onSeizeResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onSeizeTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onResourceArrived]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onLoadingStart]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onLoadingFinished]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onStorageStart]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onStorageFinished]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onReleaseResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onReleaseTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onExit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onRemove]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskSuspendedResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskResumedResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskSuspendedTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskResumedTransporter]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1715213776763</Id>
+					<Name><![CDATA[retrieve1]]></Name>
+					<X>900</X><Y>1360</Y>
+					<Label><X>-15</X><Y>-25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+						<ClassName><![CDATA[Retrieve]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
+							<ClassName><![CDATA[Retrieve]]></ClassName>
+							<ItemName><![CDATA[1608135007245]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[resourceType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourcePool]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[fleet]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterUnloadingTime]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationNode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationAttractor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationAgent]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationX]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationY]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationZ]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationTypeTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationNodeTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationAttractorTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationXTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationYTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationZTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationPathTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationPathOffsetFromBeginningTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationPathOffsetTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationConveyorTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationConveyorOffsetFromBeginningTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationConveyorOffsetTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationPositionOnConveyorTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationConveyorStationTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[changeOrientation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[orientation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationInNetworkTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationNetworkTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[destinationLevelTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[takeAgentFrom]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loweringSpeed]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[complexMovementInAisle]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[retrievingTime]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[priority]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[taskMayPreemptOtherTasks]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseMovingPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[afterReleaseGoHome]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationPathOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationPathOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationAttractor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationNode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationConveyorOffsetFromBeginning]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationConveyorOffset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationPositionOnConveyor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationConveyorStation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationX]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationY]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationZ]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationInNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationNetwork]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseDestinationLevel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPolicyType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterReleaseReturnPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPriority]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[wrapUpTaskPreemptionPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[customizeResourceChoice]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[customizeTransporterChoice]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceChoiceCondition]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterChoiceCondition]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceSelectionMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[dispatchingPolicy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceComparison]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterComparison]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[resourceRating]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[transporterRating]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onEnter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onSeizeResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onSeizeTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onResourceArrived]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onRetrievalStart]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onRetrievalFinished]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onUnloadingStart]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onUnloadingFinished]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onReleaseResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onReleaseTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onExit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onRemove]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskSuspendedTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskSuspendedResource]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskResumedTransporter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[onTaskResumedResource]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
 			</EmbeddedObjects>
 
 			<Presentation>
@@ -18461,254 +18290,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 				<Conveyor SourceId="1714366942384">
 					<Id>1714366942484</Id>
 					<Name><![CDATA[conveyor1]]></Name>
-<<<<<<< HEAD
 					<X>521</X><Y>477</Y>
-=======
-					<X>454.26370410367167</X><Y>406.08258208955226</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>20</Z>
-					<EmbeddedObject>
-						<ActiveObjectClass>
-							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-							<ClassName><![CDATA[ConveyorPathDescriptor]]></ClassName>
-						</ActiveObjectClass>
-						<GenericParameterSubstitute>
-							<GenericParameterSubstituteReference>
-								<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-								<ClassName><![CDATA[ConveyorPathDescriptor]]></ClassName>
-								<ItemName><![CDATA[1514281812596]]></ItemName>
-							</GenericParameterSubstituteReference>
-							<GenericParameterSubstituteValue Class="CodeValue">
-								<Code><![CDATA[Goods]]></Code>
-							</GenericParameterSubstituteValue>
-						</GenericParameterSubstitute>
-						<Parameters>
-							<Parameter>
-								<Name><![CDATA[type]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[reversible]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[maxSpeed]]></Name>
-								<Value Class="CodeUnitValue">
-									<Code><![CDATA[1]]></Code>
-									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
-								</Value>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[initialSpeed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[acceleration]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[deceleration]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[cellSize]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[gap]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[maximumPriority]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[priority]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onStarted]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onStopped]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onFailed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onRepaired]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onDirectionChanged]]></Name>
-							</Parameter>
-						</Parameters>
-						<ReplicationFlag>false</ReplicationFlag>
-						<Replication Class="CodeValue">
-							<Code><![CDATA[100]]></Code>
-						</Replication>
-						<CollectionType>ARRAY_LIST_BASED</CollectionType>
-						<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-						<XCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</XCode>
-						<YCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</YCode>
-						<ZCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ZCode>
-						<ColumnCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ColumnCode>
-						<RowCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</RowCode>
-						<LatitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LatitudeCode>
-						<LongitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LongitudeCode>
-						<LocationNameCode Class="CodeValue">
-							<Code><![CDATA[""]]></Code>
-						</LocationNameCode>
-						<InitializationType>SPECIFIED_NUMBER</InitializationType>
-						<InitializationDatabaseTableQuery>
-							<TableReference>
-							</TableReference>
-						</InitializationDatabaseTableQuery>
-						<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-						<QuantityColumn>
-						</QuantityColumn>
-					</EmbeddedObject>
-					<Width Class="UnitValue">
-						<Value Class="Double">1</Value>
-						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-					</Width>
-					<LineColor>-8355712</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<DrawStands>true</DrawStands>
-					<StandsLevel>0.0</StandsLevel>
-					<IsObstacle>true</IsObstacle>
-					<Points>
-						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>30.41044776119403</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>-30.41044776119403</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>-127.72388059701493</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>-97.31343283582089</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					</Points>
-
-
-				</Conveyor>
-				<TransferTable>
-					<Id>1714366942508</Id>
-					<Name><![CDATA[transferTable3]]></Name>
-					<X>549.1557127429805</X><Y>412.1646716417911</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>20</Z>
-					<EmbeddedObject>
-						<ActiveObjectClass>
-							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-							<ClassName><![CDATA[ConveyorTransferTableDescriptor]]></ClassName>
-						</ActiveObjectClass>
-						<GenericParameterSubstitute>
-							<GenericParameterSubstituteReference>
-								<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-								<ClassName><![CDATA[ConveyorTransferTableDescriptor]]></ClassName>
-								<ItemName><![CDATA[1514198004252]]></ItemName>
-							</GenericParameterSubstituteReference>
-						</GenericParameterSubstitute>
-						<Parameters>
-							<Parameter>
-								<Name><![CDATA[takeSpeedOfConnectedConveyors]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[speed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[switchingDelay]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onFailed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onRepaired]]></Name>
-							</Parameter>
-						</Parameters>
-						<ReplicationFlag>false</ReplicationFlag>
-						<Replication Class="CodeValue">
-							<Code><![CDATA[100]]></Code>
-						</Replication>
-						<CollectionType>ARRAY_LIST_BASED</CollectionType>
-						<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-						<XCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</XCode>
-						<YCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</YCode>
-						<ZCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ZCode>
-						<ColumnCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ColumnCode>
-						<RowCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</RowCode>
-						<LatitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LatitudeCode>
-						<LongitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LongitudeCode>
-						<LocationNameCode Class="CodeValue">
-							<Code><![CDATA[""]]></Code>
-						</LocationNameCode>
-						<InitializationType>SPECIFIED_NUMBER</InitializationType>
-						<InitializationDatabaseTableQuery>
-							<TableReference>
-							</TableReference>
-						</InitializationDatabaseTableQuery>
-						<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-						<QuantityColumn>
-						</QuantityColumn>
-					</EmbeddedObject>
-					<LineColor>-16777216</LineColor>
-					<FillColor>-9868951</FillColor>
-					<LineMaterial>null</LineMaterial>
-					<FillMaterial>null</FillMaterial>
-					<IsObstacle>true</IsObstacle>
-				</TransferTable>
-				<Conveyor SourceId="1714366942508">
-					<Id>1714366942522</Id>
-					<Name><![CDATA[conveyor3]]></Name>
-					<X>549.1557127429805</X><Y>407.1646716417911</Y>
->>>>>>> feature/simul/46-start-load
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18845,159 +18427,9 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>30.41044776119403</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
-<<<<<<< HEAD
 						<Point><X>0</X><Y>-124</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>-99</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>3.724</Y><Z>0</Z></Point>
-=======
-						<Point><X>0</X><Y>-128.80597014925374</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>-103.80597014925374</Y><Z>0</Z></Point>
-						<Point><X>0</X><Y>-1.0820895522388128</Y><Z>0</Z></Point>
-					</Points>
-
-
-				</Conveyor>
-				<Conveyor SourceId="1714366942508" TargetId="1714366942570">
-					<Id>1714366942546</Id>
-					<Name><![CDATA[conveyor5]]></Name>
-					<X>554.1557127321998</X><Y>412.1649999811357</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>20</Z>
-					<EmbeddedObject>
-						<ActiveObjectClass>
-							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-							<ClassName><![CDATA[ConveyorPathDescriptor]]></ClassName>
-						</ActiveObjectClass>
-						<GenericParameterSubstitute>
-							<GenericParameterSubstituteReference>
-								<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
-								<ClassName><![CDATA[ConveyorPathDescriptor]]></ClassName>
-								<ItemName><![CDATA[1514281812596]]></ItemName>
-							</GenericParameterSubstituteReference>
-						</GenericParameterSubstitute>
-						<Parameters>
-							<Parameter>
-								<Name><![CDATA[type]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[reversible]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[maxSpeed]]></Name>
-								<Value Class="CodeUnitValue">
-									<Code><![CDATA[1]]></Code>
-									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
-								</Value>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[initialSpeed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[acceleration]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[deceleration]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[cellSize]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[gap]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[maximumPriority]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[priority]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeEnter]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onLeadingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onTrailingEdgeExit]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onStarted]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onStopped]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onFailed]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onRepaired]]></Name>
-							</Parameter>
-							<Parameter>
-								<Name><![CDATA[onDirectionChanged]]></Name>
-							</Parameter>
-						</Parameters>
-						<ReplicationFlag>false</ReplicationFlag>
-						<Replication Class="CodeValue">
-							<Code><![CDATA[100]]></Code>
-						</Replication>
-						<CollectionType>ARRAY_LIST_BASED</CollectionType>
-						<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-						<XCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</XCode>
-						<YCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</YCode>
-						<ZCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ZCode>
-						<ColumnCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</ColumnCode>
-						<RowCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</RowCode>
-						<LatitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LatitudeCode>
-						<LongitudeCode Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</LongitudeCode>
-						<LocationNameCode Class="CodeValue">
-							<Code><![CDATA[""]]></Code>
-						</LocationNameCode>
-						<InitializationType>SPECIFIED_NUMBER</InitializationType>
-						<InitializationDatabaseTableQuery>
-							<TableReference>
-							</TableReference>
-						</InitializationDatabaseTableQuery>
-						<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-						<QuantityColumn>
-						</QuantityColumn>
-					</EmbeddedObject>
-					<Width Class="UnitValue">
-						<Value Class="Double">1</Value>
-						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-					</Width>
-					<LineColor>-8355712</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<DrawStands>true</DrawStands>
-					<StandsLevel>0.0</StandsLevel>
-					<IsObstacle>true</IsObstacle>
-					<Points>
-						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-						<Point><X>24.999719804153127</X><Y>0.11836263698357155</Y><Z>0</Z></Point>
-						<Point><X>24.999719804153127</X><Y>0.11836263698356198</Y><Z>0</Z></Point>
-						<Point><X>73.91057615543696</X><Y>0.34993394979085224</Y><Z>0</Z></Point>
-						<Point><X>48.910856351283826</X><Y>0.23157131280729026</Y><Z>0</Z></Point>
-						<Point><X>98.91029595959009</X><Y>0.4682965867744236</Y><Z>0</Z></Point>
->>>>>>> feature/simul/46-start-load
 					</Points>
 
 
@@ -19522,6 +18954,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
+								<Value Class="CodeUnitValue">
+									<Code><![CDATA[1]]></Code>
+									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+								</Value>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -19643,7 +19079,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>0</Z>
+					<Z>20</Z>
 					<EmbeddedObject>
 						<ActiveObjectClass>
 							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
@@ -19665,6 +19101,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
+								<Value Class="CodeUnitValue">
+									<Code><![CDATA[1]]></Code>
+									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+								</Value>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -20532,11 +19972,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					</Diameter>
 					<IsObstacle>true</IsObstacle>
 				</TurnStation>
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> feature/simul/46-start-load
 				<TransferTable>
 					<Id>1714366942422</Id>
 					<Name><![CDATA[transferTable]]></Name>
@@ -20642,11 +20077,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-<<<<<<< HEAD
-					<Z>0</Z>
-=======
 					<Z>20</Z>
->>>>>>> feature/simul/46-start-load
 					<EmbeddedObject>
 						<ActiveObjectClass>
 							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
@@ -20668,13 +20099,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
-<<<<<<< HEAD
-=======
 								<Value Class="CodeUnitValue">
 									<Code><![CDATA[1]]></Code>
 									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 								</Value>
->>>>>>> feature/simul/46-start-load
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -20914,13 +20342,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
-<<<<<<< HEAD
-=======
 								<Value Class="CodeUnitValue">
 									<Code><![CDATA[1]]></Code>
 									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 								</Value>
->>>>>>> feature/simul/46-start-load
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -21039,11 +20464,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-<<<<<<< HEAD
-					<Z>0</Z>
-=======
 					<Z>20</Z>
->>>>>>> feature/simul/46-start-load
 					<EmbeddedObject>
 						<ActiveObjectClass>
 							<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
@@ -21065,13 +20486,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
-<<<<<<< HEAD
-=======
 								<Value Class="CodeUnitValue">
 									<Code><![CDATA[1]]></Code>
 									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 								</Value>
->>>>>>> feature/simul/46-start-load
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -21311,13 +20729,10 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
-<<<<<<< HEAD
-=======
 								<Value Class="CodeUnitValue">
 									<Code><![CDATA[1]]></Code>
 									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 								</Value>
->>>>>>> feature/simul/46-start-load
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
@@ -21427,10 +20842,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 
 
 				</Conveyor>
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
 			</Presentation>
 
 					<Z>0</Z>
@@ -27368,7 +26779,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 				<Network>
 					<Id>1714895591987</Id>
 					<Name><![CDATA[network8]]></Name>
-					<X>463.065</X><Y>247.799</Y>
+					<X>349.065</X><Y>2.799</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27379,7 +26790,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
   				<PalletRack TargetId="1714895580714">
 					<Id>1714366943182</Id>
 					<Name><![CDATA[rack1]]></Name>
-					<X>463.065</X><Y>247.799</Y>
+					<X>349.065</X><Y>2.799</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27411,7 +26822,7 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 				<Path>
 					<Id>1714895580714</Id>
 					<Name><![CDATA[path]]></Name>
-					<X>434</X><Y>345</Y>
+					<X>320</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27737,6 +27148,200 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 					</SpeedLimitValue>
 				</PointNode>
+				<RackStorage>
+					<Id>1715213861930</Id>
+					<Name><![CDATA[storage]]></Name>
+					<X>280</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<EmbeddedObject>
+						<ActiveObjectClass>
+							<PackageName><![CDATA[com.anylogic.libraries.modules.rack_system_module]]></PackageName>
+							<ClassName><![CDATA[StorageDescriptor]]></ClassName>
+						</ActiveObjectClass>
+						<GenericParameterSubstitute>
+							<GenericParameterSubstituteReference>
+								<PackageName><![CDATA[com.anylogic.libraries.modules.rack_system_module]]></PackageName>
+								<ClassName><![CDATA[StorageDescriptor]]></ClassName>
+								<ItemName><![CDATA[1617869257419]]></ItemName>
+							</GenericParameterSubstituteReference>
+						</GenericParameterSubstitute>
+						<Parameters>
+							<Parameter>
+								<Name><![CDATA[resourceLiftingSpeed]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[numberOfShelves]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[numberOfCellsPerSlot]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[shelfHeight]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[accessSideAdd]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[cellCapacity]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[specifiedInslotSpeed]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[inslotSpeed]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onAgentStorage]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onAgentRetrieval]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onReserve]]></Name>
+							</Parameter>
+							<Parameter>
+								<Name><![CDATA[onRelease]]></Name>
+							</Parameter>
+						</Parameters>
+						<ReplicationFlag>false</ReplicationFlag>
+						<Replication Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</Replication>
+						<CollectionType>ARRAY_LIST_BASED</CollectionType>
+						<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+						<XCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</XCode>
+						<YCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</YCode>
+						<ZCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</ZCode>
+						<ColumnCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</ColumnCode>
+						<RowCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</RowCode>
+						<LatitudeCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</LatitudeCode>
+						<LongitudeCode Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</LongitudeCode>
+						<LocationNameCode Class="CodeValue">
+							<Code><![CDATA[""]]></Code>
+						</LocationNameCode>
+						<InitializationType>SPECIFIED_NUMBER</InitializationType>
+						<InitializationDatabaseTableQuery>
+							<TableReference>
+							</TableReference>
+						</InitializationDatabaseTableQuery>
+						<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+						<QuantityColumn>
+						</QuantityColumn>
+					</EmbeddedObject>
+					<Height Class="UnitValue">
+						<Value Class="Double">5</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</Height>
+					<Width Class="UnitValue">
+						<Value Class="Double">6</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</Width>
+					<LeftPassage Class="UnitValue">
+						<Value Class="Double">4</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</LeftPassage>
+					<AisleWidth Class="UnitValue">
+						<Value Class="Double">1.9999999999999996</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</AisleWidth>
+					<SlotDepth Class="UnitValue">
+						<Value Class="Double">0.9999999999999998</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</SlotDepth>
+					<CellWidth Class="UnitValue">
+						<Value Class="Double">1</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</CellWidth>
+					<SingleUnitFirst>true</SingleUnitFirst>
+					<FillColor>-1644806</FillColor>
+					<LineColor>-14774017</LineColor>
+					<Rotation>0.0</Rotation>
+					<Angle>0.0</Angle>
+					<Flipped>false</Flipped>
+					<IsObstacle>true</IsObstacle>
+					<UnitsDefinition>NUMBER_OF_UNITS</UnitsDefinition>
+					<NumberOfUnits>4</NumberOfUnits>
+					<BaysDefinition>NUMBER_OF_BAYS</BaysDefinition>
+					<NumberOfBays>5</NumberOfBays>
+					<NumberOfCells>1</NumberOfCells>
+					<RackType>SELECTIVE</RackType>
+					<SkuFlow>LIFO</SkuFlow>
+					<Configuration>BACK_TO_BACK</Configuration>
+					<DrawLegs>true</DrawLegs>
+					<CellsBetweenLegs>2</CellsBetweenLegs>
+					<SimplifiedAnimation>true</SimplifiedAnimation>
+					
+				</RackStorage>
+				<Network>
+					<Id>1715213948916</Id>
+					<Name><![CDATA[network10]]></Name>
+					<X>340</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+
+			<Presentation>
+				<Path>
+					<Id>1715213944033</Id>
+					<Name><![CDATA[path10]]></Name>
+					<X>340</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LineColor>-14774017</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineWidth>1</LineWidth>
+					<PathType>dashedLine</PathType>
+					
+					<Width Class="UnitValue">
+						<Value Class="Double">1</Value>
+						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+					</Width>
+					<Points>
+						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-25</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-100</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-75</Y><Z>0</Z></Point>
+						<Point><X>0</X><Y>-75</Y><Z>0</Z></Point>
+					</Points>
+					<Bidirectional>true</Bidirectional>
+					<SpeedLimit>false</SpeedLimit>
+					<SpeedLimitValue Class="CodeUnitValue">
+						<Code><![CDATA[10.0]]></Code>
+						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+					</SpeedLimitValue>
+					<LimitNumberOfTransporters>false</LimitNumberOfTransporters>
+					<LimitNumberOfTransportersValue>10</LimitNumberOfTransportersValue>
+				</Path>
+			</Presentation>
+
+					<Z>0</Z>
+				</Network>
 			</Presentation>
 
 				</Level>
@@ -27853,10 +27458,8 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1714367667792</Id>
-<<<<<<< HEAD
-=======
-					<Name><![CDATA[width]]></Name>
-					<X>620</X><Y>305</Y>
+					<Name><![CDATA[weight]]></Name>
+					<X>405</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27865,37 +27468,6 @@ System.out.println(checkGoodsForArea.toString());]]></Code>
 						<Type><![CDATA[int]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[(int) Math.round(uniform(10, 1000))]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1714367667794</Id>
-					<Name><![CDATA[height]]></Name>
-					<X>620</X><Y>345</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[Math.round(uniform(10, 20) * 10.0) / 10.0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1714367667796</Id>
->>>>>>> feature/simul/46-start-load
-					<Name><![CDATA[weight]]></Name>
-					<X>405</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[Math.round(uniform(10, 20) * 10.0) / 10.0]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -28882,23 +28454,12 @@ public class APIClient {
 
     private final String SERVER_URL = "http://localhost:8081/api/simulation";
     
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count) throws Exception{
-=======
->>>>>>> feature/simul/46-start-load
     private static APIClient instance = new APIClient();
     public static APIClient getInstance() {
     	return instance;
     }
     
-<<<<<<< HEAD
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count, LinkedList<Goods> responseRackStore) throws Exception{
-=======
     public ArrayList<Integer> setReadyCompletedArea(int areaId, int count, LinkedList<GoodsRequest> responseRackStore) throws Exception{
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
         String url = SERVER_URL + "/ready";
         String method = "POST";
         
@@ -29047,29 +28608,6 @@ public class SSEListener implements Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("data:")) {
-<<<<<<< HEAD
-                    String json  = line.substring(5).trim();
-                    ObjectMapper objectMapper = new ObjectMapper();
-                	LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
-
-                	System.out.println("Received AreaData: area_id=" + data.getAreaId() + ", conveyNo=" + data.getConveyNo()+", vehicle=" + data.getReadyVehicle());
-
-                	// 차량 준비
-                	if(data.getReadyVehicle()) {
-            			mainInstance.readyVehicleToConvey[data.getConveyNo()] = true;
-                	}
-                	// 적재 시작
-                	if(data.getAreaId()!=0) {
-                		mainInstance.startLoad(data.getConveyNo(), data.getAreaId());
-                	}	
-=======
-<<<<<<< Updated upstream
-                    String data = line.substring(5).trim();
-                    if(!data.equals("0")) {
-                    	System.out.println("[적재 시작 신호 받음]");
-                    	
-                    }
-=======
                     String response = line.substring(5).trim();
                     ObjectMapper objectMapper = new ObjectMapper();
                     
@@ -29087,8 +28625,6 @@ public class SSEListener implements Runnable {
                 	if(loadStartRequest.getAreaId()!=0) {
                 		mainInstance.startLoad(loadStartRequest.getConveyNo(), loadStartRequest.getAreaId());
                 	}	
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
                 }
             }
 
@@ -29202,22 +28738,11 @@ public class ReadyRequest implements Serializable{
 
     private int areaId;
     private int count;
-<<<<<<< HEAD
-    private LinkedList<Goods> goods;
-    
-    public ReadyRequest(int areaId, int count, LinkedList<Goods> goods) {
-=======
-<<<<<<< Updated upstream
-
-    public ReadyRequest(int areaId, int count) {
-=======
     private LinkedList<GoodsRequest> goods;
     
     public ReadyRequest() {}
     
     public ReadyRequest(int areaId, int count, LinkedList<GoodsRequest> goods) {
->>>>>>> Stashed changes
->>>>>>> feature/simul/46-start-load
         this.areaId = areaId;
         this.count = count;
         this.goods = goods;
@@ -29238,21 +28763,11 @@ public class ReadyRequest implements Serializable{
     public void setCount(int count) {
         this.count = count;
     }
-<<<<<<< HEAD
-    public LinkedList<Goods> getGoods() {
-        return goods;
-    }
-
-    public void setGoods(LinkedList<Goods> goods) {
-=======
-<<<<<<< Updated upstream
-=======
     public LinkedList<GoodsRequest> getGoods() {
         return goods;
     }
 
     public void setGoods(LinkedList<GoodsRequest> goods) {
->>>>>>> feature/simul/46-start-load
         this.goods = goods;
     }
 }]]></Text>
@@ -29264,21 +28779,14 @@ public class ReadyRequest implements Serializable{
 			<Text><![CDATA[/**
  * LoadStartResponse
  */	
-<<<<<<< HEAD
-public class LoadStartRequest {
-=======
 public class LoadStartRequest implements Serializable {
->>>>>>> feature/simul/46-start-load
 
     private int areaId;
     private int conveyNo;
     private boolean readyVehicle;
     
-<<<<<<< HEAD
-=======
     public LoadStartRequest() {}
     
->>>>>>> feature/simul/46-start-load
     public LoadStartRequest(int areaId, int conveyNo, boolean readyVehicle) {
         this.areaId = areaId;
         this.conveyNo = conveyNo;
@@ -29308,9 +28816,6 @@ public class LoadStartRequest implements Serializable {
         this.readyVehicle = readyVehicle;
     }
     
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
@@ -29356,7 +28861,6 @@ public class GoodsRequest implements Serializable{
 	    return dto;
 	}
 
->>>>>>> feature/simul/46-start-load
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>
