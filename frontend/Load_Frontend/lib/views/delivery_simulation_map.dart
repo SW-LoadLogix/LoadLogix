@@ -1,7 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-
-import '../components/nav_rail.dart';
 import 'goodsdummy.dart';
 
 @RoutePage()

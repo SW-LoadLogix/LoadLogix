@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
-import 'package:load_frontend/widgets/sidebar_menu_item.dart';
+import 'package:load_frontend/components/sidebar_menu_item.dart';
 
 import '../model.dart';
 
