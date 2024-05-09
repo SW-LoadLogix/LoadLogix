@@ -13,6 +13,7 @@ import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.response.DayGoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsCountResponse;
+import org.ssafy.load.dto.response.GoodsOutputResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.security.JwtTokenProvider;
@@ -38,5 +39,10 @@ public class AdminController {
     @GetMapping("/day-counts")
     public Response<List<DayGoodsCountResponse>> getDayGoodsCount() {
         return Response.success(goodsService.getDayGoodsCount());
+    }
+
+    @GetMapping("/goods")
+    public Response<List<GoodsOutputResponse>> getGoodsList(){
+        return Response.success(goodsService.getGoodsList());
     }
 }
