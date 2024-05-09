@@ -1,7 +1,6 @@
 package org.ssafy.load.application;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
@@ -15,8 +14,8 @@ import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
-import org.ssafy.load.dto.request.CreateGoodsRequest;
-import org.ssafy.load.dto.response.CreateGoodsResponse;
+import org.ssafy.load.dto.request.GoodsCreateRequest;
+import org.ssafy.load.dto.response.GoodsCreateResponse;
 import org.ssafy.load.dto.response.GoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 
@@ -132,15 +131,15 @@ public class GoodsService {
         return new SortedGoodsResponse(goods);
     }
 
-    public CreateGoodsResponse createGoods(CreateGoodsRequest createGoodsRequest) {
-        return CreateGoodsResponse.from(goodsRepository.save(GoodsEntity.of(
+    public GoodsCreateResponse createGoods(GoodsCreateRequest goodsCreateRequest) {
+        return GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
             null,
-            createGoodsRequest.weight(),
-            createGoodsRequest.detailAddress(),
+            goodsCreateRequest.weight(),
+            goodsCreateRequest.detailAddress(),
             null, null, null, null,
-            boxTypeRepository.findByType(BoxType.valueOf("L" + createGoodsRequest.type()))
+            boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
                 .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-            buildingRepository.findById(createGoodsRequest.buildingId())
+            buildingRepository.findById(goodsCreateRequest.buildingId())
                 .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
             null, null
         )));

@@ -1,6 +1,6 @@
 package org.ssafy.load.dto.request;
 
-public record CreateGoodsRequest(
+public record GoodsCreateRequest(
     int weight,
     String detailAddress,
     Long buildingId,

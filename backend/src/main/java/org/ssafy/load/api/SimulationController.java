@@ -9,11 +9,11 @@ import org.ssafy.load.application.GoodsService;
 import org.ssafy.load.application.LoadTaskService;
 import org.ssafy.load.application.SseService;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.dto.request.CreateGoodsRequest;
+import org.ssafy.load.dto.request.GoodsCreateRequest;
 import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
-import org.ssafy.load.dto.response.CreateGoodsResponse;
+import org.ssafy.load.dto.response.GoodsCreateResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -65,7 +65,7 @@ public class SimulationController {
 
 
     @PostMapping("/goods")
-    public Response<CreateGoodsResponse> createGoods(@RequestBody CreateGoodsRequest createGoodsRequest){
-        return Response.success(goodsService.createGoods(createGoodsRequest));
+    public Response<GoodsCreateResponse> createGoods(@RequestBody GoodsCreateRequest goodsCreateRequest){
+        return Response.success(goodsService.createGoods(goodsCreateRequest));
     }
 }
