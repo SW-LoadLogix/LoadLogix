@@ -38,12 +38,13 @@ public class WorkerService {
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
+        System.out.println(loginRequest.id() + " " + loginRequest.password());
         Optional<WorkerEntity> workerOptional = workerRepository.findByLoginIdAndPassword(
                 loginRequest.id(),
                 loginRequest.password());
 
         WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
-        if(worker.getArea() == null) throw new CommonException(ErrorCode.USER_NOT_FOUND);
+        if(worker.getArea() == null) throw new CommonException(ErrorCode.AREA_NOT_FOUND);
 
         return LoginResponse.of(jwtTokenProvider.generateToken(worker.getId(), worker.getName(),"worker"));
     }

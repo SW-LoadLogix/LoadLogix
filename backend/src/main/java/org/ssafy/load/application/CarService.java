@@ -28,6 +28,7 @@ public class CarService {
         CarEntity car = worker.getCar();
         if (car == null) {
             car = carRepository.save(CarEntity.createEmptyNewEntity());
+            worker.withUpdateCar(car);
         }
 
         //사용자 입력 받게끔 수정 필요, 지금은 1톤 적재량(1000000g)으로 설정

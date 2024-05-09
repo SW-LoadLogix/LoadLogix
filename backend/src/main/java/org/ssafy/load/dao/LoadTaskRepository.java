@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LoadTaskRepository extends JpaRepository<LoadTaskEntity, Integer> {
-    @Query("SELECT lt.id FROM LoadTaskEntity lt WHERE lt.complete = true and lt.workerState = true and lt.area.id = :areaId ORDER BY lt.createdAt DESC")
+    @Query("SELECT lt.id FROM LoadTaskEntity lt WHERE lt.areaStatus = true and lt.complete = true and lt.workerState = true and lt.area.id = :areaId ORDER BY lt.createdAt DESC")
     List<Integer> findMostRecentCompletedTaskIds(Integer areaId);
     List<LoadTaskEntity> findAllByAreaIdOrderByCreatedAtDesc(Integer areaId);
     Optional<LoadTaskEntity> findFirstByAreaStatusIsTrueAndCompleteIsFalseOrderByCreatedAt();
