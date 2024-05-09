@@ -12,7 +12,6 @@ final List<BussinessStatus> statusList = [
   BussinessStatus('Customers', '11234', Icons.people_outline_outlined),
 ];
 
-
 class StatusList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
