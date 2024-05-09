@@ -2,15 +2,13 @@ package org.ssafy.load.application;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
-import org.ssafy.load.domain.AreaEntity;
-import org.ssafy.load.domain.GoodsEntity;
-import org.ssafy.load.domain.LoadTaskEntity;
-import org.ssafy.load.domain.WorkerEntity;
+import org.ssafy.load.domain.*;
 import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
@@ -18,8 +16,8 @@ import org.ssafy.load.dto.request.CreateGoodsRequest;
 import org.ssafy.load.dto.response.CreateGoodsResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import org.ssafy.load.dto.SortedGoods;
 import org.ssafy.load.dto.response.SortedGoodsResponse;
 
@@ -36,17 +34,32 @@ public class GoodsService {
     private final BoxTypeRepository boxTypeRepository;
 
     public GoodsResponse getOriginGoods(Long workerId) {
-        //배송 기사 조회
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
+        //기사 조회
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+
+        //구역 조회
+        Optional<AreaEntity> areaOptional = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptional.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+
+        List<Integer> loadTask = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
+        if(loadTask.isEmpty()) {
+            throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
 
-        //배송 기사의 구역 조회
-        Optional<AreaEntity> area = areaRepository.findById(worker.get().getArea().getId());
-        if (area.isEmpty()) {
-            throw new CommonException(ErrorCode.AREA_NOT_FOUND);
+        //task에 할당된 상품 조회
+        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTask.get(0));
+        Map<BuildingEntity, List<GoodsEntity>> buildingGoodsMap = new HashMap<>();
+
+        for(GoodsEntity goodsEntity : goodsEntityList) {
+            buildingGoodsMap.putIfAbsent(goodsEntity.getBuilding(), new ArrayList<>()).add(goodsEntity);
         }
+
+        //응답 생성
+        List<Building> buildingList =
+
+
+
 
         //구역에 해당된 빌딩 id 조회
         List<Long> buildingIds = buildingRepository.findIdsByAreaId(area.get().getId());

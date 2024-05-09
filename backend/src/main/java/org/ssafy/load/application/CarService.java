@@ -22,15 +22,17 @@ public class CarService {
 
     @Transactional
     public CarResponse updateCarSize(CarChangeRequest carChangeRequest, Long workerId) {
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty())
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
 
-        Optional<CarEntity> car = carRepository.findById(worker.get().getCar().getId());
-        if (car.isEmpty())
-            throw new CommonException(ErrorCode.CAR_NOT_FOUND);
+        CarEntity car = worker.getCar();
+        if (car == null) {
+            car = carRepository.save(CarEntity.createEmptyNewEntity());
+            worker.withUpdateCar(car);
+        }
 
-        car.get().updateCar(carChangeRequest.carHeight(), carChangeRequest.carLength(), carChangeRequest.carWidth());
-        return CarResponse.from(car.get());
+        //사용자 입력 받게끔 수정 필요, 지금은 1톤 적재량(1000000g)으로 설정
+        car.updateCar(carChangeRequest.carHeight(), carChangeRequest.carLength(), carChangeRequest.carWidth(), 1000000);
+        return CarResponse.from(car);
     }
 }
