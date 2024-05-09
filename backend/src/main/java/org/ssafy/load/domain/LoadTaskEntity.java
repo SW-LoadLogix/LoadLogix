@@ -27,7 +27,7 @@ public class LoadTaskEntity {
     private Boolean workerState;
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean complete;
-    @Column(name="create_at")
+    @Column(name="created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

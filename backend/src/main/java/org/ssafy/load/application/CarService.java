@@ -1,6 +1,6 @@
 package org.ssafy.load.application;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
