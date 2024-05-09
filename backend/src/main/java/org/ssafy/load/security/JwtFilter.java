@@ -29,7 +29,7 @@ public class JwtFilter implements Filter {
             return;
         }
 
-        if (httpRequest.getRequestURI().startsWith("/api/worker")) {
+        if (httpRequest.getRequestURI().equals("/api/worker/signup") || httpRequest.getRequestURI().equals("/api/worker/login")) {
             String method = httpRequest.getMethod();
             if (method.equals("GET") || method.equals("POST") || method.equals("OPTIONS")) {
                 chain.doFilter(request, response);
@@ -40,7 +40,9 @@ public class JwtFilter implements Filter {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             throw new CommonException(ErrorCode.INVALID_TOKEN);
         }
+
         String token = authorizationHeader.substring(7); //"Bearer "이후의 토큰 추출
+
         try {
             jwtTokenProvider.validateToken(token);
         } catch (Exception e) {

@@ -27,7 +27,6 @@ public class JwtTokenProvider {
     private static final String SECRET_KEY = "30ec8320ca7ad94e3b7ad0a010e6bbc2e81a92c4efacb4badea20d669f4c9769";
     private static final long EXPIRATION_SECOND = 60 * 60 * 2; //2시간
 
-
     // Member 정보를 가지고 AccessToken을 생성하는 메서드
     public String generateToken(Long id, String name, String role) {
 
@@ -41,7 +40,7 @@ public class JwtTokenProvider {
         //토큰 생성
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(now + 1000 * EXPIRATION_SECOND))
+                .setExpiration(new Date(now + EXPIRATION_SECOND))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
