@@ -7,7 +7,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gl/flutter_gl.dart';
 import 'package:load_frontend/constaints.dart';
+import 'package:load_frontend/views/box_simulation/selected_box_overlay_widget.dart';
 import 'package:load_frontend/views/box_simulation/simulation_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
 import 'package:three_dart_jsm/three_dart_jsm/loaders/mtl_loader.dart';
@@ -32,6 +34,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   Ticker? _ticker;
   three.Raycaster raycaster = three.Raycaster();
 
+  late SelectedBoxOverlayWidget selectedBoxOverlayWidget;// = SelectedBoxOverlayWidget();
   int? fboId;
   late double width;
   late double height;
@@ -338,6 +341,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   initState() {
+    selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context);
     super.initState();
   }
 
@@ -347,6 +351,11 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     if (_ticker != null) {
       _ticker!.dispose(); // Ticker가 활성화된 경우 해제
     }
+    if (isSelected) {
+      print("remove ovelray");
+      selectedBoxOverlayWidget.remove();
+    }
+
     three3dRender.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -831,6 +840,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       if (isSelected){
         scene.remove(selectedMesh);
         scene.remove(selectedEdgeMesh);
+        selectedBoxOverlayWidget.remove();
       }
       isSelected = false;
       isClickOrTaped = false;
@@ -917,6 +927,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
                     selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
                 scene.add(selectedEdgeMesh);
+                selectedBoxOverlayWidget.show();
+
+                GoodsStore goodsStore = context.read<GoodsStore>();
+                goodsStore.setSelectedGoodsId(selectedBox.goodsId);
                 break;
               }
             }
