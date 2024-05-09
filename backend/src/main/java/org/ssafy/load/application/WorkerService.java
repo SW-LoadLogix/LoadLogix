@@ -1,8 +1,8 @@
 package org.ssafy.load.application;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.CarRepository;
@@ -51,6 +51,7 @@ public class WorkerService {
                         "worker"));
     }
 
+    @Transactional(readOnly = true)
     public WorkerInfoResponse getWorkerInfo(Long workerId){
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
         if (worker.isEmpty())
