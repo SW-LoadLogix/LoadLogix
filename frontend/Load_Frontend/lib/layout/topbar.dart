@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
-import 'package:load_frontend/views/news.dart';
+import 'package:load_frontend/views/building.dart';
 
 import '../views/box_simulation_3d.dart';
 import '../views/delivery_simulation_map.dart';
@@ -84,7 +84,7 @@ class TopBar extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NewsPage()),
+                        MaterialPageRoute(builder: (context) => BuildingPage()),
                       );
                     },
                   )

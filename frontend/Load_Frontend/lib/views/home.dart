@@ -4,7 +4,7 @@ import 'package:load_frontend/routes/app_router.dart';
 import 'package:load_frontend/views/box_simulation_3d.dart';
 import 'package:load_frontend/views/delivery_list.dart';
 
-import '../components/nav_rail.dart';
+
 
 @RoutePage()
 class HomePage extends StatelessWidget {

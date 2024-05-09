@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample extends StatefulWidget {
+class WeekDeliveryTotalChart extends StatefulWidget {
   final List<Color> availableColors = [
     Colors.purpleAccent,
     Colors.yellow,
@@ -15,7 +15,7 @@ class BarChartSample extends StatefulWidget {
   State<StatefulWidget> createState() => BarChartSample1State();
 }
 
-class BarChartSample1State extends State<BarChartSample> {
+class BarChartSample1State extends State<WeekDeliveryTotalChart> {
   int touchedIndex = -1;
 
   @override
