@@ -14,7 +14,6 @@ import org.ssafy.load.common.type.BoxType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoxTypeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,7 +24,6 @@ public class BoxTypeEntity {
     private int height;
     private int length;
     private int width;
-
 
     public static BoxTypeEntity of(
             Integer id,

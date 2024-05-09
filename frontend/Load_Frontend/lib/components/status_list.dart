@@ -34,8 +34,7 @@ class StatusList extends StatelessWidget {
             mainAxisSpacing: componentPadding,
             crossAxisSpacing: componentPadding,
             itemCount: statusList.length,
-            itemBuilder: (context, index) =>
-                StatusCard(index), //index 별로 컴포넌트 구분
+            itemBuilder: (context, index) => StatusCard(index), //index 별로 컴포넌트 구분
             staggeredTileBuilder: (index) {
               if (_size.width > screenXxl) return StaggeredTile.fit(1);
               if (_size.width > screenSm) return StaggeredTile.fit(2);

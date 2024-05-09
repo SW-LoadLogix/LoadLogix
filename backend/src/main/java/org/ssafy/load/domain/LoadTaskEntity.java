@@ -27,16 +27,15 @@ public class LoadTaskEntity {
     private Boolean workerState;
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean complete;
-    @Column(name="create_at")
+    @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private AreaEntity area;
 
     @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
-
 
     @PrePersist
     public void onPrePersist() {
@@ -47,16 +46,13 @@ public class LoadTaskEntity {
         return new LoadTaskEntity(id, areaStatus ,count, workerState, complete, createdAt, area, goodsEntities);
     }
 
-    public LoadTaskEntity withUpdatedAreaStateAndCount(boolean areaStatus, int count) {
-        return new LoadTaskEntity(this.id, areaStatus, count, this.workerState, this.complete, this.createdAt, this.area, this.goodsEntities);
-    }
     public LoadTaskEntity withUpdatedWorkerState(boolean workerStatus) {
         return new LoadTaskEntity(this.id, this.areaStatus, this.count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
     }
-    public LoadTaskEntity withUpdatedBothStatus(boolean areaStatus,int  count, boolean workerStatus) {
-        return new LoadTaskEntity(this.id, areaStatus, count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
-    }
 
+    public void withUpdatedComplete() {
+        complete = true;
+    }
 }
 
 
