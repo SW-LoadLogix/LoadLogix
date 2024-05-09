@@ -1,7 +1,5 @@
 package org.ssafy.load.application;
 
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -30,7 +30,7 @@ public class LoadTaskEntity {
     @Column(name="create_at")
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private AreaEntity area;
 
@@ -46,15 +46,10 @@ public class LoadTaskEntity {
         return new LoadTaskEntity(id, areaStatus ,count, workerState, complete, createdAt, area, goodsEntities);
     }
 
-    public LoadTaskEntity withUpdatedAreaStateAndCount(boolean areaStatus, int count) {
-        return new LoadTaskEntity(this.id, areaStatus, count, this.workerState, this.complete, this.createdAt, this.area, this.goodsEntities);
-    }
     public LoadTaskEntity withUpdatedWorkerState(boolean workerStatus) {
         return new LoadTaskEntity(this.id, this.areaStatus, this.count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
     }
-    public LoadTaskEntity withUpdatedBothStatus(boolean areaStatus, int count, boolean workerStatus) {
-        return new LoadTaskEntity(this.id, areaStatus, count, workerStatus, complete, createdAt,this.area, this.goodsEntities);
-    }
+
     public void withUpdatedComplete() {
         complete = true;
     }

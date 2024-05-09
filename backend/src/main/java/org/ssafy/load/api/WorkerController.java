@@ -9,6 +9,7 @@ import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
+import org.ssafy.load.dto.response.StatusResponse;
 import org.ssafy.load.dto.response.WorkerInfoResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
@@ -19,8 +20,7 @@ public class WorkerController {
 
     public final WorkerService workerService;
     public final JwtTokenProvider jwtTokenProvider;
-    public final LoadTaskService loadTaskService;
-
+    public final ReadyStatusService readyStatusService;
     @PostMapping("/signup")
     public Response<SignUpResponse> signup(@RequestBody SignUpRequest signupRequest) {
         return Response.success(workerService.signup(signupRequest));

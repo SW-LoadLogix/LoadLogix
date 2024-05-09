@@ -12,7 +12,8 @@ class GoodsData{
     required this.type,
     required this.position,
     required this.weight,
-    required this.areaId,
+    required this.buildingId,
+    required this.buildingName,
     required this.detailAddress,
   });
 
@@ -21,7 +22,8 @@ class GoodsData{
   final String type;//S1 to S6
   final Vector3 position;
   final int weight;
-  final int areaId;
+  final int buildingId;
+  final String buildingName;
   final String detailAddress;
 
   // JSON 맵핑 메소드
@@ -29,6 +31,6 @@ class GoodsData{
   Map<String, dynamic> toJson() => _$GoodsDataToJson(this);
 
   @override
-  String toString() => 'GoodsData($goodsId, $type, $position, $weight, $areaId, $detailAddress)';
+  String toString() => 'GoodsData($goodsId, $type, $position, $weight, $buildingId,$buildingName, $detailAddress)';
 
 }
