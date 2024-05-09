@@ -3,6 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:load_frontend/models/good_data.dart';
+import 'package:load_frontend/models/vector3.dart';
 import 'package:load_frontend/services/goods_functions.dart';
 
 import '../views/box_simulation/box.dart';
@@ -17,6 +18,22 @@ class GoodsStore extends ChangeNotifier {
   Map<int, List<GoodsData>> goodsGroupedByBuildingId = {};
   Map<int, bool> buildingChecked = {};
   Map<int, Map<int, bool>> goodsChecked = {};
+  int selectedGoodsId = 0;
+  GoodsData selectedGoods = GoodsData(
+    goodsId: 0,
+    buildingId: 0,
+    buildingName: '',
+    type: '',
+    weight: 0,
+    position: Vector3(0, 0, 0),
+    detailAddress: 'none',
+  );
+
+  void setSelectedGoodsId(int goodsId) {
+    selectedGoodsId = goodsId;
+    selectedGoods = goods.firstWhere((element) => element.goodsId == goodsId);
+    notifyListeners();
+  }
 
   Future<void> getGoodsFromApi() async {
     goods = await goodsService.getGoods();
