@@ -40,4 +40,8 @@ public class WorkerEntity {
     ) {
         return new WorkerEntity(id, loginId, password, name, car, area);
     }
+
+    public static WorkerEntity createNewWorker(String id, String password, String name, CarEntity car) {
+        return WorkerEntity.of(null, id, password, name, car, null);
+    }
 }

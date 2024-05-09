@@ -25,36 +25,31 @@ public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
-    private final CarRepository carRepository;
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByLoginId(signUpRequest.id());
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null,null));
-        return SignUpResponse.from(workerRepository.save(
-                WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                        signUpRequest.name(), car, null)));
+
+        return SignUpResponse.from(workerRepository.save(WorkerEntity.createNewWorker(
+                signUpRequest.id(), signUpRequest.password(), signUpRequest.name(), null)
+        ));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-        Optional<WorkerEntity> worker = workerRepository.findByLoginIdAndPassword(
+        Optional<WorkerEntity> workerOptional = workerRepository.findByLoginIdAndPassword(
                 loginRequest.id(),
                 loginRequest.password());
 
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
-        return LoginResponse.of(
-                jwtTokenProvider.generateToken(worker.get().getId(), worker.get().getName(),
-                        "worker"));
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+
+        return LoginResponse.of(jwtTokenProvider.generateToken(worker.getId(), worker.getName(),"worker"));
     }
 
     public WorkerInfoResponse getWorkerInfo(Long workerId){
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty())
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        return WorkerInfoResponse.from(worker.get());
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        return WorkerInfoResponse.from(worker);
     }
 }

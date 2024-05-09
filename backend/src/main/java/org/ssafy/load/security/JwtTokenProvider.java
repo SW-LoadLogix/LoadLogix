@@ -40,7 +40,7 @@ public class JwtTokenProvider {
         //토큰 생성
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(now + EXPIRATION_SECOND))
+                .setExpiration(new Date(now + 1000 * EXPIRATION_SECOND))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

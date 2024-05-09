@@ -38,4 +38,8 @@ public class CarEntity {
         this.length = length;
         this.width = width;
     }
+
+    public static CarEntity createEmptyNewEntity() {
+        return CarEntity.of(null, 0, 0, 0, null, null);
+    }
 }
