@@ -33,13 +33,14 @@ public class CarEntity {
         return new CarEntity(id, height, length, width, type, maxPayload);
     }
 
-    public void updateCar(int height, int length, int width) {
+    public void updateCar(int height, int length, int width, int maxPayload) {
         this.height = height;
         this.length = length;
         this.width = width;
+        this.maxPayload = maxPayload;
     }
 
     public static CarEntity createEmptyNewEntity() {
-        return CarEntity.of(null, 0, 0, 0, null, null);
+        return CarEntity.of(null, 0, 0, 0, null, 1000000);
     }
 }
