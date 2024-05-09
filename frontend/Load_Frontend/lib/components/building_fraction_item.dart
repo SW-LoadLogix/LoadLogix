@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/model.dart';
 
-class NewsItem extends StatelessWidget {
-  final News data;
-  const NewsItem(this.data);
+class BuildingItem extends StatelessWidget {
+  final Buildings data;
+  const BuildingItem(this.data);
 
   @override
   Widget build(BuildContext context) {
