@@ -12,13 +12,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.http.HttpResponse;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.dto.Response;
-import org.ssafy.load.common.exception.CommonException;
 
 @RequiredArgsConstructor
 public class JwtFilter implements Filter {
