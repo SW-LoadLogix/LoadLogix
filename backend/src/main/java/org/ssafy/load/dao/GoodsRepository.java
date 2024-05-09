@@ -28,4 +28,7 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
 
     @Query(value = "SELECT * FROM goods WHERE DATE(created_at) = CURDATE()", nativeQuery = true)
     List<GoodsEntity> findAllGoodsByCreatedAtIsToday();
+
+    @Query(value = "SELECT * FROM goods WHERE DATE(created_at) = CURDATE() AND load_task_id is not null", nativeQuery = true)
+    List<GoodsEntity> findAllLoadedGoodsByCreatedAtIsToday();
 }
