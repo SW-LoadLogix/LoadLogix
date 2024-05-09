@@ -11,6 +11,7 @@ import org.ssafy.load.application.AdminService;
 import org.ssafy.load.application.GoodsService;
 import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.LoginRequest;
+import org.ssafy.load.dto.response.BoxTypeResponse;
 import org.ssafy.load.dto.response.DayGoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsOutputResponse;
@@ -42,12 +43,17 @@ public class AdminController {
     }
 
     @GetMapping("/goods")
-    public Response<List<GoodsOutputResponse>> getGoodsList(){
+    public Response<List<GoodsOutputResponse>> getGoodsList() {
         return Response.success(goodsService.getGoodsList());
     }
 
     @GetMapping("/loads")
-    public Response<List<GoodsOutputResponse>> getLoadedGoodsList(){
+    public Response<List<GoodsOutputResponse>> getLoadedGoodsList() {
         return Response.success(goodsService.getLoadedGoodsList());
+    }
+
+    @GetMapping("/types")
+    public Response<List<BoxTypeResponse>> getBoxTypeCount() {
+        return Response.success(goodsService.getBoxTypeCount());
     }
 }
