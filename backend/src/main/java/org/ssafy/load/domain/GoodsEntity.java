@@ -15,18 +15,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int weight;
     @Column(name = "detail_address")
     private String detailAddress;
-    private int ordering;
-    private double x;
-    private double y;
-    private double z;
+    private Integer ordering;
+    private Double x;
+    private Double y;
+    private Double z;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
@@ -47,18 +48,25 @@ public class GoodsEntity {
     }
 
     public static GoodsEntity of(
-            Long id,
-            int weight,
-            String detailAddress,
-            int ordering,
-            int x,
-            int y,
-            int z,
-            BoxTypeEntity boxType,
-            BuildingEntity building,
-            LoadTaskEntity loadTask,
-            LocalDateTime createdAt
+        Long id,
+        int weight,
+        String detailAddress,
+        Integer ordering,
+        Double x,
+        Double y,
+        Double z,
+        BoxTypeEntity boxType,
+        BuildingEntity building,
+        LoadTaskEntity loadTask,
+        LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building, loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
+            loadTask, createdAt);
+    }
+
+    public void setBoxPosition(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }

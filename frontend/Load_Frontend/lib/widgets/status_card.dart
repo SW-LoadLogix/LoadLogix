@@ -7,6 +7,7 @@ import 'components/container_3.dart';
 import 'components/container_4.dart';
 
 class StatusCard extends StatefulWidget {
+
   final int index;
   const StatusCard(this.index);
 

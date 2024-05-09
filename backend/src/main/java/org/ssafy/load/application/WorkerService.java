@@ -1,8 +1,8 @@
 package org.ssafy.load.application;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.CarRepository;
@@ -32,7 +32,7 @@ public class WorkerService {
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null));
+        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null,null));
         return SignUpResponse.from(workerRepository.save(
                 WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
                         signUpRequest.name(), car, null)));
@@ -51,6 +51,7 @@ public class WorkerService {
                         "worker"));
     }
 
+    @Transactional(readOnly = true)
     public WorkerInfoResponse getWorkerInfo(Long workerId){
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
         if (worker.isEmpty())

@@ -25,7 +25,7 @@ class Container1 extends StatelessWidget {
                 color: isHover ? Colors.white : primary),
           ),
           SizedBox(
-            height: 6,
+            height: 20,
           ),
           Text(
             "2024년 05월 07일",
@@ -35,7 +35,7 @@ class Container1 extends StatelessWidget {
                 color: isHover ? Colors.white : primary),
           ),
           SizedBox(
-            height: 4,
+            height: 30,
           ),
           GestureDetector(
             onTap: () {

@@ -28,7 +28,6 @@ public class BuildingService {
 
     @Transactional
     public void registBuilding(BuildingRegistRequest buildingRegistRequest) {
-        System.out.println(buildingRegistRequest.areaId());
         Optional<AreaEntity> areaEntityOptional = areaRepository.findById(buildingRegistRequest.areaId());
         AreaEntity areaEntity = areaEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
 
@@ -60,7 +59,7 @@ public class BuildingService {
                     .append("-")
                     .append(desBuilding.getZibunSub()).toString();
 
-            Long duration = pathTimeCal.getPathTime(sourceAddress, desAddress);
+            int duration = pathTimeCal.getPathTime(sourceAddress, desAddress);
             pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, duration));
         }
     }
