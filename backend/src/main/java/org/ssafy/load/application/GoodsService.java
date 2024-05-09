@@ -12,6 +12,7 @@ import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.AreaEntity;
+import org.ssafy.load.domain.BoxTypeEntity;
 import org.ssafy.load.domain.BuildingEntity;
 import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
@@ -20,6 +21,7 @@ import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
 import org.ssafy.load.dto.request.GoodsCreateRequest;
+import org.ssafy.load.dto.response.BoxTypeResponse;
 import org.ssafy.load.dto.response.DayGoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsCreateResponse;
 import org.ssafy.load.dto.response.GoodsCountResponse;
@@ -204,6 +206,23 @@ public class GoodsService {
                     good.getWeight(),
                     String.valueOf(good.getBoxType().getType()),
                     good.getCreatedAt());
+            }).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<BoxTypeResponse> getBoxTypeCount() {
+        List<Object[]> results = goodsRepository.countBoxTypeByCreatedAtIsToday();
+        return results.stream()
+            .map(result -> {
+                BoxTypeEntity boxType = boxTypeRepository.findById(((Number) result[0]).intValue())
+                    .get();
+                return new BoxTypeResponse(
+                    boxType.getId(),
+                    String.valueOf(boxType.getType()),
+                    boxType.getHeight(),
+                    boxType.getLength(),
+                    boxType.getWidth(),
+                    ((Number) result[1]).longValue());
             }).toList();
     }
 }
