@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../components/nav_rail.dart';
 import 'goodsdummy.dart';
 
 String toDay = DateFormat('yyyy년 MM월 dd일').format(DateTime.now()); // 현재 일자

@@ -24,10 +24,10 @@ class _MenuItemState extends State<SideBarMenuItem> {
     return InkWell(
       onTap: () {
         switch(widget.item.name){
-          case 'Home':
+          case '홈':
             AutoRouter.of(context).push(HomeRoute());
             break;
-          case 'Dashboard':
+          case '배송관리 대시보드':
             AutoRouter.of(context).push(DashboardRoute());
             break;
           case 'Simulation 3d':

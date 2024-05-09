@@ -1,11 +1,11 @@
-// order_table.dart
+// delivery_table.dart
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'dummy.dart';
 // import 'dart:ffi';
 
-class _OrderTableState extends State<OrderTable> {
+class _OrderTableState extends State<DeliveryTable> {
   late OrderDataSource orderDataSource;
 
   @override
@@ -174,8 +174,8 @@ class OrderDataSource extends DataGridSource {
 }
 
 // OrderTable 위젯 - 데이터 그리드를 보여주는 위젯
-class OrderTable extends StatefulWidget {
-  const OrderTable({Key? key}) : super(key: key);
+class DeliveryTable extends StatefulWidget {
+  const DeliveryTable({Key? key}) : super(key: key);
 
   @override
   _OrderTableState createState() => _OrderTableState();
