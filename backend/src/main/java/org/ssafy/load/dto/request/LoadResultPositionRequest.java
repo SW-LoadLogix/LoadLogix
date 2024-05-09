@@ -1,8 +1,8 @@
 package org.ssafy.load.dto.request;
 
 public record LoadResultPositionRequest(
-        int x,
-        int y,
-        int z
+        double x,
+        double y,
+        double z
 ) {
 }

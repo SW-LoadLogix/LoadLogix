@@ -98,9 +98,9 @@ public class TaskService {
         LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
 
         for(LoadResultGoodsRequest item : loadResultRequest.goods()) {
-            int x = item.loadResultPositionRequest().x();
-            int y = item.loadResultPositionRequest().y();
-            int z = item.loadResultPositionRequest().z();
+            double x = item.loadResultPositionRequest().x();
+            double y = item.loadResultPositionRequest().y();
+            double z = item.loadResultPositionRequest().z();
 
             Optional<GoodsEntity> goodsEntityOptional = goodsRepository.findById(item.goodsId());
             GoodsEntity goodsEntity = goodsEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
