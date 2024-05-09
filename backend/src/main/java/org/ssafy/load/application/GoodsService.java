@@ -1,5 +1,8 @@
 package org.ssafy.load.application;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,7 @@ import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
 import org.ssafy.load.dto.request.GoodsCreateRequest;
+import org.ssafy.load.dto.response.DayGoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsCreateResponse;
 import org.ssafy.load.dto.response.GoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
@@ -152,5 +156,15 @@ public class GoodsService {
             goodsRepository.countStoredGoodsByCreatedAtIsToday(),
             goodsRepository.countLoadedGoodsByCreatedAtIsToday()
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<DayGoodsCountResponse> getDayGoodsCount(){
+        List<Object[]> results  = goodsRepository.countGoodsByDateForLastSixDays();
+        return results.stream()
+            .map(result -> new DayGoodsCountResponse(
+                LocalDate.parse(result[0].toString()),
+                ((Number) result[1]).longValue()
+            )).toList();
     }
 }
