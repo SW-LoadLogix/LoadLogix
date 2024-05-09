@@ -7,11 +7,12 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
+import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
 import org.ssafy.load.dto.request.GoodsRequest;
+import org.ssafy.load.dto.response.LoadStartResponse;
 import org.ssafy.load.dto.request.ReadyRequest;
-import org.ssafy.load.dto.response.StatusResponse;
 
 import java.util.List;
 
@@ -24,20 +25,23 @@ public class LoadTaskService {
     private final BoxTypeRepository boxTypeRepository;
     private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
+    private final SseService sseService;
 
     @Transactional
     public void setReadyCompletedArea(ReadyRequest readyRequest){
+        System.out.println(readyRequest);
         areaRepository.findById(readyRequest.areaId()).ifPresentOrElse((areaEntity) -> {
-            LoadTaskEntity loadTaskEntity = areaEntity.getLoadTask();
-
-            if (loadTaskEntity == null) {
-                throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
-            }
-            if (loadTaskEntity.getAreaStatus()) {
-                return;
-            }
-            loadTaskRepository.save(
-                    loadTaskEntity.withUpdatedAreaStateAndCount(true, readyRequest.count()));
+            LoadTaskEntity loadTaskEntity = loadTaskRepository.save(
+                            LoadTaskEntity.of(
+                                    null,
+                                    true,
+                                    readyRequest.count(),
+                                    false,
+                                    false,
+                                    null,
+                                    areaEntity,
+                                    null
+                            ));
 
             // 물품 저장
             for(GoodsRequest goods : readyRequest.goods()){
@@ -45,10 +49,10 @@ public class LoadTaskService {
                         null,
                         goods.weight(),
                         goods.detailAddress(),
-                        0,
-                        0,
-                        0,
-                        0,
+                        null,
+                        null,
+                        null,
+                        null,
                         boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         buildingRepository.findById(goods.buildingId()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
                         loadTaskEntity,
@@ -58,44 +62,36 @@ public class LoadTaskService {
 
             }
 
-
         }, () -> {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
         });
     }
 
-    // Todo 예지 : 알고리즘 완료 후 데이터 보내기 (로직 수정)
     @Transactional
-    public StatusResponse setReadyCompletedWorker(Long workerId) {
+    public Boolean setReadyCompletedWorker(Long workerId) {
 
         return workerRepository.findById(workerId)
                 .map(workerEntity -> {
-                    LoadTaskEntity readyStatusEntity = workerEntity.getArea().getLoadTask();
-                    if (readyStatusEntity == null) {
-                        throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+                    AreaEntity areaEntity = workerEntity.getArea();
+                    int areaId = areaEntity.getId();
+                    int conveyNo = areaEntity.getConveyNo();
+                    List<LoadTaskEntity> loadTaskEntities = loadTaskRepository.findAllByAreaIdOrderByCreatedAtDesc(areaId);
+                    for(LoadTaskEntity loadTaskEntity : loadTaskEntities){
+                        System.out.println(loadTaskEntity.getAreaStatus() +" "+loadTaskEntity.getWorkerState()+" "+loadTaskEntity.getComplete());
+
+                        if (loadTaskEntity!=null && !loadTaskEntity.getWorkerState() && loadTaskEntity.getAreaStatus() && loadTaskEntity.getComplete()) {
+                            loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
+                            sseService.sendEvent("1", LoadStartResponse.of(
+                                    areaId,
+                                    conveyNo,
+                                    true
+                            ));
+                            return true;
+                        }
                     }
-                    if(!readyStatusEntity.getAreaStatus()){
-                        return StatusResponse.of(false, "Not Ready");
-                    }
-                    if (!readyStatusEntity.getWorkerState()) {
-                        loadTaskRepository.save(readyStatusEntity.withUpdatedWorkerState(true));
-                        return StatusResponse.of(false, "Loading Soon");
-                    }
-                    return StatusResponse.of(false, "Already Waiting");
+                    return false;
                 })
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
-    }
-    @Transactional
-    public Integer getReadyStatus(){
-        List<LoadTaskEntity> readyStatusEntityList = loadTaskRepository.findAll();
-        for(LoadTaskEntity readyStatusEntity : readyStatusEntityList){
-
-            if(readyStatusEntity.getAreaStatus() == true && readyStatusEntity.getWorkerState() == true){
-                loadTaskRepository.save(readyStatusEntity.withUpdatedBothStatus(false, 0,false));
-                return readyStatusEntity.getArea().getId();
-            }
-        }
-        return 0;
     }
 }
 
