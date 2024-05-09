@@ -1,10 +1,14 @@
 package org.ssafy.load.application;
 
-import jakarta.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
+import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
@@ -13,6 +17,10 @@ import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.Building;
 import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
+import org.ssafy.load.dto.request.GoodsCreateRequest;
+import org.ssafy.load.dto.response.DayGoodsCountResponse;
+import org.ssafy.load.dto.response.GoodsCreateResponse;
+import org.ssafy.load.dto.response.GoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 
 import java.util.List;
@@ -30,7 +38,9 @@ public class GoodsService {
     private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
     private final LoadTaskRepository loadTaskRepository;
+    private final BoxTypeRepository boxTypeRepository;
 
+    @Transactional(readOnly = true)
     public GoodsResponse getOriginGoods(Long workerId) {
         //배송 기사 조회
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
@@ -77,6 +87,7 @@ public class GoodsService {
         return new GoodsResponse(area.get().getAreaName(), total, buildings);
     }
 
+    @Transactional(readOnly = true)
     public SortedGoodsResponse getSortedGoods(Long workerId) {
         //배송 기사 조회
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
@@ -122,5 +133,38 @@ public class GoodsService {
                 g.getDetailAddress()
             )).toList();
         return new SortedGoodsResponse(goods);
+    }
+
+    public GoodsCreateResponse createGoods(GoodsCreateRequest goodsCreateRequest) {
+        return GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
+            null,
+            goodsCreateRequest.weight(),
+            goodsCreateRequest.detailAddress(),
+            null, null, null, null,
+            boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
+                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+            buildingRepository.findById(goodsCreateRequest.buildingId())
+                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+            null, null
+        )));
+    }
+
+    @Transactional(readOnly = true)
+    public GoodsCountResponse getGoodsCount() {
+        return new GoodsCountResponse(
+            goodsRepository.countAllGoodsByCreatedAtIsToday(),
+            goodsRepository.countStoredGoodsByCreatedAtIsToday(),
+            goodsRepository.countLoadedGoodsByCreatedAtIsToday()
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public List<DayGoodsCountResponse> getDayGoodsCount(){
+        List<Object[]> results  = goodsRepository.countGoodsByDateForLastSixDays();
+        return results.stream()
+            .map(result -> new DayGoodsCountResponse(
+                LocalDate.parse(result[0].toString()),
+                ((Number) result[1]).longValue()
+            )).toList();
     }
 }
