@@ -54,7 +54,10 @@ public class LoadTaskService {
                         null,
                         null,
                         boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                        buildingRepository.findById(goods.buildingId()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                        buildingRepository.findById(goods.buildingId() + 272).orElseThrow(() -> {
+                            System.out.println(goods.buildingId());
+                            return new CommonException(ErrorCode.INVALID_DATA);
+                        }),
                         loadTaskEntity,
                         null
                 );
@@ -76,7 +79,7 @@ public class LoadTaskService {
                     int areaId = areaEntity.getId();
                     int conveyNo = areaEntity.getConveyNo();
                     List<LoadTaskEntity> loadTaskEntities = loadTaskRepository.findAllByAreaIdOrderByCreatedAtDesc(areaId);
-                    for(LoadTaskEntity loadTaskEntity : loadTaskEntities){
+                    for(LoadTaskEntity loadTaskEntity : loadTaskEntities) {
                         System.out.println(loadTaskEntity.getAreaStatus() +" "+loadTaskEntity.getWorkerState()+" "+loadTaskEntity.getComplete());
 
                         if (loadTaskEntity!=null && !loadTaskEntity.getWorkerState() && loadTaskEntity.getAreaStatus() && loadTaskEntity.getComplete()) {

@@ -21,6 +21,7 @@ public class WorkerController {
     public final WorkerService workerService;
     public final JwtTokenProvider jwtTokenProvider;
     public final LoadTaskService loadTaskService;
+
     @PostMapping("/signup")
     public Response<SignUpResponse> signup(@RequestBody SignUpRequest signupRequest) {
         return Response.success(workerService.signup(signupRequest));

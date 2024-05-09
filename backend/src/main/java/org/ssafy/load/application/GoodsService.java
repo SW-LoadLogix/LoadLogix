@@ -97,6 +97,7 @@ public class GoodsService {
         // 배송 기사의 가장 최근 적재 리스트 조회
         List<Integer> loadTaskIds = loadTaskRepository.findMostRecentCompletedTaskIds(
             area.get().getId());
+
         if (loadTaskIds.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }

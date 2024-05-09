@@ -69,4 +69,12 @@ public class GoodsEntity {
         this.y = y;
         this.z = z;
     }
+
+    public void setOrdering(int ordering) {
+        this.ordering = ordering;
+    }
+
+    public void withUpdateLoadTask(LoadTaskEntity loadTask) {
+        this.loadTask = loadTask;
+    }
 }

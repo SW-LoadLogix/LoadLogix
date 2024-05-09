@@ -43,7 +43,20 @@ public class LoadTaskEntity {
     }
 
     public static LoadTaskEntity of(Integer id, Boolean areaStatus, int count, Boolean workerState, Boolean complete, LocalDateTime createdAt, AreaEntity area, List<GoodsEntity> goodsEntities){
-        return new LoadTaskEntity(id, areaStatus ,count, workerState, complete, createdAt, area, goodsEntities);
+        return new LoadTaskEntity(id, areaStatus, count, workerState, complete, createdAt, area, goodsEntities);
+    }
+
+    public static LoadTaskEntity createNewEntity(int count, AreaEntity area) {
+        return of(
+                null,
+                true,
+                count,
+                false,
+                false,
+                null,
+                area,
+                null
+        );
     }
 
     public LoadTaskEntity withUpdatedWorkerState(boolean workerStatus) {

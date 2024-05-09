@@ -43,7 +43,7 @@ public class TaskService {
 
         LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.get();
         CarEntity carEntity = loadTaskEntity.getArea().getWorker().getCar();
-        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskEntity);
+        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskEntity.getId());
 
         //Hard Coding (refactoring require!)
         //get start point building (삼성 연수원)
@@ -95,7 +95,9 @@ public class TaskService {
     @Transactional
     public void LoadResultRegist(LoadResultRequest loadResultRequest) {
         Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findById(loadResultRequest.taskId());
+        System.out.println("결과 확인 !!!!!! " + loadResultRequest.taskId());
         LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
+        int order = 0;
 
         for(LoadResultGoodsRequest item : loadResultRequest.goods()) {
             double x = item.loadResultPositionRequest().x();
@@ -104,9 +106,27 @@ public class TaskService {
 
             Optional<GoodsEntity> goodsEntityOptional = goodsRepository.findById(item.goodsId());
             GoodsEntity goodsEntity = goodsEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.INVALID_PK));
+            goodsEntity.setOrdering(++order);
             goodsEntity.setBoxPosition(x, y, z);
         }
 
         loadTaskEntity.withUpdatedComplete();
+
+        //unfit 검사
+        List<GoodsEntity> unFitgoodsEntityList = new ArrayList<>();
+        for(GoodsEntity goodsEntity : goodsRepository.findByLoadTask(loadTaskEntity.getId())) {
+            if(goodsEntity.getOrdering() == null) {
+                unFitgoodsEntityList.add(goodsEntity);
+            }
+        }
+
+        //unfit 발생
+        if(unFitgoodsEntityList.size() > 0) {
+            AreaEntity area = loadTaskEntity.getArea();
+            LoadTaskEntity unFitloadTaskEntity = loadTaskRepository.save(LoadTaskEntity.createNewEntity(unFitgoodsEntityList.size(), area));
+            for(GoodsEntity unfitGoodsEntity : unFitgoodsEntityList) {
+                unfitGoodsEntity.withUpdateLoadTask(unFitloadTaskEntity);
+            }
+        }
     }
 }
