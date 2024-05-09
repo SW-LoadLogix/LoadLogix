@@ -78,13 +78,15 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     "color": 0xFFFFFFFF,
     "flatShading": true,
     "transparent": true,
-    "opacity": 1.0,
+    "opacity": 0.8,
     "depthTest": false,
+    //'vertexColors': true,
   });
   three.BoxGeometry selectedGeometry = three.BoxGeometry(1, 1, 1);
 
   late three.Mesh selectedMesh;
-  late three.LineSegments selectedWireframe;
+  late three.Mesh selectedEdgeMesh;
+
 
   late three.MeshPhongMaterial edgeMaterial = three.MeshPhongMaterial({
     "color": 0x00000000,
@@ -828,7 +830,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     if (isClickOrTaped){
       if (isSelected){
         scene.remove(selectedMesh);
-        scene.remove(selectedWireframe);
+        scene.remove(selectedEdgeMesh);
       }
       isSelected = false;
       isClickOrTaped = false;
@@ -887,51 +889,34 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
 
                 //selectedGeometry = adjustBoxGeometryPivot(selectedGeometry, -1 * selectedBox.boxSize.x, -1 * selectedBox.boxSize.y, -1 * selectedBox.boxSize.z);
+
+                selectedEdgeMesh = three.Mesh(
+                    selectedGeometry,
+                    three.MeshPhongMaterial({
+                      "color": 0xFF000000,
+                      "flatShading": true,
+                      "transparent": true,
+                      "opacity": 1.0,
+                      "wireframe": true,
+                      "side": three.DoubleSide,
+                      'depthTest': false, // 깊이 테스트 비활성화
+                      'depthWrite': false, // 깊이 버퍼에 쓰기 비활성화
+                     // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
+
+                    })
+                );
+
                 selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
                 selectedMesh.position.set(
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
                     selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
                 scene.add(selectedMesh);
-
-
-
-                  clickedObject.material = three.MeshPhongMaterial({
-                    "color": 0xFF000000,
-                    "flatShading": true,
-                    "transparent": false,
-                    "opacity": 1.0,
-                    "wireframe": true,
-                  });
-
-
-                var wireframeGeometry = three.EdgesGeometry(selectedMesh.geometry as three.BufferGeometry,0);
-
-                // 와이어프레임 재질 생성, 색상과 두께 설정
-                var wireframeMaterial = three.LineBasicMaterial(
-                    {
-                      'color': 0xff00ff00, // 백색
-                      'linewidth': 5, // 선의 두께
-                      'transparent': true,
-                      'opacity': 1.0 // 투명도 설정
-                    });
-
-                // 와이어프레임 메쉬 생성
-                 selectedWireframe = three.LineSegments(wireframeGeometry, wireframeMaterial);
-
-                // 와이어프레임 메쉬를 선택된 객체의 위치에 배치
-                selectedWireframe.position.copy(selectedMesh.position);
-                selectedWireframe.scale.copy(selectedMesh.scale);
-                selectedWireframe.rotation.copy(selectedMesh.rotation);
-
-                // 와이어프레임을 씬에 추가
-                scene.add(selectedWireframe);
-
-
-
-
-
-                //highlightSelectedObject(selectedMesh, scene);
+                selectedEdgeMesh.position.set(
+                    selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
+                    selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
+                    selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
+                scene.add(selectedEdgeMesh);
                 break;
               }
             }

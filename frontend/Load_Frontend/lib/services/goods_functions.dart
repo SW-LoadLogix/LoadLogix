@@ -23,7 +23,7 @@ class GoodsService {
       for (int x = 0; x < 6; x++) {
         for (int y = 0; y < 6; y++) {
           for (int z = 0; z < 6; z++) {
-            String type = 'S${random.nextInt(6) + 1}';  // Random type between S1 and S6
+            String type = 'L${random.nextInt(6) + 1}';  // Random type between S1 and S6
 
             goods.add(GoodsData(
                 goodsId: goodsId,
