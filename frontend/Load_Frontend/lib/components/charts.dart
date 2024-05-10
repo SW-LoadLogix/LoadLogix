@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
-import 'package:load_frontend/widgets/bar_chart.dart';
+import 'package:load_frontend/components/week_delivery_total_chart.dart';
 import 'package:load_frontend/widgets/pie_chart.dart';
+
+import 'map.dart';
 
 class Charts extends StatelessWidget {
   const Charts({Key? key}) : super(key: key);
@@ -12,13 +14,13 @@ class Charts extends StatelessWidget {
     if (_size.width >= screenLg) {
       return Row(
         children: [
-          Flexible(flex: 1, child: BarChartSample()),
+          Flexible(flex: 1, child: WeekDeliveryTotalChart()),
           SizedBox(
             width: componentPadding,
           ),
           Flexible(
             flex: 1,
-            child: MyPieChart(),
+            child: MyGoogleMap(),
           ),
         ],
       );
@@ -26,11 +28,11 @@ class Charts extends StatelessWidget {
 
     return Column(
       children: [
-        BarChartSample(),
+        WeekDeliveryTotalChart(),
         SizedBox(
           height: componentPadding,
         ),
-        MyPieChart(),
+        MyGoogleMap(),
       ],
     );
   }
