@@ -68,7 +68,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   List<three.MeshPhongMaterial> materials = [];
   List<three.InstancedMesh> meshes = [];
 
-  three.Vector3 truckPosition = three.Vector3(5, 6, 8);
+  three.Vector3 truckPosition = three.Vector3(40, -60, 78);
 
   bool isClickOrTaped = false;
   three.Vector2 clickedScrinPoint = three.Vector2(0, 0);
@@ -292,12 +292,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
       print("object loaded");
       object.rotation.y = three.Math.pi / 2;
-      object.scale.set(0.005, 0.005, 0.005);
-      object.position.set(5, -6, 8);
+      object.scale.set(0.05, 0.05, 0.05);
+      object.position.set(40, -60, 78);
       scene.add(object);
       isLoaded = true;
     } else {
-      object.position.set(5, -6, 8);
+      object.position.set(40, -60, 78);
       scene.add(object);
     }
   }
@@ -378,41 +378,34 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   void _handleKeyEvent(KeyEvent event) {
     if (event.runtimeType == KeyDownEvent) {
-      // double increment = 0.1; // 이동 거리 설정
-      //
-      // // 카메라의 방향 벡터 계산
-      // three.Vector3 forward = camera.getWorldDirection(0).normalize();  // 앞쪽 방향
-      // three.Vector3 right = forward.cross(camera.up).normalize();  // 오른쪽 방향
-      // three.Vector3 up = right.cross(forward).normalize();  // 상위 방향 (실제로는 사용하지 않음)
-      //
-      //
-      // setState(() {
-      //   switch (event.logicalKey.keyId) {
-      //     case 119: // 'W' - forward
-      //       camera.position.addScaledVector(forward, increment);
-      //       break;
-      //     case 115: // 'S' - backward
-      //       camera.position.addScaledVector(forward, -increment);
-      //       break;
-      //     case 100: // 'D' - right
-      //       camera.position.addScaledVector(right, increment);
-      //       break;
-      //     case 97: // 'A' - left
-      //       camera.position.addScaledVector(right, -increment);
-      //       break;
-      //     case 113: // 'Q' - up (floating up, not forward)
-      //       camera.position.addScaledVector(camera.up, increment);
-      //       break;
-      //     case 101: // 'E' - down
-      //       camera.position.addScaledVector(camera.up, -increment);
-      //       break;
-      //   }
-      //   camera.updateMatrixWorld(true);
-      //   // positionText = "Position: x=$x, y=$y, z=$z";
-      //   // print(positionText);
-      //   //truckPosition.set(x, y, z);
-      //   // 여기에서 three.js or three.dart 객체의 위치를 업데이트하는 로직을 추가
-      // });
+      double increment = 10; // 이동 거리 설정
+
+      setState(() {
+        switch (event.logicalKey.keyId) {
+          case 119: // 'W' - forward
+          x = truckPosition.x + increment;
+            break;
+          case 115: // 'S' - backward
+            x = truckPosition.x - increment;
+            break;
+          case 100: // 'D' - right
+          z = truckPosition.z + increment;
+            break;
+          case 97: // 'A' - left
+          z = truckPosition.z - increment;
+            break;
+          case 113: // 'Q' - up (floating up, not forward)
+            y = truckPosition.y + increment;
+            break;
+          case 101: // 'E' - down
+            y = truckPosition.y - increment;
+            break;
+        }
+         positionText = "Position: x=$x, y=$y, z=$z";
+         print(positionText);
+        truckPosition.set(x, y, z);
+        object.position.set(x, y, z);
+      });
     }
   }
 
@@ -548,7 +541,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     //scene.fog = three.FogExp2(0xcccccc, 0.002);
 
     camera = three.PerspectiveCamera(60, width / height, 1, 20000000);
-    camera.position.set(45, 20, 34);
+    camera.position.set(450, 200, 340);
 
     // controls
 
@@ -648,6 +641,25 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     return three.Vector3(x, y, z);
   }
 
+
+
+  Map<int, int> mapNumbersToSequential(List<int> numbers) {
+    Map<int, int> mapping = {};
+    int counter = 0;
+
+    for (int number in numbers) {
+      if (!mapping.containsKey(number)) { // 중복된 숫자를 다시 매핑하지 않도록 확인
+        mapping[number] = counter++;
+      }
+    }
+
+    return mapping; // 매핑 결과 반환
+  }
+
+
+
+
+
   void initBox() async {
 
     selectedGeometry = adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
@@ -655,9 +667,21 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     geometry = adjustBoxGeometryPivot(geometry, -0.5, -0.5, -0.5);
     matrix = three.Matrix4();
+
+    List<int> numbers = [];
+    for (int i = 0; i < gGoods.length; i++) {
+      numbers.add(gGoods[i].buildingId);
+    }
+    Map<int, int> numberMapping = mapNumbersToSequential(numbers);
+
+
+
     for (int i = 0; i < gGoods.length; i++) {
       var randomValue = gGoods[i].position;
       //randomVector3(truckSize.x, truckSize.y, truckSize.z);
+
+
+
       boxes.add(Box(
           gGoods[i].type,
           three.Vector3(randomValue.x + 25, randomValue.y, randomValue.z),
@@ -665,7 +689,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           three.Vector3(randomValue.x, randomValue.y, randomValue.z),
           three.Vector3(2, 2, 2),
           gGoods[i].goodsId,
-          gGoods[i].buildingId));
+          gGoods[i].buildingId,//numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
+          numberMapping[gGoods[i].buildingId]!));
     }
 
     for (int i = 0; i < boxes.length; i++) {
@@ -690,7 +715,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       matrix.setPosition(
           box.currPosition!.x, box.currPosition!.y, box.currPosition!.z);
       matrix.compose(box.currPosition!, quaternion, box.boxSize!);
-      meshes[box.buildingId].setMatrixAt(i, matrix.clone());
+      meshes[box.boxColorId].setMatrixAt(i, matrix.clone());
     }
 
     for (int i = 0; i < 21; i++) {
@@ -802,8 +827,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           box.currPosition!.x, box.currPosition!.y, box.currPosition!.z);
       matrix.compose(box.currPosition!, quaternion, box.boxSize!);
 
-      meshes[box.buildingId].name = box.buildingId.toString();
-      meshes[box.buildingId].setMatrixAt(i, matrix.clone());
+      meshes[box.boxColorId].name = box.boxColorId.toString();
+      meshes[box.boxColorId].setMatrixAt(i, matrix.clone());
       edgeMesh.setMatrixAt(i, matrix.clone());
     }
 
@@ -884,7 +909,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                 if (box.isChecked == false) {
                   continue;
                 }
-                if (box.buildingId == selectedBuildingId){
+                if (box.boxColorId == selectedBuildingId){
                   three.Vector3 centerPosition = three.Vector3(
                       box.currPosition.x + box.boxSize.x / 2.0,
                       box.currPosition.y + box.boxSize.y / 2.0,

@@ -1,12 +1,14 @@
 //import 'package:animated_login/animated_login.dart';
 import 'package:async/async.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:load_frontend/animated_login/animated_login.dart';
 
 import '../constaints.dart';
-import '../services/login_functions.dart';
+import '../routes/app_router.dart';
+import '../services/user_service.dart';
 import '../utils/dialog_builders.dart';
 
 @RoutePage()
@@ -33,7 +35,7 @@ class _LoginScreenState extends State<SignInUpPage> {
        onLogin: (LoginData data) async =>
            _authOperation(LoginFunctions(context).onLogin(data)),
        onSignup: (SignUpData data) async =>
-           _authOperation(LoginFunctions(context).onSignup(data)),
+           _authOperation(LoginFunctions(context).onSignUp(data)),
       //onForgotPassword: _onForgotPassword,
 
       logo: Image.asset('assets/images/logo.gif'),
@@ -68,7 +70,20 @@ class _LoginScreenState extends State<SignInUpPage> {
     _operation = CancelableOperation.fromFuture(func);
     final String? res = await _operation?.valueOrCancellation();
     if (_operation?.isCompleted == true) {
-      DialogBuilder(context).showResultDialog(res ?? 'Successful.');
+      if (res == "failed") {
+        DialogBuilder(context).showResultDialog('Failed to login.');
+      }
+      else if (res == "success") {
+        DialogBuilder(context).showResultDialog('Successfully logged in.');
+        AutoRouter.of(context).push(DashboardRoute());
+        //Navigator.of(context).pushNamed('/dashboard');
+      }
+      else if (res == null) {
+        DialogBuilder(context).showResultDialog('Failed to login.');
+      }
+      else {
+        DialogBuilder(context).showResultDialog(res);
+      }
     }
     return res;
   }
