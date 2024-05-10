@@ -16,76 +16,45 @@
 		<ActiveObjectClass>
 			<Id>1714366606318</Id>
 			<Name><![CDATA[Main]]></Name>
-			<AdditionalClassCode><![CDATA[public Goods removeAgentByIdFromRack(LinkedList<Goods> rackStore ,Goods targetAgent) {
-    for (Goods agent : rackStore) {
-        if (agent.id == targetAgent.id) {
-            rackStore1.remove(agent); 
-            return agent; 
-        }
-    }
-    return null; 
-}
-
-public void addAgentFromRack(LinkedList<Goods> rackStore, Goods targetAgent){
-	rackStore.add(targetAgent); 
-}
-
-public void startSSEListener() {
+			<AdditionalClassCode><![CDATA[public void startSSEListener() {
     SSEListener listener = new SSEListener(this);
     new Thread(listener).start();
 }
 
-public Storage getStorage(int area){
-    switch (area) {
-        case 1:
-            return store1;
-        case 2:
-        case 3:
-            return store2;
-        case 4:
-            return store3;
-        case 5:
-        case 6:
-            return store4;
-        case 7:
-            return store5;
-        case 8:
-        case 9:
-            return store6;
-    }
-}
-public List<Goods> getStoredAgent(int area){
-	Storage selectedStorage = getStorage(); 
-    List<Agent> agents = getStorage().getAgents();
-    int storageSize = selectedStoreage.size();
-	for (int i = 0; i < storageSize; i++) {
-	    Goods goods = (Goods) agents.get(i); 
-	    System.out.println(goods.id); 
-	//    enter1.take(goods); // Goods 객체를 다른 곳으로 이동
-	}
-    
-   	int cnt = 0;
-
-    for(Goods goods : selectedStorage) {
-		if(settingGoodsCountPerArea.get(settingGoodsCountPerArea.get(area)) == cnt)break;
-     	if(area == goods.areaId) {
-        	response.add(GoodsRequest.convertAgentToDTO(goods));
-    	}
-    }
-
-    return response;
-}
 
 public void startPick(LoadStartResponse response){
 	
-	Storage selectedStorage = getStorage(); 
-    List<Agent> agents = getStorage().getAgents();
+	List<Agent> agents = null;
     
-	for(Integer agentId : response.agentIds){
-		//int index = Collections.binarySearch(agents, new Agent(agentId), Comparator.comparingInt(Agent::getAgentId));
+    switch (response.getAreaId()) {
+    case 1:
+        agents = storage1.getAgents();
+        break;
+    case 2:
+    case 3:
+        agents = storage2.getAgents();
+        break;
+    case 4:
+        agents = storage3.getAgents();
+        break;
+    case 5:
+    case 6:
+        agents = storage4.getAgents();
+        break;    
+    case 7:
+        agents = storage5.getAgents();
+        break;    
+    case 8:
+    case 9:
+        agents = storage6.getAgents();
+        break;    
+    }
+    
+	for(Integer agentId : response.getAgentIds()){
+		// Todo 수정
+		int index = Collections.binarySearch(agents, new Agent(agentId), Comparator.comparingInt(Agent::getAgentId));
 		
-		int idx = Collections.binarySearch(agents, agentId);
-		Goods goods = (Goods) agents.get(idx); 
+		Goods goods = (Goods) agents.get(index); 
 		enter1.take(goods);
 	}
 
@@ -95,12 +64,10 @@ public void startPick(LoadStartResponse response){
 
 int[] goodsCntForVehicle = new int[5];
 boolean[] readyVehicleToConvey = new boolean[5];
- 
+
 // 저장소 데이터를 저장하기 위한 배열 리스트 
-List<Integer>[] goodsPerArea = new List[10]; 
-for(int i=1;i<goodsPerArea.length;i++){
-	goodsPerArea[i] = new ArrayList<Integer>();
-}]]></AdditionalClassCode>
+List<Long>[] goodsPerArea = goodsPerArea = new List[10];
+]]></AdditionalClassCode>
 			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
 }catch(Exception e){
@@ -130,14 +97,16 @@ checkGoodsForArea.add(0);
 checkGoodsForArea.add(0);
 
 
-//int[] settingGoodsCountPerArea = new int[]{0,2,5,6,6,6,6,6,6,6};
-//int[] checkGoodsForArea = new int[10];
-
+for(int i=1;i<goodsPerArea.length;i++){
+	goodsPerArea[i] = new ArrayList<Long>();
+}
 
 //SSE
 SSEListener sseListener = new SSEListener(this);
 Thread thread = new Thread(sseListener);
 thread.start();
+
+
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -3699,11 +3668,11 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[agentIdForArea1.size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[1].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 1;
-	System.out.println("readyAreaEvent1");
+	System.out.println("readyAreaEvent" + area);
 	client.setReadyCompletedArea(area, goodsPerArea[area]); 
 	goodsPerArea[area] = new ArrayList<>();
 	readyAreaEvent1.restart();
@@ -3738,15 +3707,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(2) == checkGoodsForArea.get(2)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[2].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-		System.out.println("readyAreaEvent2");
-	
-	client.setReadyCompletedArea(2, settingGoodsCountPerArea.get(2), getRackStore(2)); 
-	checkGoodsForArea.set(2,0);
-	readyAreaEvent2.restart();
+	int area = 2;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3778,15 +3746,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(3) == checkGoodsForArea.get(3)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[3].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent3");
-
-	client.setReadyCompletedArea(3, settingGoodsCountPerArea.get(3), getRackStore(3)); 
-	checkGoodsForArea.set(3,0);
-	readyAreaEvent3.restart();
+	int area = 3;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3818,15 +3785,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(4) == checkGoodsForArea.get(4)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[4].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent4");
-
-	client.setReadyCompletedArea(4, settingGoodsCountPerArea.get(4), getRackStore(4)); 
-	checkGoodsForArea.set(4,0);
-	readyAreaEvent4.restart();
+	int area = 4;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3858,15 +3824,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(5) == checkGoodsForArea.get(5)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[5].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent5");
-
-	client.setReadyCompletedArea(5, settingGoodsCountPerArea.get(5), getRackStore(5)); 
-	checkGoodsForArea.set(5,0);
-	readyAreaEvent5.restart();
+	int area = 5;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3898,15 +3863,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(6) == checkGoodsForArea.get(6)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[6].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent6");
-
-	client.setReadyCompletedArea(6, settingGoodsCountPerArea.get(6), getRackStore(6)); 
-	checkGoodsForArea.set(6,0);
-	readyAreaEvent6.restart();
+	int area = 6;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3938,15 +3902,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(7) == checkGoodsForArea.get(7)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[7].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent7");
-
-	client.setReadyCompletedArea(7, settingGoodsCountPerArea.get(7), getRackStore(7)); 
-	checkGoodsForArea.set(7,0);
-	readyAreaEvent7.restart();
+	int area = 7;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -3978,15 +3941,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(8) == checkGoodsForArea.get(8)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[8].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent8");
-
-	client.setReadyCompletedArea(8, settingGoodsCountPerArea.get(8), getRackStore(8)); 
-	checkGoodsForArea.set(8,0);
-	readyAreaEvent8.restart();
+	int area = 8;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4018,15 +3980,14 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(9) == checkGoodsForArea.get(9)
-]]></Condition>
+						<Condition><![CDATA[goodsPerArea[9].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
-	System.out.println("readyAreaEvent9");
-
-	client.setReadyCompletedArea(9, settingGoodsCountPerArea.get(9), getRackStore(9)); 
-	checkGoodsForArea.set(9,0);
-	readyAreaEvent9.restart();
+	int area = 9;
+	System.out.println("readyAreaEvent" + area);
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
+	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
 }]]></Action>
@@ -4206,7 +4167,7 @@ System.out.println("storageSize: "+storageSize);
 List<Agent> agents = storage1.getAgents(); // 한 번만 호출하여 결과를 저장
 for (int i = 0; i < storageSize; i++) {
     Goods goods = (Goods) agents.get(i); // 리스트의 각 요소를 Goods 타입으로 캐스팅
-    System.out.println(goods.id); // Goods 정보 출력
+    System.out.println(goods); // Goods 정보 출력
 //    enter1.take(goods); // Goods 객체를 다른 곳으로 이동
 }
 
@@ -4461,11 +4422,13 @@ InitialInfoDto info = gernerateGoods.generateGoodsInfo(buildingCounts);
 agent.areaId = info.getAreaId();
 agent.buildingId = info.getBuildingId();
 agent.detailAddress = info.getDetailJuso();
-agent.id = agent;
 
 // 물품 데이터 전송
-client.postGooods(agent);
-
+try{
+	client.postGoods(agent);
+}catch(Exception e){
+	System.out.println(e);
+}
 ]]></Code>
 							</Value>
 						</Parameter>
@@ -14943,7 +14906,7 @@ client.postGooods(agent);
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[1].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[1].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15716,7 +15679,7 @@ System.out.println(goodsPerArea.toString());]]></Code>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[2].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[2].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16035,7 +15998,7 @@ System.out.println(goodsPerArea.toString());]]></Code>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[3].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[3].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16354,7 +16317,7 @@ System.out.println(goodsPerArea.toString());]]></Code>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[4].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[4].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16673,7 +16636,7 @@ System.out.println(goodsPerArea.toString());]]></Code>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[5].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[5].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16992,7 +16955,7 @@ System.out.println(goodsPerArea.toString());]]></Code>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[6].add(agent.agentId);
-System.out.println(goodsPerArea.toString());]]></Code>
+System.out.println(goodsPerArea[6].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -29965,6 +29928,9 @@ System.out.println(goodsPerArea.toString());]]></Code>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[long]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[nextId++;]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -30045,26 +30011,17 @@ System.out.println(goodsPerArea.toString());]]></Code>
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
-				<Variable Class="Parameter">
-					<Id>1715316665200</Id>
-					<Name><![CDATA[parameter]]></Name>
-					<X>400</X><Y>200</Y>
+				<Variable Class="PlainVariable">
+					<Id>1715321839251</Id>
+					<Name><![CDATA[nextId]]></Name>
+					<X>410</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1715316665198</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[static long]]></Type>        
+					</Properties>
 				</Variable>
 			</Variables>
 			<AgentLinks>
@@ -31009,7 +30966,7 @@ public class APIClient {
     	
     }
     
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, ArrayList<Integer> agentIds) throws Exception{
+    public ArrayList<Integer> setReadyCompletedArea(int areaId, List<Long> agentIds) throws Exception{
         String url = SERVER_URL + "/ready";
         String method = "POST";
         
@@ -31287,11 +31244,11 @@ public class InitialInfoDto implements Serializable {
 public class ReadyRequest implements Serializable{
 
     private int areaId;
-    private ArrayList<Integer> goods;
+    private List<Long> goods;
     
     public ReadyRequest() {}
     
-    public ReadyRequest(int areaId, ArrayList<Integer> goods) {
+    public ReadyRequest(int areaId, List<Long> goods) {
         this.areaId = areaId;
         this.goods = goods;
     }
@@ -31304,11 +31261,11 @@ public class ReadyRequest implements Serializable{
         this.areaId = areaId;
     }
 
-    public ArrayList<Integer> getGoods() {
+    public List<Long> getGoods() {
         return goods;
     }
 
-    public void setGoods(ArrayList<Integer> goods) {
+    public void setGoods(List<Long> goods) {
         this.goods = goods;
     }
 }]]></Text>
