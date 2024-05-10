@@ -76,64 +76,19 @@ public List<Goods> getStoredAgent(int area){
     return response;
 }
 
-public void startLoad(int conveyor, int area, List<Integer> agentIds){
-   	 LinkedList<Goods> pickStorage = new LinkedList<>();
-
-	 if(area == 1) pickStorage = enterInject(conveyor, enter1, area);
-	 else if(area == 2 || area == 3) pickStorage = enterInject(conveyor, enter2, area);
-	 else if(area == 4) pickStorage = enterInject(conveyor, enter3, area);
-	 else if(area == 5 || area == 6) pickStorage = enterInject(conveyor, enter4, area);
-	 else if(area == 7) pickStorage = enterInject(conveyor, enter5, area);
-	 else if(area == 8 || area == 9) pickStorage = enterInject(conveyor, enter6, area);
-	 
-	 int storageSize = pickStorage.size();
-	 List<Agent> agents = pickStorage.getAgents();
-	 for (int i = 0; i < storageSize; i++) {
-	    Goods goods = (Goods) agents.get(i); 
-	    System.out.println(goods.id); // Goods 정보 출력
-	 //    enter1.take(goods); // Goods 객체를 다른 곳으로 이동
-	 }
-
-	 pickStorage
-}
-public LinkedList<Goods> enterInject(int conveyor, Enter<Goods> enter, int area){
-
-	LinkedList<Goods> pickStorage = new LinkedList<>();
-
-	switch (area) {
-        case 1:
-            pickStorage.addAll(store1);
-            break;
-        case 2:
-        case 3:
-        	pickStorage.addAll(store2);
-            break;
-        case 4:
-        	pickStorage.addAll(store3);
-            break;
-        case 5:
-        case 6:
-        	pickStorage.addAll(store4);
-            break;
-        case 7:
-        	pickStorage.addAll(store5);
-            break;
-        case 8:
-        case 9:
-        	pickStorage.addAll(store6);
-            break;
-    }
-    
-    return pickList;
-   	int cnt = 0;
-	for(Goods goods : pickList){
-		if(settingGoodsCountPerArea.get(settingGoodsCountPerArea.get(area)) == cnt)break;
-		goods.toConveyorLine = conveyor;
-		pickList.remove(goods);
-		enter.take(goods);
-		cnt++;
-	}
+public void startPick(LoadStartResponse response){
 	
+	Storage selectedStorage = getStorage(); 
+    List<Agent> agents = getStorage().getAgents();
+    
+	for(Integer agentId : response.agentIds){
+		//int index = Collections.binarySearch(agents, new Agent(agentId), Comparator.comparingInt(Agent::getAgentId));
+		
+		int idx = Collections.binarySearch(agents, agentId);
+		Goods goods = (Goods) agents.get(idx); 
+		enter1.take(goods);
+	}
+
 }
 
 
@@ -180,9 +135,9 @@ checkGoodsForArea.add(0);
 
 
 //SSE
-//SSEListener sseListener = new SSEListener(this);
-//Thread thread = new Thread(sseListener);
-//thread.start();
+SSEListener sseListener = new SSEListener(this);
+Thread thread = new Thread(sseListener);
+thread.start();
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -30090,6 +30045,27 @@ System.out.println(goodsPerArea.toString());]]></Code>
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1715316665200</Id>
+					<Name><![CDATA[parameter]]></Name>
+					<X>400</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1715316665198</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<AgentLinks>
 				<AgentLink>
@@ -31117,15 +31093,15 @@ public class APIClient {
  */	
 public class APIResponse<T> {
 	
-	private String resultCode;
+	private String result_code;
 	private List<T> result;
 	
 	public String getResultCode() {
-		return resultCode;
+		return result_code;
 	}
 
 	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
+		this.result_code = resultCode;
 	}
 
 	public List<T> getResult() {
@@ -31185,19 +31161,19 @@ public class SSEListener implements Runnable {
                     String response = line.substring(5).trim();
                     ObjectMapper objectMapper = new ObjectMapper();
                     
-                    LoadStartRequest loadStartRequest = objectMapper.readValue(response.toString(), LoadStartRequest.class);
+                    LoadStartResponse loadStartResponse = objectMapper.readValue(response.toString(), LoadStartResponse.class);
 
                     //LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
 
-                	System.out.println("Received AreaData: area_id=" + loadStartRequest.getAreaId() + ", conveyNo=" + loadStartRequest.getConveyNo()+", vehicle=" + loadStartRequest.getReadyVehicle());
+                	System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle());
 
                 	// 차량 준비
-                	if(loadStartRequest.getReadyVehicle()) {
-            			mainInstance.readyVehicleToConvey[loadStartRequest.getConveyNo()] = true;
+                	if(loadStartResponse.getReadyVehicle()) {
+            			mainInstance.readyVehicleToConvey[loadStartResponse.getConveyNo()] = true;
                 	}
                 	// 적재 시작
-                	if(loadStartRequest.getAreaId()!=0) {
-                		mainInstance.startLoad(loadStartRequest.getConveyNo(), loadStartRequest.getAreaId(), loadStartRequest.getAgentIds());
+                	if(loadStartResponse.getAreaId()!=0) {
+                		mainInstance.startPick(loadStartResponse);
                 	}	
                 }
             }
@@ -31340,20 +31316,20 @@ public class ReadyRequest implements Serializable{
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1714977088046</Id>
-			<Name><![CDATA[LoadStartRequest]]></Name>
+			<Name><![CDATA[LoadStartResponse]]></Name>
 			<Text><![CDATA[/**
  * LoadStartResponse
  */	
-public class LoadStartRequest implements Serializable {
+public class LoadStartResponse implements Serializable {
 
     private int areaId;
     private int conveyNo;
     private boolean readyVehicle;
     private List<Integer> agentIds;
     
-    public LoadStartRequest() {}
+    public LoadStartResponse() {}
     
-    public LoadStartRequest(int areaId, int conveyNo, boolean readyVehicle, List<Integer> agentIds) {
+    public LoadStartResponse(int areaId, int conveyNo, boolean readyVehicle, List<Integer> agentIds) {
         this.areaId = areaId;
         this.conveyNo = conveyNo;
         this.readyVehicle = readyVehicle;
