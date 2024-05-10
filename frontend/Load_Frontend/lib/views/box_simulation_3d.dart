@@ -16,7 +16,7 @@ import 'package:sidebarx/sidebarx.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../components/3d_overlay_widget.dart';
-import '../services/goods_functions.dart';
+import '../services/goods_service.dart';
 
 /* 메뉴 value */
 double heightFloorValuesLow = 0.0;
@@ -773,7 +773,7 @@ class _MyAppState extends State<FallingBoxSimulate>
         geometry, transparentEdgeMaterial, size * size * size);
 
     if (!isTestingDebug) {
-      var goodsList = goodsService.getGoods();
+      var goodsList = goodsService.getGoods("nonononononnononono");
 
       goodsList.then((value) {
         for (var goods in value) {
