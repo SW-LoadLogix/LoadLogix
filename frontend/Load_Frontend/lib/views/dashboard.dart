@@ -4,6 +4,8 @@ import 'package:load_frontend/components/charts.dart';
 import 'package:load_frontend/components/status_list.dart';
 import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/layout/main_layout.dart';
+import 'package:provider/provider.dart';
+import '../stores/user_store.dart';
 import '../components/delivery_table.dart';
 
 @RoutePage()
@@ -19,6 +21,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
+    print ("DashboardPage build token :  ${Provider.of<UserStore>(context, listen: false).token}");
     return MainLayout(
         topBarTitle: 'Dashboard',
         isFixed: false,
