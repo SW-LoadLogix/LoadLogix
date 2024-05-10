@@ -1,0 +1,460 @@
+class Good {
+  final int goodsId;
+  final String boxType;
+  final int boxHeight;
+  final int boxLength;
+  final int boxWidth;
+  final int weight;
+  final String address;
+
+  Good({
+    required this.goodsId,
+    required this.boxType,
+    required this.boxHeight,
+    required this.boxLength,
+    required this.boxWidth,
+    required this.weight,
+    required this.address,
+  });
+}
+
+class Building {
+  final String address;
+  final int totalGoods;
+  final List<Good> goods;
+
+  Building({
+    required this.address,
+    required this.totalGoods,
+    required this.goods,
+  });
+}
+
+class Area {
+  final String areaName;
+  final int total;
+  final List<Building> buildings;
+
+  Area({
+    required this.areaName,
+    required this.total,
+    required this.buildings,
+  });
+}
+
+List<Area> dummyData = [
+  Area(
+    areaName: "봉명1동",
+    total: 40,
+    buildings: [
+      Building(
+        address: "대전 유성구 문화동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 1,
+            boxType: "L1",
+            boxHeight: 150,
+            boxLength: 200,
+            boxWidth: 50,
+            weight: 1200,
+            address: "대전 유성구 문화동 00번지 103호",
+          ),
+          Good(
+            goodsId: 2,
+            boxType: "L2",
+            boxHeight: 130,
+            boxLength: 220,
+            boxWidth: 40,
+            weight: 1500,
+            address: "대전 유성구 문화동 00번지 104호",
+          ),
+          Good(
+            goodsId: 3,
+            boxType: "L3",
+            boxHeight: 140,
+            boxLength: 180,
+            boxWidth: 60,
+            weight: 2000,
+            address: "대전 유성구 문화동 00번지 105호",
+          ),
+          Good(
+            goodsId: 4,
+            boxType: "L4",
+            boxHeight: 120,
+            boxLength: 200,
+            boxWidth: 55,
+            weight: 1700,
+            address: "대전 유성구 문화동 00번지 106호",
+          ),
+          Good(
+            goodsId: 5,
+            boxType: "L5",
+            boxHeight: 160,
+            boxLength: 210,
+            boxWidth: 45,
+            weight: 1300,
+            address: "대전 유성구 문화동 00번지 107호",
+          ),
+        ],
+      ),
+      Building(
+        address: "서울 강남구 역삼동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 6,
+            boxType: "L6",
+            boxHeight: 170,
+            boxLength: 190,
+            boxWidth: 65,
+            weight: 1100,
+            address: "서울 강남구 역삼동 00번지 201호",
+          ),
+          Good(
+            goodsId: 7,
+            boxType: "L1",
+            boxHeight: 110,
+            boxLength: 205,
+            boxWidth: 70,
+            weight: 1600,
+            address: "서울 강남구 역삼동 00번지 202호",
+          ),
+          Good(
+            goodsId: 8,
+            boxType: "L2",
+            boxHeight: 100,
+            boxLength: 195,
+            boxWidth: 75,
+            weight: 1050,
+            address: "서울 강남구 역삼동 00번지 203호",
+          ),
+          Good(
+            goodsId: 9,
+            boxType: "L3",
+            boxHeight: 165,
+            boxLength: 180,
+            boxWidth: 80,
+            weight: 1230,
+            address: "서울 강남구 역삼동 00번지 204호",
+          ),
+          Good(
+            goodsId: 10,
+            boxType: "L4",
+            boxHeight: 155,
+            boxLength: 215,
+            boxWidth: 85,
+            weight: 1340,
+            address: "서울 강남구 역삼동 00번지 205호",
+          ),
+        ],
+      ),
+      Building(
+        address: "부산 해운대구 좌동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 11,
+            boxType: "L5",
+            boxHeight: 136,
+            boxLength: 184,
+            boxWidth: 80,
+            weight: 1926,
+            address: '부산 해운대구 좌동 00번지 301호',
+          ),
+          Good(
+            goodsId: 12,
+            boxType: "L6",
+            boxHeight: 191,
+            boxLength: 184,
+            boxWidth: 53,
+            weight: 1276,
+            address: '부산 해운대구 좌동 00번지 302호',
+          ),
+          Good(
+            goodsId: 13,
+            boxType: "L1",
+            boxHeight: 188,
+            boxLength: 203,
+            boxWidth: 74,
+            weight: 1213,
+            address: '부산 해운대구 좌동 00번지 303호',
+          ),
+          Good(
+            goodsId: 14,
+            boxType: "L2",
+            boxHeight: 196,
+            boxLength: 187,
+            boxWidth: 63,
+            weight: 1371,
+            address: '부산 해운대구 좌동 00번지 304호',
+          ),
+          Good(
+            goodsId: 15,
+            boxType: "L3",
+            boxHeight: 116,
+            boxLength: 210,
+            boxWidth: 50,
+            weight: 1367,
+            address: '부산 해운대구 좌동 00번지 305호',
+          ),
+        ],
+      ),
+      Building(
+        address: "광주 서구 치평동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 16,
+            boxType: "L4",
+            boxHeight: 180,
+            boxLength: 208,
+            boxWidth: 40,
+            weight: 1495,
+            address: '광주 서구 치평동 00번지 601호',
+          ),
+          Good(
+            goodsId: 17,
+            boxType: "L5",
+            boxHeight: 186,
+            boxLength: 190,
+            boxWidth: 69,
+            weight: 1629,
+            address: '광주 서구 치평동 00번지 602호',
+          ),
+          Good(
+            goodsId: 18,
+            boxType: "L6",
+            boxHeight: 176,
+            boxLength: 208,
+            boxWidth: 43,
+            weight: 1357,
+            address: '광주 서구 치평동 00번지 603호',
+          ),
+          Good(
+            goodsId: 19,
+            boxType: "L1",
+            boxHeight: 149,
+            boxLength: 219,
+            boxWidth: 73,
+            weight: 1305,
+            address: '광주 서구 치평동 00번지 604호',
+          ),
+          Good(
+            goodsId: 20,
+            boxType: "L2",
+            boxHeight: 111,
+            boxLength: 216,
+            boxWidth: 63,
+            weight: 1161,
+            address: '광주 서구 치평동 00번지 605호',
+          ),
+        ],
+      ),
+      Building(
+        address: "대구 수성구 범어동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 21,
+            boxType: "L3",
+            boxHeight: 115,
+            boxLength: 198,
+            boxWidth: 58,
+            weight: 1938,
+            address: '대구 수성구 범어동 00번지 503호',
+          ),
+          Good(
+            goodsId: 22,
+            boxType: "L4",
+            boxHeight: 129,
+            boxLength: 213,
+            boxWidth: 49,
+            weight: 1480,
+            address: '대구 수성구 범어동 00번지 504호',
+          ),
+          Good(
+            goodsId: 23,
+            boxType: "L5",
+            boxHeight: 106,
+            boxLength: 220,
+            boxWidth: 70,
+            weight: 1456,
+            address: '대구 수성구 범어동 00번지 505호',
+          ),
+          Good(
+            goodsId: 24,
+            boxType: "L6",
+            boxHeight: 185,
+            boxLength: 186,
+            boxWidth: 61,
+            weight: 1826,
+            address: '대구 수성구 범어동 00번지 506호',
+          ),
+          Good(
+            goodsId: 25,
+            boxType: "L1",
+            boxHeight: 112,
+            boxLength: 202,
+            boxWidth: 71,
+            weight: 1474,
+            address: '대구 수성구 범어동 00번지 507호',
+          ),
+        ],
+      ),
+      Building(
+        address: "인천 남동구 구월동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 26,
+            boxType: "L2",
+            boxHeight: 144,
+            boxLength: 180,
+            boxWidth: 57,
+            weight: 1738,
+            address: '인천 남동구 구월동 00번지 402호',
+          ),
+          Good(
+            goodsId: 27,
+            boxType: "L3",
+            boxHeight: 103,
+            boxLength: 205,
+            boxWidth: 46,
+            weight: 1313,
+            address: '인천 남동구 구월동 00번지 403호',
+          ),
+          Good(
+            goodsId: 28,
+            boxType: "L4",
+            boxHeight: 105,
+            boxLength: 186,
+            boxWidth: 56,
+            weight: 1536,
+            address: '인천 남동구 구월동 00번지 404호',
+          ),
+          Good(
+            goodsId: 29,
+            boxType: "L5",
+            boxHeight: 190,
+            boxLength: 206,
+            boxWidth: 75,
+            weight: 1723,
+            address: '인천 남동구 구월동 00번지 405호',
+          ),
+          Good(
+            goodsId: 30,
+            boxType: "L6",
+            boxHeight: 192,
+            boxLength: 189,
+            boxWidth: 67,
+            weight: 1073,
+            address: '인천 남동구 구월동 00번지 406호',
+          ),
+        ],
+      ),
+      Building(
+        address: "울산 남구 신정동 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 31,
+            boxType: "L1",
+            boxHeight: 103,
+            boxLength: 196,
+            boxWidth: 51,
+            weight: 1682,
+            address: '울산 남구 신정동 00번지 203호',
+          ),
+          Good(
+            goodsId: 32,
+            boxType: "L2",
+            boxHeight: 154,
+            boxLength: 198,
+            boxWidth: 80,
+            weight: 1581,
+            address: '울산 남구 신정동 00번지 204호',
+          ),
+          Good(
+            goodsId: 33,
+            boxType: "L3",
+            boxHeight: 134,
+            boxLength: 184,
+            boxWidth: 70,
+            weight: 1602,
+            address: '울산 남구 신정동 00번지 205호',
+          ),
+          Good(
+            goodsId: 34,
+            boxType: "L4",
+            boxHeight: 105,
+            boxLength: 183,
+            boxWidth: 73,
+            weight: 1928,
+            address: '울산 남구 신정동 00번지 206호',
+          ),
+          Good(
+            goodsId: 35,
+            boxType: "L5",
+            boxHeight: 126,
+            boxLength: 192,
+            boxWidth: 61,
+            weight: 1660,
+            address: '울산 남구 신정동 00번지 207호',
+          ),
+        ],
+      ),
+      Building(
+        address: "제주 서귀포시 성산읍 00빌딩",
+        totalGoods: 5,
+        goods: [
+          Good(
+            goodsId: 36,
+            boxType: "L6",
+            boxHeight: 107,
+            boxLength: 182,
+            boxWidth: 41,
+            weight: 1041,
+            address: '제주 서귀포시 성산읍 00번지 104호',
+          ),
+          Good(
+            goodsId: 37,
+            boxType: "L1",
+            boxHeight: 138,
+            boxLength: 194,
+            boxWidth: 70,
+            weight: 1625,
+            address: '제주 서귀포시 성산읍 00번지 105호',
+          ),
+          Good(
+            goodsId: 38,
+            boxType: "L2",
+            boxHeight: 195,
+            boxLength: 219,
+            boxWidth: 59,
+            weight: 1953,
+            address: '제주 서귀포시 성산읍 00번지 106호',
+          ),
+          Good(
+            goodsId: 39,
+            boxType: "L3",
+            boxHeight: 172,
+            boxLength: 205,
+            boxWidth: 47,
+            weight: 1278,
+            address: '제주 서귀포시 성산읍 00번지 107호',
+          ),
+          Good(
+            goodsId: 40,
+            boxType: "L4",
+            boxHeight: 111,
+            boxLength: 198,
+            boxWidth: 61,
+            weight: 1596,
+            address: '제주 서귀포시 성산읍 00번지 108호',
+          ),
+        ],
+      ),
+    ],
+  ),
+];

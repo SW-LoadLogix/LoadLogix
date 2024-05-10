@@ -1,3 +1,5 @@
+// model.dart
+
 import 'package:flutter/material.dart';
 
 class MenuItem {
@@ -16,14 +18,23 @@ class Order {
   Order(this.icon, this.name, this.packs, this.status, this.date);
 }
 
-class News {
+class Buildings {
   final String title;
   final String imgUrl;
   final String time;
   final String description;
 
-  News(this.time, this.title, this.imgUrl, [this.description = '']);
+  Buildings(this.time, this.title, this.imgUrl, [this.description = '']);
 }
+
+// class BussinessStatus {
+//   final String name;
+//   final String value;
+//   final String? iconPath;
+//   final IconData? icon;
+
+//   BussinessStatus(this.name, this.value, {this.icon, this.iconPath});
+// }
 
 class BussinessStatus {
   final String name;

@@ -11,7 +11,8 @@ GoodsData _$GoodsDataFromJson(Map<String, dynamic> json) => GoodsData(
       type: json['type'] as String,
       position: Vector3.fromJson(json['position'] as Map<String, dynamic>),
       weight: (json['weight'] as num).toInt(),
-      areaId: (json['areaId'] as num).toInt(),
+      buildingId: (json['buildingId'] as num).toInt(),
+      buildingName: json['buildingName'] as String,
       detailAddress: json['detailAddress'] as String,
     );
 
@@ -20,6 +21,7 @@ Map<String, dynamic> _$GoodsDataToJson(GoodsData instance) => <String, dynamic>{
       'type': instance.type,
       'position': instance.position,
       'weight': instance.weight,
-      'areaId': instance.areaId,
+      'buildingId': instance.buildingId,
+      'buildingName': instance.buildingName,
       'detailAddress': instance.detailAddress,
     };

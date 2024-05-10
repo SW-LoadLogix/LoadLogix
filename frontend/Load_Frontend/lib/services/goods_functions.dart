@@ -23,16 +23,17 @@ class GoodsService {
       for (int x = 0; x < 6; x++) {
         for (int y = 0; y < 6; y++) {
           for (int z = 0; z < 6; z++) {
-            String type = 'S${random.nextInt(6) + 1}';  // Random type between S1 and S6
+            String type = 'L${random.nextInt(6) + 1}';  // Random type between S1 and S6
 
             goods.add(GoodsData(
-                goodsId: goodsId++,
+                goodsId: goodsId,
                 type: type,
                 position: Vector3(x.toDouble() * 280 / 6.0 * gScale, y.toDouble()* 160 / 6.0* gScale, z.toDouble()* 160 / 6.0* gScale),
                 //position: Vector3(x.toDouble(), y as double, z as double),
 
                 weight: random.nextInt(1000),
-                areaId: random.nextInt(10),
+                buildingId: random.nextInt(5),
+                buildingName: 'Building Name ${goodsId++}',
                 detailAddress: '서울시 강남구 삼성동 123-456'));
           }
         }
