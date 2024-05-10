@@ -22,7 +22,6 @@ packer.addItem(Item(
         WHD=boxSize[5],
         weight=9,
         target=1,
-        type="L6"
     ))
 
 packer.addItem(Item(
@@ -30,177 +29,152 @@ packer.addItem(Item(
         WHD=boxSize[5],
         weight=5,
         target=2,
-        type="L6"
     ))
 packer.addItem(Item(
         name='c',
         WHD=boxSize[5],
         weight=9,
         target=3,
-        type="L6"
     ))
 packer.addItem(Item(
         name='d',
         WHD=boxSize[5],
         weight=9,
         target=4,
-        type="L6"
     ))
 packer.addItem(Item(
         name='e',
         WHD=boxSize[5],
         weight=9,
         target=5,
-        type="L6"
     ))
 packer.addItem(Item(
         name='f',
         WHD=boxSize[5],
         weight=9,
         target=6,
-        type="L6"
     ))
 packer.addItem(Item(
         name='g',
         WHD=boxSize[5],
         weight=9,
         target=7,
-        type="L6"
     ))
 packer.addItem(Item(
         name='h',
         WHD=boxSize[5],
         weight=9,
         target=8,
-        type="L6"
     ))
 packer.addItem(Item(
         name='i',
         WHD=boxSize[5],
         weight=9,
         target=9,
-        type="L6"
     ))
 packer.addItem(Item(
         name='j',
         WHD=boxSize[5],
         weight=9,
         target=10,
-        type="L6"
     ))
 packer.addItem(Item(
         name='k',
         WHD=boxSize[5],
         weight=9,
         target=11,
-        type="L6"
     ))
 packer.addItem(Item(
         name='l',
         WHD=boxSize[5],
         weight=9,
         target=12,
-        type="L6"
     ))
 packer.addItem(Item(
         name='n',
         WHD=boxSize[5],
         weight=9,
         target=13,
-        type="L6"
     ))
 packer.addItem(Item(
         name='m',
         WHD=boxSize[5],
         weight=9,
         target=14,
-        type="L6"
     ))
 packer.addItem(Item(
         name='o',
         WHD=boxSize[5],
         weight=9,
         target=15,
-        type="L6"
     ))
 packer.addItem(Item(
         name='p',
         WHD=boxSize[5],
         weight=9,
         target=16,
-        type="L6"
     ))
 packer.addItem(Item(
         name='q',
         WHD=boxSize[5],
         weight=9,
         target=17,
-        type="L6"
     ))
 packer.addItem(Item(
         name='r',
         WHD=boxSize[5],
         weight=9,
         target=18,
-        type="L6"
     ))
 packer.addItem(Item(
         name='s',
         WHD=boxSize[5],
         weight=9,
         target=19,
-        type="L6"
     ))
 packer.addItem(Item(
         name='t',
         WHD=boxSize[5],
         weight=9,
         target=20,
-        type="L6"
     ))
 packer.addItem(Item(
         name='u',
         WHD=boxSize[5],
         weight=9,
         target=21,
-        type="L6"
     ))
 packer.addItem(Item(
         name='v',
         WHD=boxSize[5],
         weight=9,
         target=22,
-        type="L6"
     ))
 packer.addItem(Item(
         name='w',
         WHD=boxSize[5],
         weight=9,
         target=23,
-        type="L6"
     ))
-#
-# packer.addItem(Item(
-#         name='x',
-#         WHD=boxSize[5],
-#         weight=9,
-#         target=23,
-#         type="L6"
-#     ))
-# packer.addItem(Item(
-#         name='y',
-#         WHD=boxSize[5],
-#         weight=9,
-#         target=23,
-#         type="L6"
-#     ))
-# packer.addItem(Item(
-#         name='z',
-#         WHD=boxSize[5],
-#         weight=9,
-#         target=23,
-#         type="L6"
-#     ))
+
+packer.addItem(Item(
+        name='x',
+        WHD=boxSize[5],
+        weight=9,
+        target=23,
+    ))
+packer.addItem(Item(
+        name='y',
+        WHD=boxSize[4],
+        weight=9,
+        target=23,
+    ))
+packer.addItem(Item(
+        name='z',
+        WHD=boxSize[5],
+        weight=9,
+        target=23,
+    ))
 
 packer.pack2(
     number_of_decimals=0

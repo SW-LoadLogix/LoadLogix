@@ -16,7 +16,10 @@ while (True):
 
     try:
         if __name__ == "__main__":
-            url = 'http://192.168.31.245:8081/api/load/task'
+            #로컬테스트
+            url = 'http://localhost:8081/api/load'
+            #백서버
+            # url = 'http://192.168.31.245:8081/api/load/task'
             for event in event_stream(url):
                 start = time.time()
                 # 서버로 부터 받은 json 객체 변환
@@ -38,17 +41,18 @@ while (True):
                     )
                     packer.addBin(box)
                     deliverOrder = event_data['result']['building_id_order']
+
                     for item in event_data['result']['goods']:
                         packer.addItem(Item(
                             name=item['goods_id'],
-                            WHD=boxSize[int(item['type'][1])],
+                            WHD=boxSize[int(item['type'][1])-1],
                             weight=item['weight'],
-                            type=item['type'],
                             target=deliverOrder.index(item["building_id"]),
                         ))
+                        # print(item['goods_id'],"를 추가완료")
 
                     # print(deliverOrder)
-                    packer.pack(
+                    packer.pack2(
                         number_of_decimals=0
                     )
                     # json 형식으로 만들기
@@ -71,6 +75,46 @@ while (True):
                     loadResponse = json.dumps(result, indent=4)
                     print(loadResponse)
 
+                    for box in packer.bins:
+
+                        volume = box.width * box.height * box.depth
+                        print(":::::::::::", box.string())
+
+                        print("FITTED ITEMS:")
+                        volume_t = 0
+                        volume_f = 0
+                        unfitted_name = ''
+
+                        # '''
+                        for item in box.items:
+                            print("name : ", item.name)
+                            print("position : ", item.position)
+                            print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+                            print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+                            print("weight : ", float(item.weight))
+                            print("floor : ", float(item.floor))
+                            volume_t += float(item.width) * float(item.height) * float(item.depth)
+                            print("***************************************************")
+                        print("***************************************************")
+                        # '''
+                        print("UNFITTED ITEMS:")
+                        for item in box.unfitted_items:
+                            print("name : ", item.name)
+                            print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+                            print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+                            print("weight : ", float(item.weight))
+                            print("floor : ", float(item.floor))
+                            print("denyInfo : ", item.denyInfo)
+                            volume_f += float(item.width) * float(item.height) * float(item.depth)
+                            unfitted_name += '{},'.format(item.name)
+                            print("***************************************************")
+                        print("***************************************************")
+                        print('space utilization : {}%'.format(round(volume_t / float(volume) * 100, 2)))
+                        print('residual volumn : ', float(volume) - volume_t)
+                        print('unpack item : ', unfitted_name)
+                        print('unpack item volumn : ', volume_f)
+                        print("gravity distribution : ", box.gravity)
+
                     stop = time.time()
                     print('used time : ', stop - start)
 
@@ -83,8 +127,10 @@ while (True):
                         fontsize=10
                     )
                     fig.show()
-                    # Post 요청을 보낼 URL
-                    post_url = 'http://192.168.31.245:8081/api/load/task/result'
+                    # 로컬테스트
+                    post_url = 'http://localhost:8081/api/load'
+                    # 백서버
+                    # post_url = 'http://192.168.31.245:8081/api/load/task/result'
 
                     # POST 요청 보내기
                     response = requests.post(post_url, data=loadResponse, headers={'Content-Type': 'application/json'})

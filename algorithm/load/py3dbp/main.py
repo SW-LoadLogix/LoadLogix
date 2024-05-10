@@ -12,8 +12,9 @@ START_POSITION = [0, 0, 0]
 DEFAULT_NUMBER_OF_DECIMALS = 0
 
 
+#denyInfo : 1(크기 넘침), 2(무게 넘침
 class Item:
-    def __init__(self, name, WHD, weight, target, type, floor=0, denyInfo=0, originDepth = 0):
+    def __init__(self, name, WHD, weight, target, floor=0, denyInfo=0, originDepth = 0):
         self.name = name
         self.width = WHD[0]
         self.height = WHD[1]
@@ -22,7 +23,6 @@ class Item:
         self.position = START_POSITION
         self.number_of_decimals = DEFAULT_NUMBER_OF_DECIMALS
         self.target = target
-        self.type = type
         self.floor = floor
         self.denyInfo = denyInfo
         self.originDepth = originDepth
@@ -36,14 +36,10 @@ class Item:
         self.number_of_decimals = number_of_decimals
 
     def getVolume(self):
+        return set2Decimal(self.width * self.height * self.depth, self.number_of_decimals)
+
+    def getArea(self):
         return set2Decimal(self.width * self.height, self.number_of_decimals)
-
-    def getMaxArea(self):
-        a = sorted([self.width, self.height, self.depth], reverse=True) if self.updown == True else [self.width,
-                                                                                                     self.height,
-                                                                                                     self.depth]
-
-        return set2Decimal(a[0] * a[1], self.number_of_decimals)
 
     def getDimension(self):
         return [self.width, self.height, self.depth]
@@ -86,6 +82,7 @@ class Bin:
         return set2Decimal(
             self.width * self.height * self.depth, self.number_of_decimals
         )
+
     def getTotalWeight(self):
         total_weight = 0
         for item in self.items:
@@ -149,6 +146,7 @@ class Packer:
         self.items = []
         self.unfit_items = []
         self.total_items = 0
+        self.floorVolume =0
 
     def addBin(self, bin):
         return self.bins.append(bin)
@@ -177,16 +175,16 @@ class Packer:
                     pivot = [0, 0, 0]
                     w, h, d = ib.getDimension()
                     if axis == Axis.WIDTH:
-                        print(ib.name, "의 옆으로", item.name, "를 적재")
+                        # print(ib.name, "의 옆으로", item.name, "를 적재")
                         pivot = [ib.position[0] + w, ib.position[1], ib.position[2]]
                     elif axis == Axis.HEIGHT:
-                        print(ib.name, "의 앞으로", item.name, "를 적재")
+                        # print(ib.name, "의 앞으로", item.name, "를 적재")
                         pivot = [ib.position[0], ib.position[1] + h, ib.position[2]]
                     elif axis == Axis.DEPTH:
-                        print(ib.name, "의 위로", item.name)
+                        # print(ib.name, "의 위로", item.name)
                         pivot = [ib.position[0], ib.position[1], ib.position[2] + d]
                     elif axis == Axis.LEFT:
-                        print(ib.name, "의 왼쪽으로", item.name)
+                        # print(ib.name, "의 왼쪽으로", item.name)
                         pivot = [ib.position[0]-item.width, ib.position[1] , ib.position[2]]
 
                     if bin.putItem(item, pivot, ib, axis):
@@ -205,13 +203,13 @@ class Packer:
                     pivot = [0, 0, 0]
                     w, h, d = ib.getDimension()
                     if axis == Axis.WIDTH:
-                        print(ib.name, "의 옆으로", item.name, "를 적재")
+                        # print(ib.name, "의 옆으로", item.name, "를 적재")
                         pivot = [ib.position[0] + w, ib.position[1], ib.position[2]]
                     elif axis == Axis.HEIGHT:
-                        print(ib.name, "의 앞으로", item.name, "를 적재")
+                        # print(ib.name, "의 앞으로", item.name, "를 적재")
                         pivot = [ib.position[0], ib.position[1] + h, ib.position[2]]
                     elif axis == Axis.LEFT:
-                        print(ib.name, "의 왼쪽으로", item.name, "를 적재, 밑의 공간 : ", ib.target, "쌓으려는 공간: ", item.target)
+                        # print(ib.name, "의 왼쪽으로", item.name, "를 적재, 밑의 공간 : ", ib.target, "쌓으려는 공간: ", item.target)
                         pivot = [ib.position[0] - item.width, ib.position[1], ib.position[2]]
                     if bin.putItem(item, pivot, ib, axis):
                         fitted = True
@@ -237,16 +235,16 @@ class Packer:
                 pivot = [0, 0, 0]
                 w, h, d = ib.getDimension()
                 if axis == Axis.DEPTH:
-                    print(ib.name, "의 위로", item.name)
+                    # print(ib.name, "의 위로", item.name)
                     pivot = [ib.position[0], ib.position[1], ib.position[2] + d]
                 elif axis == Axis.WIDTH:
-                    print(ib.name, "의 옆으로", item.name, "를 적재")
+                    # print(ib.name, "의 옆으로", item.name, "를 적재")
                     pivot = [ib.position[0] + w, ib.position[1], ib.position[2]]
                 elif axis == Axis.LEFT:
-                    print(ib.name, "의 왼쪽으로", item.name)
+                    # print(ib.name, "의 왼쪽으로", item.name)
                     pivot = [ib.position[0]-item.width, ib.position[1], ib.position[2]]
                 elif axis == Axis.HEIGHT:
-                    print(ib.name, "의 앞으로", item.name, "를 적재")
+                    # print(ib.name, "의 앞으로", item.name, "를 적재")
                     pivot = [ib.position[0], ib.position[1] + h, ib.position[2]]
 
                 if bin.putItem(item, pivot, ib, axis):
@@ -258,8 +256,7 @@ class Packer:
             bin.unfitted_items.append(item)
 
     def pack(self, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):
-
-        self.items.sort(key=lambda item: (-item.target, item.weight, -item.getVolume()))
+        self.items.sort(key=lambda item: (-item.target, item.weight, -item.getArea()))
 
         for idx, bin in enumerate(self.bins):
             # pack item to bin
@@ -280,26 +277,21 @@ class Packer:
 
     def pack2(self, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):
         totalVolume = 0.0
+        maxDepth = self.get_item_with_max_depth()
         # Decimal로 변경
         for item in self.items:
             item.formatNumbers(number_of_decimals)
             totalVolume += float(item.getVolume())
 
         totalVolume = math.ceil(totalVolume / 10) * 10
-        totalVolume /= float(self.items[0].getVolume())
-        print("!!!!!!!!!!!!!!!!사용량!!!!!!!!!!!!!!!!!!!!!!!")
-        print(totalVolume)
+        # totalVolume /= float(self.items[0].getVolume())
         self.bins[0].originDepth = self.bins[0].depth
-        if totalVolume < 22.0:
-            self.bins[0].depth = 34.0
-        elif totalVolume < 44.0:
-            self.bins[0].depth = 34.0 * 2
-        elif totalVolume < 66.0:
-            self.bins[0].depth = 34.0 * 3
-        elif totalVolume < 88.0:
-            self.bins[0].depth = 34.0 * 4
+
+        floor = math.ceil(totalVolume/self.floorVolume)*1.8
+        self.bins[0].depth = maxDepth * floor if maxDepth * floor < self.bins[0].depth else self.bins[0].depth
+
         # Item : sorted by volumn -> sorted by loadbear -> sorted by level -> binding
-        self.items.sort(key=lambda item: (-item.target, item.weight, -item.getVolume()))
+        self.items.sort(key=lambda item: (-item.target, -item.getArea(), item.weight))
 
         for idx, bin in enumerate(self.bins):
             # pack item to bin
@@ -307,6 +299,19 @@ class Packer:
                 self.pack2Bin2(bin, item)
         self.bins[0].depth = self.bins[0].originDepth
 
+    def get_item_with_max_depth(self):
+        if not self.items:
+            return None
+        # max() 함수를 사용하여 items 리스트에서 가장 깊이가 큰 Item을 찾습니다.
+        item = max(self.items, key=lambda item: item.depth)
+        rCnt = 0
+        cCnt = 0
+        for row in range(item.width, self.bins[0].width, item.width):
+            rCnt += 1
+        for col in range(item.height, self.bins[0].height, item.height):
+            cCnt += 1
+        self.floorVolume = item.width * item.height * item.depth * rCnt * cCnt
+        return item.depth
 class Painter:
 
     def __init__(self, bins):
