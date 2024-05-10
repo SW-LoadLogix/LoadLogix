@@ -5,7 +5,8 @@ import 'package:load_frontend/models/vector3.dart';
 
 part 'good_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
+//@JsonSerializable()
 class GoodsData{
   const GoodsData({
     required this.goodsId,

@@ -7,21 +7,21 @@ part of 'good_data.dart';
 // **************************************************************************
 
 GoodsData _$GoodsDataFromJson(Map<String, dynamic> json) => GoodsData(
-      goodsId: (json['goodsId'] as num).toInt(),
+      goodsId: (json['goods_id'] as num).toInt(),
       type: json['type'] as String,
       position: Vector3.fromJson(json['position'] as Map<String, dynamic>),
       weight: (json['weight'] as num).toInt(),
-      buildingId: (json['buildingId'] as num).toInt(),
-      buildingName: json['buildingName'] as String,
-      detailAddress: json['detailAddress'] as String,
+      buildingId: (json['building_id'] as num).toInt(),
+      buildingName: json['building_name'] as String,
+      detailAddress: json['detail_address'] as String,
     );
 
 Map<String, dynamic> _$GoodsDataToJson(GoodsData instance) => <String, dynamic>{
-      'goodsId': instance.goodsId,
+      'goods_id': instance.goodsId,
       'type': instance.type,
       'position': instance.position,
       'weight': instance.weight,
-      'buildingId': instance.buildingId,
-      'buildingName': instance.buildingName,
-      'detailAddress': instance.detailAddress,
+      'building_id': instance.buildingId,
+      'building_name': instance.buildingName,
+      'detail_address': instance.detailAddress,
     };
