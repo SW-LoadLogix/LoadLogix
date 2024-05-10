@@ -28,6 +28,7 @@ public class WorkerService {
     private final CarRepository carRepository;
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
+        System.out.println("signup in service");
         Optional<WorkerEntity> worker = workerRepository.findByLoginId(signUpRequest.id());
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);

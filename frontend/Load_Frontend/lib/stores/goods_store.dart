@@ -1,10 +1,15 @@
 
 
 
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:load_frontend/models/good_data.dart';
 import 'package:load_frontend/models/vector3.dart';
-import 'package:load_frontend/services/goods_functions.dart';
+import 'package:load_frontend/services/goods_service.dart';
+import 'package:load_frontend/stores/user_secure_store.dart';
+import 'package:load_frontend/stores/user_store.dart';
+import 'package:provider/provider.dart';
 
 import '../views/box_simulation/box.dart';
 
@@ -19,6 +24,7 @@ class GoodsStore extends ChangeNotifier {
   Map<int, bool> buildingChecked = {};
   Map<int, Map<int, bool>> goodsChecked = {};
   int selectedGoodsId = 0;
+
   GoodsData selectedGoods = GoodsData(
     goodsId: 0,
     buildingId: 0,
@@ -35,8 +41,17 @@ class GoodsStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getGoodsFromApi() async {
-    goods = await goodsService.getGoods();
+  Future<void> getGoodsFromApi(String accessToken) async {
+    //String? token = await Provider.of<UserSecureStorage>(context as BuildContext, listen: false).getToken();
+    //print ("token: $token");
+
+
+    print ("token on Goods Api: $accessToken");
+
+
+    //String? token = await UserSecureStorage().getToken();
+
+    goods = await goodsService.getGoods(accessToken);
     goodsGroupedByBuildingId = await getGoodsGroupedByBuildingId();
     initializeGoodsChecked(goods);
 

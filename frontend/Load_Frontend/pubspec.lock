@@ -350,6 +350,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
+  flutter_secure_storage:
+    dependency: "direct main"
+    description:
+      name: flutter_secure_storage
+      sha256: "9f3dd2ac3b6875b0fde5b04734789c3ef35ba3965c18e99dd564a7a2f8056df6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:
@@ -384,22 +392,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  google_maps:
-    dependency: transitive
-    description:
-      name: google_maps
-      sha256: "47eef3836b49bb030d5cb3afc60b8451408bf34cf753e571b645d6529eb4251a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.1.0"
   google_maps_flutter:
     dependency: "direct main"
     description:
       name: google_maps_flutter
-      sha256: c1972cbad779bc5346c49045f26ae45550a0958b1cbca5b524dd3c8954995d28
+      sha256: abefcb1e5e5c96bdd8084939dda555257af272c7972902ca46d5631092c1df68
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.1"
+    version: "2.2.8"
   google_maps_flutter_android:
     dependency: transitive
     description:
@@ -424,14 +424,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
-  google_maps_flutter_web:
-    dependency: transitive
-    description:
-      name: google_maps_flutter_web
-      sha256: "0c0d5c723d94b295cf86dd1c45ff91d2ac1fff7c05ddca4f01bef9fa0a014690"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.7"
   graphs:
     dependency: transitive
     description:
@@ -500,18 +492,10 @@ packages:
     dependency: transitive
     description:
       name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.7"
-  js_wrapping:
-    dependency: transitive
-    description:
-      name: js_wrapping
-      sha256: e385980f7c76a8c1c9a560dfb623b890975841542471eade630b2871d243851c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.4"
+    version: "0.7.1"
   json_annotation:
     dependency: "direct main"
     description:
@@ -712,14 +696,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  sanitize_html:
-    dependency: transitive
-    description:
-      name: sanitize_html
-      sha256: "12669c4a913688a26555323fb9cec373d8f9fbe091f2d01c40c723b33caa8989"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   shelf:
     dependency: transitive
     description:
@@ -809,26 +785,26 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: fc61878342caee6da7979ca0ca9bb178f1eb5ca9b836dada34b83caa39e4bfed
+      sha256: "6c534bb282e1429ac082354ace1b7c6d4496a258e62c948b7ca2b52acca8a514"
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   syncfusion_flutter_datagrid:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_datagrid
-      sha256: "1b21b1217ddab9b43ba62282a3e0fcf0d04e631e729aad074e926f80ae42fb2c"
+      sha256: a1282007dd6f6152822f8e9ede9bbdb7755eb3f3d47ee742d5b813eaafe1cdb6
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: cd351cb8391b9ee69043bcd1f28a518ae559bf165b2f8aa906592a007dad86ca
+      sha256: "9bc6b900c2325b9128798380d6dfa5ce07a6cecb15673e637013aa49b61d3167"
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   term_glyph:
     dependency: transitive
     description:
