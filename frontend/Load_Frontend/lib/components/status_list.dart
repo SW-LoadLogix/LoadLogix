@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:load_frontend/model.dart';
 import 'package:load_frontend/components/status_card.dart';
+import 'package:load_frontend/models/worker_info_data.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
 
@@ -12,7 +15,23 @@ final List<BussinessStatus> statusList = [
   BussinessStatus('Customers', '11234', Icons.people_outline_outlined),
 ];
 
-class StatusList extends StatelessWidget {
+class StatusList extends StatefulWidget {
+  StatusList({Key? key}) :super(key: key);
+
+  @override
+  _StatusListState createState() => _StatusListState();
+}
+class _StatusListState extends State<StatusList>{
+  String name = '';
+  String todayDate = '';
+
+  @override
+  void initState() {
+    WorkerStore ws = Provider.of<WorkerStore>(context,listen: false);
+    ws.getWorkerInfoFromApi();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
@@ -44,3 +63,5 @@ class StatusList extends StatelessWidget {
     );
   }
 }
+
+
