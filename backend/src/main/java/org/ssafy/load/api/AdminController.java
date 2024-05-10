@@ -4,13 +4,16 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ssafy.load.application.AdminService;
+import org.ssafy.load.application.AreaService;
 import org.ssafy.load.application.GoodsService;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
+import org.ssafy.load.dto.request.AreaSettingRequest;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.response.BoxTypeResponse;
 import org.ssafy.load.dto.response.DayGoodsCountResponse;
@@ -29,6 +32,7 @@ public class AdminController {
     private final AdminService adminService;
     private final GoodsService goodsService;
     private final WorkerService workerService;
+    private final AreaService areaService;
 
     @PostMapping("/login")
     public Response<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -61,7 +65,12 @@ public class AdminController {
     }
 
     @GetMapping("/workers")
-    public Response<List<WorkerResponse>> getWorkerList(){
+    public Response<List<WorkerResponse>> getWorkerList() {
         return Response.success(workerService.getWorkerList());
+    }
+
+    @PutMapping("/settings")
+    public Response<String> setAreaCount(@RequestBody AreaSettingRequest areaSettingRequest) {
+        return Response.success(areaService.setAreaCount(areaSettingRequest));
     }
 }

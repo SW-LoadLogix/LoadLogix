@@ -15,13 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AreaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="area_name")
+    @Column(name = "area_name")
     private String areaName;
-    @Column(name="convey_no")
+    @Column(name = "convey_no")
     private int conveyNo;
+
+    @Column(name="count")
+    private int count;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id") // 실제 데이터베이스의 외래키 컬럼명 지정
@@ -31,12 +35,17 @@ public class AreaEntity {
     private List<LoadTaskEntity> loadTaskEntities;
 
     public static AreaEntity of(
-            Integer id,
-            String areaName,
-            int conveyNo,
-            WorkerEntity worker,
-            List<LoadTaskEntity> loadTaskEntities){
-        return new AreaEntity(id, areaName, conveyNo, worker, loadTaskEntities);
+        Integer id,
+        String areaName,
+        int conveyNo,
+        int count,
+        WorkerEntity worker,
+        List<LoadTaskEntity> loadTaskEntities) {
+        return new AreaEntity(id, areaName, conveyNo, count, worker, loadTaskEntities);
+    }
+
+    public void updateArea(int count) {
+        this.count = count;
     }
 
 }
