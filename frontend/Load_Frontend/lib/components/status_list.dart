@@ -3,10 +3,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:load_frontend/model.dart';
 import 'package:load_frontend/components/status_card.dart';
 import 'package:load_frontend/models/worker_info_data.dart';
+import 'package:load_frontend/services/user_service.dart';
 import 'package:load_frontend/stores/worker_store.dart';
 import 'package:provider/provider.dart';
 
 import '../constaints.dart';
+import '../stores/user_store.dart';
 
 final List<BussinessStatus> statusList = [
   BussinessStatus('Total Sales', '1123456 \$', Icons.show_chart_outlined),
@@ -28,18 +30,22 @@ class _StatusListState extends State<StatusList>{
   @override
   void initState() {
     WorkerStore ws = Provider.of<WorkerStore>(context,listen: false);
-    ws.getWorkerInfoFromApi();
+    UserStore us = Provider.of<UserStore>(context, listen:false);
+
+    ws.getWorkerInfoFromApi(us.token);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
+    var workerinfo = Provider.of<WorkerStore>(context,listen: false).workerInfo;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "김보경 기사님 2024-05-05 배송관리",
+          " ${Provider.of<WorkerStore>(context, listen: true).workerInfo.name} 기사님 2024-05-05 배송관리",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           textAlign: TextAlign.left,
         ),
