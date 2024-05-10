@@ -96,11 +96,14 @@ class BuildingList extends StatelessWidget {
               ],
             ),
           ),
-          Chart(),
+
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                children: buildings.map((e) => BuildingItem(e)).toList(),
+                children: [
+                  Chart(),
+                  ...buildings.map((e) => BuildingItem(e)).toList(),
+                ],
               ),
             ),
           ),
