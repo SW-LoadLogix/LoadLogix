@@ -1,13 +1,15 @@
 package org.ssafy.load.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record SortedGoods(
-    Long goodsId,
-    String type,
+    @JsonProperty("goods_id") Long goodsId,
+    @JsonProperty("type") String type,
     Position position,
     int weight,
-    Long buildingId,
-    String buildingName,
-    String detailAddress
+    @JsonProperty("building_id") Long buildingId,
+    @JsonProperty("building_name") String buildingName,
+    @JsonProperty("detail_address") String detailAddress
 ) {
 
 }

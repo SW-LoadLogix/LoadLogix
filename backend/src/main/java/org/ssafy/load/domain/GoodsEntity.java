@@ -77,4 +77,25 @@ public class GoodsEntity {
     public void withUpdateLoadTask(LoadTaskEntity loadTask) {
         this.loadTask = loadTask;
     }
+
+    public static GoodsEntity createNewEntity(
+            int weight,
+            String detailAddress,
+            BoxTypeEntity boxType,
+            BuildingEntity building,
+            LoadTaskEntity loadTask
+    ) {
+        return GoodsEntity.of(
+                null,
+                weight,
+                detailAddress,
+                null,
+                null,
+                null,
+                null,
+                boxType,
+                building,
+                loadTask,
+                null);
+    }
 }

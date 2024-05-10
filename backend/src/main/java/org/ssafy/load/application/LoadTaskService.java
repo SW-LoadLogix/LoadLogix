@@ -7,14 +7,13 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
-import org.ssafy.load.domain.AreaEntity;
-import org.ssafy.load.domain.GoodsEntity;
-import org.ssafy.load.domain.LoadTaskEntity;
+import org.ssafy.load.domain.*;
 import org.ssafy.load.dto.request.GoodsRequest;
 import org.ssafy.load.dto.response.LoadStartResponse;
 import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,73 +27,43 @@ public class LoadTaskService {
     private final SseService sseService;
 
     @Transactional
-    public void setReadyCompletedArea(ReadyRequest readyRequest){
-        System.out.println(readyRequest);
-        areaRepository.findById(readyRequest.areaId()).ifPresentOrElse((areaEntity) -> {
-            LoadTaskEntity loadTaskEntity = loadTaskRepository.save(
-                            LoadTaskEntity.of(
-                                    null,
-                                    true,
-                                    readyRequest.count(),
-                                    false,
-                                    false,
-                                    null,
-                                    areaEntity,
-                                    null
-                            ));
+    public void setReadyCompletedArea(ReadyRequest readyRequest) {
+        AreaEntity areaEntity = areaRepository.findById(readyRequest.areaId()).orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
 
-            // 물품 저장
-            for(GoodsRequest goods : readyRequest.goods()){
-                GoodsEntity goodsEntity = GoodsEntity.of(
-                        null,
-                        goods.weight(),
-                        goods.detailAddress(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                        buildingRepository.findById(goods.buildingId() + 272).orElseThrow(() -> {
-                            System.out.println(goods.buildingId());
-                            return new CommonException(ErrorCode.INVALID_DATA);
-                        }),
-                        loadTaskEntity,
-                        null
-                );
-                goodsRepository.save(goodsEntity);
+        LoadTaskEntity loadTaskEntity = loadTaskRepository.save(LoadTaskEntity.createNewEntity(readyRequest.count(), areaEntity));
 
-            }
+        // 물품 저장
+        for (GoodsRequest goods : readyRequest.goods()) {
+            BoxTypeEntity boxType = boxTypeRepository.findByType(BoxType.valueOf("L" + goods.type()))
+                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA));
+            BuildingEntity building = buildingRepository.findById(goods.buildingId() + 271)
+                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA));
 
-        }, () -> {
-            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
-        });
+            goodsRepository.save(GoodsEntity.createNewEntity(
+                    goods.weight(),
+                    goods.detailAddress(),
+                    boxType,
+                    building,
+                    loadTaskEntity
+            ));
+        }
     }
 
     @Transactional
     public Boolean setReadyCompletedWorker(Long workerId) {
-
-        return workerRepository.findById(workerId)
-                .map(workerEntity -> {
-                    AreaEntity areaEntity = workerEntity.getArea();
-                    int areaId = areaEntity.getId();
-                    int conveyNo = areaEntity.getConveyNo();
-                    List<LoadTaskEntity> loadTaskEntities = loadTaskRepository.findAllByAreaIdOrderByCreatedAtDesc(areaId);
-                    for(LoadTaskEntity loadTaskEntity : loadTaskEntities) {
-                        System.out.println(loadTaskEntity.getAreaStatus() +" "+loadTaskEntity.getWorkerState()+" "+loadTaskEntity.getComplete());
-
-                        if (loadTaskEntity!=null && !loadTaskEntity.getWorkerState() && loadTaskEntity.getAreaStatus() && loadTaskEntity.getComplete()) {
-                            loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
-                            sseService.sendEvent("1", LoadStartResponse.of(
-                                    areaId,
-                                    conveyNo,
-                                    true
-                            ));
-                            return true;
-                        }
-                    }
-                    return false;
-                })
+        WorkerEntity workerEntity = workerRepository.findById(workerId)
                 .orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
+
+        AreaEntity areaEntity = workerEntity.getArea();
+        int areaId = areaEntity.getId();
+        int conveyNo = areaEntity.getConveyNo();
+        Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findOldWaitedTask(areaId);
+        if(loadTaskEntityOptional.isEmpty()) return false;
+
+        LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.get();
+        loadTaskEntity.withUpdatedWorkerState(true);
+        sseService.sendEvent("1", LoadStartResponse.of(areaId, conveyNo, true));
+        return true;
     }
 }
 

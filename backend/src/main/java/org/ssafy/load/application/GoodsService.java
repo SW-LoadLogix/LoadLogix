@@ -22,7 +22,6 @@ import org.ssafy.load.dto.SortedGoods;
 public class GoodsService {
 
     private final WorkerRepository workerRepository;
-    private final AreaRepository areaRepository;
     private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
     private final LoadTaskRepository loadTaskRepository;
@@ -30,20 +29,21 @@ public class GoodsService {
 
     public GoodsListResponse getOriginGoods(Long workerId) {
         //기사 조회
-        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
-        WorkerEntity worker = workerEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
 
         //구역 조회
-        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
-        AreaEntity area = areaOptionalEntity.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+        Optional<AreaEntity> areaOptional = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptional.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
-        List<Integer> loadTask = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
-        if(loadTask.isEmpty()) {
+        //가장 최근 적재 조회
+        List<Integer> loadTaskList = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
+        if(loadTaskList.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
 
         //task에 할당된 상품 조회
-        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTask.getFirst());
+        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskList.getFirst());
         Map<BuildingEntity, List<GoodsEntity>> buildingGoodsEntityMap = new HashMap<>();
 
         for(GoodsEntity goodsEntity : goodsEntityList) {
@@ -89,38 +89,20 @@ public class GoodsService {
 
     public SortedGoodsResponse getSortedGoods(Long workerId) {
         //기사 조회
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
+        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
 
         //구역 조회
-        Optional<AreaEntity> area = areaRepository.findById(worker.get().getArea().getId());
-        if (area.isEmpty()) {
-            throw new CommonException(ErrorCode.AREA_NOT_FOUND);
-        }
+        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptionalEntity.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
-        // 배송 기사의 가장 최근 적재 리스트 조회
-        List<Integer> loadTaskIds = loadTaskRepository.findMostRecentCompletedTaskIds(
-            area.get().getId());
-
-        if (loadTaskIds.isEmpty()) {
+        //가장 최근 적재 조회
+        List<Integer> loadTaskList = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
+        if(loadTaskList.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
 
-        Integer loadTaskId = loadTaskIds.getFirst();
-        Optional<LoadTaskEntity> loadTask = loadTaskRepository.findById(loadTaskId);
-        if (loadTask.isEmpty()) {
-            throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
-        }
-
-        if (!loadTask.get().getAreaStatus() || !loadTask.get().getWorkerState()) {
-            throw new CommonException(ErrorCode.INVALID_LOAD_TASK);
-        }
-
-        List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
-            loadTaskId);
-
+        List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(loadTaskList.getFirst());
         List<SortedGoods> goods = goodsEntities.stream()
             .map(g -> new SortedGoods(
                 g.getId(),
