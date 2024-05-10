@@ -21,6 +21,7 @@ import org.ssafy.load.dto.response.GoodsCountResponse;
 import org.ssafy.load.dto.response.GoodsOutputResponse;
 import org.ssafy.load.dto.response.GoodsResponse;
 import org.ssafy.load.dto.response.LoginResponse;
+import org.ssafy.load.dto.response.RackStoreCountResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
@@ -72,5 +73,10 @@ public class AdminController {
     @PutMapping("/settings")
     public Response<String> setAreaCount(@RequestBody AreaSettingRequest areaSettingRequest) {
         return Response.success(areaService.setAreaCount(areaSettingRequest));
+    }
+
+    @GetMapping("/racks")
+    public Response<List<RackStoreCountResponse>> getRackStoreGoodsCount(){
+        return Response.success(goodsService.getRackStoreGoodsCount());
     }
 }
