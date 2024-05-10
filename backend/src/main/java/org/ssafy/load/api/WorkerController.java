@@ -13,6 +13,7 @@ import org.ssafy.load.dto.response.StatusResponse;
 import org.ssafy.load.dto.response.WorkerInfoResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/worker")
