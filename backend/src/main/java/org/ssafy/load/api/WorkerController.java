@@ -13,7 +13,7 @@ import org.ssafy.load.dto.response.StatusResponse;
 import org.ssafy.load.dto.response.WorkerInfoResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
-@CrossOrigin()
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/worker")
@@ -24,7 +24,6 @@ public class WorkerController {
     public final LoadTaskService loadTaskService;
     @PostMapping("/signup")
     public Response<SignUpResponse> signup(@RequestBody SignUpRequest signupRequest) {
-        System.out.println("asdf");
         return Response.success(workerService.signup(signupRequest));
     }
 
