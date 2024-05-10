@@ -140,7 +140,12 @@ public LinkedList<Goods> enterInject(int conveyor, Enter<Goods> enter, int area)
 
 int[] goodsCntForVehicle = new int[5];
 boolean[] readyVehicleToConvey = new boolean[5];
- ]]></AdditionalClassCode>
+ 
+// 저장소 데이터를 저장하기 위한 배열 리스트 
+List<Integer>[] goodsPerArea = new List[10]; 
+for(int i=1;i<goodsPerArea.length;i++){
+	goodsPerArea[i] = new ArrayList<Integer>();
+}]]></AdditionalClassCode>
 			<StartupCode><![CDATA[try{
 	buildingCounts = client.getBuildingCount();	
 }catch(Exception e){
@@ -3739,13 +3744,13 @@ checkGoodsForArea.add(0);
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[false && settingGoodsCountPerArea.size()!=0 && settingGoodsCountPerArea.get(1) == checkGoodsForArea.get(1)
-]]></Condition>
+						<Condition><![CDATA[agentIdForArea1.size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
+	int area = 1;
 	System.out.println("readyAreaEvent1");
-	checkGoodsForArea.set(1,0);
-	client.setReadyCompletedArea(1, settingGoodsCountPerArea.get(1), getRackStore(1)); 
+	client.setReadyCompletedArea(area, goodsPerArea[area]); 
+	goodsPerArea[area] = new ArrayList<>();
 	readyAreaEvent1.restart();
 }catch(Exception e){
 	System.out.println(e);
@@ -14982,13 +14987,8 @@ client.postGooods(agent);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[1].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15760,13 +15760,8 @@ System.out.println(checkGoodsForArea.toString());
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[2].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16084,13 +16079,8 @@ System.out.println(checkGoodsForArea.toString());
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[3].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16408,13 +16398,8 @@ System.out.println(checkGoodsForArea.toString());
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[4].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16732,13 +16717,8 @@ System.out.println(checkGoodsForArea.toString());
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[5].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -17056,13 +17036,8 @@ System.out.println(checkGoodsForArea.toString());
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[addAgentFromRack(rackStore2, agent);
-// 구역별 저장
-int idx = agent.areaId;
-checkGoodsForArea.set(idx, checkGoodsForArea.get(idx) + 1);
-System.out.println(checkGoodsForArea.toString());
-
-]]></Code>
+								<Code><![CDATA[goodsPerArea[6].add(agent.agentId);
+System.out.println(goodsPerArea.toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -31058,11 +31033,11 @@ public class APIClient {
     	
     }
     
-    public ArrayList<Integer> setReadyCompletedArea(int areaId, int count, LinkedList<GoodsRequest> responseRackStore) throws Exception{
+    public ArrayList<Integer> setReadyCompletedArea(int areaId, ArrayList<Integer> agentIds) throws Exception{
         String url = SERVER_URL + "/ready";
         String method = "POST";
         
-        ReadyRequest requestBody = new ReadyRequest(areaId, count, responseRackStore);
+        ReadyRequest requestBody = new ReadyRequest(areaId, agentIds);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonRequestBody = objectMapper.writeValueAsString(requestBody);
         
@@ -31336,14 +31311,12 @@ public class InitialInfoDto implements Serializable {
 public class ReadyRequest implements Serializable{
 
     private int areaId;
-    private int count;
-    private LinkedList<GoodsRequest> goods;
+    private ArrayList<Integer> goods;
     
     public ReadyRequest() {}
     
-    public ReadyRequest(int areaId, int count, LinkedList<GoodsRequest> goods) {
+    public ReadyRequest(int areaId, ArrayList<Integer> goods) {
         this.areaId = areaId;
-        this.count = count;
         this.goods = goods;
     }
 
@@ -31355,18 +31328,11 @@ public class ReadyRequest implements Serializable{
         this.areaId = areaId;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-    public LinkedList<GoodsRequest> getGoods() {
+    public ArrayList<Integer> getGoods() {
         return goods;
     }
 
-    public void setGoods(LinkedList<GoodsRequest> goods) {
+    public void setGoods(ArrayList<Integer> goods) {
         this.goods = goods;
     }
 }]]></Text>
