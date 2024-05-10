@@ -2,24 +2,19 @@ package org.ssafy.load.application;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.*;
-import org.ssafy.load.dto.Building;
-import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.Position;
 import org.ssafy.load.dto.request.CreateGoodsRequest;
-import org.ssafy.load.dto.response.CreateGoodsResponse;
-import org.ssafy.load.dto.response.GoodsResponse;
+import org.ssafy.load.dto.response.*;
 
 import java.util.*;
 
 import org.ssafy.load.dto.SortedGoods;
-import org.ssafy.load.dto.response.SortedGoodsResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -33,14 +28,14 @@ public class GoodsService {
     private final LoadTaskRepository loadTaskRepository;
     private final BoxTypeRepository boxTypeRepository;
 
-    public GoodsResponse getOriginGoods(Long workerId) {
+    public GoodsListResponse getOriginGoods(Long workerId) {
         //기사 조회
-        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
-        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
 
         //구역 조회
-        Optional<AreaEntity> areaOptional = Optional.ofNullable(worker.getArea());
-        AreaEntity area = areaOptional.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptionalEntity.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         List<Integer> loadTask = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
         if(loadTask.isEmpty()) {
@@ -48,60 +43,58 @@ public class GoodsService {
         }
 
         //task에 할당된 상품 조회
-        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTask.get(0));
-        Map<BuildingEntity, List<GoodsEntity>> buildingGoodsMap = new HashMap<>();
+        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTask.getFirst());
+        Map<BuildingEntity, List<GoodsEntity>> buildingGoodsEntityMap = new HashMap<>();
 
         for(GoodsEntity goodsEntity : goodsEntityList) {
-            buildingGoodsMap.putIfAbsent(goodsEntity.getBuilding(), new ArrayList<>()).add(goodsEntity);
+            buildingGoodsEntityMap.computeIfAbsent(goodsEntity.getBuilding(), k -> new ArrayList<>()).add(goodsEntity);
         }
 
         //응답 생성
-        List<Building> buildingList =
+        String areaName = area.getAreaName();
+        int total = goodsEntityList.size();
+        List<BuildingDetailResponse> buildingDetailResponseList = new ArrayList<>();
 
+        for(BuildingEntity buildingEntity : buildingGoodsEntityMap.keySet()) {
+            String topAddress = buildingEntity.getSidoName() + " " + buildingEntity.getGugunName();
+            String buildingAddress = buildingEntity.getDongName() + " " + buildingEntity.getZibunMain() + "-" + buildingEntity.getZibunSub();
+            int totalGoods = buildingGoodsEntityMap.get(buildingEntity).size();
+            int totalPercentage = (int)((double)totalGoods / total * 100);
+            List<GoodsDetailResponse> goodsDetailResponseList = new ArrayList<>();
 
+            for (GoodsEntity goodsEntity : buildingGoodsEntityMap.get(buildingEntity)) {
+                goodsDetailResponseList.add(
+                        new GoodsDetailResponse(
+                                goodsEntity.getId(),
+                                goodsEntity.getBoxType().getType().name(),
+                                goodsEntity.getBoxType().getHeight(),
+                                goodsEntity.getBoxType().getLength(),
+                                goodsEntity.getBoxType().getWidth(),
+                                goodsEntity.getWeight(),
+                                goodsEntity.getDetailAddress())
+                );
+            }
 
-
-        //구역에 해당된 빌딩 id 조회
-        List<Long> buildingIds = buildingRepository.findIdsByAreaId(area.get().getId());
-        if (buildingIds.isEmpty()) {
-            throw new CommonException(ErrorCode.BUILDING_NOT_FOUND);
+            buildingDetailResponseList.add(
+                    new BuildingDetailResponse(
+                            topAddress,
+                            buildingAddress,
+                            totalGoods,
+                            totalPercentage,
+                            goodsDetailResponseList)
+            );
         }
-
-        // 빌딩별로 상품 조회
-        List<Building> buildings = buildingIds.stream()
-            .map(goodsRepository::findAllByBuildingId) // 상품 조회
-            .filter(goodsEntities -> !goodsEntities.isEmpty()) // 비어있지 않은 상품 목록만 처리
-            .map(goodsEntities -> {
-                StringBuilder sb = new StringBuilder();
-                sb.append(goodsEntities.getFirst().getBuilding().getSidoName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getGugunName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getDongName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getZibunMain() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getZibunSub() + " ");
-                String address = sb.toString();
-                List<Goods> goods = goodsEntities.stream()
-                    .map(g -> new Goods(
-                        g.getId(),
-                        String.valueOf(g.getBoxType().getType()),
-                        g.getWeight(),
-                        g.getDetailAddress()))
-                    .toList();
-                return new Building(address, goodsEntities.size(), goods);
-            }).toList();
-        // 상품 총 수 계산
-        int total = buildings.stream().mapToInt(Building::totalGoods).sum();
-
-        return new GoodsResponse(area.get().getAreaName(), total, buildings);
+        return new GoodsListResponse(areaName, total, buildingDetailResponseList);
     }
 
     public SortedGoodsResponse getSortedGoods(Long workerId) {
-        //배송 기사 조회
+        //기사 조회
         Optional<WorkerEntity> worker = workerRepository.findById(workerId);
         if (worker.isEmpty()) {
             throw new CommonException(ErrorCode.USER_NOT_FOUND);
         }
 
-        //배송 기사의 구역 조회
+        //구역 조회
         Optional<AreaEntity> area = areaRepository.findById(worker.get().getArea().getId());
         if (area.isEmpty()) {
             throw new CommonException(ErrorCode.AREA_NOT_FOUND);
