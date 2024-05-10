@@ -1,8 +1,6 @@
 package org.ssafy.load.application;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,7 @@ import org.ssafy.load.dto.response.GoodsResponse;
 import java.util.List;
 import java.util.Optional;
 import org.ssafy.load.dto.SortedGoods;
+import org.ssafy.load.dto.response.RackStoreCountResponse;
 import org.ssafy.load.dto.response.SortedGoodsResponse;
 
 @Service
@@ -224,5 +223,35 @@ public class GoodsService {
                     boxType.getWidth(),
                     ((Number) result[1]).longValue());
             }).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<RackStoreCountResponse> getRackStoreGoodsCount() {
+        List<RackStoreCountResponse> result = new ArrayList<>();
+        long[] cnt = new long[7];
+
+        List<Object[]> goodsList = goodsRepository.countGoodsByBuildingIdAndCreatedAtIsToday();
+        for (Object[] obj : goodsList) {
+            Integer areaId = buildingRepository.findById(((Number) obj[0]).longValue()).get()
+                .getArea().getId();
+            if (areaId == 1) {
+                cnt[1] += ((Number) obj[1]).longValue();
+            } else if (areaId == 2 || areaId == 3) {
+                cnt[2] += ((Number) obj[1]).longValue();
+            } else if (areaId == 4) {
+                cnt[3] += ((Number) obj[1]).longValue();
+            } else if (areaId == 5 || areaId == 6) {
+                cnt[4] += ((Number) obj[1]).longValue();
+            } else if (areaId == 7) {
+                cnt[5] += ((Number) obj[1]).longValue();
+            } else {
+                cnt[6] += ((Number) obj[1]).longValue();
+            }
+        }
+
+        for (int i = 1; i <= 6; i++) {
+            result.add(new RackStoreCountResponse(i, cnt[i]));
+        }
+        return result;
     }
 }

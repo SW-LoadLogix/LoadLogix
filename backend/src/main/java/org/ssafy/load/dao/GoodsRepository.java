@@ -34,4 +34,7 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
 
     @Query(value = "SELECT box_type_id as type, COUNT(*) as count FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY box_type_id", nativeQuery = true)
     List<Object[]> countBoxTypeByCreatedAtIsToday();
+
+    @Query(value = "SELECT building_id, COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY building_id", nativeQuery = true)
+    List<Object[]> countGoodsByBuildingIdAndCreatedAtIsToday();
 }
