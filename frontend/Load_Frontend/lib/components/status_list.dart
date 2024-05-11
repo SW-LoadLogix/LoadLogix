@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 import 'package:load_frontend/model.dart';
 import 'package:load_frontend/components/status_card.dart';
 import 'package:load_frontend/models/worker_info_data.dart';
@@ -24,8 +25,7 @@ class StatusList extends StatefulWidget {
   _StatusListState createState() => _StatusListState();
 }
 class _StatusListState extends State<StatusList>{
-  String name = '';
-  String todayDate = '';
+  String todayDate = DateFormat('yyyy년 MM월 dd일').format(DateTime.now());
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _StatusListState extends State<StatusList>{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          " ${Provider.of<WorkerStore>(context, listen: true).workerInfo.name} 기사님 2024-05-05 배송관리",
+          " ${Provider.of<WorkerStore>(context, listen: true).workerInfo.name} 기사님의 ${todayDate} 배송관리 대시보드 입니다",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           textAlign: TextAlign.left,
         ),
