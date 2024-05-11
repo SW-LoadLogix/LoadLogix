@@ -1,6 +1,8 @@
 import 'package:load_frontend/views/box_simulation/simulation_controller.dart';
 import 'package:three_dart/three_dart.dart' as three;
 
+import 'box_simulation_gobal_setting.dart';
+
 double boxStep = 10.0;
 double gScale = 1.0;
 
@@ -21,9 +23,9 @@ class Box {
       this.boxSize, this.goodsId, this.buildingId,this.boxColorId);
 
   void setSize() {
-    // boxSize =
-    //     three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
-    // return;
+    boxSize =
+         three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
+    return;
     if (type == 'L1') {
       boxSize = three.Vector3(22 * gScale,9 * gScale, 22 * gScale);
     } else if (type == 'L2') {
@@ -48,17 +50,48 @@ class Box {
   void update() {
     boxStep = 10.0 * boxStepPercent / 100.0;
     if (isDone) return;
-    if (currPosition.x > endPosition.x) {
-      currPosition.x -= boxStep;
-      if (currPosition.x <= endPosition.x) {
+
+    if (gIsForword){
+      if (currPosition.x > endPosition.x) {
+        currPosition.x -= boxStep;
+        if (currPosition.x <= endPosition.x) {
+          currPosition.x = endPosition.x;
+          isDone = true; // 끝 위치 도달 시 완료 처리
+        }
+      } else {
         currPosition.x = endPosition.x;
         isDone = true; // 끝 위치 도달 시 완료 처리
       }
-    } else {
-      currPosition.x = endPosition.x;
-      isDone = true; // 끝 위치 도달 시 완료 처리
+    }
+    else {
+      if (currPosition.x < startPosition.x) {
+        currPosition.x += boxStep;
+        if (currPosition.x >= startPosition.x) {
+          currPosition.x = startPosition.x;
+          isDone = true; // 끝 위치 도달 시 완료 처리
+        }
+      } else {
+        currPosition.x = startPosition.x;
+        isDone = true; // 끝 위치 도달 시 완료 처리
+      }
     }
   }
+
+  void determineIsFinished(){
+    isDone = false;
+    if (gIsForword){
+      if (currPosition.x <= endPosition.x) {
+        isDone = true;
+      }
+    }
+    else {
+      if (currPosition.x >= startPosition.x) {
+        isDone = true;
+      }
+    }
+  }
+
+
 
   void toggleChecked() {
     isChecked = !isChecked; // 체크 상태 토글

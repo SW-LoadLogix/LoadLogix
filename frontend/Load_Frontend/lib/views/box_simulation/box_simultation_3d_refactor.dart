@@ -19,6 +19,8 @@ import 'box.dart';
 import 'box_colors.dart';
 import 'package:load_frontend/stores/goods_store.dart';
 
+import 'box_simulation_gobal_setting.dart';
+
 @RoutePage()
 class BoxSimulation3dSecondPage extends StatefulWidget {
   const BoxSimulation3dSecondPage({super.key});
@@ -34,7 +36,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   Ticker? _ticker;
   three.Raycaster raycaster = three.Raycaster();
 
-  late SelectedBoxOverlayWidget selectedBoxOverlayWidget;// = SelectedBoxOverlayWidget();
+  late SelectedBoxOverlayWidget
+      selectedBoxOverlayWidget; // = SelectedBoxOverlayWidget();
   int? fboId;
   late double width;
   late double height;
@@ -89,7 +92,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   late three.Mesh selectedMesh;
   late three.Mesh selectedEdgeMesh;
-
 
   late three.MeshPhongMaterial edgeMaterial = three.MeshPhongMaterial({
     "color": 0x00000000,
@@ -161,16 +163,19 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   void onPointerDown(TapDownDetails event) {
     var size = MediaQuery.of(context).size;
-     double x = (event.localPosition.dx / (size.width - sideBarDesktopWidth - rightsideBarDesktopWidth)) * 2 - 1;
-     double y = -(event.localPosition.dy / (size.height - topBarHeight)) * 2 + 1;
+    double x = (event.localPosition.dx /
+        (size.width - gCurrSideBarWidth - gCurrRightSideBarWidth)) *
+//        (size.width - sideBarDesktopWidth - rightsideBarDesktopWidth)) *
+            2 -
+        1;
+//    double y = -(event.localPosition.dy / (size.height - topBarHeight)) * 2 + 1;
+    double y = -(event.localPosition.dy / (size.height - gCurrTopBarHeight)) * 2 + 1;
 
     //double x = (event.localPosition.dx / width) * 2 - 1;
     //double y = -(event.localPosition.dy / height) * 2 + 1;
 
-
     isClickOrTaped = true;
     clickedScrinPoint = three.Vector2(x, y);
-
   }
 
   Map<String, double> calculateHeightExtremes() {
@@ -194,9 +199,11 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     double totalMaxHeight = heightExtremes['maxHeight']!;
 
     double minHeight = totalMinHeight +
-        (totalMaxHeight - totalMinHeight) * ( heightFloorValuesLowPercent / 100.0);
+        (totalMaxHeight - totalMinHeight) *
+            (heightFloorValuesLowPercent / 100.0);
     double maxHeight = totalMinHeight +
-        (totalMaxHeight - totalMinHeight) * ( heightFloorValuesHighPercent / 100.0);
+        (totalMaxHeight - totalMinHeight) *
+            (heightFloorValuesHighPercent / 100.0);
 
     for (var box in boxes) {
       double boxHeight = box.currPosition.y + box.boxSize.y;
@@ -341,7 +348,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   initState() {
-    selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context);
     super.initState();
   }
 
@@ -353,7 +359,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     }
     if (isSelected) {
       print("remove ovelray");
-      if (selectedBoxOverlayWidget.isShowing){
+      if (selectedBoxOverlayWidget.isShowing) {
         selectedBoxOverlayWidget.remove();
       }
     }
@@ -369,9 +375,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   double x = 0, y = 0, z = 0; // 트럭의 초기 위치
 
   void calculateCameraDirection(three.Camera camera) {
-    three.Vector3 direction = three.Vector3();  // 방향을 저장할 Vector3 객체 생성
-    camera.getWorldDirection(direction);  // 카메라의 방향을 계산하여 'direction' 객체에 저장
-    direction.normalize();  // 방향 벡터 정규화
+    three.Vector3 direction = three.Vector3(); // 방향을 저장할 Vector3 객체 생성
+    camera.getWorldDirection(direction); // 카메라의 방향을 계산하여 'direction' 객체에 저장
+    direction.normalize(); // 방향 벡터 정규화
 
     print("Camera direction: ${direction.x}, ${direction.y}, ${direction.z}");
   }
@@ -383,16 +389,16 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       setState(() {
         switch (event.logicalKey.keyId) {
           case 119: // 'W' - forward
-          x = truckPosition.x + increment;
+            x = truckPosition.x + increment;
             break;
           case 115: // 'S' - backward
             x = truckPosition.x - increment;
             break;
           case 100: // 'D' - right
-          z = truckPosition.z + increment;
+            z = truckPosition.z + increment;
             break;
           case 97: // 'A' - left
-          z = truckPosition.z - increment;
+            z = truckPosition.z - increment;
             break;
           case 113: // 'Q' - up (floating up, not forward)
             y = truckPosition.y + increment;
@@ -401,8 +407,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
             y = truckPosition.y - increment;
             break;
         }
-         positionText = "Position: x=$x, y=$y, z=$z";
-         print(positionText);
+        positionText = "Position: x=$x, y=$y, z=$z";
+        print(positionText);
         truckPosition.set(x, y, z);
         object.position.set(x, y, z);
       });
@@ -411,6 +417,24 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   Widget build(BuildContext context) {
+
+    final Size _size = MediaQuery.of(context).size;
+    final bool _isDesktop = _size.width >= screenLg;
+    final bool _isMobile = _size.width < screenSm;
+
+    if (_isDesktop){
+      gCurrTopBarHeight = topBarHeight;
+      gCurrSideBarWidth = sideBarDesktopWidth;
+      gCurrRightSideBarWidth = rightSideBarDesktopWidth;
+    }else if (_isMobile){
+      gCurrTopBarHeight = mobileTopBarHeight;
+      gCurrSideBarWidth = 0;
+      gCurrRightSideBarWidth = 0;
+    }else{
+      gCurrTopBarHeight = topBarHeight;
+      gCurrSideBarWidth = sideBarMobileWidth;
+      gCurrRightSideBarWidth = rightSideBarDesktopWidth;
+    }
     return Scaffold(
       body: Focus(
         focusNode: _focusNode,
@@ -426,27 +450,49 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           },
         ),
       ),
+      floatingActionButton:
+          Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  child: const Text("Restart"),
+                  onPressed: () {
+                    reStart();
+                  },
+                ),
+                FloatingActionButton(
+                  child: const Text("Rewind"),
+                  onPressed: () {
+                    rewind();
+                  },
+                )
+              ]
+          ),
     );
   }
 
+  bool isOverlayCreated = false;
   Widget _build(BuildContext context) {
-
+    if (isOverlayCreated == false){
+      selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context,position: Offset(gCurrSideBarWidth + 20, gCurrTopBarHeight + 20));
+      isOverlayCreated = true;
+    }
     return GestureDetector(
       onTapDown: onPointerDown,
-      child:Stack(
+      child: Stack(
         children: [
           three_jsm.DomLikeListenable(
               key: _globalKey,
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height - topBarHeight,
+                    height: MediaQuery.of(context).size.height - gCurrTopBarHeight,
                     color: Colors.black,
                     child: Builder(builder: (BuildContext context) {
                       if (kIsWeb) {
                         return three3dRender.isInitialized
                             ? HtmlElementView(
-                            viewType: three3dRender.textureId!.toString())
+                                viewType: three3dRender.textureId!.toString())
                             : Container();
                       } else {
                         return three3dRender.isInitialized
@@ -454,12 +500,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                             : Container();
                       }
                     }));
-              }
-          ),
+              }),
         ],
       ),
     );
-
 
     return Column(
       children: [
@@ -484,12 +528,29 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                               : Container();
                         }
                       }));
-                }
-              ),
+                }),
           ],
         ),
       ],
     );
+  }
+
+  void reStart() {
+    print("reStart ............. ");
+    currentBoxIndex = 0;
+    gIsForword = true;
+    for (int i = 0; i < boxes.length; i++) {
+      boxes[i].isDone = false;
+      boxes[i].init();
+    }
+  }
+
+  void rewind() {
+    print("rewind ............. ");
+    gIsForword = false;
+    for (int i = 0; i < boxes.length; i++) {
+      boxes[i].determineIsFinished();
+    }
   }
 
   render() {
@@ -586,8 +647,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     var ambientLight = three.AmbientLight(0x777777);
     scene.add(ambientLight);
 
-
-
     // 강력한 주광 조명
 //     var dirLight1 = three.DirectionalLight(0xffffff, 1); // 강도 1로 설정
 //     dirLight1.position.set(0, 10, 10);
@@ -641,14 +700,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     return three.Vector3(x, y, z);
   }
 
-
-
   Map<int, int> mapNumbersToSequential(List<int> numbers) {
     Map<int, int> mapping = {};
     int counter = 0;
 
     for (int number in numbers) {
-      if (!mapping.containsKey(number)) { // 중복된 숫자를 다시 매핑하지 않도록 확인
+      if (!mapping.containsKey(number)) {
+        // 중복된 숫자를 다시 매핑하지 않도록 확인
         mapping[number] = counter++;
       }
     }
@@ -656,13 +714,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     return mapping; // 매핑 결과 반환
   }
 
-
-
-
-
+  Map<int, int> numberMapping = {};
   void initBox() async {
-
-    selectedGeometry = adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
+    selectedGeometry =
+        adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
     selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
 
     geometry = adjustBoxGeometryPivot(geometry, -0.5, -0.5, -0.5);
@@ -674,13 +729,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     }
     Map<int, int> numberMapping = mapNumbersToSequential(numbers);
 
-
-
     for (int i = 0; i < gGoods.length; i++) {
       var randomValue = gGoods[i].position;
       //randomVector3(truckSize.x, truckSize.y, truckSize.z);
-
-
 
       boxes.add(Box(
           gGoods[i].type,
@@ -689,7 +740,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           three.Vector3(randomValue.x, randomValue.y, randomValue.z),
           three.Vector3(2, 2, 2),
           gGoods[i].goodsId,
-          gGoods[i].buildingId,//numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
+          gGoods[i].buildingId,
+          //numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
           numberMapping[gGoods[i].buildingId]!));
     }
 
@@ -728,23 +780,28 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   int currentBoxIndex = 0; // 현재 애니메이션 중인 상자 인덱스
   static double lastCheckTransparantValue = 60.0;
 
-
-  void createVisualRay(three.Vector2 pointer, three.Camera camera, three.Scene scene) {
+  void createVisualRay(
+      three.Vector2 pointer, three.Camera camera, three.Scene scene) {
     // 광선 생성자 설정
     three.Raycaster raycaster = three.Raycaster();
     raycaster.setFromCamera(pointer, camera);
 
     // 광선의 시작점과 끝점을 설정 (시작점은 카메라 위치, 끝점은 광선의 방향을 이용)
     three.Vector3 start = camera.position;
-    three.Vector3 end = raycaster.ray.direction.clone().multiplyScalar(500).add(camera.position);
+    three.Vector3 end = raycaster.ray.direction
+        .clone()
+        .multiplyScalar(500)
+        .add(camera.position);
 
     // 선 기하 생성
     three.BufferGeometry geometry = three.BufferGeometry();
     List<double> vertices = [start.x, start.y, start.z, end.x, end.y, end.z];
-    geometry.setAttribute('position', three.Float32BufferAttribute(Float32Array.from(vertices), 3));
+    geometry.setAttribute('position',
+        three.Float32BufferAttribute(Float32Array.from(vertices), 3));
 
     // 선 재질 설정
-    three.LineBasicMaterial material = three.LineBasicMaterial({'color': 0xff0000});
+    three.LineBasicMaterial material =
+        three.LineBasicMaterial({'color': 0xff0000});
 
     // 선 객체 생성
     three.Line line = three.Line(geometry, material);
@@ -753,20 +810,15 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     scene.add(line);
   }
 
-
-
-  three.Vector2 worldToScreen(three.Vector3 worldCoords, three.Camera camera, double screenWidth, double screenHeight) {
+  three.Vector2 worldToScreen(three.Vector3 worldCoords, three.Camera camera,
+      double screenWidth, double screenHeight) {
     // 월드 좌표를 카메라 관점의 좌표로 변환
     worldCoords.project(camera);
 
     // 변환된 좌표를 스크린 좌표로 매핑
-    return three.Vector2(
-        (worldCoords.x + 1) * screenWidth / 2,
-        -(worldCoords.y - 1) * screenHeight / 2
-    );
+    return three.Vector2((worldCoords.x + 1) * screenWidth / 2,
+        -(worldCoords.y - 1) * screenHeight / 2);
   }
-
-
 
   /**********************************************************/
   /**
@@ -774,22 +826,32 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
    *
    */
   void onTickBox() {
-    if (lastCheckTransparantValue != transparencyValuePercent){
+    if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;
       }
       lastCheckTransparantValue = transparencyValuePercent;
     }
 
-
-
-
-
-    if (currentBoxIndex < boxes.length) {
-      Box currentBox = boxes[currentBoxIndex];
-      currentBox.update();
-      if (currentBox.isDone && currentBoxIndex < boxes.length) {
-        currentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
+    if (gIsForword) {
+      if (currentBoxIndex < boxes.length) {
+        Box currentBox = boxes[currentBoxIndex];
+        currentBox.update();
+        if (currentBox.isDone && currentBoxIndex < boxes.length) {
+          currentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
+        }
+      }
+    }
+    else{
+      if (currentBoxIndex >= 0) {
+        if (currentBoxIndex >= boxes.length) {
+          currentBoxIndex = boxes.length - 1;
+        }
+        Box currentBox = boxes[currentBoxIndex];
+        currentBox.update();
+        if (currentBox.isDone && currentBoxIndex >= 0) {
+          currentBoxIndex--; // 현재 상자 완료 시 다음 상자 시작
+        }
       }
     }
 
@@ -813,16 +875,18 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     var quaternion = three.Quaternion();
 
-
-
     for (int i = 0; i < currentBoxIndex + 1 && i < boxes.length; i++) {
       var box = boxes[i];
-      if (box.isChecked == false){
+      if (box.isChecked == false) {
         continue;
       }
       if (box.isVisible == false) {
         continue;
       }
+      if (gIsForword == false && box.isDone) {
+        continue;
+      }
+
       matrix.setPosition(
           box.currPosition!.x, box.currPosition!.y, box.currPosition!.z);
       matrix.compose(box.currPosition!, quaternion, box.boxSize!);
@@ -861,13 +925,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     scene.add(edgeMesh);
     scene.add(transparentEdgeMesh);
 
-
     // 레이트레이싱 사용해서 선택된 박스 찾기
-    if (isClickOrTaped){
-      if (isSelected){
+    if (isClickOrTaped) {
+      if (isSelected) {
         scene.remove(selectedMesh);
         scene.remove(selectedEdgeMesh);
-        if (selectedBoxOverlayWidget.isShowing){
+        if (selectedBoxOverlayWidget.isShowing) {
           selectedBoxOverlayWidget.remove();
         }
         //selectedBoxOverlayWidget.remove();
@@ -876,57 +939,59 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       isClickOrTaped = false;
       //createVisualRay(clickedScrinPoint, camera, scene);
 
-      raycaster.setFromCamera(three.Vector2(clickedScrinPoint.x, clickedScrinPoint.y), camera);
+      raycaster.setFromCamera(
+          three.Vector2(clickedScrinPoint.x, clickedScrinPoint.y), camera);
       var intersects = raycaster.intersectObjects(scene.children, true);
 
       if (intersects.isNotEmpty) {
         for (int i = 0; i < intersects.length; i++) {
-          if (intersects[i].object is three.InstancedMesh){
+          if (intersects[i].object is three.InstancedMesh) {
             if (intersects[i].object.name.isNotEmpty) {
-
               int selectedBuildingId = int.parse(intersects[i].object.name);
               three.Vector3 intersectedPoint = intersects[i].point;
 
               three.CircleGeometry circleGeometry = three.CircleGeometry();
-              three.Mesh circle = three.Mesh(circleGeometry, three.MeshBasicMaterial({
-                "color": 0xFFFFFFFF,
-                "side": three.DoubleSide,
-                "depthTest": false,
-                "transparent": true
-              }));
+              three.Mesh circle = three.Mesh(
+                  circleGeometry,
+                  three.MeshBasicMaterial({
+                    "color": 0xFFFFFFFF,
+                    "side": three.DoubleSide,
+                    "depthTest": false,
+                    "transparent": true
+                  }));
 
-
-              circle.position.set(intersects[i].point.x, intersects[i].point.y, intersects[i].point.z);
+              circle.position.set(intersects[i].point.x, intersects[i].point.y,
+                  intersects[i].point.z);
               circle.renderOrder = 1;
 
               //scene.add(circle);
 
               double minDistance = double.infinity;
-              for(var box in boxes){
+              for (var box in boxes) {
                 if (box.isVisible == false) {
                   continue;
                 }
                 if (box.isChecked == false) {
                   continue;
                 }
-                if (box.boxColorId == selectedBuildingId){
+                if (box.boxColorId == selectedBuildingId) {
                   three.Vector3 centerPosition = three.Vector3(
                       box.currPosition.x + box.boxSize.x / 2.0,
                       box.currPosition.y + box.boxSize.y / 2.0,
                       box.currPosition.z + box.boxSize.z / 2.0);
 
-
-                  double distToPoint = intersectedPoint.distanceTo(centerPosition);
-                  if (distToPoint < minDistance){
+                  double distToPoint =
+                      intersectedPoint.distanceTo(centerPosition);
+                  if (distToPoint < minDistance) {
                     minDistance = distToPoint;
                     selectedBox = box;
                   }
                 }
               }
-              if (minDistance != double.infinity){
+              if (minDistance != double.infinity) {
                 isSelected = true;
-                selectedGeometry = three.BoxGeometry(selectedBox.boxSize.x, selectedBox.boxSize.y, selectedBox.boxSize.z);
-
+                selectedGeometry = three.BoxGeometry(selectedBox.boxSize.x,
+                    selectedBox.boxSize.y, selectedBox.boxSize.z);
 
                 //selectedGeometry = adjustBoxGeometryPivot(selectedGeometry, -1 * selectedBox.boxSize.x, -1 * selectedBox.boxSize.y, -1 * selectedBox.boxSize.z);
 
@@ -941,10 +1006,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                       "side": three.DoubleSide,
                       'depthTest': false, // 깊이 테스트 비활성화
                       'depthWrite': false, // 깊이 버퍼에 쓰기 비활성화
-                     // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
-
-                    })
-                );
+                      // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
+                    }));
 
                 selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
                 selectedMesh.position.set(
@@ -986,7 +1049,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         // }
 
         //= intersects[1].object;
-
 
         //scene.remove(intersectedObject);
         // Now you can do something with the selected object
