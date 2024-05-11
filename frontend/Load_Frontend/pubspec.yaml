@@ -36,6 +36,7 @@ dependencies:
   loading_animation_widget: ^1.2.1
   msh_checkbox: ^2.0.1
   flutter_secure_storage: ^4.2.1
+  google_maps_flutter_web: ^0.5.7
 
 
 
@@ -54,7 +55,7 @@ flutter:
     - assets/images/
     - assets/3dmodels/3d-model.obj
     - assets/textures/truck.mtl
-    - .env
+
     - assets/gif/트럭시뮬gif.gif
     - assets/gif/truckgif.gif
     - assets/gif/truck43.gif
