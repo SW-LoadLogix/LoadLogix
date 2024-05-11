@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 import 'package:load_frontend/model.dart';
 import 'package:load_frontend/components/status_card.dart';
+import 'package:load_frontend/models/worker_info_data.dart';
+import 'package:load_frontend/services/user_service.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
+import '../stores/user_store.dart';
 
 final List<BussinessStatus> statusList = [
   BussinessStatus('Total Sales', '1123456 \$', Icons.show_chart_outlined),
@@ -12,15 +18,34 @@ final List<BussinessStatus> statusList = [
   BussinessStatus('Customers', '11234', Icons.people_outline_outlined),
 ];
 
-class StatusList extends StatelessWidget {
+class StatusList extends StatefulWidget {
+  StatusList({Key? key}) :super(key: key);
+
+  @override
+  _StatusListState createState() => _StatusListState();
+}
+class _StatusListState extends State<StatusList>{
+  String todayDate = DateFormat('yyyy년 MM월 dd일').format(DateTime.now());
+
+  @override
+  void initState() {
+    WorkerStore ws = Provider.of<WorkerStore>(context,listen: false);
+    UserStore us = Provider.of<UserStore>(context, listen:false);
+
+    ws.getWorkerInfoFromApi(us.token);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
+    var workerinfo = Provider.of<WorkerStore>(context,listen: false).workerInfo;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "김보경 기사님 2024-05-05 배송관리",
+          " ${Provider.of<WorkerStore>(context, listen: true).workerInfo.name} 기사님의 ${todayDate} 배송관리 대시보드 입니다",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           textAlign: TextAlign.left,
         ),
@@ -44,3 +69,5 @@ class StatusList extends StatelessWidget {
     );
   }
 }
+
+

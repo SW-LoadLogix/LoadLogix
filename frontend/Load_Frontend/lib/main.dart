@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/routes/app_router.dart';
 import 'package:load_frontend/stores/goods_store.dart';
+import 'package:load_frontend/stores/worker_store.dart';
 import 'package:load_frontend/stores/user_store.dart';
 import 'package:load_frontend/themes/login_style.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
          ChangeNotifierProvider(create: (context) => GoodsStore()),
+        ChangeNotifierProvider(create: (context) => WorkerStore()),
          ChangeNotifierProvider(create: (context) => UserStore()),
       ],
       child: MaterialApp.router(
