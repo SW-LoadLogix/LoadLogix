@@ -24,6 +24,13 @@ class GoodsStore extends ChangeNotifier {
   Map<int, bool> buildingChecked = {};
   Map<int, Map<int, bool>> goodsChecked = {};
   int selectedGoodsId = 0;
+  Map<int, int> numberMapping = {};
+
+
+  Map<int, List<GoodsData>>  getgoodsGroupedByBuildingId(){
+    notifyListeners();
+    return goodsGroupedByBuildingId;
+  }
 
   GoodsData selectedGoods = GoodsData(
     goodsId: 0,
@@ -39,6 +46,20 @@ class GoodsStore extends ChangeNotifier {
     selectedGoodsId = goodsId;
     selectedGoods = goods.firstWhere((element) => element.goodsId == goodsId);
     notifyListeners();
+  }
+
+  Map<int, int> mapNumbersToSequential(List<int> numbers) {
+    Map<int, int> mapping = {};
+    int counter = 0;
+
+    for (int number in numbers) {
+      if (!mapping.containsKey(number)) {
+        // 중복된 숫자를 다시 매핑하지 않도록 확인
+        mapping[number] = counter++;
+      }
+    }
+
+    return mapping; // 매핑 결과 반환
   }
 
   Future<void> getGoodsFromApi(String accessToken) async {
@@ -59,6 +80,14 @@ class GoodsStore extends ChangeNotifier {
       updateBuildingCheckedState(id);
     }
     gGoods = goods;
+
+    List<int> numbers = [];
+    for (int i = 0; i < gGoods.length; i++) {
+      numbers.add(gGoods[i].buildingId);
+    }
+    numberMapping = mapNumbersToSequential(numbers);
+
+
     notifyListeners();
   }
 

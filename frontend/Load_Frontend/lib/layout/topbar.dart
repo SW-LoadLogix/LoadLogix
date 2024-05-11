@@ -14,8 +14,13 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
+    final _isMobile = _size.width < screenSm;
     return Container(
-      height: topBarHeight,
+      height: _isMobile ? mobileTopBarHeight : topBarHeight,
+      decoration: _isMobile ?
+                    BoxDecoration(color: primaryLight):
+                    BoxDecoration(color:Colors.transparent),
       padding: EdgeInsets.symmetric(horizontal: componentPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +33,9 @@ class TopBar extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: _isMobile ? 15 : 24,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 Positioned(

@@ -26,12 +26,16 @@ class MainLayout extends StatelessWidget {
     final Size _size = MediaQuery.of(context).size;
     final _showDesktop = _size.width >= screenXxl;
     final _isSimulationPage = topBarTitle == '3D Simulation Dashboard';
+    final _isMobile = _size.width < screenSm;
 
     return Scaffold(
         body: SafeArea(
       child: Row(
         children: [
-          SideBar(),
+          !_isMobile ? SideBar() : Container(
+            width: 0,
+          ),
+          //SideBar(),
           Expanded(
             child: Column(
               children: [
@@ -51,6 +55,7 @@ class MainLayout extends StatelessWidget {
               ],
             ),
           ),
+
           _isSimulationPage ? SimSidebarPage(_showDesktop) :
           Container(
             width: _showDesktop ? newsPageWidth : 0,

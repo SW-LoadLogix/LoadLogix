@@ -8,7 +8,7 @@ import 'package:load_frontend/views/box_simulation/box.dart';
 import '../models/vector3.dart';
 import 'base_url.dart';
 
-bool isDebug = false;
+bool isDebug = true;
 
 class GoodsService {
   Future<List<GoodsData>> getGoods(String accessToken) async {

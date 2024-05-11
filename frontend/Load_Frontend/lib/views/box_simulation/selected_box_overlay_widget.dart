@@ -121,6 +121,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:load_frontend/views/box_simulation/box_simulation_gobal_setting.dart';
 import 'package:provider/provider.dart';
 import 'package:load_frontend/stores/goods_store.dart';
 
@@ -137,8 +138,8 @@ class SelectedBoxOverlayWidget {
 
   SelectedBoxOverlayWidget({
     required this.context,
-    this.position = const Offset(250, 100),
-    this.size = const Size(300, 400),
+    required this.position,// = const Offset(gCurrSideBarWidth + 20, gTopBarHeight + 20),
+    this.size = const Size(300, 350),
   }) {
     overlayEntry = createOverlayEntry();
   }

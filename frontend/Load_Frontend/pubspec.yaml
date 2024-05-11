@@ -37,6 +37,7 @@ dependencies:
   msh_checkbox: ^2.0.1
   flutter_secure_storage: ^4.2.1
   google_maps_flutter_web: ^0.5.7
+  syncfusion_flutter_charts: ^25.2.3+1
 
 
 
