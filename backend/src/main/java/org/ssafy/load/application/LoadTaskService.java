@@ -57,10 +57,10 @@ public class LoadTaskService {
         AreaEntity areaEntity = workerEntity.getArea();
         int areaId = areaEntity.getId();
         int conveyNo = areaEntity.getConveyNo();
-        Optional<LoadTaskEntity> loadTaskEntityOptional = loadTaskRepository.findOldWaitedTask(areaId);
-        if(loadTaskEntityOptional.isEmpty()) return false;
+        List<LoadTaskEntity> loadTaskEntityList = loadTaskRepository.findByAlgorithmCompletedTask(areaId);
+        if(loadTaskEntityList.isEmpty()) return false;
 
-        LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.get();
+        LoadTaskEntity loadTaskEntity = loadTaskEntityList.get(0);
         loadTaskEntity.withUpdatedWorkerState(true);
         sseService.sendEvent("1", LoadStartResponse.of(areaId, conveyNo, true));
         return true;

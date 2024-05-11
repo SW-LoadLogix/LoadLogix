@@ -20,10 +20,9 @@ public class SecurityConfig {
         filterRegistrationBean.setFilter(new JwtFilter(jwtTokenProvider));
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/worker/info");
-//        filterRegistrationBean.addUrlPatterns("/worker/ready");
-//        filterRegistrationBean.addUrlPatterns("/goods/*");
-//        filterRegistrationBean.addUrlPatterns("/car/*");
-        //filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.addUrlPatterns("/worker/ready");
+        filterRegistrationBean.addUrlPatterns("/goods/*");
+        filterRegistrationBean.addUrlPatterns("/car/*");
         return filterRegistrationBean;
     }
 }

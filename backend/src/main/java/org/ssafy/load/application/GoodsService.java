@@ -37,7 +37,7 @@ public class GoodsService {
         AreaEntity area = areaOptional.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         //가장 최근 적재 조회
-        List<Integer> loadTaskList = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
+        List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
         if(loadTaskList.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
@@ -97,7 +97,7 @@ public class GoodsService {
         AreaEntity area = areaOptionalEntity.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         //가장 최근 적재 조회
-        List<Integer> loadTaskList = loadTaskRepository.findMostRecentCompletedTaskIds(area.getId());
+        List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
         if(loadTaskList.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
