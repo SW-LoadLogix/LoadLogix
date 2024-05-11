@@ -34,7 +34,7 @@ public class LoadTaskEntity {
     @JoinColumn(name = "area_id")
     private AreaEntity area;
 
-    @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
     @PrePersist

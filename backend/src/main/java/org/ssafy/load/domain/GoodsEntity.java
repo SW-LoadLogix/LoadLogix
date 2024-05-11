@@ -30,11 +30,11 @@ public class GoodsEntity {
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private BuildingEntity building;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "load_task_id")
     private LoadTaskEntity loadTask;
 
