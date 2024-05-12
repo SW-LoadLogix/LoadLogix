@@ -50,12 +50,29 @@ public void startPick(LoadStartResponse response){
         break;    
     }
     
+    List<Goods> goodsList = new ArrayList<>();
+    for (Agent agent : agents) {
+        if (agent instanceof Goods) {
+            goodsList.add((Goods) agent);
+        } else {
+            // 적절한 오류 처리나 다른 로직 구현
+            System.out.println("Non-Goods agent encountered, cannot process.");
+        }
+    }
+    
+    Collections.sort(goodsList, (a1, a2) -> Long.compare(a1.agentId, a2.agentId));
+    
 	for(Integer agentId : response.getAgentIds()){
 		// Todo 수정
-		int index = Collections.binarySearch(agents, new Agent(agentId), Comparator.comparingInt(Agent::getAgentId));
+	int index = Collections.binarySearch(goodsList, new Goods(agentId), (a1, a2) -> Long.compare(a1.agentId, a2.agentId));
 		
-		Goods goods = (Goods) agents.get(index); 
-		enter1.take(goods);
+        if (index >= 0) {
+            Goods goods = (Goods) agents.get(index); 
+            enter1.take(goods);
+        } else {
+            // 요소가 없는 경우의 처리 로직 추가
+            System.out.println("Agent ID " + agentId + " not found.");
+        }
 	}
 
 }
@@ -3668,7 +3685,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[1].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[1]!=null && goodsPerArea[1].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 1;
@@ -3707,7 +3724,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[2].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[2]!=null && goodsPerArea[2].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 2;
@@ -3746,7 +3763,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[3].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[3]!=null && goodsPerArea[3].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 3;
@@ -3785,7 +3802,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[4].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[4]!=null && goodsPerArea[4].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 4;
@@ -3824,7 +3841,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[5].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[5]!=null && goodsPerArea[5].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 5;
@@ -3863,7 +3880,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[6].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[6]!=null && goodsPerArea[6].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 6;
@@ -3902,7 +3919,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[7].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[7]!=null && goodsPerArea[7].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 7;
@@ -3941,7 +3958,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[8].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[8]!=null && goodsPerArea[8].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 8;
@@ -3980,7 +3997,7 @@ thread.start();
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 						</RecurrenceCode>
-						<Condition><![CDATA[goodsPerArea[9].size() == settingGoodsCountPerArea.get(1);]]></Condition>
+						<Condition><![CDATA[goodsPerArea[9]!=null && goodsPerArea[9].size() == settingGoodsCountPerArea.get(1);]]></Condition>
 					</Properties>
 					<Action><![CDATA[try{
 	int area = 9;
@@ -30022,6 +30039,27 @@ System.out.println(goodsPerArea[6].toString());]]></Code>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[static long]]></Type>        
 					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1715491145409</Id>
+					<Name><![CDATA[agent]]></Name>
+					<X>410</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[long]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1715491145407</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
 				</Variable>
 			</Variables>
 			<AgentLinks>
