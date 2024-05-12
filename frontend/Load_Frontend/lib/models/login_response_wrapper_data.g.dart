@@ -9,7 +9,7 @@ part of 'login_response_wrapper_data.dart';
 LoginResponseWrapperData _$LoginResponseWrapperDataFromJson(
         Map<String, dynamic> json) =>
     LoginResponseWrapperData(
-      result_code: json['result_code'] as String,
+      resultCode: json['result_code'] as String,
       result:
           LoginResponseResult.fromJson(json['result'] as Map<String, dynamic>),
     );
@@ -17,7 +17,7 @@ LoginResponseWrapperData _$LoginResponseWrapperDataFromJson(
 Map<String, dynamic> _$LoginResponseWrapperDataToJson(
         LoginResponseWrapperData instance) =>
     <String, dynamic>{
-      'result_code': instance.result_code,
+      'result_code': instance.resultCode,
       'result': instance.result,
     };
 

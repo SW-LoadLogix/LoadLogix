@@ -6,21 +6,21 @@ part 'signup_response_wrapper_data.g.dart'; // Generate this file with `flutter 
 @JsonSerializable(fieldRename: FieldRename.snake) // 스네이크 케이스
 class SignupResponseWrapperData {
   const SignupResponseWrapperData({
-    required this.result_code,
+    required this.resultCode,
     required this.result,
   });
 
-  final String result_code;
+  final String resultCode;
   final SignupResponseResult result;
 
   factory SignupResponseWrapperData.fromJson(Map<String, dynamic> json) =>
       _$SignupResponseWrapperDataFromJson(json);
   Map<String, dynamic> toJson() => _$SignupResponseWrapperDataToJson(this);
   @override
-  String toString() => 'SignupResponseWrapperData(resultCode: $result_code, result: $result)';
+  String toString() => 'SignupResponseWrapperData(resultCode: $resultCode, result: $result)';
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class SignupResponseResult {
   const SignupResponseResult({
     required this.id,
