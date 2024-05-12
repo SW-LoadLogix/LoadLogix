@@ -9,7 +9,7 @@ part of 'signup_response_wrapper_data.dart';
 SignupResponseWrapperData _$SignupResponseWrapperDataFromJson(
         Map<String, dynamic> json) =>
     SignupResponseWrapperData(
-      result_code: json['result_code'] as String,
+      resultCode: json['result_code'] as String,
       result:
           SignupResponseResult.fromJson(json['result'] as Map<String, dynamic>),
     );
@@ -17,7 +17,7 @@ SignupResponseWrapperData _$SignupResponseWrapperDataFromJson(
 Map<String, dynamic> _$SignupResponseWrapperDataToJson(
         SignupResponseWrapperData instance) =>
     <String, dynamic>{
-      'result_code': instance.result_code,
+      'result_code': instance.resultCode,
       'result': instance.result,
     };
 
@@ -25,7 +25,7 @@ SignupResponseResult _$SignupResponseResultFromJson(
         Map<String, dynamic> json) =>
     SignupResponseResult(
       id: (json['id'] as num).toInt(),
-      userId: json['userId'] as String,
+      userId: json['user_id'] as String,
       name: json['name'] as String,
     );
 
@@ -33,6 +33,6 @@ Map<String, dynamic> _$SignupResponseResultToJson(
         SignupResponseResult instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
+      'user_id': instance.userId,
       'name': instance.name,
     };
