@@ -6,6 +6,7 @@ class VideoControlsOverlay extends StatefulWidget {
   final VoidCallback onClose;
 
   VideoControlsOverlay({required this.onClose});
+
   @override
   _VideoControlsOverlayState createState() => _VideoControlsOverlayState();
 }
@@ -50,61 +51,99 @@ class _VideoControlsOverlayState extends State<VideoControlsOverlay> {
                   });
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.replay_10, size: 24),
-                    onPressed: () => updateCurrentValue(-10),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.play_arrow, size: 24),
-                    onPressed: () {}, // Play functionality here
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.forward_10, size: 24),
-                    onPressed: () => updateCurrentValue(10),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('${_currentValue.round()}%', style: TextStyle(fontSize: 12)),
-                  SizedBox(width: 10),
-                  Text("Speed:", style: TextStyle(fontSize: 10)),
-                  SizedBox(width: 5),
-                  Container(
-                    width: 80,
-                    child: Slider(
-                      value: _playbackSpeed,
-                      min: 0.5,
-                      max: 2.0,
-                      divisions: 15,
-                      label: '${_playbackSpeed.toStringAsFixed(1)}x',
-                      onChanged: (double value) {
-                        setState(() {
-                          _playbackSpeed = value;
-                        });
-                      },
+              Flex(direction: Axis.horizontal, children: [
+                Flexible(
+                  child: Expanded(
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      width: double.infinity,
+                      height: 40,
+                      // color: Colors.red,
+                      child: Text('       ${_currentValue.round()}%',
+                          style: TextStyle(fontSize: 12)),
                     ),
                   ),
-                  Text("Reverse:", style: TextStyle(fontSize: 10)),
-                  Transform.scale(
-                    scale: 0.8,
-                    child: Switch(
-                      value: _isReversed,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _isReversed = value;
-                        });
-                      },
+                ),
+                Flexible(
+                  child: Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      //color: Colors.green,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.replay_10, size: 24),
+                            onPressed: () => updateCurrentValue(-10),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.play_arrow, size: 24),
+                            onPressed: () {}, // Play functionality here
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.forward_10, size: 24),
+                            onPressed: () => updateCurrentValue(10),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  SizedBox(width: 5),
-                  Text('$_currentItem / $_totalItems', style: TextStyle(fontSize: 12)),
-                ],
-              ),
+                ),
+                Flexible(
+                  child: Expanded(
+                    child: Container(
+                      alignment: Alignment.bottomRight,
+                      width: double.infinity,
+                      //color: Colors.blue,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Speed:", style: TextStyle(fontSize: 10)),
+                          SizedBox(width: 5),
+                          Container(
+                            width: 100,
+                            child: Slider(
+                              value: _playbackSpeed,
+                              min: 0.5,
+                              max: 2.0,
+                              divisions: 15,
+                              label: '${_playbackSpeed.toStringAsFixed(1)}x',
+                              onChanged: (double value) {
+                                setState(() {
+                                  _playbackSpeed = value;
+                                });
+                              },
+                            ),
+                          ),
+                          Text("Reverse:", style: TextStyle(fontSize: 10)),
+                          Transform.scale(
+                            scale: 0.5,
+                            child: Switch(
+                              value: _isReversed,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _isReversed = value;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Text('$_currentItem / $_totalItems',
+                              style: TextStyle(fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //
+              //     SizedBox(width: 10),
+              //
+              //   ],
+              // ),
             ],
           ),
         ),
