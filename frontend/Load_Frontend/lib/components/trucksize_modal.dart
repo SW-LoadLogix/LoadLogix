@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:load_frontend/services/worker_info_functions.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
+import '../models/worker_info_data.dart';
+import '../stores/user_store.dart';
 
 class TruckSizeModal extends StatelessWidget {
   final TextEditingController widthController = TextEditingController();
@@ -49,10 +54,24 @@ class TruckSizeModal extends StatelessWidget {
             _buildInputField("높이", heightController),
             SizedBox(height: 16),
             GestureDetector(
-              onTap: () {
-                // 입력된 값을 사용하여 저장 동작 수행
+              onTap: () async {
+                UserStore userStore = await Provider.of<UserStore>(context, listen: false);
+                String? result = await WorkerInfoService().changeCarInfo(userStore.token,
+                    int.parse(widthController.text),
+                    int.parse(lengthController.text),
+                    int.parse(heightController.text));
+                if (result == "success"){
+                  WorkerStore workerStore = Provider.of<WorkerStore>(context, listen: false);
+                  WorkerInfoData? workerInfoDataNew = await WorkerInfoService().fetchWorkerInfo(userStore.token);
+                  workerStore.setWorkerInfo(workerInfoDataNew!);
+                }
+                else{
+                  print ("실패요 ㅠㅠ");
+                }
                 print(
                     '가로: ${widthController.text}, 세로: ${lengthController.text}, 높이: ${heightController.text}');
+
+
                 Navigator.pop(context);
               },
               child: Container(
