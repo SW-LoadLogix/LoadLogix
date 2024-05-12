@@ -6,11 +6,11 @@ part 'login_response_wrapper_data.g.dart'; // Generate this file with `flutter p
 @JsonSerializable(fieldRename: FieldRename.snake) // 스네이크 케이스
 class LoginResponseWrapperData {
   const LoginResponseWrapperData({
-    required this.result_code,
+    required this.resultCode,
     required this.result,
   });
 
-  final String result_code;
+  final String resultCode;
   final LoginResponseResult result;
 
   factory LoginResponseWrapperData.fromJson(Map<String, dynamic> json) =>
@@ -18,10 +18,10 @@ class LoginResponseWrapperData {
   Map<String, dynamic> toJson() => _$LoginResponseWrapperDataToJson(this);
 
   @override
-  String toString() => 'LoginResponseWrapperData(result_code: $result_code, result: $result)';
+  String toString() => 'LoginResponseWrapperData(result_code: $resultCode, result: $result)';
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake) // 스네이크 케이스
 class LoginResponseResult {
   const LoginResponseResult({
     required this.token,
