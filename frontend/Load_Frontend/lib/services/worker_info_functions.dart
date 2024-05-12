@@ -18,7 +18,7 @@ class WorkerInfoService {
 
     try {
       final response = await http.get(
-        Uri.parse('http://125.138.70.52:8081/api/worker/info'), headers: {
+        Uri.parse('http://43.201.116.59:8081/api/worker/info'), headers: {
           "Authorization": "Bearer $accessToken"
         });
 
