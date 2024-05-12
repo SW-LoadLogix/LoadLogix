@@ -5,14 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
-import org.ssafy.load.dto.request.GoodsRequest;
-import org.ssafy.load.dto.response.LoadStartResponse;
 import org.ssafy.load.dto.request.ReadyRequest;
+import org.ssafy.load.dto.response.LoadStartResponse;
 
 import java.util.List;
 
@@ -22,8 +20,6 @@ public class LoadTaskService {
     private final LoadTaskRepository loadTaskRepository;
     private final AreaRepository areaRepository;
     private final WorkerRepository workerRepository;
-    private final BoxTypeRepository boxTypeRepository;
-    private final BuildingRepository buildingRepository;
     private final GoodsRepository goodsRepository;
     private final SseService sseService;
 
@@ -32,15 +28,15 @@ public class LoadTaskService {
         System.out.println(readyRequest);
         areaRepository.findById(readyRequest.areaId()).ifPresentOrElse((areaEntity) -> {
             LoadTaskEntity loadTaskEntity = loadTaskRepository.save(
-                            LoadTaskEntity.of(
-                                    null,
-                                    true,
-                                    false,
-                                    false,
-                                    null,
-                                    areaEntity,
-                                    null
-                            ));
+                    LoadTaskEntity.of(
+                            null,
+                            true,
+                            false,
+                            false,
+                            null,
+                            areaEntity,
+                            null
+                    ));
 
             // agentid 찾아 load_task 튜플와 연결 (적재 준비 완료된 물품)
             for(long agentId : readyRequest.agentIds()){
