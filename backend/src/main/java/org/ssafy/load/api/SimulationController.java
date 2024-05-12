@@ -4,15 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import org.ssafy.load.application.AddressService;
-import org.ssafy.load.application.GoodsService;
-import org.ssafy.load.application.LoadTaskService;
-import org.ssafy.load.application.SseService;
+import org.ssafy.load.application.*;
 import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.GoodsCreateRequest;
 import org.ssafy.load.dto.request.ReadyRequest;
 
 import java.util.List;
+
+import org.ssafy.load.dto.request.anylogic.InputSettingResponse;
 import org.ssafy.load.dto.response.GoodsCreateResponse;
 
 @RequiredArgsConstructor
@@ -20,14 +19,14 @@ import org.ssafy.load.dto.response.GoodsCreateResponse;
 @RequestMapping("/simulation")
 public class SimulationController {
 
-    public final AddressService addressService;
     public final LoadTaskService loadTaskService;
     public final SseService sseService;
     public final GoodsService goodsService;
+    public final BuildingService buildingService;
 
     @GetMapping
-    public Response<List<Integer>> getAreaAndBuildingCount() {
-        return Response.success(addressService.getAreaAndBuildingCount());
+    public Response<InputSettingResponse> getAreaAndBuildingCount() {
+        return Response.success(buildingService.getInputSettingInfo());
     }
 
     @PostMapping("/ready")
