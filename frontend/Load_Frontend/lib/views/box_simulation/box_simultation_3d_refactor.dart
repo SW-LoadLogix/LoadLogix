@@ -455,12 +455,16 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FloatingActionButton(
+                  heroTag: "restart",
+                  key: Key("restart"),
                   child: const Text("Restart"),
                   onPressed: () {
                     reStart();
                   },
                 ),
                 FloatingActionButton(
+                  heroTag: "rewind",
+                  key: Key("rewind"),
                   child: const Text("Rewind"),
                   onPressed: () {
                     rewind();
