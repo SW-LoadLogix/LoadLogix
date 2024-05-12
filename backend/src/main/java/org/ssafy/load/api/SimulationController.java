@@ -36,36 +36,13 @@ public class SimulationController {
         return Response.success();
     }
 
-//    @GetMapping(value = "/start", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-//    public Flux<LoadStartRequest> streamEvents() {
-//        return Flux.interval(Duration.ofSeconds(3))
-//                .map(sequence -> loadTaskService.getReadyStatus());
-//    }
-
-//    @GetMapping("/ready")
-//    public SseEmitter streamSse() {
-//        // 요청마다 새로운 SseEmitter 생성
-//        SseEmitter emitter = new SseEmitter();
-//
-//        // 백그라운드 스레드에서 데이터 전송
-//        new Thread(() -> {
-//            try {
-//                emitter.send();
-//                emitter.complete();
-//            } catch (Exception e) {
-//                emitter.completeWithError(e);
-//            }
-//        }).start();
-//
-//        return emitter;
-//    }
     @GetMapping(value = "/start", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamSse() {return sseService.createEmitter("1");
     }
 
-
     @PostMapping("/goods")
-    public Response<GoodsCreateResponse> createGoods(@RequestBody GoodsCreateRequest goodsCreateRequest){
-        return Response.success(goodsService.createGoods(goodsCreateRequest));
+    public Response<Void> createGoods(@RequestBody GoodsCreateRequest goodsCreateRequest){
+        goodsService.createGoods(goodsCreateRequest);
+        return Response.success();
     }
 }

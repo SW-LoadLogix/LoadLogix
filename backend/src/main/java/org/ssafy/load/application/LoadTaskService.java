@@ -35,7 +35,6 @@ public class LoadTaskService {
                             LoadTaskEntity.of(
                                     null,
                                     true,
-                                    readyRequest.count(),
                                     false,
                                     false,
                                     null,
@@ -43,25 +42,13 @@ public class LoadTaskService {
                                     null
                             ));
 
-            // 물품 저장
-            for(GoodsRequest goods : readyRequest.goods()){
-                GoodsEntity goodsEntity = GoodsEntity.of(
-                        null,
-                        goods.weight(),
-                        goods.detailAddress(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        boxTypeRepository.findByType(BoxType.valueOf("L"+goods.type())).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                        buildingRepository.findById(goods.buildingId()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                        loadTaskEntity,
-                        null
-                );
-                goodsRepository.save(goodsEntity);
-
+            // agentid 찾아 load_task 튜플와 연결 (적재 준비 완료된 물품)
+            for(long agentId : readyRequest.agentIds()){
+                List<GoodsEntity> goodsList = goodsRepository.findAllByAgentId(agentId);
+                for(GoodsEntity goods : goodsList){
+                    goodsRepository.save(goods.updateLoadTaskId(loadTaskEntity));
+                }
             }
-
         }, () -> {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
         });
