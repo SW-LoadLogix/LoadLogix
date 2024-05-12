@@ -5,10 +5,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:load_frontend/animated_login/animated_login.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
 import '../routes/app_router.dart';
 import '../services/user_service.dart';
+import '../stores/user_store.dart';
 import '../utils/dialog_builders.dart';
 
 @RoutePage()
@@ -33,9 +35,9 @@ class _LoginScreenState extends State<SignInUpPage> {
     return AnimatedLogin(
 
        onLogin: (LoginData data) async =>
-           _authOperation(LoginFunctions(context).onLogin(data)),
+           _loginAuthOperation(LoginFunctions(context).onLogin(data)),
        onSignup: (SignUpData data) async =>
-           _authOperation(LoginFunctions(context).onSignUp(data)),
+           _signUpAuthOperation(LoginFunctions(context).onSignUp(data)),
       //onForgotPassword: _onForgotPassword,
 
       logo: Image.asset('assets/images/logo.gif'),
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<SignInUpPage> {
     );
   }
 
-  Future<String?> _authOperation(Future<String?> func) async {
+  Future<String?> _loginAuthOperation(Future<String?> func) async {
     await _operation?.cancel();
     _operation = CancelableOperation.fromFuture(func);
     final String? res = await _operation?.valueOrCancellation();
@@ -74,7 +76,8 @@ class _LoginScreenState extends State<SignInUpPage> {
         DialogBuilder(context).showResultDialog('Failed to login.');
       }
       else if (res == "success") {
-        DialogBuilder(context).showResultDialog('Successfully logged in.');
+        await DialogBuilder(context).showResultDialog('Successfully logged in.');
+        //await Future.delayed(const Duration(seconds: 3));
         AutoRouter.of(context).push(DashboardRoute());
         //Navigator.of(context).pushNamed('/dashboard');
       }
@@ -87,7 +90,28 @@ class _LoginScreenState extends State<SignInUpPage> {
     }
     return res;
   }
-
+  Future<String?> _signUpAuthOperation(Future<String?> func) async {
+    await _operation?.cancel();
+    _operation = CancelableOperation.fromFuture(func);
+    final String? res = await _operation?.valueOrCancellation();
+    if (_operation?.isCompleted == true) {
+      if (res == "failed") {
+        DialogBuilder(context).showResultDialog('Failed to signup.');
+      }
+      else if (res == "success") {
+        DialogBuilder(context).showResultDialog('Successfully signup.');
+        //AutoRouter.of(context).push(DashboardRoute());
+        //Navigator.of(context).pushNamed('/dashboard');
+      }
+      else if (res == null) {
+        DialogBuilder(context).showResultDialog('Failed to signup.');
+      }
+      else {
+        DialogBuilder(context).showResultDialog(res);
+      }
+    }
+    return res;
+  }
   // Future<String?> _onForgotPassword(String email) async {
   //   await _operation?.cancel();
   //   return await LoginFunctions(context).onForgotPassword(email);

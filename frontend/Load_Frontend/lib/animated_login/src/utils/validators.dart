@@ -14,7 +14,8 @@ class Validators {
 
   /// Regex for name input, also considers international chars.
   static const String _nameRegex =
-      r"""^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ðıİşŞÜüĞğÇçÖö ,.'-]+$""";
+  r"""^[a-zA-Z가-힣àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ðıİşŞÜüĞğÇçÖö]+$""";
+
 
   /// Regex for email input.
   static const String _emailRegex =
@@ -52,7 +53,7 @@ class Validators {
     if (errorMessage == null) {
       final isValid = RegExp(_nameRegex).hasMatch(name!);
       if (!isValid) {
-        const defaultMessage = '올바른 이름을 입력해 주세요.';
+        const defaultMessage = '올바른 이름을 입력해 주세요. final isValid = RegExp(_nameRegex).hasMatch(name!);';
         return validator?.validatorCallback?.call(name) ?? defaultMessage;
       }
     }

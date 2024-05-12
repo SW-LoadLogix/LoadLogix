@@ -28,7 +28,7 @@ class LoginFunctions {
       return "failed";
     }
     else{
-      Provider.of<UserStore>(context, listen: false).saveToken(loginResult.token);
+      await Provider.of<UserStore>(context, listen: false).saveToken(loginResult.token);
       print ("Token : ${Provider.of<UserStore>(context, listen: false).token}");
       //UserSecureStorage().saveToken(loginResult.token);
       return "success";
@@ -70,7 +70,7 @@ class UserService{
   Future<LoginResponseResult?> LoginApiCall(LoginData loginData) async {
     await Future.delayed(const Duration(seconds: 2));
     try {
-      var url = Uri.parse('http://192.168.31.245:8081/api/worker/login');
+      var url = Uri.parse('http://125.138.70.52:8081/api/worker/login');
       var data = {
         'id': loginData.email,
         'password': loginData.password
@@ -80,11 +80,12 @@ class UserService{
       });
 
       print (response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
-        print(responseData);
+        print(responseData.toString());
         LoginResponseWrapperData loginResponseWrapperData = LoginResponseWrapperData.fromJson(responseData);
-        print(loginResponseWrapperData);
+        print(loginResponseWrapperData.toString());
 
 
         return loginResponseWrapperData.result;
@@ -104,7 +105,7 @@ class UserService{
     }
     await Future.delayed(const Duration(seconds: 2));
     try {
-      var url = Uri.parse('http://192.168.31.245:8081/api/worker/signup');
+      var url = Uri.parse('http://125.138.70.52:8081/api/worker/signup');
       var data = {
         'name': signupData.name,
         'id': signupData.email,
@@ -115,6 +116,7 @@ class UserService{
       });
 
       print (response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
         SignupResponseWrapperData signupResponse = SignupResponseWrapperData.fromJson(responseData);
