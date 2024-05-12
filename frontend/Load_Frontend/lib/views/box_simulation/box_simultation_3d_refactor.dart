@@ -9,6 +9,7 @@ import 'package:flutter_gl/flutter_gl.dart';
 import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/views/box_simulation/selected_box_overlay_widget.dart';
 import 'package:load_frontend/views/box_simulation/simulation_controller.dart';
+import 'package:load_frontend/views/box_simulation/video_overlay_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:three_dart/three_dart.dart' as three;
 import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
@@ -79,6 +80,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   bool isSelected = false;
   late Box selectedBox;
+
+
+  OverlayEntry? _overlayEntry;
+
 
   three.MeshPhongMaterial selectedMaterial = three.MeshPhongMaterial({
     "color": 0xFFFFFFFF,
@@ -349,6 +354,24 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   @override
   initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showOverlay(context);
+    });
+
+  }
+
+  void _showOverlay(BuildContext context) {
+    _overlayEntry = OverlayEntry(
+      builder: (context) => VideoControlsOverlay(
+        onClose: _removeOverlay,
+      ),
+    );
+    Overlay.of(context)?.insert(_overlayEntry!);
+  }
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 
   @override
@@ -450,28 +473,28 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           },
         ),
       ),
-      floatingActionButton:
-          Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FloatingActionButton(
-                  heroTag: "restart",
-                  key: Key("restart"),
-                  child: const Text("Restart"),
-                  onPressed: () {
-                    reStart();
-                  },
-                ),
-                FloatingActionButton(
-                  heroTag: "rewind",
-                  key: Key("rewind"),
-                  child: const Text("Rewind"),
-                  onPressed: () {
-                    rewind();
-                  },
-                )
-              ]
-          ),
+      // floatingActionButton:
+      //     Column(
+      //         mainAxisAlignment: MainAxisAlignment.end,
+      //         children: [
+      //           FloatingActionButton(
+      //             heroTag: "restart",
+      //             key: Key("restart"),
+      //             child: const Text("Restart"),
+      //             onPressed: () {
+      //               reStart();
+      //             },
+      //           ),
+      //           FloatingActionButton(
+      //             heroTag: "rewind",
+      //             key: Key("rewind"),
+      //             child: const Text("Rewind"),
+      //             onPressed: () {
+      //               rewind();
+      //             },
+      //           )
+      //         ]
+      //     ),
     );
   }
 
@@ -479,6 +502,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   Widget _build(BuildContext context) {
     if (isOverlayCreated == false){
       selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context,position: Offset(gCurrSideBarWidth + 20, gCurrTopBarHeight + 20));
+
+
       isOverlayCreated = true;
     }
     return GestureDetector(
