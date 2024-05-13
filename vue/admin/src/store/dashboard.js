@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import axios from '@/utils/adminAxios';
 
-export const useDashboard = defineStore('dashboard', () => {
+export const useDashboardStore = defineStore('dashboard', () => {
     /* 택배 수 조회 */
     const goodsCount = ref({});
     const getGoodsCount = async () => {

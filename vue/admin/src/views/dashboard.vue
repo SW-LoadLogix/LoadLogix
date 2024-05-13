@@ -1,4 +1,7 @@
 <script setup>
+// import { computed } from "vue";
+import { useDashboardStore } from "@/store/dashboard";
+
 import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import Carousel from "./components/Carousel.vue";
@@ -9,6 +12,9 @@ import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
+const dashboardStore = useDashboardStore();
+// const goodsCount = computed(() => dashboardStore.goodsCount);
+dashboardStore.getGoodsCount();
 const sales = {
   us: {
     country: "United States",
