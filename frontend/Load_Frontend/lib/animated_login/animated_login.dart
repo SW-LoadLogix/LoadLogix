@@ -215,6 +215,7 @@ class _AnimatedLoginState extends State<AnimatedLogin> {
               c.component == LoginComponents.policyCheckbox,
         ) !=
         -1;
+
     return MultiProvider(
       providers: <ChangeNotifierProvider<dynamic>>[
         ChangeNotifierProvider<LoginTexts>.value(value: loginTexts),
