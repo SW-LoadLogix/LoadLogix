@@ -33,7 +33,7 @@ public class LoadTaskEntity {
     @JoinColumn(name = "area_id")
     private AreaEntity area;
 
-    @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "loadTask", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<GoodsEntity> goodsEntities = new ArrayList<>();
 
     @PrePersist
@@ -43,6 +43,18 @@ public class LoadTaskEntity {
 
     public static LoadTaskEntity of(Integer id, Boolean areaStatus, Boolean workerState, Boolean complete, LocalDateTime createdAt, AreaEntity area, List<GoodsEntity> goodsEntities){
         return new LoadTaskEntity(id, areaStatus , workerState, complete, createdAt, area, goodsEntities);
+    }
+
+    public static LoadTaskEntity createNewEntity(AreaEntity area) {
+        return of(
+                null,
+                true,
+                false,
+                false,
+                null,
+                area,
+                null
+        );
     }
 
     public LoadTaskEntity withUpdatedWorkerState(boolean workerStatus) {
