@@ -1,9 +1,11 @@
-package org.ssafy.load.dto.response;
+package org.ssafy.load.dto.response.worker;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.ssafy.load.domain.WorkerEntity;
 
 public record SignUpResponse(
     Long id,
+    @JsonProperty("user_id")
     String userId,
     String name
 ) {

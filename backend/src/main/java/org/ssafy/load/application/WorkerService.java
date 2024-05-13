@@ -1,25 +1,21 @@
 package org.ssafy.load.application;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.dao.CarRepository;
 import org.ssafy.load.dao.WorkerRepository;
-import org.ssafy.load.domain.BoxTypeEntity;
-import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
-import org.ssafy.load.dto.request.LoginRequest;
-import org.ssafy.load.dto.request.SignUpRequest;
-import org.ssafy.load.dto.response.BoxTypeResponse;
-import org.ssafy.load.dto.response.LoginResponse;
-import org.ssafy.load.dto.response.SignUpResponse;
-import org.ssafy.load.dto.response.WorkerInfoResponse;
+import org.ssafy.load.dto.request.worker.LoginRequest;
+import org.ssafy.load.dto.request.worker.SignUpRequest;
+import org.ssafy.load.dto.response.worker.LoginResponse;
+import org.ssafy.load.dto.response.worker.SignUpResponse;
+import org.ssafy.load.dto.response.worker.WorkerInfoResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,46 +25,40 @@ public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
-    private final CarRepository carRepository;
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByLoginId(signUpRequest.id());
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null, null));
-        return SignUpResponse.from(workerRepository.save(
-            WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                signUpRequest.name(), car, null)));
+        return SignUpResponse.from(workerRepository.save(WorkerEntity.createNewWorker(
+                signUpRequest.id(), signUpRequest.password(), signUpRequest.name(), null)
+        ));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-        Optional<WorkerEntity> worker = workerRepository.findByLoginIdAndPassword(
-            loginRequest.id(),
-            loginRequest.password());
+        Optional<WorkerEntity> workerOptional = workerRepository.findByLoginIdAndPassword(
+                loginRequest.id(),
+                loginRequest.password());
 
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
-        return LoginResponse.of(
-            jwtTokenProvider.generateToken(worker.get().getId(), worker.get().getName(),
-                "worker"));
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        if(worker.getArea() == null) throw new CommonException(ErrorCode.AREA_NOT_FOUND);
+
+        return LoginResponse.of(jwtTokenProvider.generateToken(worker.getId(), worker.getName(),"worker"));
     }
 
     @Transactional(readOnly = true)
-    public WorkerInfoResponse getWorkerInfo(Long workerId) {
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
-        return WorkerInfoResponse.from(worker.get());
+    public WorkerInfoResponse getWorkerInfo(Long workerId){
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        return WorkerInfoResponse.from(worker);
     }
 
     @Transactional(readOnly = true)
     public List<WorkerResponse> getWorkerList() {
         List<WorkerEntity> workers = workerRepository.findAll();
         return workers.stream()
-            .map(worker -> new WorkerResponse(worker.getName(), worker.getArea().getAreaName()))
-            .toList();
+                .map(worker -> new WorkerResponse(worker.getName(), worker.getArea().getAreaName()))
+                .toList();
     }
 }
