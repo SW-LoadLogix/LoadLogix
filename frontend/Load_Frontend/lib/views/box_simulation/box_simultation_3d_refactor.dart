@@ -16,6 +16,7 @@ import 'package:three_dart_jsm/three_dart_jsm.dart' as three_jsm;
 import 'package:three_dart_jsm/three_dart_jsm/loaders/mtl_loader.dart';
 import 'package:three_dart_jsm/three_dart_jsm/loaders/obj_loader.dart';
 
+import '../../stores/box_store.dart';
 import 'box.dart';
 import 'box_colors.dart';
 import 'package:load_frontend/stores/goods_store.dart';
@@ -79,11 +80,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   late three.Object3D clickedObject;
 
   bool isSelected = false;
-  late Box selectedBox;
-
+  late SimulBox selectedBox;
 
   OverlayEntry? _overlayEntry;
-
 
   three.MeshPhongMaterial selectedMaterial = three.MeshPhongMaterial({
     "color": 0xFFFFFFFF,
@@ -169,12 +168,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   void onPointerDown(TapDownDetails event) {
     var size = MediaQuery.of(context).size;
     double x = (event.localPosition.dx /
-        (size.width - gCurrSideBarWidth - gCurrRightSideBarWidth)) *
+                (size.width - gCurrSideBarWidth - gCurrRightSideBarWidth)) *
 //        (size.width - sideBarDesktopWidth - rightsideBarDesktopWidth)) *
             2 -
         1;
 //    double y = -(event.localPosition.dy / (size.height - topBarHeight)) * 2 + 1;
-    double y = -(event.localPosition.dy / (size.height - gCurrTopBarHeight)) * 2 + 1;
+    double y =
+        -(event.localPosition.dy / (size.height - gCurrTopBarHeight)) * 2 + 1;
 
     //double x = (event.localPosition.dx / width) * 2 - 1;
     //double y = -(event.localPosition.dy / height) * 2 + 1;
@@ -357,13 +357,17 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showOverlay(context);
     });
-
   }
 
+  late GlobalKey<VideoControlsOverlayState> overlayKey;
+
   void _showOverlay(BuildContext context) {
+    overlayKey = GlobalKey<VideoControlsOverlayState>();
+
     _overlayEntry = OverlayEntry(
       builder: (context) => VideoControlsOverlay(
         onClose: _removeOverlay,
+        overlayKey: overlayKey,
       ),
     );
     Overlay.of(context)?.insert(_overlayEntry!);
@@ -376,6 +380,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   void dispose() {
+    print("dispose!!!!!!");
     disposed = true;
     if (_ticker != null) {
       _ticker!.dispose(); // Ticker가 활성화된 경우 해제
@@ -386,6 +391,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         selectedBoxOverlayWidget.remove();
       }
     }
+    _removeOverlay();
 
     three3dRender.dispose();
     WidgetsBinding.instance.removeObserver(this);
@@ -440,20 +446,19 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   Widget build(BuildContext context) {
-
     final Size _size = MediaQuery.of(context).size;
     final bool _isDesktop = _size.width >= screenLg;
     final bool _isMobile = _size.width < screenSm;
 
-    if (_isDesktop){
+    if (_isDesktop) {
       gCurrTopBarHeight = topBarHeight;
       gCurrSideBarWidth = sideBarDesktopWidth;
       gCurrRightSideBarWidth = rightSideBarDesktopWidth;
-    }else if (_isMobile){
+    } else if (_isMobile) {
       gCurrTopBarHeight = mobileTopBarHeight;
       gCurrSideBarWidth = 0;
       gCurrRightSideBarWidth = 0;
-    }else{
+    } else {
       gCurrTopBarHeight = topBarHeight;
       gCurrSideBarWidth = sideBarMobileWidth;
       gCurrRightSideBarWidth = rightSideBarDesktopWidth;
@@ -473,6 +478,17 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           },
         ),
       ),
+      floatingActionButton:
+          Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+        FloatingActionButton(
+          heroTag: "State",
+          key: Key("State"),
+          child: const Text("State"),
+          onPressed: () {
+            showOverlayWidget();
+          },
+        ),
+      ]),
       // floatingActionButton:
       //     Column(
       //         mainAxisAlignment: MainAxisAlignment.end,
@@ -499,10 +515,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   }
 
   bool isOverlayCreated = false;
-  Widget _build(BuildContext context) {
-    if (isOverlayCreated == false){
-      selectedBoxOverlayWidget = SelectedBoxOverlayWidget(context: context,position: Offset(gCurrSideBarWidth + 20, gCurrTopBarHeight + 20));
 
+  Widget _build(BuildContext context) {
+    if (isOverlayCreated == false) {
+      selectedBoxOverlayWidget = SelectedBoxOverlayWidget(
+          context: context,
+          position: Offset(gCurrSideBarWidth + 20, gCurrTopBarHeight + 20));
 
       isOverlayCreated = true;
     }
@@ -515,7 +533,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height - gCurrTopBarHeight,
+                    height:
+                        MediaQuery.of(context).size.height - gCurrTopBarHeight,
                     color: Colors.black,
                     child: Builder(builder: (BuildContext context) {
                       if (kIsWeb) {
@@ -533,40 +552,22 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         ],
       ),
     );
+  }
 
-    return Column(
-      children: [
-        Stack(
-          children: [
-            three_jsm.DomLikeListenable(
-                key: _globalKey,
-                builder: (BuildContext context) {
-                  return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height - topBarHeight,
-                      color: Colors.black,
-                      child: Builder(builder: (BuildContext context) {
-                        if (kIsWeb) {
-                          return three3dRender.isInitialized
-                              ? HtmlElementView(
-                                  viewType: three3dRender.textureId!.toString())
-                              : Container();
-                        } else {
-                          return three3dRender.isInitialized
-                              ? Texture(textureId: three3dRender.textureId!)
-                              : Container();
-                        }
-                      }));
-                }),
-          ],
-        ),
-      ],
-    );
+  bool isOverlayWidgetShowing = true;
+
+  void showOverlayWidget() {
+    if (isOverlayWidgetShowing) {
+      _removeOverlay();
+    } else {
+      _showOverlay(context);
+    }
+    isOverlayWidgetShowing = !isOverlayWidgetShowing;
   }
 
   void reStart() {
     print("reStart ............. ");
-    currentBoxIndex = 0;
+    gCurrentBoxIndex = 0;
     gIsForword = true;
     for (int i = 0; i < boxes.length; i++) {
       boxes[i].isDone = false;
@@ -744,7 +745,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   }
 
   Map<int, int> numberMapping = {};
+
   void initBox() async {
+    gCurrentBoxIndex = 0; // 현재 애니메이션 중인 상자 인덱스
+    gBoxCount = gGoods.length;
     selectedGeometry =
         adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
     selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
@@ -762,7 +766,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       var randomValue = gGoods[i].position;
       //randomVector3(truckSize.x, truckSize.y, truckSize.z);
 
-      boxes.add(Box(
+      boxes.add(SimulBox(
           gGoods[i].type,
           three.Vector3(randomValue.x + 25, randomValue.y, randomValue.z),
           three.Vector3(randomValue.x + 25, randomValue.y, randomValue.z),
@@ -806,7 +810,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     scene.add(transparentEdgeMesh);
   }
 
-  int currentBoxIndex = 0; // 현재 애니메이션 중인 상자 인덱스
   static double lastCheckTransparantValue = 60.0;
 
   void createVisualRay(
@@ -854,6 +857,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
    * MainLoop
    *
    */
+  int lastcheck = 0;
+
   void onTickBox() {
     if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
@@ -862,24 +867,28 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       lastCheckTransparantValue = transparencyValuePercent;
     }
 
+    if (gCurrentBoxIndex < 0)
+      gCurrentBoxIndex = 0;
+    else if (gCurrentBoxIndex >= boxes.length)
+      gCurrentBoxIndex = boxes.length - 1;
+
     if (gIsForword) {
-      if (currentBoxIndex < boxes.length) {
-        Box currentBox = boxes[currentBoxIndex];
+      if (gCurrentBoxIndex < boxes.length) {
+        SimulBox currentBox = boxes[gCurrentBoxIndex];
         currentBox.update();
-        if (currentBox.isDone && currentBoxIndex < boxes.length) {
-          currentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
+        if (currentBox.isDone && gCurrentBoxIndex < boxes.length) {
+          gCurrentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
         }
       }
-    }
-    else{
-      if (currentBoxIndex >= 0) {
-        if (currentBoxIndex >= boxes.length) {
-          currentBoxIndex = boxes.length - 1;
+    } else {
+      if (gCurrentBoxIndex >= 0) {
+        if (gCurrentBoxIndex >= boxes.length) {
+          gCurrentBoxIndex = boxes.length - 1;
         }
-        Box currentBox = boxes[currentBoxIndex];
+        SimulBox currentBox = boxes[gCurrentBoxIndex];
         currentBox.update();
-        if (currentBox.isDone && currentBoxIndex >= 0) {
-          currentBoxIndex--; // 현재 상자 완료 시 다음 상자 시작
+        if (currentBox.isDone && gCurrentBoxIndex >= 0) {
+          gCurrentBoxIndex--; // 현재 상자 완료 시 다음 상자 시작
         }
       }
     }
@@ -904,7 +913,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     var quaternion = three.Quaternion();
 
-    for (int i = 0; i < currentBoxIndex + 1 && i < boxes.length; i++) {
+    for (int i = 0; i < gCurrentBoxIndex + 1 && i < boxes.length; i++) {
       var box = boxes[i];
       if (box.isChecked == false) {
         continue;
@@ -1085,5 +1094,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         // Perform any other actions you need on the clicked object
       }
     }
+
+    if (lastcheck != gCurrentBoxIndex) {
+      lastcheck = gCurrentBoxIndex;
+      Provider.of<BoxStore>(context, listen: false)
+          .setEveryThing(gCurrentBoxIndex, gBoxCount);
+    } //Overlay.of(context).
+    // _overlayEntry.
   }
 }

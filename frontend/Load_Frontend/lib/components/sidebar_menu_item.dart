@@ -28,9 +28,11 @@ class _MenuItemState extends State<SideBarMenuItem> {
             AutoRouter.of(context).push(HomeRoute());
             break;
           case '배송관리 대시보드':
+            AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
             AutoRouter.of(context).push(DashboardRoute());
             break;
           case 'Simulation 3d':
+            AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
             AutoRouter.of(context).push(DashboardSimulation3dRoute());
             break;
         }

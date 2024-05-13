@@ -8,7 +8,7 @@ import 'package:load_frontend/views/box_simulation/box.dart';
 import '../models/vector3.dart';
 import 'base_url.dart';
 
-bool isDebug = true;
+bool isDebug = false;
 
 class GoodsService {
   Future<List<GoodsData>> getGoods(String accessToken) async {
@@ -44,7 +44,7 @@ class GoodsService {
       return goods;
     }
 
-    final response = await http.get(Uri.parse('http://125.138.70.52:8081/api/goods/loads'), headers: {"Authorization":  "Bearer $accessToken"});
+    final response = await http.get(Uri.parse('http://43.201.116.59:8081/api/goods/loads'), headers: {"Authorization":  "Bearer $accessToken"});
     if (response.statusCode == 200) {
       List<GoodsData> goods = [];
       var data = json.decode(response.body);

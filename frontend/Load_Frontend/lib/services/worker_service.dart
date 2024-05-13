@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/worker_info_data.dart';
 import 'base_url.dart';
 
-class WorkerInfoService {
+class WorkerService {
 
   /**
    * Rest API method : GET
@@ -80,4 +80,27 @@ class WorkerInfoService {
     }return "fail";
   }
 
+  Future <bool> isWorkerReadyApi(String accessToken) async {
+    try {
+      final response = await http.get(
+          Uri.parse('http://43.201.116.59:8081/api/worker/info'), headers: {
+        "Authorization": "Bearer $accessToken"
+      });
+
+      var responseBody = json.decode(response.body);
+      print(responseBody);
+      if (response.statusCode == 200) {
+        if (responseBody['result'] == true)
+          return true;
+        else
+          return false;
+      }
+      else {
+        return false;
+      }
+    }
+    catch (error) {
+      throw Exception("Failed to load Worker Ready");
+    }
+  }
 }

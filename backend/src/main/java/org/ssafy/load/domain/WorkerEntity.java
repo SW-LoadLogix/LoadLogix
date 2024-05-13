@@ -23,8 +23,8 @@ public class WorkerEntity {
     private String password;
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_id") // 실제 데이터베이스의 외래키 컬럼명 지정
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
     private CarEntity car;
 
     @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -39,5 +39,13 @@ public class WorkerEntity {
             AreaEntity area
     ) {
         return new WorkerEntity(id, loginId, password, name, car, area);
+    }
+
+    public void withUpdateCar(CarEntity car) {
+        this.car = car;
+    }
+
+    public static WorkerEntity createNewWorker(String id, String password, String name, CarEntity car) {
+        return WorkerEntity.of(null, id, password, name, car, null);
     }
 }

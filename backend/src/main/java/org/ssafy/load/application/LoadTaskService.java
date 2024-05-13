@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.dao.*;
+import org.ssafy.load.dao.AreaRepository;
+import org.ssafy.load.dao.GoodsRepository;
+import org.ssafy.load.dao.LoadTaskRepository;
+import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
-import org.ssafy.load.dto.Goods;
 import org.ssafy.load.dto.request.ReadyRequest;
 import org.ssafy.load.dto.response.LoadStartResponse;
 
