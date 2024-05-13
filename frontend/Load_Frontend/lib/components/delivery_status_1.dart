@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:load_frontend/services/worker_service.dart';
+import 'package:load_frontend/stores/user_store.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
 
@@ -38,7 +42,11 @@ class DeliveryStatus1 extends StatelessWidget {
             height: 30,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              print("배송대기 버튼 클릭");
+              String accessToken = Provider.of<UserStore>(context, listen: false).token;
+              bool isWorkerReady = await WorkerService().isWorkerReadyApi(accessToken);
+              Provider.of<WorkerStore>(context, listen: false).setWorkerIsReady(isWorkerReady);
               // 버튼 클릭 시 동작할 내용 작성
             },
             child: Container(
