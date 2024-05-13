@@ -1,13 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:load_frontend/services/worker_info_functions.dart';
+import 'package:load_frontend/services/worker_service.dart';
 
 import '../models/worker_info_data.dart';
 
 // List<WorkerInfoData> wInfo = [];
 
 class WorkerStore extends ChangeNotifier {
-  WorkerInfoService workerInfoService = WorkerInfoService();
+  WorkerService workerInfoService = WorkerService();
 
   WorkerInfoData workerInfo = WorkerInfoData(
   name : "a",

@@ -376,6 +376,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   @override
   void dispose() {
+    print ("dispose!!!!!!");
     disposed = true;
     if (_ticker != null) {
       _ticker!.dispose(); // Ticker가 활성화된 경우 해제
@@ -386,6 +387,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         selectedBoxOverlayWidget.remove();
       }
     }
+    _removeOverlay();
 
     three3dRender.dispose();
     WidgetsBinding.instance.removeObserver(this);
