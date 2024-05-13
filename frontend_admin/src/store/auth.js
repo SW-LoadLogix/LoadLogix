@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
+const apiUrl = process.env.VUE_APP_API_URL+'/admin';
+
 export const useAuthStore = defineStore(
   "auth",
   () => {
@@ -15,7 +17,7 @@ export const useAuthStore = defineStore(
     const token = ref(""); //jwt 토큰 정보
 
     const login = async (loginRequest) => {
-      const { data } = await axios.post(`/api/admin/login`, loginRequest);
+      const { data } = await axios.post(`${apiUrl}/login`, loginRequest);
       console.log("로그인 요청 후 응답 데이터:", data);
 
       token.value = data.result.token; //토큰 정보 저장
