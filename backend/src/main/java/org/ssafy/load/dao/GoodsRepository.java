@@ -6,6 +6,7 @@ import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.LoadTaskEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
@@ -37,4 +38,6 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
 
     @Query(value = "SELECT building_id, COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY building_id", nativeQuery = true)
     List<Object[]> countGoodsByBuildingIdAndCreatedAtIsToday();
+
+    List<GoodsEntity> findAllByAgentId(long agentId);
 }
