@@ -9,9 +9,11 @@ import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.*;
 import org.ssafy.load.dto.Position;
-import org.ssafy.load.dto.SortedGoods;
+import org.ssafy.load.dto.response.goods.SortedGoods;
 import org.ssafy.load.dto.request.GoodsCreateRequest;
 import org.ssafy.load.dto.response.*;
+import org.ssafy.load.dto.response.goods.GoodsListResponse;
+import org.ssafy.load.dto.response.goods.SortedGoodsResponse;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -93,7 +95,6 @@ public class GoodsService {
         //기사 조회
         Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
         WorkerEntity worker = workerEntityOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
-
         //구역 조회
         Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
         AreaEntity area = areaOptionalEntity.orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));

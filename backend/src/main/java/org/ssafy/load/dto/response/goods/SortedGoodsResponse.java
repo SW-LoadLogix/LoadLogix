@@ -1,7 +1,6 @@
-package org.ssafy.load.dto.response;
+package org.ssafy.load.dto.response.goods;
 
 import java.util.List;
-import org.ssafy.load.dto.SortedGoods;
 
 public record SortedGoodsResponse(
     List<SortedGoods> goods

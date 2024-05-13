@@ -1,6 +1,7 @@
-package org.ssafy.load.dto.response;
+package org.ssafy.load.dto.response.goods;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.ssafy.load.dto.response.BuildingDetailResponse;
 
 import java.util.List;
 

@@ -8,8 +8,9 @@ import org.ssafy.load.application.GoodsService;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
 import org.ssafy.load.dto.request.AreaSettingRequest;
-import org.ssafy.load.dto.request.LoginRequest;
+import org.ssafy.load.dto.request.worker.LoginRequest;
 import org.ssafy.load.dto.response.*;
+import org.ssafy.load.dto.response.worker.LoginResponse;
 
 import java.util.List;
 
