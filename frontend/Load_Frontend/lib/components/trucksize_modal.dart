@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:load_frontend/services/worker_info_functions.dart';
+import 'package:load_frontend/services/worker_service.dart';
 import 'package:load_frontend/stores/worker_store.dart';
 import 'package:provider/provider.dart';
 
@@ -56,13 +56,13 @@ class TruckSizeModal extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 UserStore userStore = await Provider.of<UserStore>(context, listen: false);
-                String? result = await WorkerInfoService().changeCarInfo(userStore.token,
+                String? result = await WorkerService().changeCarInfo(userStore.token,
                     int.parse(widthController.text),
                     int.parse(lengthController.text),
                     int.parse(heightController.text));
                 if (result == "success"){
                   WorkerStore workerStore = Provider.of<WorkerStore>(context, listen: false);
-                  WorkerInfoData? workerInfoDataNew = await WorkerInfoService().fetchWorkerInfo(userStore.token);
+                  WorkerInfoData? workerInfoDataNew = await WorkerService().fetchWorkerInfo(userStore.token);
                   workerStore.setWorkerInfo(workerInfoDataNew!);
                 }
                 else{

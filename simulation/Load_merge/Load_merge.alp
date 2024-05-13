@@ -58,24 +58,29 @@ public void startPick(LoadStartResponse response){
     // 리스트 정렬 확인
     Collections.sort(agents, (a1, a2) -> Long.compare(((Goods)a1).agentId, ((Goods)a2).agentId));
     
+    List<Goods> pickList = new ArrayList<>();
+    
     // 이진탐색으로 agent 찾아 pick
     for(Long agentId : response.getAgentIds()){
+    
         Goods newGoods = new Goods();
         newGoods.agentId = agentId;
         int index = Collections.binarySearch(agents, newGoods, (a1, a2) -> Long.compare(((Goods)a1).agentId, ((Goods)a2).agentId));
         if (index >= 0) {
             Goods goods = (Goods) agents.get(index);
             goods.toConveyorLine = response.getConveyNo();
-            
-            try {
-	            semaphore.acquire();
-	            enter.take(goods);
-	        } finally {
-	            semaphore.release();
-	        }
+            pickList.add(goods);
+           // try {
+	       //     semaphore.acquire();
+	       // } finally {
+	       //     semaphore.release();
+	       // }
         } else {
             System.out.println("Agent ID " + agentId + " not found.");
-        }
+        }       
+    }
+    for(Goods pick : pickList){   
+    	enter.take(pick);
     }
 }
 
@@ -87,7 +92,7 @@ boolean[] readyVehicleToConvey = new boolean[5];
 List<Long>[] goodsPerArea = goodsPerArea = new List[10];
 
 // 멀티 스레드 접근 제어를 위한 세마포어
-private final Semaphore semaphore = new Semaphore(1);
+//private final Semaphore semaphore = new Semaphore(1);
 
 ]]></AdditionalClassCode>
 			<StartupCode><![CDATA[try{
@@ -4314,9 +4319,6 @@ setVehicle4.restart();]]></Action>
 										</GenericParameterSubstituteReference>
 									</GenericParameterSubstitute>
 									<Parameters>
-										<Parameter>
-											<Name><![CDATA[agent]]></Name>
-										</Parameter>
 									</Parameters>
 									<ReplicationFlag>true</ReplicationFlag>
 									<Replication Class="CodeValue">
@@ -4405,7 +4407,7 @@ agent.areaId = info.getAreaId();
 agent.buildingId = info.getBuildingId();
 agent.detailAddress = info.getDetailJuso();
 agent.agentId = (++nextId);
-System.out.println(agent.agentId);
+//System.out.println(agent.agentId);
 // 물품 데이터 전송
 try{
 	client.postGoods(agent);
@@ -14889,7 +14891,7 @@ try{
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[1].add(agent.agentId);
-System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15662,7 +15664,7 @@ System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[2].add(agent.agentId);
-System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15981,7 +15983,7 @@ System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[3].add(agent.agentId);
-System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16300,7 +16302,7 @@ System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[4].add(agent.agentId);
-System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16619,7 +16621,7 @@ System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[5].add(agent.agentId);
-System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16938,7 +16940,7 @@ System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[6].add(agent.agentId);
-System.out.println("저장된 물품 / 구역6: "+goodsPerArea[6].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역6: "+goodsPerArea[6].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -31010,8 +31012,11 @@ public class APIClient {
 			<Text><![CDATA[/**
  * APIResponse
  */	
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class APIResponse<T> {
 	
+    @JsonProperty("result_code")
 	private String resultCode;
 	private T result;
 	
@@ -31084,7 +31089,7 @@ public class SSEListener implements Runnable {
 
                     //LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
 
-                	System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
+                	//System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
 
                 	// 차량 준비
                 	if(loadStartResponse.getReadyVehicle()) {

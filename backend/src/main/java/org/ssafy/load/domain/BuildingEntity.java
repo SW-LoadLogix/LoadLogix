@@ -46,12 +46,12 @@ public class BuildingEntity {
     @Column(name="longitude")
     private Double longitude;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private AreaEntity area;
 
-    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<GoodsEntity> goodsEntities;
 
     static public BuildingEntity of(
