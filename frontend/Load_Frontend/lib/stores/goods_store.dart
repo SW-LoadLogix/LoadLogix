@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../views/box_simulation/box.dart';
 
 List<GoodsData> gGoods = [];
-List<Box> boxes = [];
+List<SimulBox> boxes = [];
 
 class GoodsStore extends ChangeNotifier {
   GoodsService goodsService = GoodsService();
