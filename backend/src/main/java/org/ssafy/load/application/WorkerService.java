@@ -7,11 +7,11 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.WorkerEntity;
-import org.ssafy.load.dto.request.LoginRequest;
-import org.ssafy.load.dto.request.SignUpRequest;
-import org.ssafy.load.dto.response.LoginResponse;
-import org.ssafy.load.dto.response.SignUpResponse;
-import org.ssafy.load.dto.response.WorkerInfoResponse;
+import org.ssafy.load.dto.request.worker.LoginRequest;
+import org.ssafy.load.dto.request.worker.SignUpRequest;
+import org.ssafy.load.dto.response.worker.LoginResponse;
+import org.ssafy.load.dto.response.worker.SignUpResponse;
+import org.ssafy.load.dto.response.worker.WorkerInfoResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 

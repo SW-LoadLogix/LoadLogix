@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/area")
+@RequestMapping("/path")
 public class PathController {
     private final PathService pathService;
     private final JwtTokenProvider jwtTokenProvider;
