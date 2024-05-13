@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.AreaRepository;
+import org.ssafy.load.dao.BuildingJoinArea;
 import org.ssafy.load.dao.BuildingRepository;
 import org.ssafy.load.dao.PathTimeRepository;
 import org.ssafy.load.domain.AreaEntity;
@@ -13,8 +14,11 @@ import org.ssafy.load.domain.BuildingEntity;
 import org.ssafy.load.domain.PathTimeEntity;
 import org.ssafy.load.dto.Coordinate;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
+import org.ssafy.load.dto.request.anylogic.AreaAndBuilding;
+import org.ssafy.load.dto.request.anylogic.InputSettingResponse;
 import org.ssafy.load.util.PathTimeCal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,7 @@ public class BuildingService {
     private final BuildingRepository buildingRepository;
     private final PathTimeRepository pathTimeRepository;
     private final PathTimeCal pathTimeCal;
+    private final BuildingJoinArea buildingJoinArea;
 
     @Transactional
     public void registBuilding(BuildingRegistRequest buildingRegistRequest) {
@@ -63,4 +68,18 @@ public class BuildingService {
             pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, duration));
         }
     }
+    @Transactional
+    public InputSettingResponse getInputSettingInfo(){
+        List<AreaEntity> areaEntities = areaRepository.findAll();
+
+        List<Integer> goodsCountPerArea = new ArrayList<>();
+        for(AreaEntity  areaEntity : areaEntities){
+            goodsCountPerArea.add(areaEntity.getCount());
+        }
+
+        List<AreaAndBuilding> queryResponse = buildingJoinArea.getBuildingIdAndAreaId();
+
+        return InputSettingResponse.of(goodsCountPerArea, queryResponse);
+    }
+
 }
