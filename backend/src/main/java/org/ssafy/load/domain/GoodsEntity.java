@@ -49,21 +49,21 @@ public class GoodsEntity {
     }
 
     public static GoodsEntity of(
-        Long id,
-        int weight,
-        String detailAddress,
-        Integer ordering,
-        Double x,
-        Double y,
-        Double z,
-        Long agentId,
-        BoxTypeEntity boxType,
-        BuildingEntity building,
-        LoadTaskEntity loadTask,
-        LocalDateTime createdAt
+            Long id,
+            int weight,
+            String detailAddress,
+            Integer ordering,
+            Double x,
+            Double y,
+            Double z,
+            Long agentId,
+            BoxTypeEntity boxType,
+            BuildingEntity building,
+            LoadTaskEntity loadTask,
+            LocalDateTime createdAt
     ) {
         return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, agentId, boxType, building,
-            loadTask, createdAt);
+                loadTask, createdAt);
     }
     public GoodsEntity updateLoadTaskId(LoadTaskEntity loadTaskEntity){
         return GoodsEntity.of(
@@ -83,26 +83,5 @@ public class GoodsEntity {
 
     public void withUpdateLoadTask(LoadTaskEntity loadTask) {
         this.loadTask = loadTask;
-    }
-
-    public static GoodsEntity createNewEntity(
-            int weight,
-            String detailAddress,
-            BoxTypeEntity boxType,
-            BuildingEntity building,
-            LoadTaskEntity loadTask
-    ) {
-        return GoodsEntity.of(
-                null,
-                weight,
-                detailAddress,
-                null,
-                null,
-                null,
-                null,
-                boxType,
-                building,
-                loadTask,
-                null);
     }
 }

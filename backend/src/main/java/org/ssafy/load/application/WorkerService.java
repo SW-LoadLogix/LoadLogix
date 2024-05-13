@@ -1,25 +1,21 @@
 package org.ssafy.load.application;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.dao.CarRepository;
 import org.ssafy.load.dao.WorkerRepository;
-import org.ssafy.load.domain.BoxTypeEntity;
-import org.ssafy.load.domain.CarEntity;
 import org.ssafy.load.domain.WorkerEntity;
 import org.ssafy.load.dto.request.LoginRequest;
 import org.ssafy.load.dto.request.SignUpRequest;
-import org.ssafy.load.dto.response.BoxTypeResponse;
 import org.ssafy.load.dto.response.LoginResponse;
 import org.ssafy.load.dto.response.SignUpResponse;
 import org.ssafy.load.dto.response.WorkerInfoResponse;
 import org.ssafy.load.dto.response.WorkerResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +25,6 @@ public class WorkerService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final WorkerRepository workerRepository;
-    private final CarRepository carRepository;
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
         Optional<WorkerEntity> worker = workerRepository.findByLoginId(signUpRequest.id());
@@ -63,7 +58,7 @@ public class WorkerService {
     public List<WorkerResponse> getWorkerList() {
         List<WorkerEntity> workers = workerRepository.findAll();
         return workers.stream()
-            .map(worker -> new WorkerResponse(worker.getName(), worker.getArea().getAreaName()))
-            .toList();
+                .map(worker -> new WorkerResponse(worker.getName(), worker.getArea().getAreaName()))
+                .toList();
     }
 }
