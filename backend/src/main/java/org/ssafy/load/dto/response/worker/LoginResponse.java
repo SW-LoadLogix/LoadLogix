@@ -1,4 +1,4 @@
-package org.ssafy.load.dto.response;
+package org.ssafy.load.dto.response.worker;
 
 public record LoginResponse(
     String token

@@ -22,11 +22,8 @@ import org.ssafy.load.domain.WorkerEntity;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private final WorkerRepository workerRepository;
-
     private static final String SECRET_KEY = "30ec8320ca7ad94e3b7ad0a010e6bbc2e81a92c4efacb4badea20d669f4c9769";
     private static final long EXPIRATION_SECOND = 60 * 60 * 2; //2시간
-
 
     // Member 정보를 가지고 AccessToken을 생성하는 메서드
     public String generateToken(Long id, String name, String role) {
@@ -82,21 +79,4 @@ public class JwtTokenProvider {
             throw new JWTException(e);
         }
     }
-
-//    public Long getIdFromHttpRequest(HttpServletRequest httpRequest){
-//        String authorizationHeader = httpRequest.getHeader("Authorization");
-//
-//        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-//            throw new CommonException(ErrorCode.INVALID_TOKEN);
-//        }
-//
-//        String token = authorizationHeader.substring(7);
-//        try {
-//            validateToken(token);
-//        } catch (Exception e) {
-//            throw new CommonException(ErrorCode.INVALID_TOKEN);
-//        }
-//
-//        return getId(token);
-//    }
 }

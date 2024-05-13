@@ -1,4 +1,4 @@
-package org.ssafy.load.dto.request;
+package org.ssafy.load.dto.request.worker;
 
 public record LoginRequest(
     String id,
