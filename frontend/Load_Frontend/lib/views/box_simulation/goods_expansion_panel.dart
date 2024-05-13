@@ -23,7 +23,7 @@ class GoodsExpansionPanel extends StatelessWidget {
                 goodsStore.toggleBuilding(buildingId);
               },
             ),
-            title: Text('Building ID $buildingId'),
+            title: Text('${goods[0].buildingName}'),
             children: goods.map((good) {
               return Padding(
                 padding: EdgeInsets.only(left: 16.0),

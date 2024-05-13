@@ -139,18 +139,23 @@ public class GoodsService {
         return new SortedGoodsResponse(goods);
     }
 
-    public GoodsCreateResponse createGoods(GoodsCreateRequest goodsCreateRequest) {
-        return GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
-            null,
-            goodsCreateRequest.weight(),
-            goodsCreateRequest.detailAddress(),
-            null, null, null, null,
-            boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
-                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-            buildingRepository.findById(goodsCreateRequest.buildingId())
-                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-            null, null
-        )));
+    public void createGoods(GoodsCreateRequest goodsCreateRequest) {
+        try {
+            GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
+                    null,
+                    goodsCreateRequest.weight(),
+                    goodsCreateRequest.detailAddress(),
+                    null, null, null, null,
+                    goodsCreateRequest.agentId(),
+                    boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
+                            .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                    buildingRepository.findById(goodsCreateRequest.buildingId())
+                            .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                    null, null
+            )));
+        }catch (Exception e){
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Transactional(readOnly = true)
