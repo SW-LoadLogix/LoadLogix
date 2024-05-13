@@ -28,7 +28,7 @@ public class AreaEntity {
     private int count;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_id") // 실제 데이터베이스의 외래키 컬럼명 지정
+    @JoinColumn(name = "worker_id")
     private WorkerEntity worker;
 
     @OneToMany(mappedBy = "area", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
