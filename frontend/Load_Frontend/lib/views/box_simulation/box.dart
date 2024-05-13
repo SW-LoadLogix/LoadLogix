@@ -6,7 +6,7 @@ import 'box_simulation_gobal_setting.dart';
 double boxStep = 10.0;
 double gScale = 1.0;
 
-class Box {
+class SimulBox {
   String type; //S1 to S6
   three.Vector3 currPosition;
   three.Vector3 startPosition;
@@ -19,13 +19,13 @@ class Box {
   bool isChecked = true;
   bool isVisible = true;
 
-  Box(this.type, this.currPosition, this.startPosition, this.endPosition,
+  SimulBox(this.type, this.currPosition, this.startPosition, this.endPosition,
       this.boxSize, this.goodsId, this.buildingId,this.boxColorId);
 
   void setSize() {
-    boxSize =
-         three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
-    return;
+    // boxSize =
+    //      three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
+    // return;
     if (type == 'L1') {
       boxSize = three.Vector3(22 * gScale,9 * gScale, 22 * gScale);
     } else if (type == 'L2') {
@@ -42,14 +42,29 @@ class Box {
   }
 
   void init() {
-    this.currPosition = this.startPosition.clone();
+    if (gIsForword){
+      this.currPosition = this.startPosition.clone();
+    }
+    else{
+      this.currPosition = this.endPosition.clone();
+    }
     setSize();
     isDone = false;
   }
+  void makeAsDone(){
+    if (gIsForword){
+      this.currPosition = this.endPosition.clone();
+    }
+    else{
+      this.currPosition = this.startPosition.clone();
+    }
+    isDone = true;
+  }
 
   void update() {
-    boxStep = 10.0 * boxStepPercent / 100.0;
+    boxStep = 10.0 * gPlaySpeed;
     if (isDone) return;
+    if (gIsPause) return;
 
     if (gIsForword){
       if (currPosition.x > endPosition.x) {
