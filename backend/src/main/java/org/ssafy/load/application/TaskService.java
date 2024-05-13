@@ -122,7 +122,7 @@ public class TaskService {
         if(!unFitgoodsEntityList.isEmpty()) {
             //unfit 발생
             LoadTaskEntity unFitloadTaskEntity = loadTaskRepository.save(LoadTaskEntity.
-                    createNewEntity(unFitgoodsEntityList.size(), loadTaskEntity.getArea()));
+                    createNewEntity(loadTaskEntity.getArea()));
             for(GoodsEntity unfitGoodsEntity : unFitgoodsEntityList) {
                 unfitGoodsEntity.withUpdateLoadTask(unFitloadTaskEntity);
             }

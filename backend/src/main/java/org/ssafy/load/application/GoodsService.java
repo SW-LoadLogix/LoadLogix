@@ -1,7 +1,5 @@
 package org.ssafy.load.application;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,28 +7,14 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
-import org.ssafy.load.domain.AreaEntity;
-import org.ssafy.load.domain.BoxTypeEntity;
-import org.ssafy.load.domain.BuildingEntity;
-import org.ssafy.load.domain.GoodsEntity;
-import org.ssafy.load.domain.LoadTaskEntity;
-import org.ssafy.load.domain.WorkerEntity;
-import org.ssafy.load.dto.Building;
-import org.ssafy.load.dto.Goods;
+import org.ssafy.load.domain.*;
 import org.ssafy.load.dto.Position;
-import org.ssafy.load.dto.request.GoodsCreateRequest;
-import org.ssafy.load.dto.response.BoxTypeResponse;
-import org.ssafy.load.dto.response.DayGoodsCountResponse;
-import org.ssafy.load.dto.response.GoodsCreateResponse;
-import org.ssafy.load.dto.response.GoodsCountResponse;
-import org.ssafy.load.dto.response.GoodsOutputResponse;
-import org.ssafy.load.dto.response.GoodsResponse;
-
-import java.util.List;
-import java.util.Optional;
 import org.ssafy.load.dto.SortedGoods;
-import org.ssafy.load.dto.response.RackStoreCountResponse;
-import org.ssafy.load.dto.response.SortedGoodsResponse;
+import org.ssafy.load.dto.request.GoodsCreateRequest;
+import org.ssafy.load.dto.response.*;
+
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -122,16 +106,16 @@ public class GoodsService {
 
         List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(loadTaskList.getFirst());
         List<SortedGoods> goods = goodsEntities.stream()
-            .map(g -> new SortedGoods(
-                g.getId(),
-                String.valueOf(g.getBoxType().getType()),
-                new Position(g.getX(), g.getY(), g.getZ()),
-                g.getWeight(),
-                g.getBuilding().getId(),
-                g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"
-                    + g.getBuilding().getZibunSub(),
-                g.getDetailAddress()
-            )).toList();
+                .map(g -> new SortedGoods(
+                        g.getId(),
+                        String.valueOf(g.getBoxType().getType()),
+                        new Position(g.getX(), g.getY(), g.getZ()),
+                        g.getWeight(),
+                        g.getBuilding().getId(),
+                        g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"
+                                + g.getBuilding().getZibunSub(),
+                        g.getDetailAddress()
+                )).toList();
         return new SortedGoodsResponse(goods);
     }
 
@@ -157,9 +141,9 @@ public class GoodsService {
     @Transactional(readOnly = true)
     public GoodsCountResponse getGoodsCount() {
         return new GoodsCountResponse(
-            goodsRepository.countAllGoodsByCreatedAtIsToday(),
-            goodsRepository.countStoredGoodsByCreatedAtIsToday(),
-            goodsRepository.countLoadedGoodsByCreatedAtIsToday()
+                goodsRepository.countAllGoodsByCreatedAtIsToday(),
+                goodsRepository.countStoredGoodsByCreatedAtIsToday(),
+                goodsRepository.countLoadedGoodsByCreatedAtIsToday()
         );
     }
 
@@ -167,63 +151,63 @@ public class GoodsService {
     public List<DayGoodsCountResponse> getDayGoodsCount() {
         List<Object[]> results = goodsRepository.countGoodsByDateForLastSixDays();
         return results.stream()
-            .map(result -> new DayGoodsCountResponse(
-                LocalDate.parse(result[0].toString()),
-                ((Number) result[1]).longValue()
-            )).toList();
+                .map(result -> new DayGoodsCountResponse(
+                        LocalDate.parse(result[0].toString()),
+                        ((Number) result[1]).longValue()
+                )).toList();
     }
 
     @Transactional(readOnly = true)
     public List<GoodsOutputResponse> getGoodsList() {
         List<GoodsEntity> goods = goodsRepository.findAllGoodsByCreatedAtIsToday();
         return goods.stream()
-            .map(good -> {
-                BuildingEntity building = good.getBuilding();
-                AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
+                .map(good -> {
+                    BuildingEntity building = good.getBuilding();
+                    AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
 
-                return new GoodsOutputResponse(
-                    area.getAreaName(),
-                    good.getDetailAddress(),
-                    area.getWorker().getId(),
-                    good.getWeight(),
-                    String.valueOf(good.getBoxType().getType()),
-                    good.getCreatedAt());
-            }).toList();
+                    return new GoodsOutputResponse(
+                            area.getAreaName(),
+                            good.getDetailAddress(),
+                            area.getWorker().getId(),
+                            good.getWeight(),
+                            String.valueOf(good.getBoxType().getType()),
+                            good.getCreatedAt());
+                }).toList();
     }
 
     @Transactional(readOnly = true)
     public List<GoodsOutputResponse> getLoadedGoodsList() {
         List<GoodsEntity> goods = goodsRepository.findAllLoadedGoodsByCreatedAtIsToday();
         return goods.stream()
-            .map(good -> {
-                BuildingEntity building = good.getBuilding();
-                AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
+                .map(good -> {
+                    BuildingEntity building = good.getBuilding();
+                    AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
 
-                return new GoodsOutputResponse(
-                    area.getAreaName(),
-                    good.getDetailAddress(),
-                    area.getWorker().getId(),
-                    good.getWeight(),
-                    String.valueOf(good.getBoxType().getType()),
-                    good.getCreatedAt());
-            }).toList();
+                    return new GoodsOutputResponse(
+                            area.getAreaName(),
+                            good.getDetailAddress(),
+                            area.getWorker().getId(),
+                            good.getWeight(),
+                            String.valueOf(good.getBoxType().getType()),
+                            good.getCreatedAt());
+                }).toList();
     }
 
     @Transactional(readOnly = true)
     public List<BoxTypeResponse> getBoxTypeCount() {
         List<Object[]> results = goodsRepository.countBoxTypeByCreatedAtIsToday();
         return results.stream()
-            .map(result -> {
-                BoxTypeEntity boxType = boxTypeRepository.findById(((Number) result[0]).intValue())
-                    .get();
-                return new BoxTypeResponse(
-                    boxType.getId(),
-                    String.valueOf(boxType.getType()),
-                    boxType.getHeight(),
-                    boxType.getLength(),
-                    boxType.getWidth(),
-                    ((Number) result[1]).longValue());
-            }).toList();
+                .map(result -> {
+                    BoxTypeEntity boxType = boxTypeRepository.findById(((Number) result[0]).intValue())
+                            .get();
+                    return new BoxTypeResponse(
+                            boxType.getId(),
+                            String.valueOf(boxType.getType()),
+                            boxType.getHeight(),
+                            boxType.getLength(),
+                            boxType.getWidth(),
+                            ((Number) result[1]).longValue());
+                }).toList();
     }
 
     @Transactional(readOnly = true)
@@ -234,7 +218,7 @@ public class GoodsService {
         List<Object[]> goodsList = goodsRepository.countGoodsByBuildingIdAndCreatedAtIsToday();
         for (Object[] obj : goodsList) {
             Integer areaId = buildingRepository.findById(((Number) obj[0]).longValue()).get()
-                .getArea().getId();
+                    .getArea().getId();
             if (areaId == 1) {
                 cnt[1] += ((Number) obj[1]).longValue();
             } else if (areaId == 2 || areaId == 3) {
