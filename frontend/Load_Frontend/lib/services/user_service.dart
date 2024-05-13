@@ -70,7 +70,7 @@ class UserService{
   Future<LoginResponseResult?> LoginApiCall(LoginData loginData) async {
     await Future.delayed(const Duration(seconds: 2));
     try {
-      var url = Uri.parse('http://125.138.70.52:8081/api/worker/login');
+      var url = Uri.parse('http://43.201.116.59:8081/api/worker/login');
       var data = {
         'id': loginData.email,
         'password': loginData.password

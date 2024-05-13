@@ -63,7 +63,6 @@ public void startPick(LoadStartResponse response){
     // 이진탐색으로 agent 찾아 pick
     for(Long agentId : response.getAgentIds()){
     
-    
         Goods newGoods = new Goods();
         newGoods.agentId = agentId;
         int index = Collections.binarySearch(agents, newGoods, (a1, a2) -> Long.compare(((Goods)a1).agentId, ((Goods)a2).agentId));

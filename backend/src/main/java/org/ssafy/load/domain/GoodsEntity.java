@@ -26,6 +26,8 @@ public class GoodsEntity {
     private Double x;
     private Double y;
     private Double z;
+    @Column(name = "agent_id")
+    private long agentId;
 
     @ManyToOne
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
@@ -55,15 +57,21 @@ public class GoodsEntity {
         Double x,
         Double y,
         Double z,
+        Long agentId,
         BoxTypeEntity boxType,
         BuildingEntity building,
         LoadTaskEntity loadTask,
         LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, agentId, boxType, building,
             loadTask, createdAt);
     }
-
+    public GoodsEntity updateLoadTaskId(LoadTaskEntity loadTaskEntity){
+        return GoodsEntity.of(
+                id, weight, detailAddress, ordering, x, y, z, agentId, boxType, building,
+                loadTaskEntity, createdAt
+        );
+    }
     public void setBoxPosition(double x, double y, double z) {
         this.x = x;
         this.y = y;

@@ -1,10 +1,11 @@
 package org.ssafy.load.dto.request;
 
 public record GoodsCreateRequest(
-    int weight,
-    String detailAddress,
-    Long buildingId,
-    int type
+        long agentId,
+        int weight,
+        String detailAddress,
+        Long buildingId,
+        int type
 ) {
 
 }

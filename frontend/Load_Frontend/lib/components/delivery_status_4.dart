@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
+import '../models/worker_info_data.dart';
 import 'trucksize_modal.dart';
 import 'package:http/http.dart';
 
 class DeliveryStatus4 extends StatelessWidget {
   final bool isHover;
+  final Key key;
 
   const DeliveryStatus4({
-    Key? key,
+    required this.key,
     required this.isHover,
-  }) : super(key: key);
+  });
 
   void _showTruckSizeModal(BuildContext context) {
     showDialog(
@@ -21,8 +25,10 @@ class DeliveryStatus4 extends StatelessWidget {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+    WorkerInfoData workerInfo = Provider.of<WorkerStore>(context, listen: true).workerInfo;
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +46,8 @@ class DeliveryStatus4 extends StatelessWidget {
                 ),
               ),
               Text(
-                "봉명 1동",
+                //"봉명 1동",
+                workerInfo.areaName,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -64,7 +71,7 @@ class DeliveryStatus4 extends StatelessWidget {
                 ),
               ),
               Text(
-                "3번 라인",
+                workerInfo.conveyNo.toString(),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -88,7 +95,7 @@ class DeliveryStatus4 extends StatelessWidget {
             height: 1,
           ),
           Text(
-            "3700 X 1700 X 2100",
+            "${workerInfo.carWidth} X ${workerInfo.carLength} X ${workerInfo.carHeight}",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
