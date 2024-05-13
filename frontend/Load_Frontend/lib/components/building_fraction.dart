@@ -3,6 +3,10 @@ import 'package:load_frontend/components/building_fraction_piechart.dart';
 import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/model.dart';
 import 'package:load_frontend/components/building_fraction_item.dart';
+import 'package:load_frontend/models/delivery_data.dart';
+import 'package:load_frontend/services/delivery_service.dart';
+import 'package:load_frontend/stores/delivery_store.dart';
+import 'package:provider/provider.dart';
 
 final buildings = <Buildings>[
   Buildings(
@@ -64,9 +68,11 @@ final buildings = <Buildings>[
 class BuildingList extends StatelessWidget {
   final bool showDesktop;
   const BuildingList([this.showDesktop = false]);
-
   @override
   Widget build(BuildContext context) {
+
+    DeliveryData dt = Provider.of<DeliveryStore>(context,listen: true).deliveryData;
+    // print(dt.toString());
     return Container(
       color: primaryLight.withAlpha(100),
       padding: EdgeInsets.symmetric(horizontal: componentPadding),
@@ -89,7 +95,7 @@ class BuildingList extends StatelessWidget {
                 Expanded(
                     child: Center(
                   child: Text(
-                    '배송 구역별 배송현황 관리',
+                    '${dt.areaName} (총 ${dt.total} 건) 배송 현황 관리',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ))

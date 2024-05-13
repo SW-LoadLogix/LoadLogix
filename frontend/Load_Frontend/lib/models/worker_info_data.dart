@@ -2,8 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'worker_info_data.g.dart';
 // WorkerInfoResponse RestAPI 리턴 구조 객체 모델
-@JsonSerializable()
-// @JsonSerializable(fieldRename: FieldRename.snake)
+// @JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class WorkerInfoData{
   final String name;
   final String areaName;
