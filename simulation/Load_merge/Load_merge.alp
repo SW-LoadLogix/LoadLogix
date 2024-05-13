@@ -63,7 +63,6 @@ public void startPick(LoadStartResponse response){
     // 이진탐색으로 agent 찾아 pick
     for(Long agentId : response.getAgentIds()){
     
-    
         Goods newGoods = new Goods();
         newGoods.agentId = agentId;
         int index = Collections.binarySearch(agents, newGoods, (a1, a2) -> Long.compare(((Goods)a1).agentId, ((Goods)a2).agentId));
@@ -71,7 +70,6 @@ public void startPick(LoadStartResponse response){
             Goods goods = (Goods) agents.get(index);
             goods.toConveyorLine = response.getConveyNo();
             pickList.add(goods);
-            System.out.println("!!!!!!!!!!!!"+goods);
            // try {
 	       //     semaphore.acquire();
 	       // } finally {
@@ -81,9 +79,7 @@ public void startPick(LoadStartResponse response){
             System.out.println("Agent ID " + agentId + " not found.");
         }       
     }
-    for(Goods pick : pickList){
-        System.out.println("!!!!!!!!!pick!!!"+pick);
-   
+    for(Goods pick : pickList){   
     	enter.take(pick);
     }
 }
