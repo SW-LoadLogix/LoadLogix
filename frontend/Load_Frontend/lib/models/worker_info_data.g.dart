@@ -9,19 +9,19 @@ part of 'worker_info_data.dart';
 WorkerInfoData _$WorkerInfoDataFromJson(Map<String, dynamic> json) =>
     WorkerInfoData(
       name: json['name'] as String,
-      areaName: json['areaName'] as String,
-      conveyNo: (json['conveyNo'] as num).toInt(),
-      carHeight: (json['carHeight'] as num).toInt(),
-      carLength: (json['carLength'] as num).toInt(),
-      carWidth: (json['carWidth'] as num).toInt(),
+      areaName: json['area_name'] as String,
+      conveyNo: (json['convey_no'] as num).toInt(),
+      carHeight: (json['car_height'] as num).toInt(),
+      carLength: (json['car_length'] as num).toInt(),
+      carWidth: (json['car_width'] as num).toInt(),
     );
 
 Map<String, dynamic> _$WorkerInfoDataToJson(WorkerInfoData instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'areaName': instance.areaName,
-      'conveyNo': instance.conveyNo,
-      'carHeight': instance.carHeight,
-      'carLength': instance.carLength,
-      'carWidth': instance.carWidth,
+      'area_name': instance.areaName,
+      'convey_no': instance.conveyNo,
+      'car_height': instance.carHeight,
+      'car_length': instance.carLength,
+      'car_width': instance.carWidth,
     };
