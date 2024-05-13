@@ -25,4 +25,8 @@ class WorkerStore extends ChangeNotifier {
     print(workerInfo);
     notifyListeners();
   }
+  Future<void> setWorkerInfo(WorkerInfoData newWorkerInfo) async {
+    workerInfo = newWorkerInfo;
+    notifyListeners();
+  }
 }
