@@ -59,7 +59,7 @@ class _StatusCardState extends State<StatusCard> {
       case 2:
         return DeliveryStatus3(isHover: _isHover);
       case 3:
-        return DeliveryStatus4(isHover: _isHover);
+        return DeliveryStatus4(isHover: _isHover, key: UniqueKey());
 
       // return Container(
       //   color: Colors.yellow, // 예시용 색상
