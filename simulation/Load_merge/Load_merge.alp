@@ -4319,9 +4319,6 @@ setVehicle4.restart();]]></Action>
 										</GenericParameterSubstituteReference>
 									</GenericParameterSubstitute>
 									<Parameters>
-										<Parameter>
-											<Name><![CDATA[agent]]></Name>
-										</Parameter>
 									</Parameters>
 									<ReplicationFlag>true</ReplicationFlag>
 									<Replication Class="CodeValue">
@@ -4410,7 +4407,7 @@ agent.areaId = info.getAreaId();
 agent.buildingId = info.getBuildingId();
 agent.detailAddress = info.getDetailJuso();
 agent.agentId = (++nextId);
-System.out.println(agent.agentId);
+//System.out.println(agent.agentId);
 // 물품 데이터 전송
 try{
 	client.postGoods(agent);
@@ -14894,7 +14891,7 @@ try{
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[1].add(agent.agentId);
-System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15667,7 +15664,7 @@ System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[2].add(agent.agentId);
-System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -15986,7 +15983,7 @@ System.out.println("저장된 물품 / 구역2: "+goodsPerArea[2].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[3].add(agent.agentId);
-System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16305,7 +16302,7 @@ System.out.println("저장된 물품 / 구역3: "+goodsPerArea[3].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[4].add(agent.agentId);
-System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16624,7 +16621,7 @@ System.out.println("저장된 물품 / 구역4: "+goodsPerArea[4].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[5].add(agent.agentId);
-System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -16943,7 +16940,7 @@ System.out.println("저장된 물품 / 구역5: "+goodsPerArea[5].toString());]]
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[goodsPerArea[6].add(agent.agentId);
-System.out.println("저장된 물품 / 구역6: "+goodsPerArea[6].toString());]]></Code>
+//System.out.println("저장된 물품 / 구역6: "+goodsPerArea[6].toString());]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -31015,8 +31012,11 @@ public class APIClient {
 			<Text><![CDATA[/**
  * APIResponse
  */	
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class APIResponse<T> {
 	
+    @JsonProperty("result_code")
 	private String resultCode;
 	private T result;
 	
@@ -31089,7 +31089,7 @@ public class SSEListener implements Runnable {
 
                     //LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
 
-                	System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
+                	//System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
 
                 	// 차량 준비
                 	if(loadStartResponse.getReadyVehicle()) {
