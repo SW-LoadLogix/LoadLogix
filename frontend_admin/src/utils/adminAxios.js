@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/store/auth";
 import router from "../router";
 
 //비동기 요청 전 인터셉트

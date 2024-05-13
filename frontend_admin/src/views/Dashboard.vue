@@ -9,6 +9,17 @@ import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
+import { onMounted } from 'vue';
+
+// Todo api 테스트 , 테스트 후 삭제
+import {getGoodsCount} from "@/api/dashboard.js";
+
+onMounted(async () => {
+  const { data } = await getGoodsCount();
+  console.log(data);
+});
+////////
+
 const sales = {
   us: {
     country: "United States",
