@@ -1,6 +1,6 @@
 package org.ssafy.load.application;
 
-import java.util.List;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,32 +36,27 @@ public class WorkerService {
         if (worker.isPresent()) {
             throw new CommonException(ErrorCode.USER_ALREADY_EXISTS);
         }
-        CarEntity car = carRepository.save(CarEntity.of(null, 0, 0, 0, null, null));
-        return SignUpResponse.from(workerRepository.save(
-            WorkerEntity.of(null, signUpRequest.id(), signUpRequest.password(),
-                signUpRequest.name(), car, null)));
+        return SignUpResponse.from(workerRepository.save(WorkerEntity.createNewWorker(
+                signUpRequest.id(), signUpRequest.password(), signUpRequest.name(), null)
+        ));
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-        Optional<WorkerEntity> worker = workerRepository.findByLoginIdAndPassword(
-            loginRequest.id(),
-            loginRequest.password());
+        Optional<WorkerEntity> workerOptional = workerRepository.findByLoginIdAndPassword(
+                loginRequest.id(),
+                loginRequest.password());
 
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
-        return LoginResponse.of(
-            jwtTokenProvider.generateToken(worker.get().getId(), worker.get().getName(),
-                "worker"));
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        if(worker.getArea() == null) throw new CommonException(ErrorCode.AREA_NOT_FOUND);
+
+        return LoginResponse.of(jwtTokenProvider.generateToken(worker.getId(), worker.getName(),"worker"));
     }
 
     @Transactional(readOnly = true)
-    public WorkerInfoResponse getWorkerInfo(Long workerId) {
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
-        return WorkerInfoResponse.from(worker.get());
+    public WorkerInfoResponse getWorkerInfo(Long workerId){
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        return WorkerInfoResponse.from(worker);
     }
 
     @Transactional(readOnly = true)

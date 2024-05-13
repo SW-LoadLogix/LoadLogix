@@ -15,6 +15,6 @@ public interface BuildingRepository extends JpaRepository<BuildingEntity, Long> 
     List<Long> findIdsByAreaId(int areaId);
     List<BuildingEntity> findByArea(AreaEntity area);
     Optional<BuildingEntity> findByZibunMainAndZibunSubAndArea(int zibunMain, int zibunSub, AreaEntity area);
-    @Query("select DISTINCT building from GoodsEntity goods inner join goods.building building where goods.loadTask= :loadTask order by building.id")
+    @Query("select distinct building from GoodsEntity goods join goods.building building where goods.loadTask= :loadTask order by building.id")
     List<BuildingEntity> findByLoadTask(LoadTaskEntity loadTask);
 }
