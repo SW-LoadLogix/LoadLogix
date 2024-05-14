@@ -2,7 +2,6 @@ import json
 import requests
 import time
 from py3dbp import Packer, Bin, Item, Painter
-from decimal import Decimal
 
 boxSize = [(22, 22, 9), (27, 27, 15), (35, 35, 10), (34, 34, 21), (41, 41, 28), (48, 48, 34)]
 while (True):

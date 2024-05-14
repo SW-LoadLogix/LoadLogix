@@ -1,5 +1,3 @@
-import json
-import requests
 import time
 from py3dbp import Packer, Bin, Item, Painter
 
