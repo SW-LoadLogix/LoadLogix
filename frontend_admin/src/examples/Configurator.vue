@@ -5,7 +5,6 @@ import { activateDarkMode, deactivateDarkMode } from "@/assets/js/dark-mode";
 
 const store = useStore();
 // state
-const isRTL = computed(() => store.state.isRTL);
 const isNavFixed = computed(() => store.state.isNavFixed);
 const sidebarType = computed(() => store.state.sidebarType);
 const toggleConfigurator = () => store.commit("toggleConfigurator");
@@ -41,14 +40,14 @@ const darkMode = () => {
     </a>
     <div class="shadow-lg card">
       <div class="pt-3 pb-0 bg-transparent card-header">
-        <div class="" :class="isRTL ? 'float-end' : 'float-start'">
+        <div class="" :class="'float-start'">
           <h5 class="mt-3 mb-0">Argon Configurator</h5>
           <p>See our dashboard options.</p>
         </div>
         <div
           class="mt-4"
           @click="toggleConfigurator"
-          :class="isRTL ? 'float-start' : 'float-end'"
+          :class="'float-end'"
         >
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
             <i class="fa fa-close"></i>
@@ -65,7 +64,7 @@ const darkMode = () => {
         <a href="#" class="switch-trigger background-color">
           <div
             class="my-2 badge-colors"
-            :class="isRTL ? 'text-end' : ' text-start'"
+            :class="' text-start'"
           >
             <span
               class="badge filter bg-gradient-primary active"
@@ -140,7 +139,7 @@ const darkMode = () => {
           <div class="form-check form-switch ps-0 ms-auto my-auto">
             <input
               class="mt-1 form-check-input"
-              :class="isRTL ? 'float-end  me-auto' : ' ms-auto'"
+              :class="' ms-auto'"
               type="checkbox"
               id="navbarFixed"
               :checked="isNavFixed"
@@ -151,7 +150,7 @@ const darkMode = () => {
 
         <hr class="horizontal dark my-4" />
         <div class="mt-2 mb-5 d-flex">
-          <h6 class="mb-0" :class="isRTL ? 'ms-2' : ''">Light / Dark</h6>
+          <h6 class="mb-0">Light / Dark</h6>
           <div class="form-check form-switch ps-0 ms-auto my-auto">
             <input
               class="form-check-input mt-1 ms-auto"

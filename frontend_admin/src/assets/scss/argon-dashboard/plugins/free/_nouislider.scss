@@ -47,12 +47,7 @@
   transform-origin: 0 0;
   transform-style: flat;
 }
-/* Offset direction
-*/
-.noUi-txt-dir-rtl.noUi-horizontal .noUi-origin {
-  left: 0;
-  right: auto;
-}
+
 /* Give origins 0 height/width so they don't interfere with clicking the
 * connect elements.
 */
@@ -99,10 +94,6 @@
   height: 15px;
   right: -5px;
   bottom: -10px;
-}
-.noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
-  left: -17px;
-  right: auto;
 }
 /* Styling;
 * Giving the connect element a border radius causes issues with using transform: scale
@@ -201,7 +192,7 @@
   -webkit-transform: translate(-50%, 50%);
   transform: translate(-50%, 50%);
 }
-.noUi-rtl .noUi-value-horizontal {
+.noUi-value-horizontal {
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
 }
@@ -230,7 +221,7 @@
   transform: translate(0, -50%);
   padding-left: 25px;
 }
-.noUi-rtl .noUi-value-vertical {
+.noUi-value-vertical {
   -webkit-transform: translate(0, 50%);
   transform: translate(0, 50%);
 }

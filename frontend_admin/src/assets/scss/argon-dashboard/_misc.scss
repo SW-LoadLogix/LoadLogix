@@ -304,22 +304,6 @@ hr.horizontal {
   transform: translate(0, -50%);
 }
 
-// VR Pages
-
-@include media-breakpoint-up(lg) {
-  .virtual-reality {
-    .sidenav {
-      margin-top: $spacer * 1.5;
-      animation-name: $animation-name;
-      animation-fill-mode: $animation-mode;
-      animation-duration: $animation-duration;
-      transform: $transform-scale;
-      background: $white;
-      left: $position-left !important;
-      position: absolute;
-    }
-  }
-}
 
 // Separator Skew
 
