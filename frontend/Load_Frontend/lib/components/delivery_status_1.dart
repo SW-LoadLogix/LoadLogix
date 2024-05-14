@@ -5,6 +5,7 @@ import 'package:load_frontend/stores/worker_store.dart';
 import 'package:provider/provider.dart';
 
 import '../constaints.dart';
+import '../models/worker_info_data.dart';
 
 class DeliveryStatus1 extends StatelessWidget {
   final bool isHover;
@@ -48,7 +49,50 @@ class DeliveryStatus1 extends StatelessWidget {
             onTap: () async {
               print("배송대기 버튼 클릭");
               String accessToken = Provider.of<UserStore>(context, listen: false).token;
+
+              WorkerInfoData? workerInfoData = await WorkerService().fetchWorkerInfo(accessToken);
+              if (workerInfoData?.carWidth == 0  || workerInfoData?.carHeight == 0 ||  workerInfoData?.carLength == 0 ){
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("차량 정보를 입력해주세요"),
+                      content: Text("차량 정보를 입력해야 배송을 시작할 수 있습니다."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("확인"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                return;
+              }
+
               bool isWorkerReady = await WorkerService().isWorkerReadyApi(accessToken);
+              if (isWorkerReady == false){
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("배송 준비중"),
+                      content: Text("배송 준비중입니다. 잠시만 기다려주세요."),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("확인"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                return;
+              }
               Provider.of<WorkerStore>(context, listen: false).setWorkerIsReady(isWorkerReady);
               // 버튼 클릭 시 동작할 내용 작성
             },
