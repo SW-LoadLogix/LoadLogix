@@ -78,7 +78,7 @@ class _MenuItemState extends State<SideBarMenuItem> {
                     widget.item.name,
                     style: TextStyle(
                       color: _iconColor,
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w900,
                       // fontSize: 13,
                     ),

@@ -3,6 +3,8 @@ import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/views/building.dart';
 
 import '../views/box_simulation_3d.dart';
+import '../views/dashboard.dart';
+import '../views/dashboard_simulation3d.dart';
 import '../views/delivery_simulation_map.dart';
 
 class TopBar extends StatelessWidget {
@@ -53,33 +55,50 @@ class TopBar extends StatelessWidget {
             ),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.local_shipping,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.conveyor_belt,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.forklift,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
             IconButton(
               icon: Icon(
                 Icons.local_shipping,
                 color: Theme.of(context).primaryColor,
               ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.conveyor_belt,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.forklift,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardPage()),
+                );
+              },
             ),
             IconButton(
               icon: Icon(
                 Icons.view_in_ar,
                 color: Theme.of(context).primaryColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DashboardSimulation3dPage())
+                );
+              },
             ),
             this.showDesktop
                 ? SizedBox.shrink()
