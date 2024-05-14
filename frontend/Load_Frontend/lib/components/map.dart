@@ -12,12 +12,14 @@ class MyGoogleMap extends StatefulWidget {
   @override
   _MyGoogleMapState createState() => _MyGoogleMapState();
 }
+
 class _MyGoogleMapState extends State<MyGoogleMap> {
   late GoogleMapController mapController;
-  final LatLng _center = const LatLng(36.36405586, 127.3561363);
-
+  LatLng _center = LatLng(36.36405586, 127.3561363);
+  late LatLng newPosition;
   List<BuildingData> _buildingData = [];
   Set<Circle> _circles = {};
+  bool _mapControllerInitialized = false;
 
   @override
   void initState() {
@@ -29,36 +31,58 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     AreaService areaService = AreaService();
     UserStore userStore = Provider.of<UserStore>(context, listen: false);
     List<BuildingData> buildingdata = await areaService.getBuildingPriority(userStore.token);
+    print(buildingdata[0]);
     setState(() {
       _buildingData = buildingdata;
       _circles = _markCircles(buildingdata);
+      // 카메라 이동은 맵 컨트롤러가 초기화된 후에 실행합니다.
+      if (_mapControllerInitialized) {
+        _moveCamera(newPosition);
+      }
       print(_markCircles(buildingdata));
     });
   }
 
   Set<Circle> _markCircles(List<BuildingData> buildings) {
     Set<Circle> circles = {};
-
+    double new_latitude = 0;
+    double new_longitude = 0;
     for (int i = 0; i < buildings.length; i++) {
-      print(buildings[i].buildingId.toString());
-      print(buildings[i].longitude);
+      new_latitude += buildings[i].latitude;
+      new_longitude += buildings[i].longitude;
+
       circles.add(
         Circle(
           circleId: CircleId(buildings[i].buildingId.toString()),
-          center: LatLng(buildings[i].latitude, buildings[i].longitude),
-          radius: 1500,
-          fillColor: Colors.red,
-          strokeWidth: 3,
-          strokeColor: Colors.black,
+          center: LatLng(buildings[i].longitude, buildings[i].latitude),
+          radius: 9, // 반지름 (미터)
+          fillColor: Color(0XFF89B5A2).withOpacity(0.3), // 원 내부 색상
+          strokeWidth: 3, // 원 외곽선 두께
+          strokeColor: Colors.black, // 원 외곽선 색상
         ),
       );
     }
-
+    new_latitude = new_latitude / buildings.length;
+    new_longitude = new_longitude / buildings.length;
+    newPosition = LatLng(new_longitude, new_latitude);
     return circles;
   }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _mapControllerInitialized = true;
+    // 맵 컨트롤러가 초기화된 후에 카메라 이동을 시도합니다.
+    if (_buildingData.isNotEmpty) {
+      _moveCamera(newPosition);
+    }
+  }
+
+  void _moveCamera(LatLng target) {
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: target, zoom: 18.0),
+      ),
+    );
   }
 
   @override
@@ -71,7 +95,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 13.0,
+              zoom: 15.0,
             ),
             circles: _circles,
           ),
