@@ -100,8 +100,8 @@ public class BuildingEntity {
                 buildingAddressRegistRequest.loadCode(),
                 buildingAddressRegistRequest.buildingMain(),
                 buildingAddressRegistRequest.buildingSub(),
-                coordinate.latitude(),
                 coordinate.longitude(),
+                coordinate.latitude(),
                 area,
                 null
         );
