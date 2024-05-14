@@ -1,6 +1,6 @@
 package org.ssafy.load.dto.response;
 
-import org.ssafy.load.domain.AddressEntity;
+import org.ssafy.load.domain.BuildingEntity;
 
 public record BuildingResponse(
         Long id,
@@ -14,7 +14,7 @@ public record BuildingResponse(
         return new BuildingResponse(id, buildingMain, buildingSub);
     }
 
-    public static BuildingResponse fromBuilding (AddressEntity entity){
+    public static BuildingResponse fromBuilding (BuildingEntity entity){
         return new BuildingResponse(entity.getId(), entity.getBuildingMain(), entity.getBuildingSub());
     }
 }
