@@ -57,10 +57,6 @@ Docs & License: https://fullcalendar.io/
   direction: ltr;
   text-align: left;
 }
-.fc-direction-rtl {
-  direction: rtl;
-  text-align: right;
-}
 .fc-theme-standard td,
 .fc-theme-standard th {
   border: 1px solid #ddd;
@@ -272,15 +268,6 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.fc-direction-rtl .fc-button-group > .fc-button:not(:first-child) {
-  margin-right: -1px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.fc-direction-rtl .fc-button-group > .fc-button:not(:last-child) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
 .fc .fc-toolbar {
   display: flex;
   justify-content: space-between;
@@ -298,13 +285,6 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 }
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
   margin-left: 0.75em; /* space between */
-}
-.fc-direction-rtl .fc-toolbar > * > :not(:first-child) {
-  margin-right: 0.75em; /* space between */
-}
-.fc-direction-rtl .fc-toolbar-ltr {
-  /* when the toolbar-chunk positioning system is explicitly left-to-right */
-  flex-direction: row-reverse;
 }
 .fc .fc-scroller {
   -webkit-overflow-scrolling: touch;
@@ -329,10 +309,6 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 }
 .fc .fc-scroller-harness-liquid {
   height: 100%;
-}
-.fc-direction-rtl .fc-scroller-harness > .fc-scroller {
-  /* undo above hack */
-  direction: rtl;
 }
 .fc-theme-standard .fc-scrollgrid {
   border: 1px solid #ddd;
@@ -613,13 +589,13 @@ A HORIZONTAL event
 }
 /* adjust border and border-radius (if there is any) for non-start/end */
 .fc-direction-ltr .fc-daygrid-block-event:not(.fc-event-start),
-.fc-direction-rtl .fc-daygrid-block-event:not(.fc-event-end) {
+.fc-daygrid-block-event:not(.fc-event-end) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left-width: 0;
 }
 .fc-direction-ltr .fc-daygrid-block-event:not(.fc-event-end),
-.fc-direction-rtl .fc-daygrid-block-event:not(.fc-event-start) {
+.fc-daygrid-block-event:not(.fc-event-start) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-right-width: 0;
@@ -632,13 +608,13 @@ A HORIZONTAL event
   width: var(--fc-event-resizer-thickness, 8px);
 }
 .fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-resizer-start,
-.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-resizer-end {
+.fc-h-event:not(.fc-event-selected) .fc-event-resizer-end {
   cursor: w-resize;
   left: -4px;
   left: calc(var(--fc-event-resizer-thickness, 8px) / -2);
 }
 .fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-resizer-end,
-.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-resizer-start {
+.fc-h-event:not(.fc-event-selected) .fc-event-resizer-start {
   cursor: e-resize;
   right: -4px;
   right: calc(var(--fc-event-resizer-thickness, 8px) / -2);
@@ -650,12 +626,12 @@ A HORIZONTAL event
   margin-top: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
 .fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-resizer-start,
-.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-resizer-end {
+.fc-h-event.fc-event-selected .fc-event-resizer-end {
   left: -4px;
   left: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
 .fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-resizer-end,
-.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-resizer-start {
+.fc-h-event.fc-event-selected .fc-event-resizer-start {
   right: -4px;
   right: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
@@ -845,18 +821,18 @@ A HORIZONTAL event
   padding: 10px;
 }
 .fc-direction-ltr .fc-daygrid-event.fc-event-start,
-.fc-direction-rtl .fc-daygrid-event.fc-event-end {
+.fc-daygrid-event.fc-event-end {
   margin-left: 2px;
 }
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
-.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+.fc-daygrid-event.fc-event-start {
   margin-right: 2px;
 }
 .fc-direction-ltr .fc-daygrid-week-number {
   left: 0;
   border-radius: 0 0 3px 0;
 }
-.fc-direction-rtl .fc-daygrid-week-number {
+.fc-daygrid-week-number {
   right: 0;
   border-radius: 0 0 0 3px;
 }
@@ -917,7 +893,7 @@ A HORIZONTAL event
 .fc-direction-ltr .fc-daygrid-event .fc-event-time {
   margin-right: 3px;
 }
-.fc-direction-rtl .fc-daygrid-event .fc-event-time {
+.fc-daygrid-event .fc-event-time {
   margin-left: 3px;
 }
 
@@ -1107,7 +1083,7 @@ A VERTICAL event
 .fc-direction-ltr .fc-timegrid-slot-label-frame {
   text-align: right;
 }
-.fc-direction-rtl .fc-timegrid-slot-label-frame {
+.fc-timegrid-slot-label-frame {
   text-align: left;
 }
 .fc-liquid-hack .fc-timegrid-axis-frame-liquid {
@@ -1195,7 +1171,7 @@ A VERTICAL event
 .fc-direction-ltr .fc-timegrid-col-events {
   margin: 0 2.5% 0 2px;
 }
-.fc-direction-rtl .fc-timegrid-col-events {
+.fc-timegrid-col-events {
   margin: 0 2px 0 2.5%;
 }
 .fc-timegrid-event-harness-inset .fc-timegrid-event,
@@ -1270,7 +1246,7 @@ A VERTICAL event
   border-top-color: transparent;
   border-bottom-color: transparent;
 }
-.fc-direction-rtl .fc-timegrid-now-indicator-arrow {
+.fc-timegrid-now-indicator-arrow {
   right: 0;
 
   /* triangle pointing left. TODO: mixin */
@@ -1345,18 +1321,18 @@ A VERTICAL event
   background-color: var(--fc-neutral-bg-color, rgba(208, 208, 208, 0.3));
 }
 .fc-direction-ltr .fc-list-day-text,
-.fc-direction-rtl .fc-list-day-side-text {
+.fc-list-day-side-text {
   float: left;
 }
 .fc-direction-ltr .fc-list-day-side-text,
-.fc-direction-rtl .fc-list-day-text {
+.fc-list-day-text {
   float: right;
 }
 /* make the dot closer to the event title */
 .fc-direction-ltr .fc-list-table .fc-list-event-graphic {
   padding-right: 0;
 }
-.fc-direction-rtl .fc-list-table .fc-list-event-graphic {
+.fc-list-table .fc-list-event-graphic {
   padding-left: 0;
 }
 .fc .fc-list-event.fc-event-forced-url {
