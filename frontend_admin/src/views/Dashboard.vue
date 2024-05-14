@@ -13,12 +13,21 @@ import BR from "@/assets/img/icons/flags/BR.png";
 import ArgonButton from "@/components/ArgonButton.vue";
 
 import { ref } from 'vue';
-import {getGoodsCount} from "@/api/dashboard.js";
+import {
+  getGoodsCount, 
+  getDayGoodsCount
+} from "@/api/dashboard.js";
 
 const totalGoods = ref(0);
 const enterGoods = ref(0);
 const releaseGoods = ref(0);
 const updateTime = ref(0);
+
+const chartData = ref({
+  labels: [],
+  datasets: []
+});
+let isLoadingChart = ref(false);
 
 const sales = {
   us: {
@@ -51,6 +60,25 @@ const sales = {
   },
 };
 
+function transformToChartData(inputData) {
+  if (!inputData || !Array.isArray(inputData.amount)) {
+    return {
+      labels: [],
+      datasets: []
+    };
+  }
+
+  return {
+    labels: inputData.amount.map(item => item.date),
+    datasets: [
+      {
+        label: 'Mobile Apps',
+        data: inputData.amount.map(item => item.total),
+      },
+    ],
+  };
+}
+
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
@@ -60,7 +88,15 @@ const getGoodsCountRequest = async () => {
   updateTime.value = new Date().toLocaleTimeString();
 };
 
+const getDailyGoodsCountRequest = async () => {
+  const {data} = await getDayGoodsCount();
+  chartData.value = transformToChartData(data.result);
+  isLoadingChart.value = true;
+};
 getGoodsCountRequest();
+getDailyGoodsCountRequest();
+
+
 </script>
 <template>
   <div class="py-4 container-fluid">
@@ -123,31 +159,12 @@ getGoodsCountRequest();
         <div class="row">
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
-            <div class="card z-index-2">
+            <div class="card z-index-2" v-if="isLoadingChart">
               <gradient-line-chart
                 id="chart-line"
-                title="Sales Overview"
-                description="<i class='fa fa-arrow-up text-success'></i>
-      <span class='font-weight-bold'>4% more</span> in 2021"
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: [
-                    {
-                      label: 'Mobile Apps',
-                      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    },
-                  ],
-                }"
+                title="Daily Shipping Volume"
+                description="물류 공장의 실시간 일별 출고량"
+                :chart=chartData
               />
             </div>
           </div>
