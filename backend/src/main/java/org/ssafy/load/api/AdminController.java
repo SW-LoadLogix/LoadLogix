@@ -7,6 +7,7 @@ import org.ssafy.load.application.AreaService;
 import org.ssafy.load.application.GoodsService;
 import org.ssafy.load.application.WorkerService;
 import org.ssafy.load.common.dto.Response;
+import org.ssafy.load.dto.TotalDayGoods;
 import org.ssafy.load.dto.request.AreaSettingRequest;
 import org.ssafy.load.dto.request.worker.LoginRequest;
 import org.ssafy.load.dto.response.*;
@@ -35,7 +36,7 @@ public class AdminController {
     }
 
     @GetMapping("/day-counts")
-    public Response<List<DayGoodsCountResponse>> getDayGoodsCount() {
+    public Response<GoodsTotalResponse> getDayGoodsCount() {
         return Response.success(goodsService.getDayGoodsCount());
     }
 
