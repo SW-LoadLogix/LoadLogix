@@ -9,18 +9,11 @@ import '../models/delivery_data.dart';
 import '../stores/delivery_store.dart';
 
 const List<String> imgurl =[
-  'assets/images/b2.png',
   'assets/images/b3.png',
   'assets/images/b4.png',
-  'assets/images/b5.png',
   'assets/images/b6.png',
   'assets/images/b7.png',
   'assets/images/b8.png',
-  'assets/images/image 2.png',
-  'assets/images/image 3.png',
-  'assets/images/image 4.png',
-  'assets/images/image 5.png',
-  'assets/images/image 6.png',
 ];
 
 class BuildingItem extends StatelessWidget {

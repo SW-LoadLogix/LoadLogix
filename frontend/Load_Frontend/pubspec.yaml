@@ -71,3 +71,10 @@ flutter:
     - family: Nunito
       fonts:
         - asset: assets/fonts/nunito-Regular.ttf
+    - family: NanumSquareNeo-eHv
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-eHv.ttf
+    - family: NanumSquareNeo-dEb
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+
