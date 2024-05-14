@@ -9,16 +9,19 @@ import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
-import { onMounted } from 'vue';
+// import ArgonInput from "@/components/ArgonInput.vue";
+import ArgonButton from "@/components/ArgonButton.vue";
 
-// Todo api 테스트 , 테스트 후 삭제
-import {getGoodsCount} from "@/api/dashboard.js";
 
-onMounted(async () => {
-  const { data } = await getGoodsCount();
-  console.log(data);
-});
-////////
+// // Todo api 테스트 , 테스트 후 삭제
+//import { onMounted } from 'vue';
+// import {getGoodsCount} from "@/api/dashboard.js";
+
+// onMounted(async () => {
+//   const { data } = await getGoodsCount();
+//   console.log(data);
+// });
+// ////////
 
 const sales = {
   us: {
@@ -230,6 +233,50 @@ const sales = {
             />
           </div>
         </div>
+      </div>
+    </div>
+    <div class="py-4 container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="mb-0">Edit Profile</p>
+                <argon-button color="success" size="sm" class="ms-auto"
+                  >Settings</argon-button
+                >
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Username</label
+                  >
+                  <input class="form-control" type="text" value="" />
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Email address</label
+                  >
+                  <input class="form-control" type="text" value="" />
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >First name</label
+                  >
+                  <input class="form-control" type="text" value="" />
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Last name</label
+                  >
+                  <input class="form-control" type="text" value="" />
+                </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </div>
