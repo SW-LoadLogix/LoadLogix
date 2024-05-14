@@ -54,12 +54,8 @@
 
     $is-css-var: map-get($utility, css-var);
     $is-local-vars: map-get($utility, local-vars);
-    $is-rtl: map-get($utility, rtl);
 
     @if $value != null {
-      @if $is-rtl == false {
-        /* rtl:begin:remove */
-      }
 
       @if $is-css-var {
         .#{$property-class + $infix + $property-class-modifier} {
@@ -98,9 +94,6 @@
         }
       }
 
-      @if $is-rtl == false {
-        /* rtl:end:remove */
-      }
     }
   }
 }

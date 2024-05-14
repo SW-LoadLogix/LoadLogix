@@ -6,7 +6,6 @@ export default createStore({
     isPinned: false,
     showConfig: false,
     sidebarType: "bg-white",
-    isRTL: false,
     mcolor: "",
     darkMode: false,
     isNavFixed: false,
