@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/building_data.dart';
+import 'base_url.dart';
 
 class AreaService {
   Future<List<BuildingData>> getBuildingPriority(String accessToken) async {
     final response = await http.get(
-        Uri.parse('http://43.201.116.59:8081/api/area'),
+        Uri.parse('${baseUrl}/api/area'),
         headers: {
           "Authorization": "Bearer $accessToken"
         }

@@ -1,5 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:load_frontend/models/goods_total_data.dart';
+import 'package:load_frontend/services/delivery_service.dart';
+import 'package:load_frontend/stores/user_store.dart';
+import 'package:provider/provider.dart';
 
 class WeekDeliveryTotalChart extends StatefulWidget {
   final List<Color> availableColors = [
@@ -17,6 +21,32 @@ class WeekDeliveryTotalChart extends StatefulWidget {
 
 class BarChartSample1State extends State<WeekDeliveryTotalChart> {
   int touchedIndex = -1;
+  GoodsTotalDataWrapper _goodsTotalDataWrapper = GoodsTotalDataWrapper(amount: [
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 10),
+  ]);
+
+  @override
+  void initState() {
+    fetchGoodsTotalDataWrapperFromService();
+    super.initState();
+  }
+
+  Future<void> fetchGoodsTotalDataWrapperFromService() async{
+    UserStore us = Provider.of<UserStore>(context, listen: false);
+    GoodsTotalDataWrapper goodsTotalDataWrapper = (await DeliveryService().fetchGoodsTotal(us.token))!;
+    setState(()  {
+      _goodsTotalDataWrapper = goodsTotalDataWrapper;
+      print (_goodsTotalDataWrapper);
+    });
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,19 +95,19 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 15, isTouched: i == touchedIndex);
+            return makeGroupData(0, _goodsTotalDataWrapper.amount[0].total+ 1 as double, isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 16.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, _goodsTotalDataWrapper.amount[1].total + 1as double, isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 10, isTouched: i == touchedIndex);
+            return makeGroupData(2, _goodsTotalDataWrapper.amount[2].total + 1as double, isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, _goodsTotalDataWrapper.amount[3].total+ 1 as double, isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, _goodsTotalDataWrapper.amount[4].total+ 1 as double, isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, _goodsTotalDataWrapper.amount[5].total+ 1 as double, isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(6, _goodsTotalDataWrapper.amount[6].total+ 1 as double, isTouched: i == touchedIndex);
           default:
             return throw Error();
         }
@@ -174,12 +204,12 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
           getTitles: (value) {
             if (value == 0) {
               return '0';
-            } else if (value == 10) {
-              return '1K';
-            } else if (value == 20) {
-              return '2K';
-            } else if (value == 30) {
-              return '3K';
+            } else if (value == 50) {
+              return '50';
+            } else if (value == 100) {
+              return '100';
+            } else if (value == 150) {
+              return '150';
             } else {
               return '';
             }

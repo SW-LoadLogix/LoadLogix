@@ -310,7 +310,6 @@ class _OrderTableState extends State<DeliveryTable> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                width: 160,
                 autoFitPadding: EdgeInsets.all(16)  )
               //width: 100),
           ],
