@@ -53,7 +53,8 @@ class _MenuItemState extends State<SideBarMenuItem> {
           },
           child: Container(
             width: widget.isDesktop ? null : 44,
-            height: 44,
+            // height: 44,
+            height: 64,
             padding: EdgeInsets.symmetric(horizontal: 8),
             margin: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
@@ -63,29 +64,23 @@ class _MenuItemState extends State<SideBarMenuItem> {
                   ? MainAxisAlignment.start
                   : MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: primary,
-                      image: DecorationImage(
-                          fit: BoxFit.cover, image: AssetImage(widget.item.icon))),
+                Icon(
+                  widget.item.icon,
+                  size: 24,
+                  color: _iconColor,
                 ),
-                // Icon(
-                //   widget.item.icon,
-                //   size: 24,
-                //   color: _iconColor,
-                // ),
                 if (widget.isDesktop) ...[
                   SizedBox(
-                    width: 16,
+                    width: 6,
+                    // width: 16,
                   ),
                   Text(
                     widget.item.name,
                     style: TextStyle(
                       color: _iconColor,
-                      fontSize: 13,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      // fontSize: 13,
                     ),
                   )
                 ] else
