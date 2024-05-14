@@ -26,14 +26,14 @@ public class PathTimeCal {
     public int getPathTime(String sourceAddress, String desAddress) {
         Coordinate sourceCoordinate = toCoordinate(sourceAddress);
         Coordinate desCoordinate = toCoordinate(desAddress);
-        return calculatePathTime(sourceCoordinate.latitude(), sourceCoordinate.longitude(),
-                desCoordinate.latitude(), desCoordinate.longitude());
+        return calculatePathTime(sourceCoordinate.longitude(), sourceCoordinate.latitude(),
+                desCoordinate.longitude(), desCoordinate.latitude());
     }
 
-    public int calculatePathTime(double originLatitude, double originLongitude, double desLatitude, double desLongitude) {
+    public int calculatePathTime(double originLongitude, double originLatitude, double desLongitude, double desLatitude) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String url = "https://apis-navi.kakaomobility.com/v1/directions?" +
-                "origin={originLatitude},{originLongitude}&destination={desLatitude},{desLongitude}";
+                "origin={originLongitude},{originLatitude}&destination={desLongitude},{desLatitude}";
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
