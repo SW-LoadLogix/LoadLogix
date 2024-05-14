@@ -46,7 +46,7 @@ class _StatusListState extends State<StatusList>{
       children: [
         Text(
           " ${Provider.of<WorkerStore>(context, listen: true).workerInfo.name} 기사님의 ${todayDate} 배송관리 대시보드 입니다",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
           textAlign: TextAlign.left,
         ),
         SizedBox(

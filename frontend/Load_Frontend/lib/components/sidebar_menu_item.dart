@@ -63,11 +63,20 @@ class _MenuItemState extends State<SideBarMenuItem> {
                   ? MainAxisAlignment.start
                   : MainAxisAlignment.center,
               children: [
-                Icon(
-                  widget.item.icon,
-                  size: 20,
-                  color: _iconColor,
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      color: primary,
+                      image: DecorationImage(
+                          fit: BoxFit.cover, image: AssetImage(widget.item.icon))),
                 ),
+                // Icon(
+                //   widget.item.icon,
+                //   size: 24,
+                //   color: _iconColor,
+                // ),
                 if (widget.isDesktop) ...[
                   SizedBox(
                     width: 16,
@@ -76,6 +85,7 @@ class _MenuItemState extends State<SideBarMenuItem> {
                     widget.item.name,
                     style: TextStyle(
                       color: _iconColor,
+                      fontSize: 13,
                     ),
                   )
                 ] else

@@ -17,6 +17,7 @@ class WorkerStore extends ChangeNotifier {
   carLength: 5,
   carWidth:6,
   );
+  bool isWorkerReady = false;
 
 
   // 페이지 진입 시 API 호출하기 위한 함수
@@ -27,6 +28,10 @@ class WorkerStore extends ChangeNotifier {
   }
   Future<void> setWorkerInfo(WorkerInfoData newWorkerInfo) async {
     workerInfo = newWorkerInfo;
+    notifyListeners();
+  }
+  Future<void> setWorkerIsReady(bool ready) async{
+    isWorkerReady = ready;
     notifyListeners();
   }
 }
