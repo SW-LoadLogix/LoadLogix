@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:load_frontend/services/area_service.dart';
+import 'package:load_frontend/stores/user_store.dart';
+import 'package:provider/provider.dart';
+
+import '../models/building_data.dart';
 
 class MyGoogleMap extends StatefulWidget {
   const MyGoogleMap({Key? key}) : super(key: key);
@@ -9,49 +14,69 @@ class MyGoogleMap extends StatefulWidget {
 }
 class _MyGoogleMapState extends State<MyGoogleMap> {
   late GoogleMapController mapController;
-
-  // final LatLng _center = const LatLng(45.521563, -122.677433);
   final LatLng _center = const LatLng(36.36405586, 127.3561363);
+
+  List<BuildingData> _buildingData = [];
+  Set<Circle> _circles = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBuildingData();
+  }
+
+  Future<void> _loadBuildingData() async {
+    AreaService areaService = AreaService();
+    UserStore userStore = Provider.of<UserStore>(context, listen: false);
+    List<BuildingData> buildingdata = await areaService.getBuildingPriority(userStore.token);
+    setState(() {
+      _buildingData = buildingdata;
+      _circles = _markCircles(buildingdata);
+      print(_markCircles(buildingdata));
+    });
+  }
+
+  Set<Circle> _markCircles(List<BuildingData> buildings) {
+    Set<Circle> circles = {};
+
+    for (int i = 0; i < buildings.length; i++) {
+      print(buildings[i].buildingId.toString());
+      print(buildings[i].longitude);
+      circles.add(
+        Circle(
+          circleId: CircleId(buildings[i].buildingId.toString()),
+          center: LatLng(buildings[i].latitude, buildings[i].longitude),
+          radius: 1500,
+          fillColor: Colors.red,
+          strokeWidth: 3,
+          strokeColor: Colors.black,
+        ),
+      );
+    }
+
+    return circles;
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
-    Set<Circle> _circles = Set<Circle>.from([
-      Circle(
-        circleId: CircleId('circle_1'),
-        center: LatLng(36.3644346, 127.3569143), // 원의 중심
-        radius: 50, // 반지름 (미터)
-        fillColor: Color(0XFF89B5A2).withOpacity(0.3), // 원 내부 색상
-        strokeWidth: 3, // 원 외곽선 두께
-        strokeColor: Colors.black, // 원 외곽선 색상
-      ),
-    ]);
     return AspectRatio(
-        aspectRatio: 1.5,
-        child: MaterialApp(
-          home: Scaffold(
-            body: GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 18.0,
-              ),
-              circles: _circles, // 원 추가
-              // markers: {
-              //   const Marker(
-              //     markerId: const MarkerId("Sydney"),
-              //     position: LatLng(36.3644346, 127.3569143),
-              //     infoWindow: InfoWindow(
-              //       title: "Sydney",
-              //       snippet: "Capital of New South Wales",
-              //     ), // InfoWi
-              //   ), // Marker
-              // }, // markers
+      aspectRatio: 1.5,
+      child: MaterialApp(
+        home: Scaffold(
+          body: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 13.0,
             ),
+            circles: _circles,
           ),
-        )
+        ),
+      ),
     );
   }
 }

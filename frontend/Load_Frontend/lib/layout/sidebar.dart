@@ -5,9 +5,12 @@ import 'package:load_frontend/components/sidebar_menu_item.dart';
 import '../model.dart';
 
 final List<MenuItem> menuItems = [
-  MenuItem('홈', Icons.home_outlined),
-  MenuItem('배송관리 대시보드', Icons.dashboard_outlined),
-  MenuItem('Simulation 3d', Icons.threed_rotation),
+  // MenuItem('홈', Icons.home_outlined),
+  // MenuItem('배송관리 대시보드', Icons.dashboard_outlined),
+  // MenuItem('Simulation 3d', Icons.threed_rotation),
+  MenuItem('홈', "assets/images/home.png"),
+  MenuItem('배송관리 대시보드', "assets/images/dashboard.png"),
+  MenuItem('Simulation 3d', "assets/images/3d.png"),
   // MenuItem('Contact', Icons.contact_mail),
 ];
 

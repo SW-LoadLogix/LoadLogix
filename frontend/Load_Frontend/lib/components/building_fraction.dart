@@ -39,7 +39,7 @@ class BuildingList extends StatelessWidget {
                 Expanded(
                     child: Center(
                     child: Text(
-                    '${dt.areaName} (총 ${dt.total} 건) 배송 현황 관리',
+                    '${dt.areaName} [총 ${dt.total} 건] 배송 현황 관리',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ))
