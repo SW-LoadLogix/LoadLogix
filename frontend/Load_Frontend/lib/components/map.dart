@@ -43,7 +43,6 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     AreaService areaService = AreaService();
     UserStore userStore = Provider.of<UserStore>(context, listen: false);
     List<BuildingData> buildingdata = await areaService.getBuildingPriority(userStore.token);
-    print(buildingdata[0]);
     setState(() {
       _buildingData = buildingdata;
       _circles = _markCircles(buildingdata);
@@ -55,7 +54,6 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     });
   }
 
-  //위치 표시
   Set<Circle> _markCircles(List<BuildingData> buildings) {
     Set<Circle> circles = {};
     double new_latitude = 0;
