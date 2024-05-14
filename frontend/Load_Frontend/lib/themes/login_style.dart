@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constaints.dart';
 
 var loginTheme = ThemeData(
-  fontFamily: 'Nunito',
+  fontFamily: 'NanumSquareNeo-dEb',
   primaryColor: primary,
   primaryColorDark: primaryAncient,
   primaryColorLight: primaryLight,
