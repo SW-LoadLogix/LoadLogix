@@ -82,8 +82,8 @@ class WorkerService {
 
   Future <bool> isWorkerReadyApi(String accessToken) async {
     try {
-      final response = await http.get(
-          Uri.parse('http://43.201.116.59:8081/api/worker/info'), headers: {
+      final response = await http.put(
+          Uri.parse('http://43.201.116.59:8081/api/worker/ready'), headers: {
         "Authorization": "Bearer $accessToken"
       });
 
