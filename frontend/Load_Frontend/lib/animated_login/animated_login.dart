@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../constaints.dart';
+
 export 'src/constants/enums/enums_shelf.dart';
 export 'src/models/models_shelf.dart';
 export 'src/providers/login_texts.dart';
@@ -213,6 +215,7 @@ class _AnimatedLoginState extends State<AnimatedLogin> {
               c.component == LoginComponents.policyCheckbox,
         ) !=
         -1;
+
     return MultiProvider(
       providers: <ChangeNotifierProvider<dynamic>>[
         ChangeNotifierProvider<LoginTexts>.value(value: loginTexts),

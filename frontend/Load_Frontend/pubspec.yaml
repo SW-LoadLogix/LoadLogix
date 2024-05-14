@@ -1,41 +1,80 @@
 name: load_frontend
 description: "삼성 청년 아카데미 B308팀 자율 프로젝트"
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
-
+  sdk: ">=3.3.3 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  responsive_framework: ^1.4.0
+  #responsive_framework: ^1.4.0
   animations: ^2.0.11
   sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
-  three_dart: ^0.0.14
-  three_dart_jsm: ^0.0.9
+  three_dart: ^0.0.16
+  three_dart_jsm: ^0.0.10
   flutter_gl: ^0.0.21
   provider: ^6.0.5
   intl: ^0.19.0
+  flutter_staggered_grid_view: ^0.4.0
+
 
   url_strategy: ^0.2.0
   syncfusion_flutter_sliders: ^25.1.41
-  syncfusion_flutter_datagrid: ^25.1.41
+  syncfusion_flutter_datagrid: ^25.1.42
   url_launcher: ^6.1.12
-  auto_route: ^7.2.0
+  json_annotation: ^4.9.0
+  auto_route: ^8.0.0
+  http: ^0.13.6
+  google_maps_flutter: ^2.2.8
+  flutter_dotenv: ^5.1.0
+  flutter_config: ^2.0.2
+  loading_animation_widget: ^1.2.1
+  msh_checkbox: ^2.0.1
+  flutter_secure_storage: ^4.2.1
+  google_maps_flutter_web: ^0.5.7
+  syncfusion_flutter_charts: ^25.2.3+1
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  auto_route_generator: ^7.1.1
-  build_runner: ^2.1.4
+  auto_route_generator: ^8.0.0
+  build_runner: ^2.4.9
+  fl_chart: ^0.36.4
+  json_serializable: ^6.8.0
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/
+    - assets/3dmodels/3d-model.obj
+    - assets/textures/truck.mtl
+
+    - assets/gif/트럭시뮬gif.gif
+    - assets/gif/truckgif.gif
+    - assets/gif/truck43.gif
+
+  fonts:
+    - family: AlumniSansPinstripe
+      fonts:
+        - asset: assets/fonts/AlumniSansPinstripe-Regular.ttf
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Medium.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito-Regular.ttf
+    - family: NanumSquareNeo-eHv
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-eHv.ttf
+    - family: NanumSquareNeo-dEb
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+

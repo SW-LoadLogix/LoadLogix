@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:load_frontend/routes/app_router.dart';
+import 'package:load_frontend/stores/delivery_store.dart';
+import 'package:load_frontend/stores/box_store.dart';
+import 'package:load_frontend/stores/goods_store.dart';
+import 'package:load_frontend/stores/worker_store.dart';
+import 'package:load_frontend/stores/user_store.dart';
 import 'package:load_frontend/themes/login_style.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'components/nav_rail.dart';
-import 'views/pages.dart';
+import 'package:load_frontend/constaints.dart';
+import 'package:load_frontend/themes/theme_version2.dart';
 
-class SidebarState extends ChangeNotifier {
-  int _selectedIndex = 0;
-  int get selectedIndex => _selectedIndex;
 
-  void setSelectedIndex(int index) {
-    _selectedIndex = index;
-    notifyListeners(); // 변경 사항을 위젯에 알림
-  }
-}
 
 void main() {
   setPathUrlStrategy();  // 주소창에서 # 제거
-  runApp(ChangeNotifierProvider(
-    create: (context) => SidebarState(), // SidebarState 인스턴스 생성
-    child: const MyApp(),
-  ),);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,9 +24,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppRouter appRouter = AppRouter();
-    return MaterialApp.router(
-      theme: loginTheme,
-      routerConfig: appRouter.config(),
+
+    return MultiProvider(
+      providers: [
+         ChangeNotifierProvider(create: (context) => GoodsStore()),
+        ChangeNotifierProvider(create: (context) => WorkerStore()),
+         ChangeNotifierProvider(create: (context) => UserStore()),
+        ChangeNotifierProvider(create: (context) => DeliveryStore()),
+        ChangeNotifierProvider(create: (context) => BoxStore()),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        //theme: themeVersion2.light(),
+        theme:loginTheme,
+        routerConfig: appRouter.config(),
+      )
     );
   }
 }

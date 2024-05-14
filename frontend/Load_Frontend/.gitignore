@@ -57,7 +57,6 @@ app.*.map.json
 .pub/
 build/
 coverage/
-lib/generated_plugin_registrant.dart
 # For library packages, don’t commit the pubspec.lock file.
 # Regenerating the pubspec.lock file lets you test your package against the latest compatible versions of its dependencies.
 # See https://dart.dev/guides/libraries/private-files#pubspeclock
@@ -153,3 +152,14 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,rust,windows
 
+# history file
+
+.history/
+*.history/
+../.history/
+*../.history/
+../../.history/
+*../../.history/
+*../../.history/
+
+api_key.js
