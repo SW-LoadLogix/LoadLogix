@@ -1,11 +1,7 @@
 <script setup>
-import { computed } from "vue";
-import { useStore } from "vuex";
 import ArgonAvatar from "@/components/ArgonAvatar.vue";
 import img1 from "../../assets/img/logos/mastercard.png";
 
-const store = useStore();
-const isRTL = computed(() => store.state.isRTL);
 defineProps({
   card: {
     type: Object,
@@ -42,7 +38,7 @@ defineProps({
         </h5>
         <div class="d-flex">
           <div class="d-flex">
-            <div :class="isRTL ? 'ms-4' : 'me-4'">
+            <div :class="'me-4'">
               <p class="text-white text-sm opacity-8 mb-0">
                 {{ card.holderText }}
               </p>
@@ -57,7 +53,7 @@ defineProps({
           </div>
           <div
             class="w-20 d-flex align-items-end justify-content-end"
-            :class="isRTL ? 'me-auto' : 'ms-auto'"
+            :class="'ms-auto'"
           >
             <argon-avatar class="w-60 mt-2" :image="img1" alt="logo" />
           </div>
