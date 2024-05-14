@@ -1,9 +1,7 @@
 <script setup>
-import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const isRTL = computed(() => store.state.isRTL);
 const sidebarMinimize = () => store.commit("sidebarMinimize");
 
 const minimizeSidebar = () => {
@@ -30,7 +28,7 @@ defineProps({
     >
       <slot name="icon"></slot>
     </div>
-    <span class="nav-link-text" :class="isRTL ? ' me-1' : 'ms-1'">{{
+    <span class="nav-link-text" :class="'ms-1'">{{
       navText
     }}</span>
   </router-link>
