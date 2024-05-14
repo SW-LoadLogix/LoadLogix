@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'package:load_frontend/models/goods.dart';
 
+import 'package:json_annotation/json_annotation.dart';
+
 part 'building_fraction.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
