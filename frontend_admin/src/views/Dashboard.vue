@@ -12,16 +12,13 @@ import BR from "@/assets/img/icons/flags/BR.png";
 // import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 
+import { ref } from 'vue';
+import {getGoodsCount} from "@/api/dashboard.js";
 
-// // Todo api 테스트 , 테스트 후 삭제
-//import { onMounted } from 'vue';
-// import {getGoodsCount} from "@/api/dashboard.js";
-
-// onMounted(async () => {
-//   const { data } = await getGoodsCount();
-//   console.log(data);
-// });
-// ////////
+const totalGoods = ref(0);
+const enterGoods = ref(0);
+const releaseGoods = ref(0);
+const updateTime = ref(0);
 
 const sales = {
   us: {
@@ -53,6 +50,17 @@ const sales = {
     flag: BR,
   },
 };
+
+const getGoodsCountRequest = async () => {
+  // 물품 조회
+  const { data } = await getGoodsCount();
+  totalGoods.value = data.result.totalCount;
+  enterGoods.value = data.result.storeCount;
+  releaseGoods.value = data.result.loadCount;
+  updateTime.value = new Date().toLocaleTimeString();
+};
+
+getGoodsCountRequest();
 </script>
 <template>
   <div class="py-4 container-fluid">
@@ -61,11 +69,9 @@ const sales = {
         <div class="row">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Today's Money"
-              value="$53,000"
-              description="<span
-                class='text-sm font-weight-bolder text-success'
-                >+55%</span> since yesterday"
+              title="TOTAL GOODS"
+              :value='`${totalGoods} 개`'
+              description="실시간 전체 물품 개수"
               :icon="{
                 component: 'ni ni-money-coins',
                 background: 'bg-gradient-primary',
@@ -75,11 +81,11 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Today's Users"
-              value="2,300"
-              description="<span
+              title="WAREHOUSING"
+              :value='`${enterGoods} 개`'
+              description="실시간<span
                 class='text-sm font-weight-bolder text-success'
-                >+3%</span> since last week"
+                >입고</span> 물품 개수"
               :icon="{
                 component: 'ni ni-world',
                 background: 'bg-gradient-danger',
@@ -89,11 +95,11 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="New Clients"
-              value="+3,462"
-              description="<span
+              title="Release Goods"
+              :value='`${releaseGoods} 개`'
+              description="실시간 <span
                 class='text-sm font-weight-bolder text-danger'
-                >-2%</span> since last quarter"
+                >출고</span> 물품 개수"
               :icon="{
                 component: 'ni ni-paper-diploma',
                 background: 'bg-gradient-success',
@@ -103,11 +109,9 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Sales"
-              value="$103,430"
-              description="<span
-                class='text-sm font-weight-bolder text-success'
-                >+5%</span> than last month"
+              title="Update Time"
+              :value='`${updateTime}`'
+              description="물류 공장 현황 반영 시간"
               :icon="{
                 component: 'ni ni-cart',
                 background: 'bg-gradient-warning',
