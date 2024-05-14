@@ -17,10 +17,11 @@ public class CarController {
     private final CarService carService;
 
     @PutMapping("/change")
-    public Response<CarResponse> updateCarSize(@RequestHeader(name = "Authorization") String token,
+    public Response<Void> updateCarSize(@RequestHeader(name = "Authorization") String token,
                                                @RequestBody CarChangeRequest carChangeRequest
     ) {
         Long workerId = jwtTokenProvider.getId(token);
-        return Response.success(carService.updateCarSize(carChangeRequest, workerId));
+        carService.updateCarSize(carChangeRequest, workerId);
+        return Response.success();
     }
 }

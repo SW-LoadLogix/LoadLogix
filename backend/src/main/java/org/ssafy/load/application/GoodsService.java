@@ -1,9 +1,5 @@
 package org.ssafy.load.application;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,27 +7,17 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.common.type.BoxType;
 import org.ssafy.load.dao.*;
-import org.ssafy.load.domain.AreaEntity;
-import org.ssafy.load.domain.BoxTypeEntity;
-import org.ssafy.load.domain.BuildingEntity;
-import org.ssafy.load.domain.GoodsEntity;
-import org.ssafy.load.domain.LoadTaskEntity;
-import org.ssafy.load.domain.WorkerEntity;
-import org.ssafy.load.dto.Building;
-import org.ssafy.load.dto.Goods;
+import org.ssafy.load.domain.*;
+import org.ssafy.load.dto.TotalDayGoods;
 import org.ssafy.load.dto.Position;
+import org.ssafy.load.dto.response.goods.SortedGoods;
 import org.ssafy.load.dto.request.GoodsCreateRequest;
-import org.ssafy.load.dto.response.BoxTypeResponse;
-import org.ssafy.load.dto.response.DayGoodsCountResponse;
-import org.ssafy.load.dto.response.GoodsCreateResponse;
-import org.ssafy.load.dto.response.GoodsCountResponse;
-import org.ssafy.load.dto.response.GoodsOutputResponse;
-import org.ssafy.load.dto.response.GoodsResponse;
+import org.ssafy.load.dto.response.*;
+import org.ssafy.load.dto.response.goods.GoodsListResponse;
+import org.ssafy.load.dto.response.goods.SortedGoodsResponse;
 
-import java.util.List;
-import java.util.Optional;
-import org.ssafy.load.dto.SortedGoods;
-import org.ssafy.load.dto.response.SortedGoodsResponse;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,86 +32,89 @@ public class GoodsService {
     private final BoxTypeRepository boxTypeRepository;
 
     @Transactional(readOnly = true)
-    public GoodsResponse getOriginGoods(Long workerId) {
-        //배송 기사 조회
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
+    public GoodsListResponse getOriginGoods(Long workerId) {
+        //기사 조회
+        Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerOptional.orElseThrow(
+            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+
+        //구역 조회
+        Optional<AreaEntity> areaOptional = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptional.orElseThrow(
+            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+
+        //가장 최근 적재 조회
+        List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
+        if (loadTaskList.isEmpty()) {
+            throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
 
-        //배송 기사의 구역 조회
-        Optional<AreaEntity> area = areaRepository.findById(worker.get().getArea().getId());
-        if (area.isEmpty()) {
-            throw new CommonException(ErrorCode.AREA_NOT_FOUND);
+        //task에 할당된 상품 조회
+        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskList.getFirst());
+        Map<BuildingEntity, List<GoodsEntity>> buildingGoodsEntityMap = new HashMap<>();
+
+        for (GoodsEntity goodsEntity : goodsEntityList) {
+            buildingGoodsEntityMap.computeIfAbsent(goodsEntity.getBuilding(),
+                k -> new ArrayList<>()).add(goodsEntity);
         }
 
-        //구역에 해당된 빌딩 id 조회
-        List<Long> buildingIds = buildingRepository.findIdsByAreaId(area.get().getId());
-        if (buildingIds.isEmpty()) {
-            throw new CommonException(ErrorCode.BUILDING_NOT_FOUND);
+        //응답 생성
+        String areaName = area.getAreaName();
+        int total = goodsEntityList.size();
+        List<BuildingDetailResponse> buildingDetailResponseList = new ArrayList<>();
+
+        for (BuildingEntity buildingEntity : buildingGoodsEntityMap.keySet()) {
+            String topAddress = buildingEntity.getSidoName() + " " + buildingEntity.getGugunName();
+            String buildingAddress =
+                buildingEntity.getDongName() + " " + buildingEntity.getZibunMain() + "-"
+                    + buildingEntity.getZibunSub();
+            int totalGoods = buildingGoodsEntityMap.get(buildingEntity).size();
+            int totalPercentage = (int) ((double) totalGoods / total * 100);
+            List<GoodsDetailResponse> goodsDetailResponseList = new ArrayList<>();
+
+            for (GoodsEntity goodsEntity : buildingGoodsEntityMap.get(buildingEntity)) {
+                goodsDetailResponseList.add(
+                    new GoodsDetailResponse(
+                        goodsEntity.getId(),
+                        goodsEntity.getBoxType().getType().name(),
+                        goodsEntity.getBoxType().getHeight(),
+                        goodsEntity.getBoxType().getLength(),
+                        goodsEntity.getBoxType().getWidth(),
+                        goodsEntity.getWeight(),
+                        goodsEntity.getDetailAddress())
+                );
+            }
+
+            buildingDetailResponseList.add(
+                new BuildingDetailResponse(
+                    topAddress,
+                    buildingAddress,
+                    totalGoods,
+                    totalPercentage,
+                    goodsDetailResponseList)
+            );
         }
-
-        // 빌딩별로 상품 조회
-        List<Building> buildings = buildingIds.stream()
-            .map(goodsRepository::findAllByBuildingId) // 상품 조회
-            .filter(goodsEntities -> !goodsEntities.isEmpty()) // 비어있지 않은 상품 목록만 처리
-            .map(goodsEntities -> {
-                StringBuilder sb = new StringBuilder();
-                sb.append(goodsEntities.getFirst().getBuilding().getSidoName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getGugunName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getDongName() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getZibunMain() + " ")
-                    .append(goodsEntities.getFirst().getBuilding().getZibunSub() + " ");
-                String address = sb.toString();
-                List<Goods> goods = goodsEntities.stream()
-                    .map(g -> new Goods(
-                        g.getId(),
-                        String.valueOf(g.getBoxType().getType()),
-                        g.getWeight(),
-                        g.getDetailAddress()))
-                    .toList();
-                return new Building(address, goodsEntities.size(), goods);
-            }).toList();
-        // 상품 총 수 계산
-        int total = buildings.stream().mapToInt(Building::totalGoods).sum();
-
-        return new GoodsResponse(area.get().getAreaName(), total, buildings);
+        return new GoodsListResponse(areaName, total, buildingDetailResponseList);
     }
 
-    @Transactional(readOnly = true)
     public SortedGoodsResponse getSortedGoods(Long workerId) {
-        //배송 기사 조회
-        Optional<WorkerEntity> worker = workerRepository.findById(workerId);
-        if (worker.isEmpty()) {
-            throw new CommonException(ErrorCode.USER_NOT_FOUND);
-        }
+        //기사 조회
+        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerEntityOptional.orElseThrow(
+            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        //구역 조회
+        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptionalEntity.orElseThrow(
+            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
-        //배송 기사의 구역 조회
-        Optional<AreaEntity> area = areaRepository.findById(worker.get().getArea().getId());
-        if (area.isEmpty()) {
-            throw new CommonException(ErrorCode.AREA_NOT_FOUND);
-        }
-
-        // 배송 기사의 가장 최근 적재 리스트 조회
-        List<Integer> loadTaskIds = loadTaskRepository.findMostRecentCompletedTaskIds(
-            area.get().getId());
-        if (loadTaskIds.isEmpty()) {
+        //가장 최근 적재 조회
+        List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
+        if (loadTaskList.isEmpty()) {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
-        }
-
-        Integer loadTaskId = loadTaskIds.getFirst();
-        Optional<LoadTaskEntity> loadTask = loadTaskRepository.findById(loadTaskId);
-        if (loadTask.isEmpty()) {
-            throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
-        }
-
-        if (!loadTask.get().getAreaStatus() || !loadTask.get().getWorkerState()) {
-            throw new CommonException(ErrorCode.INVALID_LOAD_TASK);
         }
 
         List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
-            loadTaskId);
-
+            loadTaskList.getFirst());
         List<SortedGoods> goods = goodsEntities.stream()
             .map(g -> new SortedGoods(
                 g.getId(),
@@ -140,18 +129,23 @@ public class GoodsService {
         return new SortedGoodsResponse(goods);
     }
 
-    public GoodsCreateResponse createGoods(GoodsCreateRequest goodsCreateRequest) {
-        return GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
-            null,
-            goodsCreateRequest.weight(),
-            goodsCreateRequest.detailAddress(),
-            null, null, null, null,
-            boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
-                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-            buildingRepository.findById(goodsCreateRequest.buildingId())
-                .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-            null, null
-        )));
+    public void createGoods(GoodsCreateRequest goodsCreateRequest) {
+        try {
+            GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
+                null,
+                goodsCreateRequest.weight(),
+                goodsCreateRequest.detailAddress(),
+                null, null, null, null,
+                goodsCreateRequest.agentId(),
+                boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
+                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                buildingRepository.findById(goodsCreateRequest.buildingId())
+                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                null, null
+            )));
+        } catch (Exception e) {
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -164,13 +158,13 @@ public class GoodsService {
     }
 
     @Transactional(readOnly = true)
-    public List<DayGoodsCountResponse> getDayGoodsCount() {
+    public GoodsTotalResponse getDayGoodsCount() {
         List<Object[]> results = goodsRepository.countGoodsByDateForLastSixDays();
-        return results.stream()
-            .map(result -> new DayGoodsCountResponse(
+        return GoodsTotalResponse.of(results.stream()
+            .map(result -> new TotalDayGoods(
                 LocalDate.parse(result[0].toString()),
-                ((Number) result[1]).longValue()
-            )).toList();
+                ((Number) result[1]).intValue()
+            )).toList());
     }
 
     @Transactional(readOnly = true)
@@ -224,5 +218,65 @@ public class GoodsService {
                     boxType.getWidth(),
                     ((Number) result[1]).longValue());
             }).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<RackStoreCountResponse> getRackStoreGoodsCount() {
+        List<RackStoreCountResponse> result = new ArrayList<>();
+        long[] cnt = new long[7];
+
+        List<Object[]> goodsList = goodsRepository.countGoodsByBuildingIdAndCreatedAtIsToday();
+        for (Object[] obj : goodsList) {
+            Integer areaId = buildingRepository.findById(((Number) obj[0]).longValue()).get()
+                .getArea().getId();
+            if (areaId == 1) {
+                cnt[1] += ((Number) obj[1]).longValue();
+            } else if (areaId == 2 || areaId == 3) {
+                cnt[2] += ((Number) obj[1]).longValue();
+            } else if (areaId == 4) {
+                cnt[3] += ((Number) obj[1]).longValue();
+            } else if (areaId == 5 || areaId == 6) {
+                cnt[4] += ((Number) obj[1]).longValue();
+            } else if (areaId == 7) {
+                cnt[5] += ((Number) obj[1]).longValue();
+            } else {
+                cnt[6] += ((Number) obj[1]).longValue();
+            }
+        }
+
+        for (int i = 1; i <= 6; i++) {
+            result.add(new RackStoreCountResponse(i, cnt[i]));
+        }
+        return result;
+    }
+
+    @Transactional(readOnly = true)
+    public GoodsTotalResponse getDayLoadedGoodsCount(Long workerId) {
+        //기사 조회
+        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerEntityOptional.orElseThrow(
+            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        //구역 조회
+        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptionalEntity.orElseThrow(
+            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+
+        List<TotalDayGoods> result = new ArrayList<>();
+        for (int day = 6; day >= 0; day--) {
+            List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByCreatedAt(
+                area.getId(),
+                day);
+            if (loadTaskList.isEmpty()) {
+                result.add(new TotalDayGoods(LocalDate.now().minusDays(day), 0));
+                continue;
+            }
+
+            int cnt = 0;
+            for(int i = 0; i<loadTaskList.size(); i++){
+                cnt += (int) goodsRepository.countByLoadTaskId(loadTaskList.get(i));
+            }
+            result.add(new TotalDayGoods(LocalDate.now().minusDays(day), cnt));
+        }
+        return GoodsTotalResponse.of(result);
     }
 }

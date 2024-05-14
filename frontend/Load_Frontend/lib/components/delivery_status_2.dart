@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:load_frontend/stores/worker_store.dart';
 import 'package:msh_checkbox/msh_checkbox.dart';
+import 'package:provider/provider.dart';
 
 import '../constaints.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -22,10 +24,24 @@ class _Container2State extends State<DeliveryStatus2> {
   bool isLoading = true; // API 호출되었을 때 여부를 관리하는 변수 추가
 
   bool isChecked = true; // 체크박스 형태로 고정
+  bool isCalled = false;
 
   @override
   Widget build(BuildContext context) {
+    WorkerStore ws = Provider.of<WorkerStore>(context, listen: true);
+    if (ws.isWorkerReady){
+      if (isCalled == false){
+        isCalled = true;
+        fetchDataFromAPI();
+      }
+    }
+    else {
+      message = "준비 중";
+    }
     return Container(
+      constraints: BoxConstraints(
+        minHeight: 150.0, // 최소 높이 설정
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,6 +108,6 @@ class _Container2State extends State<DeliveryStatus2> {
   void initState() {
     super.initState();
     // Call API to fetch initial data when widget is initialized
-    fetchDataFromAPI();
+
   }
 }

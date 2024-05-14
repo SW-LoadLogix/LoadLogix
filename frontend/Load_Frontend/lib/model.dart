@@ -18,13 +18,13 @@ class Order {
   Order(this.icon, this.name, this.packs, this.status, this.date);
 }
 
-class Buildings {
+class mBuildings {
   final String title;
   final String imgUrl;
   final String time;
   final String description;
 
-  Buildings(this.time, this.title, this.imgUrl, [this.description = '']);
+  mBuildings(this.time, this.title, this.imgUrl, [this.description = '']);
 }
 
 // class BussinessStatus {

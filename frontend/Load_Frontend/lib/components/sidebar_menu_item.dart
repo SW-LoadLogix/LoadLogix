@@ -28,9 +28,11 @@ class _MenuItemState extends State<SideBarMenuItem> {
             AutoRouter.of(context).push(HomeRoute());
             break;
           case '배송관리 대시보드':
+            AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
             AutoRouter.of(context).push(DashboardRoute());
             break;
           case 'Simulation 3d':
+            AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
             AutoRouter.of(context).push(DashboardSimulation3dRoute());
             break;
         }
@@ -51,7 +53,8 @@ class _MenuItemState extends State<SideBarMenuItem> {
           },
           child: Container(
             width: widget.isDesktop ? null : 44,
-            height: 44,
+            // height: 44,
+            height: 64,
             padding: EdgeInsets.symmetric(horizontal: 8),
             margin: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
@@ -63,17 +66,21 @@ class _MenuItemState extends State<SideBarMenuItem> {
               children: [
                 Icon(
                   widget.item.icon,
-                  size: 20,
+                  size: 24,
                   color: _iconColor,
                 ),
                 if (widget.isDesktop) ...[
                   SizedBox(
-                    width: 16,
+                    width: 6,
+                    // width: 16,
                   ),
                   Text(
                     widget.item.name,
                     style: TextStyle(
                       color: _iconColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      // fontSize: 13,
                     ),
                   )
                 ] else

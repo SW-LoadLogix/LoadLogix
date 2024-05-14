@@ -3,6 +3,8 @@ import 'package:load_frontend/constaints.dart';
 import 'package:load_frontend/views/building.dart';
 
 import '../views/box_simulation_3d.dart';
+import '../views/dashboard.dart';
+import '../views/dashboard_simulation3d.dart';
 import '../views/delivery_simulation_map.dart';
 
 class TopBar extends StatelessWidget {
@@ -14,8 +16,13 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
+    final _isMobile = _size.width < screenSm;
     return Container(
-      height: topBarHeight,
+      height: _isMobile ? mobileTopBarHeight : topBarHeight,
+      decoration: _isMobile ?
+                    BoxDecoration(color: primaryLight):
+                    BoxDecoration(color:Colors.transparent),
       padding: EdgeInsets.symmetric(horizontal: componentPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +35,9 @@ class TopBar extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: _isMobile ? 15 : 24,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 Positioned(
@@ -46,33 +55,50 @@ class TopBar extends StatelessWidget {
             ),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.local_shipping,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.conveyor_belt,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.forklift,
+            //     color: Theme.of(context).primaryColor,
+            //   ),
+            //   onPressed: () {},
+            // ),
             IconButton(
               icon: Icon(
                 Icons.local_shipping,
                 color: Theme.of(context).primaryColor,
               ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.conveyor_belt,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.forklift,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardPage()),
+                );
+              },
             ),
             IconButton(
               icon: Icon(
                 Icons.view_in_ar,
                 color: Theme.of(context).primaryColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DashboardSimulation3dPage())
+                );
+              },
             ),
             this.showDesktop
                 ? SizedBox.shrink()
