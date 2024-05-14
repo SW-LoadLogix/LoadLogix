@@ -6,8 +6,8 @@ import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.AdminRepository;
 import org.ssafy.load.domain.AdminEntity;
-import org.ssafy.load.dto.request.LoginRequest;
-import org.ssafy.load.dto.response.LoginResponse;
+import org.ssafy.load.dto.request.worker.LoginRequest;
+import org.ssafy.load.dto.response.worker.LoginResponse;
 import org.ssafy.load.security.JwtTokenProvider;
 
 import java.util.Optional;

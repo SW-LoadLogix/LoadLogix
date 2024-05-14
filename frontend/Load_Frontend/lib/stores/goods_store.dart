@@ -1,15 +1,20 @@
 
 
 
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:load_frontend/models/good_data.dart';
 import 'package:load_frontend/models/vector3.dart';
-import 'package:load_frontend/services/goods_functions.dart';
+import 'package:load_frontend/services/goods_service.dart';
+import 'package:load_frontend/stores/user_secure_store.dart';
+import 'package:load_frontend/stores/user_store.dart';
+import 'package:provider/provider.dart';
 
 import '../views/box_simulation/box.dart';
 
 List<GoodsData> gGoods = [];
-List<Box> boxes = [];
+List<SimulBox> boxes = [];
 
 class GoodsStore extends ChangeNotifier {
   GoodsService goodsService = GoodsService();
@@ -19,6 +24,14 @@ class GoodsStore extends ChangeNotifier {
   Map<int, bool> buildingChecked = {};
   Map<int, Map<int, bool>> goodsChecked = {};
   int selectedGoodsId = 0;
+  Map<int, int> numberMapping = {};
+
+
+  Map<int, List<GoodsData>>  getgoodsGroupedByBuildingId(){
+    notifyListeners();
+    return goodsGroupedByBuildingId;
+  }
+
   GoodsData selectedGoods = GoodsData(
     goodsId: 0,
     buildingId: 0,
@@ -35,8 +48,31 @@ class GoodsStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getGoodsFromApi() async {
-    goods = await goodsService.getGoods();
+  Map<int, int> mapNumbersToSequential(List<int> numbers) {
+    Map<int, int> mapping = {};
+    int counter = 0;
+
+    for (int number in numbers) {
+      if (!mapping.containsKey(number)) {
+        // 중복된 숫자를 다시 매핑하지 않도록 확인
+        mapping[number] = counter++;
+      }
+    }
+
+    return mapping; // 매핑 결과 반환
+  }
+
+  Future<void> getGoodsFromApi(String accessToken) async {
+    //String? token = await Provider.of<UserSecureStorage>(context as BuildContext, listen: false).getToken();
+    //print ("token: $token");
+
+
+    print ("token on Goods Api: $accessToken");
+
+
+    //String? token = await UserSecureStorage().getToken();
+
+    goods = await goodsService.getGoods(accessToken);
     goodsGroupedByBuildingId = await getGoodsGroupedByBuildingId();
     initializeGoodsChecked(goods);
 
@@ -44,6 +80,14 @@ class GoodsStore extends ChangeNotifier {
       updateBuildingCheckedState(id);
     }
     gGoods = goods;
+
+    List<int> numbers = [];
+    for (int i = 0; i < gGoods.length; i++) {
+      numbers.add(gGoods[i].buildingId);
+    }
+    numberMapping = mapNumbersToSequential(numbers);
+
+
     notifyListeners();
   }
 

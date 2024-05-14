@@ -1,12 +1,13 @@
 package org.ssafy.load.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class Response<T> {
-    private String resultCode;
+    @JsonProperty("result_code") private String resultCode;
     private T result;
 
     public static Response<Void> success() {
@@ -20,5 +21,4 @@ public class Response<T> {
     public static Response<Void> error(String errorCode) {
         return new Response<>(errorCode, null);
     }
-
 }

@@ -18,11 +18,11 @@ public class PathEntity {
     private Long id;
     private int priority;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "load_task_id")
     private LoadTaskEntity loadTask;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private BuildingEntity building;
 

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,16 +25,18 @@ public class GoodsEntity {
     private Double x;
     private Double y;
     private Double z;
+    @Column(name = "agent_id")
+    private long agentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private BuildingEntity building;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "load_task_id")
     private LoadTaskEntity loadTask;
 
@@ -48,25 +49,39 @@ public class GoodsEntity {
     }
 
     public static GoodsEntity of(
-        Long id,
-        int weight,
-        String detailAddress,
-        Integer ordering,
-        Double x,
-        Double y,
-        Double z,
-        BoxTypeEntity boxType,
-        BuildingEntity building,
-        LoadTaskEntity loadTask,
-        LocalDateTime createdAt
+            Long id,
+            int weight,
+            String detailAddress,
+            Integer ordering,
+            Double x,
+            Double y,
+            Double z,
+            Long agentId,
+            BoxTypeEntity boxType,
+            BuildingEntity building,
+            LoadTaskEntity loadTask,
+            LocalDateTime createdAt
     ) {
-        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, boxType, building,
-            loadTask, createdAt);
+        return new GoodsEntity(id, weight, detailAddress, ordering, x, y, z, agentId, boxType, building,
+                loadTask, createdAt);
     }
-
+    public GoodsEntity updateLoadTaskId(LoadTaskEntity loadTaskEntity){
+        return GoodsEntity.of(
+                id, weight, detailAddress, ordering, x, y, z, agentId, boxType, building,
+                loadTaskEntity, createdAt
+        );
+    }
     public void setBoxPosition(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public void setOrdering(int ordering) {
+        this.ordering = ordering;
+    }
+
+    public void withUpdateLoadTask(LoadTaskEntity loadTask) {
+        this.loadTask = loadTask;
     }
 }

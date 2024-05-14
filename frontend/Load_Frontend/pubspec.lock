@@ -350,6 +350,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
+  flutter_secure_storage:
+    dependency: "direct main"
+    description:
+      name: flutter_secure_storage
+      sha256: "9f3dd2ac3b6875b0fde5b04734789c3ef35ba3965c18e99dd564a7a2f8056df6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:
@@ -425,7 +433,7 @@ packages:
     source: hosted
     version: "2.6.0"
   google_maps_flutter_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_maps_flutter_web
       sha256: "0c0d5c723d94b295cf86dd1c45ff91d2ac1fff7c05ddca4f01bef9fa0a014690"
@@ -704,14 +712,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  responsive_framework:
-    dependency: "direct main"
-    description:
-      name: responsive_framework
-      sha256: "52367ab0c3479b3a5342dec3b74a3d47c4cc1b45bb5d38f720c2e002ebccd4ee"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   sanitize_html:
     dependency: transitive
     description:
@@ -805,30 +805,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "65c7e02d23cc87d4eaee318f5062d78cb711eb7b9d23f3a5fcda62203a771fbe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "25.2.3+1"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: fc61878342caee6da7979ca0ca9bb178f1eb5ca9b836dada34b83caa39e4bfed
+      sha256: "6c534bb282e1429ac082354ace1b7c6d4496a258e62c948b7ca2b52acca8a514"
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   syncfusion_flutter_datagrid:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_datagrid
-      sha256: "1b21b1217ddab9b43ba62282a3e0fcf0d04e631e729aad074e926f80ae42fb2c"
+      sha256: a1282007dd6f6152822f8e9ede9bbdb7755eb3f3d47ee742d5b813eaafe1cdb6
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: cd351cb8391b9ee69043bcd1f28a518ae559bf165b2f8aa906592a007dad86ca
+      sha256: "9bc6b900c2325b9128798380d6dfa5ce07a6cecb15673e637013aa49b61d3167"
       url: "https://pub.dev"
     source: hosted
-    version: "25.1.42"
+    version: "25.2.3"
   term_glyph:
     dependency: transitive
     description:
@@ -921,10 +929,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_ios
-      sha256: "9149d493b075ed740901f3ee844a38a00b33116c7c5c10d7fb27df8987fb51d5"
+      sha256: "7068716403343f6ba4969b4173cbf3b84fc768042124bc2c011e5d782b24fe89"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.5"
+    version: "6.3.0"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -937,10 +945,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_macos
-      sha256: b7244901ea3cf489c5335bdacda07264a6e960b1c1b1a9f91e4bc371d9e68234
+      sha256: "9a1a42d5d2d95400c795b2914c36fdcb525870c752569438e4ebb09a2b5d90de"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.0"
   url_launcher_platform_interface:
     dependency: transitive
     description:
