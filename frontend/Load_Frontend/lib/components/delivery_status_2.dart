@@ -39,6 +39,9 @@ class _Container2State extends State<DeliveryStatus2> {
       message = "준비 중";
     }
     return Container(
+      constraints: BoxConstraints(
+        minHeight: 150.0, // 최소 높이 설정
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

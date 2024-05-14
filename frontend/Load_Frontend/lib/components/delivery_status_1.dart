@@ -17,6 +17,9 @@ class DeliveryStatus1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(
+        minHeight: 150.0, // 최소 높이 설정
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
