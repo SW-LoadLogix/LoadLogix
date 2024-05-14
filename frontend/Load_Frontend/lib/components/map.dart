@@ -6,6 +6,17 @@ import 'package:provider/provider.dart';
 
 import '../models/building_data.dart';
 
+List<Color> generateDistinctColors(int count) {
+  List<Color> colors = [];
+  for (int i = 0; i < 20; i++) {
+    // Colors 클래스에 정의된 색상 중 랜덤하게 선택하여 리스트에 추가
+    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
+    colors.add(color);
+  }
+  return colors;
+}
+
+List<Color> distinctColor = generateDistinctColors(20);
 class MyGoogleMap extends StatefulWidget {
   const MyGoogleMap({Key? key}) : super(key: key);
 
@@ -19,6 +30,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   late LatLng newPosition;
   List<BuildingData> _buildingData = [];
   Set<Circle> _circles = {};
+  Set<Marker> _markers = {};
   bool _mapControllerInitialized = false;
 
   @override
@@ -35,14 +47,15 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     setState(() {
       _buildingData = buildingdata;
       _circles = _markCircles(buildingdata);
+      _markers = _getMarkers(buildingdata);
       // 카메라 이동은 맵 컨트롤러가 초기화된 후에 실행합니다.
       if (_mapControllerInitialized) {
         _moveCamera(newPosition);
       }
-      print(_markCircles(buildingdata));
     });
   }
 
+  //위치 표시
   Set<Circle> _markCircles(List<BuildingData> buildings) {
     Set<Circle> circles = {};
     double new_latitude = 0;
@@ -56,7 +69,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
           circleId: CircleId(buildings[i].buildingId.toString()),
           center: LatLng(buildings[i].longitude, buildings[i].latitude),
           radius: 9, // 반지름 (미터)
-          fillColor: Color(0XFF89B5A2).withOpacity(0.3), // 원 내부 색상
+          fillColor: distinctColor[i], // 원 내부 색상
           strokeWidth: 3, // 원 외곽선 두께
           strokeColor: Colors.black, // 원 외곽선 색상
         ),
@@ -66,6 +79,26 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     new_longitude = new_longitude / buildings.length;
     newPosition = LatLng(new_longitude, new_latitude);
     return circles;
+  }
+
+  //마커 표시
+  Set<Marker> _getMarkers(List<BuildingData> buildings) {
+    Set<Marker> markers = {};
+
+    for (int i = 0; i < buildings.length; i++) {
+
+      markers.add(
+        Marker(
+          markerId: MarkerId(buildings[i].buildingId.toString()),
+          position: LatLng(buildings[i].longitude, buildings[i].latitude),
+          infoWindow: InfoWindow(
+            title: "${buildings[i].buildingName}",
+            snippet: "배송 상품 개수 : ${buildings[i].totalGoods}",
+          ), // InfoWi
+        ),
+      );
+    }
+    return markers;
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -98,6 +131,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
               zoom: 15.0,
             ),
             circles: _circles,
+            markers: _markers,
           ),
         ),
       ),
