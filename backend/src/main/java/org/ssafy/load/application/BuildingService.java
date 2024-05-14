@@ -73,7 +73,7 @@ public class BuildingService {
         List<AreaEntity> areaEntities = areaRepository.findAll();
 
         List<Integer> goodsCountPerArea = new ArrayList<>();
-        for(AreaEntity  areaEntity : areaEntities){
+        for(AreaEntity areaEntity : areaEntities){
             goodsCountPerArea.add(areaEntity.getCount());
         }
 
