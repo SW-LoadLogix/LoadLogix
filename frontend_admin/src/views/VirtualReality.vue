@@ -27,7 +27,6 @@ onBeforeMount(() => {
   store.state.showNavbar = false;
   store.state.showSidenav = false;
   store.state.showFooter = false;
-  body.classList.add("virtual-reality");
   store.state.isTransparent = "bg-white";
 });
 onBeforeUnmount(() => {
@@ -35,8 +34,6 @@ onBeforeUnmount(() => {
   store.state.showNavbar = true;
   store.state.showSidenav = true;
   store.state.showFooter = true;
-  body.classList.remove("virtual-reality");
-
   if (store.state.isPinned === false) {
     const sidenav_show = document.querySelector(".g-sidenav-show");
     sidenav_show.classList.remove("g-sidenav-hidden");
