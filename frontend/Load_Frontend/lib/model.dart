@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MenuItem {
   final String name;
-  final String icon;
+  final IconData icon;
 
   MenuItem(this.name, this.icon);
 }
