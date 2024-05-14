@@ -11,8 +11,22 @@ class GoodsExpansionPanel extends StatelessWidget {
     final goodsStore = context.watch<GoodsStore>();
     final Map<int, List<GoodsData>> groupedGoods = goodsStore.goodsGroupedByBuildingId;
 
+    bool allChecked = goodsStore.buildingChecked.length == groupedGoods.length &&
+        goodsStore.buildingChecked.values.every((checked) => checked);
+
     return Column(
       children: [
+        Row(
+          children: [
+            Checkbox(
+              value: allChecked,
+              onChanged: (bool? checked) {
+                goodsStore.toggleAll(checked ?? false);
+              },
+            ),
+            Text(allChecked ? "Deselect All" : "Select All"),
+          ],
+        ),
         ...groupedGoods.entries.map((entry) {
           int buildingId = entry.key;
           List<GoodsData> goods = entry.value;
