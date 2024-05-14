@@ -129,6 +129,7 @@ public class GoodsService {
         return new SortedGoodsResponse(goods);
     }
 
+    @Transactional(readOnly = true)
     public void createGoods(GoodsCreateRequest goodsCreateRequest) {
         try {
             GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
