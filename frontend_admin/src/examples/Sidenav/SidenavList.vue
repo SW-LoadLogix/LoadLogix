@@ -55,12 +55,6 @@ const getRoute = () => {
       </li>
 
       <li class="mt-3 nav-item">
-        <h6
-          class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
-          :class="'ms-2'"
-        >
-          صفحات المرافق
-        </h6>
 
         <h6
           class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
