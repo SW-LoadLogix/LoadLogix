@@ -12,7 +12,7 @@ List<Color> generateDistinctColors(int count) {
   List<Color> colors = [];
   for (int i = 0; i < 20; i++) {
     // Colors 클래스에 정의된 색상 중 랜덤하게 선택하여 리스트에 추가
-    Color color = Colors.primaries[i % Colors.primaries.length];
+    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
     colors.add(color);
   }
   return colors;
@@ -81,7 +81,7 @@ class Chart extends StatelessWidget {
             color:distinctColor[i],
             value: currBuilding.totalGoods as double,
             showTitle: true,
-            radius: 50 * currBuilding.totalPercentage / maxPercent,
+            radius: 65 * currBuilding.totalPercentage / maxPercent,
           )
       );
     }
@@ -104,14 +104,14 @@ class Chart extends StatelessWidget {
               children: [
                 //SizedBox(height: defaultPadding),
                 Text(
-                  dt.total.toString(),
+                  "${dt.total.toString()} 건",
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
+                        fontSize: 17,
                         height: 0.5,
                       ),
                 ),
-                //Text("총 택배 수")
               ],
             ),
           ),

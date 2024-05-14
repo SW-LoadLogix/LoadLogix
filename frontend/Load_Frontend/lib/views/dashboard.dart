@@ -7,6 +7,7 @@ import 'package:load_frontend/layout/main_layout.dart';
 import 'package:load_frontend/models/delivery_data.dart';
 import 'package:load_frontend/services/delivery_service.dart';
 import 'package:provider/provider.dart';
+import '../services/area_service.dart';
 import '../stores/delivery_store.dart';
 import '../stores/user_store.dart';
 import '../components/delivery_table.dart';
@@ -36,6 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
     DeliveryStore deliveryStore = Provider.of<DeliveryStore>(context, listen: false);
     deliveryStore.getDeliveryServiceFromApi(userStore.token);
     print(deliveryStore.deliveryData.toString());
+    // AreaService().getBuildingPriority(userStore.token);
 
     return MainLayout(
         topBarTitle: 'Dashboard',

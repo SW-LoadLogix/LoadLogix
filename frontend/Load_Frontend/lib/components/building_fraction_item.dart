@@ -9,10 +9,18 @@ import '../models/delivery_data.dart';
 import '../stores/delivery_store.dart';
 
 const List<String> imgurl =[
-  'assets/images/nav1.png',
-  'assets/images/nav2.png',
-  'assets/images/nav3.png',
-  'assets/images/nav4.png',
+  'assets/images/b2.png',
+  'assets/images/b3.png',
+  'assets/images/b4.png',
+  'assets/images/b5.png',
+  'assets/images/b6.png',
+  'assets/images/b7.png',
+  'assets/images/b8.png',
+  'assets/images/image 2.png',
+  'assets/images/image 3.png',
+  'assets/images/image 4.png',
+  'assets/images/image 5.png',
+  'assets/images/image 6.png',
 ];
 
 class BuildingItem extends StatelessWidget {
@@ -40,7 +48,7 @@ class BuildingItem extends StatelessWidget {
                 height: 70,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
-                    color: primary,
+                    color: Colors.transparent,
                     image: DecorationImage(
                         fit: BoxFit.cover, image: AssetImage(imgurl[randomNumber]))),
               ),
@@ -64,7 +72,7 @@ class BuildingItem extends StatelessWidget {
                       "${building.totalPercentage.toString()}%",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                     SizedBox(
                       height: 4,
@@ -74,7 +82,7 @@ class BuildingItem extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontStyle: FontStyle.italic,
-                          fontSize: 12),
+                          fontSize: 14),
                       ),
                     ],
                   ),
