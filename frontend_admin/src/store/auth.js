@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const apiUrl = process.env.VUE_APP_API_URL+'/admin';
+const apiUrl = process.env.VUE_APP_API_URL;
 
 export const useAuthStore = defineStore(
   "auth",
