@@ -40,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
     // AreaService().getBuildingPriority(userStore.token);
 
     return MainLayout(
-        topBarTitle: 'Dashboard',
+        topBarTitle: 'Smart Delivery Dashboard',
         isFixed: false,
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
