@@ -58,7 +58,6 @@ public class PathService {
         List<LoadTaskEntity> loadTaskList = loadTaskRepository.findByWorkerCompletedTask(area.getId());
         if(loadTaskList.isEmpty()) return null;
 
-        System.out.println("==============================================================================");
         List<PathEntity> pathEntityList = pathRepository.findAllByTaskId(loadTaskList.get(0).getId());
 
         List<PathResponse> pathResponseList = new ArrayList<>();

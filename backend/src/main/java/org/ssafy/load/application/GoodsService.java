@@ -129,6 +129,7 @@ public class GoodsService {
         return new SortedGoodsResponse(goods);
     }
 
+    @Transactional
     public void createGoods(GoodsCreateRequest goodsCreateRequest) {
         try {
             GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
@@ -248,5 +249,35 @@ public class GoodsService {
             result.add(new RackStoreCountResponse(i, cnt[i]));
         }
         return result;
+    }
+
+    @Transactional(readOnly = true)
+    public GoodsTotalResponse getDayLoadedGoodsCount(Long workerId) {
+        //기사 조회
+        Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
+        WorkerEntity worker = workerEntityOptional.orElseThrow(
+            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        //구역 조회
+        Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
+        AreaEntity area = areaOptionalEntity.orElseThrow(
+            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+
+        List<TotalDayGoods> result = new ArrayList<>();
+        for (int day = 6; day >= 0; day--) {
+            List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByCreatedAt(
+                area.getId(),
+                day);
+            if (loadTaskList.isEmpty()) {
+                result.add(new TotalDayGoods(LocalDate.now().minusDays(day), 0));
+                continue;
+            }
+
+            int cnt = 0;
+            for(int i = 0; i<loadTaskList.size(); i++){
+                cnt += (int) goodsRepository.countByLoadTaskId(loadTaskList.get(i));
+            }
+            result.add(new TotalDayGoods(LocalDate.now().minusDays(day), cnt));
+        }
+        return GoodsTotalResponse.of(result);
     }
 }

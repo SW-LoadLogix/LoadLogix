@@ -6,7 +6,6 @@ import logo from "@/assets/img/logo-ct-dark.png";
 import logoWhite from "@/assets/img/logo-ct.png";
 
 const store = useStore();
-const isRTL = computed(() => store.state.isRTL);
 const layout = computed(() => store.state.layout);
 const sidebarType = computed(() => store.state.sidebarType);
 const darkMode = computed(() => store.state.darkMode);
@@ -20,7 +19,7 @@ const darkMode = computed(() => store.state.darkMode);
 
   <aside
     class="my-3 overflow-auto border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl"
-    :class="`${isRTL ? 'me-3 rotate-caret fixed-end' : 'fixed-start ms-3'}    
+    :class="`fixed-start ms-3    
       ${
         layout === 'landing' ? 'bg-transparent shadow-none' : ' '
       } ${sidebarType}`"

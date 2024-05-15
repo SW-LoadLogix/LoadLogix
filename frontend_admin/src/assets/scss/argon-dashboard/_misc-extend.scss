@@ -40,16 +40,6 @@
   box-shadow: $device-wrapper-box-shadow;
 }
 
-// sidebar caret RTL
-.rotate-caret {
-  .collapse {
-    .nav-link:after {
-      margin-right: auto;
-      margin-left: 0;
-    }
-  }
-}
-
 @keyframes gradient {
   0% {
     background-position: 0 50%;
