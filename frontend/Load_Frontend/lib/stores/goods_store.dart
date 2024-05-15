@@ -309,8 +309,13 @@ class GoodsStore extends ChangeNotifier {
       }
 
     } else {
-      buildingChecked.clear();
-      goodsChecked.clear();
+      buildingChecked = {
+        for (var key in goodsGroupedByBuildingId.keys) key: false
+      };
+      goodsChecked = {
+        for (var entry in goodsGroupedByBuildingId.entries)
+          entry.key: {for (var good in entry.value) good.goodsId: false}
+      };
       for (var box in boxes) {
         box.isChecked = false;
       }
