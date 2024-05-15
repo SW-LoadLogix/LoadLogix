@@ -31,7 +31,7 @@ public class AreaService {
         List<AreaEntity> areaEntityList = areaRepository.findAll();
         List<AreaResponse> areaResponses = new ArrayList<>();
         for(AreaEntity areaEntity : areaEntityList){
-            areaResponses.add(AreaResponse.of(areaEntity.getAreaName(),areaEntity.getConveyNo(), areaEntity.getCount()));
+            areaResponses.add(AreaResponse.of(areaEntity.getId(), areaEntity.getAreaName(),areaEntity.getConveyNo(), areaEntity.getCount()));
         }
         return areaResponses;
     }
