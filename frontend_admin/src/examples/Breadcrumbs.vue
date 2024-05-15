@@ -3,7 +3,6 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const isRTL = computed(() => store.state.isRTL);
 const isNavFixed = computed(() => store.state.isNavFixed);
 
 defineProps({
@@ -21,20 +20,12 @@ defineProps({
   <nav aria-label="breadcrumb">
     <ol
       class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb"
-      :class="`${isRTL ? '' : ' me-sm-6'} ${
+      :class="`' me-sm-6' ${
         isNavFixed ? 'text-dark' : 'text-white'
       }`"
     >
       <li class="text-sm breadcrumb-item">
         <a
-          v-if="isRTL"
-          class="opacity-5 ps-2"
-          href="#"
-          :class="isNavFixed ? 'text-dark' : 'text-white'"
-          >لوحات القيادة</a
-        >
-        <a
-          v-else
           :class="isNavFixed ? 'text-dark' : 'text-white'"
           class="opacity-8"
           href="#"

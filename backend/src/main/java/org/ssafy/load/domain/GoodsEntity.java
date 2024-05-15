@@ -28,7 +28,7 @@ public class GoodsEntity {
     @Column(name = "agent_id")
     private long agentId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "box_type_id") // 실제 데이터베이스의 외래키 컬럼명 지정
     private BoxTypeEntity boxType;
 
