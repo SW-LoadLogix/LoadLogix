@@ -69,4 +69,9 @@ public class AdminController {
     public Response<List<RackStoreCountResponse>> getRackStoreGoodsCount(){
         return Response.success(goodsService.getRackStoreGoodsCount());
     }
+
+    @GetMapping("/area")
+    public Response<List<AreaResponse>> getAreaInfo(){
+        return Response.success(areaService.getAreaInfo());
+    }
 }

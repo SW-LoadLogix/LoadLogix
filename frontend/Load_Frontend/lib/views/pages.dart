@@ -7,3 +7,4 @@ export 'set_truck_specifications.dart';
 export 'sign_in_up.dart';
 export 'box_simulation/box_simultation_3d_refactor.dart';
 export 'dashboard.dart';
+export 'main_landing.dart';

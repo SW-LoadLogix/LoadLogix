@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../constaints.dart';
 import '../../stores/box_store.dart';
 import '../../stores/goods_store.dart';
 import '../box_simulation_3d.dart';
@@ -13,8 +14,6 @@ class VideoControlsOverlay extends StatefulWidget {
 
   VideoControlsOverlay({required this.onClose, required this.overlayKey});
 
-
-
   @override
   VideoControlsOverlayState createState() => VideoControlsOverlayState();
 }
@@ -26,10 +25,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
   int _totalItems = 100;
   double _currentValue = 50.0;
 
-
-
-
-  void syncWithGlobalValue(int gCurrItem, int gTotalItems){
+  void syncWithGlobalValue(int gCurrItem, int gTotalItems) {
     if (gCurrItem == _currentItem && gTotalItems == _totalItems) return;
 
     if (gCurrItem < 0) gCurrItem = 0;
@@ -41,41 +37,33 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
       _currentValue = _currentItem / (_totalItems as double) * 100;
       if (_currentValue > 100)
         _currentValue = 100.0;
-      else if (_currentValue < 0)
-        _currentValue = 0.0;
+      else if (_currentValue < 0) _currentValue = 0.0;
     });
   }
 
-  void setGlobalValue(){
+  void setGlobalValue() {}
 
-  }
-
-
-  void initBoxAfterIndex(int index){
-    if (gIsForword){
-      for(int i = 0; i < boxes.length;i++){
+  void initBoxAfterIndex(int index) {
+    if (gIsForword) {
+      for (int i = 0; i < boxes.length; i++) {
         SimulBox box = boxes[i];
-        if (i >= index){
+        if (i >= index) {
           box.init();
-        }
-        else{
+        } else {
           box.makeAsDone();
         }
       }
-    }
-    else{
-      for(int i = 0; i < boxes.length;i++){
+    } else {
+      for (int i = 0; i < boxes.length; i++) {
         SimulBox box = boxes[i];
-        if (i <= index){
+        if (i <= index) {
           box.init();
-        }
-        else{
+        } else {
           box.makeAsDone();
         }
       }
     }
   }
-
 
   void updateCurrentValue(double increment) {
     setState(() {
@@ -86,35 +74,28 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
     });
   }
 
-  void onPlayBarChanged(double value){
+  void onPlayBarChanged(double value) {
     if (value < 0 || value > 100) return;
 
     setState(() {
-    _currentValue = value;
-    _currentItem = (_currentValue / 100 * _totalItems).round();
+      _currentValue = value;
+      _currentItem = (_currentValue / 100 * _totalItems).round();
 
-    if (_currentValue < 0)
-      _currentValue = 0;
-    if (_currentItem < 0)
-      _currentItem = 0;
+      if (_currentValue < 0) _currentValue = 0;
+      if (_currentItem < 0) _currentItem = 0;
 
+      gCurrentBoxIndex = _currentItem;
+      if (gIsForword) {
+        initBoxAfterIndex(gCurrentBoxIndex);
+      } else {
+        initBoxAfterIndex(gCurrentBoxIndex);
+      }
 
-
-    gCurrentBoxIndex = _currentItem;
-    if (gIsForword){
-      initBoxAfterIndex(gCurrentBoxIndex);
-    }
-    else{
-      initBoxAfterIndex(gCurrentBoxIndex);
-    }
-
-
-    for (int i = 0; i < boxes.length; i++) {
-      boxes[i].determineIsFinished();
-    }
+      for (int i = 0; i < boxes.length; i++) {
+        boxes[i].determineIsFinished();
+      }
     });
   }
-
 
   void rewind() {
     print("rewind ............. ");
@@ -128,6 +109,14 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
   Widget build(BuildContext context) {
     BoxStore boxStore = Provider.of<BoxStore>(context, listen: true);
     syncWithGlobalValue(boxStore.currentBoxIndex, boxStore.boxCount);
+    final Size _size = MediaQuery.of(context).size;
+    bool isMobile = _size.width < 1600;
+    double centerIconSize;
+    if (isMobile){
+      centerIconSize = 24;
+    }else{
+      centerIconSize = 36;
+    }
 
     return Positioned(
       bottom: 50.0,
@@ -149,122 +138,98 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
                 divisions: 100,
                 label: _currentValue.round().toString() + '%',
                 onChanged: onPlayBarChanged,
-                //     (value) {
-                //   setState(() {
-                //     _currentValue = value;
-                //   });
-                // },
               ),
-              Flex(direction: Axis.horizontal, children: [
-                Flexible(
-                  child: Expanded(
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
                     child: Container(
                       alignment: Alignment.topLeft,
-                      width: double.infinity,
                       height: 40,
-                      // color: Colors.red,
                       child: Text('       ${_currentValue.round()}%',
                           style: TextStyle(fontSize: 12)),
                     ),
                   ),
-                ),
-                Flexible(
-                  child: Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      //color: Colors.green,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.replay_10, size: 36),
-                            onPressed: () => updateCurrentValue(-10),
-                          ),
-                          IconButton(
-                            icon: !gIsPause ? Icon(Icons.pause,size: 36) : Icon(Icons.play_arrow,size: 36),
-                            onPressed: () {
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.replay_10, size: centerIconSize),
+                          onPressed: () => updateCurrentValue(-10),
+                        ),
+                        IconButton(
+                          icon: !gIsPause
+                              ? Icon(Icons.pause, size: centerIconSize)
+                              : Icon(Icons.play_arrow, size: centerIconSize),
+                          onPressed: () {
+                            setState(() {
+                              gIsPause = !gIsPause;
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.forward_10, size: centerIconSize),
+                          onPressed: () => updateCurrentValue(10),
+                        ),
+                      ],
+                    ),
+                  ),
+                  !isMobile ? Expanded(
+                    flex : 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text("Speed:", style: TextStyle(fontSize: 10)),
+                        SizedBox(width: 5),
+                        Container(
+                          width: 100,
+                          child: Slider(
+                            value: _playbackSpeed,
+                            min: 0.5,
+                            max: 2.0,
+                            divisions: 15,
+                            label: '${_playbackSpeed.toStringAsFixed(1)}x',
+                            onChanged: (value) => {
                               setState(() {
-                                gIsPause = !gIsPause;
+                                _playbackSpeed = value;
+                                gPlaySpeed = _playbackSpeed;
+                              }),
+                            },
+                          ),
+                        ),
+                        Text("Reverse:", style: TextStyle(fontSize: 10)),
+                        Transform.scale(
+                          scale: 0.5,
+                          child: Switch(
+                            value: _isReversed,
+                            onChanged: (bool value) {
+                              setState(() {
+                                _isReversed = value;
+                                gIsForword = !value;
+                                for (int i = 0; i < boxes.length; i++) {
+                                  boxes[i].determineIsFinished();
+                                }
                               });
                             },
                           ),
-                          IconButton(
-                            icon: Icon(Icons.forward_10, size: 36),
-                            onPressed: () => updateCurrentValue(10),
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 5),
+                        Text('$_currentItem / $_totalItems',
+                            style: TextStyle(fontSize: 12)),
+                      ],
                     ),
+                  ): Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text('$_currentItem / $_totalItems',
+                            style: TextStyle(fontSize: 12)),
+                      )
                   ),
-                ),
-                Flexible(
-                  child: Expanded(
-                    child: Container(
-                      alignment: Alignment.bottomRight,
-                      width: double.infinity,
-                      //color: Colors.blue,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text("Speed:", style: TextStyle(fontSize: 10)),
-                          SizedBox(width: 5),
-                          Container(
-                            width: 100,
-                            child: Slider(
-                              value: _playbackSpeed,
-                              min: 0.5,
-                              max: 2.0,
-                              divisions: 15,
-                              label: '${_playbackSpeed.toStringAsFixed(1)}x',
-                              onChanged: (value) =>{
-                                setState(() {
-                                  _playbackSpeed = value;
-                                  gPlaySpeed = _playbackSpeed;
-                                }),},
-                            ),
-                          ),
-                          Text("Reverse:", style: TextStyle(fontSize: 10)),
-                          Transform.scale(
-                            scale: 0.5,
-                            child: Switch(
-                              value: _isReversed,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _isReversed = value;
-                                  if (_isReversed == true){
-                                    gIsForword = false;
-                                    for (int i = 0; i < boxes.length; i++) {
-                                      boxes[i].determineIsFinished();
-                                    }
-                                  }
-                                  else{
-                                    gIsForword = true;
-                                    for (int i = 0; i < boxes.length; i++) {
-                                      boxes[i].determineIsFinished();
-                                    }
-                                  }
-
-                                });
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Text('$_currentItem / $_totalItems',
-                              style: TextStyle(fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //
-              //     SizedBox(width: 10),
-              //
-              //   ],
-              // ),
+                ],
+              ),
             ],
           ),
         ),
