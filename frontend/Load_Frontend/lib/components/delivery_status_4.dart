@@ -84,35 +84,37 @@ class DeliveryStatus4 extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 1,
+            height: 10,
           ),
-          Text(
-            "화물차량(mm)",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: isHover ? Colors.white : primary,
+          Row(children: [
+            Text(
+              "화물차량(mm)",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: isHover ? Colors.white : primary,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 1,
-          ),
-          Text(
-            "${workerInfo.carWidth} X ${workerInfo.carLength} X ${workerInfo.carHeight}",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: isHover ? Colors.white : primary,
+            SizedBox(
+              width: 3,
             ),
-          ),
+            Text(
+              "${workerInfo.carWidth} X ${workerInfo.carLength} X ${workerInfo.carHeight}",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: isHover ? Colors.white : primary,
+              ),
+            ),
+          ],),
           SizedBox(
-            height: 1,
+            height: 15,
           ),
           GestureDetector(
             onTap: () => _showTruckSizeModal(context),
             child: Container(
               width: double.infinity, // 전체 너비
-              height: 25,
+              height: 55,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), // 버튼의 모서리를 둥글게 만듦

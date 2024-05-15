@@ -49,7 +49,7 @@ class SideBar extends StatelessWidget {
           //   height: 24,
           // ),
           Center(
-            child: Image.asset('assets/images/logologix2.png'),
+            child: Image.asset('assets/images/loadlogix.png'),
           ),
           SizedBox(
             height: 24,

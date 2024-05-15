@@ -28,7 +28,7 @@ class DeliveryStatus1 extends StatelessWidget {
           Text(
             "최신 적재일",
             style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: isHover ? Colors.white : primary),
           ),
