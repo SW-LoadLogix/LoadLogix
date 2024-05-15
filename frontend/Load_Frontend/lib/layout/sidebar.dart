@@ -27,29 +27,29 @@ class SideBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // Center(
+          //   child:
+          //   Container(
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(8), color: primaryAncient),
+          //     width: 100,
+          //     height: 45,
+          //     child: Center(
+          //       child: Text(
+          //         'LOAD',
+          //         style: TextStyle(
+          //             fontSize: 28,
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.white),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 24,
+          // ),
           Center(
-            child:
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8), color: primaryAncient),
-              width: 100,
-              height: 45,
-              child: Center(
-                child: Text(
-                  'LOAD',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          Center(
-            child: Image.asset('assets/images/logo3.png'),
+            child: Image.asset('assets/images/logologix2.png'),
           ),
           SizedBox(
             height: 24,
