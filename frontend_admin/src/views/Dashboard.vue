@@ -4,10 +4,13 @@ import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import Carousel from "./components/Carousel.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 
-import US from "@/assets/img/icons/flags/US.png";
-import DE from "@/assets/img/icons/flags/DE.png";
-import GB from "@/assets/img/icons/flags/GB.png";
-import BR from "@/assets/img/icons/flags/BR.png";
+import L1 from "@/assets/img/boxes/L1.png";
+import L2 from "@/assets/img/boxes/L2.png";
+import L3 from "@/assets/img/boxes/L3.png";
+import L4 from "@/assets/img/boxes/L4.png";
+import L5 from "@/assets/img/boxes/L5.png";
+import L6 from "@/assets/img/boxes/L6.png";
+
 
 // import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
@@ -15,7 +18,8 @@ import ArgonButton from "@/components/ArgonButton.vue";
 import { ref } from 'vue';
 import {
   getGoodsCount, 
-  getDayGoodsCount
+  getDayGoodsCount,
+  getGoodsCountByBoxType,
 } from "@/api/dashboard.js";
 
 const totalGoods = ref(0);
@@ -28,38 +32,44 @@ const chartData = ref({
   datasets: []
 });
 let isLoadingChart = ref(false);
+let isLoadingBoxes = ref(false);
 
-const sales = {
-  us: {
-    country: "United States",
-    sales: 2500,
-    value: "$230,900",
-    bounce: "29.9%",
-    flag: US,
-  },
-  germany: {
-    country: "Germany",
-    sales: "3.900",
-    value: "$440,000",
-    bounce: "40.22%",
-    flag: DE,
-  },
-  britain: {
-    country: "Great Britain",
-    sales: "1.400",
-    value: "$190,700",
-    bounce: "23.44%",
-    flag: GB,
-  },
-  brasil: {
-    country: "Brasil",
-    sales: "562",
-    value: "$143,960",
-    bounce: "32.14%",
-    flag: BR,
-  },
+const boxTypes = {
+  L1,L2,L3,L4,L5,L6
 };
 
+// const sales = {
+//   us: {
+//     country: "United States",
+//     sales: 2500,
+//     value: "$230,900",
+//     bounce: "29.9%",
+//     flag: US,
+//   },
+//   germany: {
+//     country: "Germany",
+//     sales: "3.900",
+//     value: "$440,000",
+//     bounce: "40.22%",
+//     flag: DE,
+//   },
+//   britain: {
+//     country: "Great Britain",
+//     sales: "1.400",
+//     value: "$190,700",
+//     bounce: "23.44%",
+//     flag: GB,
+//   },
+//   brasil: {
+//     country: "Brasil",
+//     sales: "562",
+//     value: "$143,960",
+//     bounce: "32.14%",
+//     flag: BR,
+//   },
+// };
+
+let boxes = [];
 function transformToChartData(inputData) {
   if (!inputData || !Array.isArray(inputData.amount)) {
     return {
@@ -72,7 +82,7 @@ function transformToChartData(inputData) {
     labels: inputData.amount.map(item => item.date),
     datasets: [
       {
-        label: 'Mobile Apps',
+        label: '출고량',
         data: inputData.amount.map(item => item.total),
       },
     ],
@@ -93,8 +103,16 @@ const getDailyGoodsCountRequest = async () => {
   chartData.value = transformToChartData(data.result);
   isLoadingChart.value = true;
 };
+
+const getBoxTypeRequest = async () => {
+  const {data} = await getGoodsCountByBoxType();
+  console.log(data);
+  boxes = data.result;
+  isLoadingBoxes.value = true;
+};
 getGoodsCountRequest();
 getDailyGoodsCountRequest();
+getBoxTypeRequest();
 
 
 </script>
@@ -172,47 +190,53 @@ getDailyGoodsCountRequest();
             <carousel />
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4" v-if="isLoadingBoxes">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">
               <div class="p-3 pb-0 card-header">
                 <div class="d-flex justify-content-between">
-                  <h6 class="mb-2">Sales by Country</h6>
+                  <h6 class="mb-2">규격 별 물품 수</h6>
                 </div>
               </div>
               <div class="table-responsive">
                 <table class="table align-items-center">
                   <tbody>
-                    <tr v-for="(sale, index) in sales" :key="index">
+                    <tr v-for="(box, index) in boxes" :key="index">
                       <td class="w-30">
                         <div class="px-2 py-1 d-flex align-items-center">
                           <div>
-                            <img :src="sale.flag" alt="Country flag" />
+                            <img  style="max-width: 100px;" :src="boxTypes[box.type]" alt="Country flag" />
                           </div>
                           <div class="ms-4">
                             <p class="mb-0 text-xs font-weight-bold">
-                              Country:
+                              포장재 규격
                             </p>
-                            <h6 class="mb-0 text-sm">{{ sale.country }}</h6>
+                            <h6 class="mb-0 text-sm">{{ box.type }}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="text-center">
-                          <p class="mb-0 text-xs font-weight-bold">Sales:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.sales }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">너비</p>
+                          <h6 class="mb-0 text-sm">{{ box.width }}</h6>
                         </div>
                       </td>
                       <td>
                         <div class="text-center">
-                          <p class="mb-0 text-xs font-weight-bold">Value:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.value }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">높이</p>
+                          <h6 class="mb-0 text-sm">{{ box.height }}</h6>
                         </div>
                       </td>
                       <td class="text-sm align-middle">
                         <div class="text-center col">
-                          <p class="mb-0 text-xs font-weight-bold">Bounce:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.bounce }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">길이</p>
+                          <h6 class="mb-0 text-sm">{{ box.length }}</h6>
+                        </div>
+                      </td>
+                      <td class="text-sm align-middle">
+                        <div class="text-center col">
+                          <p class="mb-0 text-xs font-weight-bold">물품량</p>
+                          <h6 class="mb-0 text-sm">{{ box.totalCount }}</h6>
                         </div>
                       </td>
                     </tr>
