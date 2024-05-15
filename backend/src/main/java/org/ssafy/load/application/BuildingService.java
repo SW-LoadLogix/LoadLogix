@@ -13,6 +13,7 @@ import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.BuildingEntity;
 import org.ssafy.load.domain.PathTimeEntity;
 import org.ssafy.load.dto.Coordinate;
+import org.ssafy.load.dto.PathResult;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 import org.ssafy.load.dto.request.anylogic.AreaAndBuilding;
 import org.ssafy.load.dto.request.anylogic.InputSettingResponse;
@@ -64,8 +65,8 @@ public class BuildingService {
                     .append("-")
                     .append(desBuilding.getZibunSub()).toString();
 
-            int duration = pathTimeCal.getPathTime(sourceAddress, desAddress);
-            pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, duration));
+            PathResult pathResult = pathTimeCal.getPathTime(sourceAddress, desAddress);
+            pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, pathResult.duration(), pathResult.distance()));
         }
     }
     @Transactional
