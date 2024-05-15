@@ -57,6 +57,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomePage(),
       );
     },
+    MainLandingRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MainLandingPage(),
+      );
+    },
     NotFoundRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -172,6 +178,20 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MainLandingPage]
+class MainLandingRoute extends PageRouteInfo<void> {
+  const MainLandingRoute({List<PageRouteInfo>? children})
+      : super(
+          MainLandingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainLandingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
