@@ -47,6 +47,11 @@ import axiosInstance from '@/utils/adminAxios';
     console.log('실시간 출고 리스트 조회');
      return await axiosInstance.get(`/loads`);
    };
+
+   /* 구역 조회 */
+   const getAreaInfo = async () => {
+    return await axiosInstance.get('/area');
+   }
 export {
   getGoodsCount,
   initialSet,
@@ -55,5 +60,6 @@ export {
   getGoods,
   getGoodsCountByBoxType,
   getWorkers,
-  getLoadedGoods
+  getLoadedGoods,
+  getAreaInfo
 };
