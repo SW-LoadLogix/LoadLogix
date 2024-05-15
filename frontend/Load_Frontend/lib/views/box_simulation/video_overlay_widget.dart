@@ -34,7 +34,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
     setState(() {
       _currentItem = gCurrItem;
       _totalItems = gTotalItems;
-      _currentValue = _currentItem / (_totalItems as double) * 100;
+      _currentValue = _currentItem / _totalItems * 100;
       if (_currentValue > 100)
         _currentValue = 100.0;
       else if (_currentValue < 0) _currentValue = 0.0;
