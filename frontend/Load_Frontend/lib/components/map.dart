@@ -104,7 +104,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       child:
           Text(
             building.buildingName,
-            style: TextStyle(fontSize: 6, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 3, fontWeight: FontWeight.bold),
           ),
     );
   }
@@ -120,7 +120,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   void _moveCamera(LatLng target) {
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: target, zoom:20.0),
+        CameraPosition(target: target, zoom:19.0),
       ),
     );
   }

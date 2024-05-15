@@ -49,7 +49,7 @@ class _Container2State extends State<DeliveryStatus2> {
           Text(
             "적재 Status",
             style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: widget.isHover ? Colors.white : primary), // StatefulWidget 클래스의 속성에 접근할 때는 "widget" 객체를 사용해야 됨.
           ),
