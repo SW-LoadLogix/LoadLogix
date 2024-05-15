@@ -20,6 +20,7 @@ import {
   getGoodsCount, 
   getDayGoodsCount,
   getGoodsCountByBoxType,
+  getRackStoreGoodsCount,
 } from "@/api/dashboard.js";
 
 const totalGoods = ref(0);
@@ -33,43 +34,16 @@ const chartData = ref({
 });
 let isLoadingChart = ref(false);
 let isLoadingBoxes = ref(false);
+let isLoadingStorage = ref(false);
+
 
 const boxTypes = {
   L1,L2,L3,L4,L5,L6
 };
 
-// const sales = {
-//   us: {
-//     country: "United States",
-//     sales: 2500,
-//     value: "$230,900",
-//     bounce: "29.9%",
-//     flag: US,
-//   },
-//   germany: {
-//     country: "Germany",
-//     sales: "3.900",
-//     value: "$440,000",
-//     bounce: "40.22%",
-//     flag: DE,
-//   },
-//   britain: {
-//     country: "Great Britain",
-//     sales: "1.400",
-//     value: "$190,700",
-//     bounce: "23.44%",
-//     flag: GB,
-//   },
-//   brasil: {
-//     country: "Brasil",
-//     sales: "562",
-//     value: "$143,960",
-//     bounce: "32.14%",
-//     flag: BR,
-//   },
-// };
-
 let boxes = [];
+
+let storage = [];
 function transformToChartData(inputData) {
   if (!inputData || !Array.isArray(inputData.amount)) {
     return {
@@ -89,6 +63,18 @@ function transformToChartData(inputData) {
   };
 }
 
+function transformToStorageData(inputDataArray) {
+  return inputDataArray.map(inputData => ({
+    icon: {
+      component: 'ni ni-app',
+      background: 'dark',
+    },
+    label: `${inputData.rackLine}번 저장소` ,
+    description: `실시간 저장 물품 : ${inputData.totalCount}`,
+  }));
+}
+
+
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
@@ -106,13 +92,20 @@ const getDailyGoodsCountRequest = async () => {
 
 const getBoxTypeRequest = async () => {
   const {data} = await getGoodsCountByBoxType();
-  console.log(data);
   boxes = data.result;
   isLoadingBoxes.value = true;
 };
+
+const getGoodsPerStoreRequest = async () => {
+  const {data} = await getRackStoreGoodsCount();
+  console.log(data);
+  storage = transformToStorageData(data.result);
+  isLoadingStorage.value = true;
+}
 getGoodsCountRequest();
 getDailyGoodsCountRequest();
 getBoxTypeRequest();
+getGoodsPerStoreRequest();
 
 
 </script>
@@ -245,36 +238,9 @@ getBoxTypeRequest();
               </div>
             </div>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-5" v-if=isLoadingStorage>
             <categories-list
-              :categories="[
-                {
-                  icon: {
-                    component: 'ni ni-mobile-button',
-                    background: 'dark',
-                  },
-                  label: 'Devices',
-                  description: '250 in stock <strong>346+ sold</strong>',
-                },
-                {
-                  icon: {
-                    component: 'ni ni-tag',
-                    background: 'dark',
-                  },
-                  label: 'Tickets',
-                  description: '123 closed <strong>15 open</strong>',
-                },
-                {
-                  icon: { component: 'ni ni-box-2', background: 'dark' },
-                  label: 'Error logs',
-                  description: '1 is active <strong>40 closed</strong>',
-                },
-                {
-                  icon: { component: 'ni ni-satisfied', background: 'dark' },
-                  label: 'Happy Users',
-                  description: '+ 430',
-                },
-              ]"
+              :categories=storage
             />
           </div>
         </div>
