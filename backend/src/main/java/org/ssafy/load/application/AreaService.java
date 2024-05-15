@@ -6,6 +6,8 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.ssafy.load.common.dto.ErrorCode;
+import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dao.AreaRepository;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.dto.request.AreaSettingRequest;
@@ -18,13 +20,13 @@ public class AreaService {
 
     private final AreaRepository areaRepository;
 
-    public String setAreaCount(AreaSettingRequest areaSettingRequest) {
-
-        for (int i = 0; i < areaSettingRequest.count().size(); i++) {
-            AreaEntity area = areaRepository.findById(i + 1).get();
-            area.updateArea(areaSettingRequest.count().get(i));
+    public void setAreaCount(List<AreaSettingRequest> requests) {
+        for (AreaSettingRequest areaSettingRequest : requests) {
+            AreaEntity areaEntity = areaRepository.findById(areaSettingRequest.areaId())
+                    .orElseThrow(() -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+            areaEntity.updateArea(areaSettingRequest);
+            areaRepository.save(areaEntity);
         }
-        return "SUCCESS";
     }
 
     public List<AreaResponse> getAreaInfo(){
