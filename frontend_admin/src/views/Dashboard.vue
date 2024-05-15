@@ -46,7 +46,6 @@ const boxTypes = {
 
 let boxes = [];
 let storage = [];
-let releasePerArea = [];
 let areaInfos = [];
 
 function transformToChartData(inputData) {
@@ -108,8 +107,7 @@ const getGoodsPerStoreRequest = async () => {
 }
 
 const setReleaseCountRequest = async () => {
-  const {data} = await initialSet({count:releasePerArea});
-  console.log(data);
+  await initialSet(areaInfos);
 }
 
 const getAreaInfoRequest = async () => {
@@ -274,13 +272,12 @@ getAreaInfoRequest();
                     <div class="row-md-12" v-for="(area, index) in areaInfos" :key="index" style="display: flex; align-items: center; gap: 10px;">
                       
                         <label style="flex: 1; margin: 10px 0;" for="example-text-input" class="form-control-label">{{area.area_name}}</label>
-                        <input style="flex: 1; margin: 10px 10px 10px 0;" class="form-control" type="text" :value=area.count />
+                        <input style="flex: 1; margin: 10px 10px 10px 0;" class="form-control" type="text" :value=area.count v-model="area.count" />
                         <label style="flex: 1.5; margin: 10px 0;" for="example-text-input" class="form-control-label">Convey-Line</label>
-                        <input style="flex: 0.5; margin: 10px 0;" class="form-control" type="text" :value=area.convey_no />
+                        <input style="flex: 0.5; margin: 10px 0;" class="form-control" type="text" :value=area.convey_no v-model="area.convey_no" />
                       
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
