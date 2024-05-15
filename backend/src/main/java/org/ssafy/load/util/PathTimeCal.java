@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
 import org.ssafy.load.dto.Coordinate;
+import org.ssafy.load.dto.PathResult;
 
 @Component
 @RequiredArgsConstructor
@@ -23,14 +24,14 @@ public class PathTimeCal {
 
     private final RestTemplateBuilder restTemplateBuilder;
 
-    public int getPathTime(String sourceAddress, String desAddress) {
+    public PathResult getPathTime(String sourceAddress, String desAddress) {
         Coordinate sourceCoordinate = toCoordinate(sourceAddress);
         Coordinate desCoordinate = toCoordinate(desAddress);
         return calculatePathTime(sourceCoordinate.longitude(), sourceCoordinate.latitude(),
                 desCoordinate.longitude(), desCoordinate.latitude());
     }
 
-    public int calculatePathTime(double originLongitude, double originLatitude, double desLongitude, double desLatitude) {
+    public PathResult calculatePathTime(double originLongitude, double originLatitude, double desLongitude, double desLatitude) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String url = "https://apis-navi.kakaomobility.com/v1/directions?" +
                 "origin={originLongitude},{originLatitude}&destination={desLongitude},{desLatitude}";
@@ -41,7 +42,7 @@ public class PathTimeCal {
 
         HttpEntity<String> requestEntity = new HttpEntity<>("", httpHeaders);
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class,
-                originLatitude, originLongitude, desLatitude, desLongitude);
+                originLongitude, originLatitude, desLongitude, desLatitude);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -49,9 +50,12 @@ public class PathTimeCal {
 
             //출발지와 도착지가 5m 이내로 설정된 경우
             if(jsonNode.get("routes").get(0).get("result_code").asInt() == 104)  {
-                return 0;
+                return new PathResult(0, 0);
             }
-            return jsonNode.get("routes").get(0).get("summary").get("duration").asInt();
+
+            int duration = jsonNode.get("routes").get(0).get("summary").get("duration").asInt();
+            int distance = jsonNode.get("routes").get(0).get("summary").get("distance").asInt();
+            return new PathResult(duration, distance);
         } catch (Exception e) {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         }
