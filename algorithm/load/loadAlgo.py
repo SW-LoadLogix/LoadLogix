@@ -16,9 +16,9 @@ while (True):
     try:
         if __name__ == "__main__":
             #로컬테스트
-            url = 'http://localhost:8081/api/load'
+            # url = 'http://localhost:8081/api/load'
             #백서버
-            # url = 'http://192.168.31.245:8081/api/load/task'
+            url = 'http://docker-compose-spring-1:8081/api/load/task'
             for event in event_stream(url):
                 start = time.time()
                 # 서버로 부터 받은 json 객체 변환
@@ -127,9 +127,9 @@ while (True):
                     )
                     fig.show()
                     # 로컬테스트
-                    post_url = 'http://localhost:8081/api/load'
+                    # post_url = 'http://localhost:8081/api/load'
                     # 백서버
-                    # post_url = 'http://192.168.31.245:8081/api/load/task/result'
+                    post_url = 'http://docker-compose-spring-1:8081/api/load/task/result'
 
                     # POST 요청 보내기
                     response = requests.post(post_url, data=loadResponse, headers={'Content-Type': 'application/json'})
