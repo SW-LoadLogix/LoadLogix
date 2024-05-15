@@ -61,15 +61,15 @@ public class PathOrderCalV2 {
 
         log.info("Objective: " + solution.objectiveValue() + "miles");
         log.info("Route:");
-        String route = "";
+        StringBuilder route = new StringBuilder();
         long index = routing.start(0);
         while (!routing.isEnd(index)) {
             routes.add((int)index);
-            route += manager.indexToNode(index) + " -> ";
+            route.append(manager.indexToNode(index)).append(" -> ");
             index = solution.value(routing.nextVar(index));
         }
-        route += manager.indexToNode(routing.end(0));
-        log.info(route);
+        route.append(manager.indexToNode(routing.end(0)));
+        log.info(route.toString());
         return routes;
     }
 }
