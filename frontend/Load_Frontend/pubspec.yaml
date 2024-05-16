@@ -56,7 +56,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/3dmodels/3d-model.obj
+    - assets/models3d/3d-model.obj
     - assets/textures/truck.mtl
 
     - assets/gif/트럭시뮬gif.gif
