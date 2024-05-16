@@ -38,4 +38,6 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByAgentId(long agentId);
 
     long countByLoadTaskId(Integer loadTaskId);
+
+    Optional<GoodsEntity> findFirstByOrderByIdDesc();
 }
