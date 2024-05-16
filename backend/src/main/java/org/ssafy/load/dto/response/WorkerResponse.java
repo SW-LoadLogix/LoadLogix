@@ -7,7 +7,7 @@ public record WorkerResponse(
     @JsonProperty("area_name")
     String areaName,
     @JsonProperty("total_count")
-    int totalCount,
+    long totalCount,
     boolean ready
 ) {
 
