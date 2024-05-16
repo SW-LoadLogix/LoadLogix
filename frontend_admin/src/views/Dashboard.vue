@@ -87,7 +87,7 @@ const getGoodsCountRequest = async () => {
   enterGoods.value = data.result.store_count;
   releaseGoods.value = data.result.load_count;
   updateTime.value = new Date().toLocaleTimeString();
-  isLoadingCount.value = false;
+  isLoadingCount.value = true;
 };
 
 const getDailyGoodsCountRequest = async () => {
@@ -129,7 +129,7 @@ getAreaInfoRequest();
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <div class="row">
+        <div class="row" v-if="isLoadingCount">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
               title="TOTAL GOODS"
@@ -170,7 +170,7 @@ getAreaInfoRequest();
               }"
             />
           </div>
-          <div class="col-lg-3 col-md-6 col-12" v-if="isLoadingCount">
+          <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
               title="Update Time"
               :value='`${updateTime}`'
