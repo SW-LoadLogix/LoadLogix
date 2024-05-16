@@ -22,7 +22,6 @@ import axiosInstance from '@/utils/adminAxios';
 
   /* 실시간 물품 리스트 조회 */
   const getGoods = async () => {
-    console.log('실시간 물품 리스트 조회');
     return await axiosInstance.get(`/goods`);
   };
 
@@ -39,7 +38,6 @@ import axiosInstance from '@/utils/adminAxios';
 
   /* 실시간 출고 리스트 조회 */
    const getLoadedGoods = async () => {
-    console.log('실시간 출고 리스트 조회');
      return await axiosInstance.get(`/loads`);
    };
 
