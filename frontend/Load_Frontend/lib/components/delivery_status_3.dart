@@ -15,10 +15,10 @@ class DeliveryStatus3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        minHeight: 150.0, // 최소 높이 설정
+        minHeight: 170.0, // 최소 높이 설정
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
@@ -26,19 +26,19 @@ class DeliveryStatus3 extends StatelessWidget {
           ),
           // 텍스트 대신 GIF 이미지를 표시
           Container(
-            width: 180,
+            width: 400,
             height: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: isHover ? Colors.white : primary,
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: Color.fromRGBO(137, 181, 162, 0.56),
-              //     blurRadius: 16,
-              //     spreadRadius: 0,
-              //     offset: Offset(0, -2),
-              //   ),
-              // ],
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(137, 181, 162, 0.56),
+                  blurRadius: 16,
+                  spreadRadius: 0,
+                  offset: Offset(0, -2),
+                ),
+              ],
             ),
             child: Image.asset(
               'assets/gif/truck43.gif',

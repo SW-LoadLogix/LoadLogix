@@ -860,6 +860,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   int lastcheck = 0;
 
   void onTickBox() {
+    if (boxes.isEmpty)
+      return;
     if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;

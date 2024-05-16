@@ -27,9 +27,9 @@ class MyGoogleMap extends StatefulWidget {
 class _MyGoogleMapState extends State<MyGoogleMap> {
   late GoogleMapController mapController;
   LatLng _center = LatLng(36.36405586, 127.3561363);
-  late LatLng newPosition;
+  LatLng newPosition = LatLng(36.36405586, 127.3561363);
   List<BuildingData> _buildingData = [];
-  Set<Circle> _circles = {};
+  Set<Circle> _circles = {}; 
   List<MarkerData> _customMarkers = [];
   bool _mapControllerInitialized = false;
 
@@ -64,7 +64,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       circles.add(
         Circle(
           circleId: CircleId(buildings[i].buildingId.toString()),
-          center: LatLng(buildings[i].longitude, buildings[i].latitude),
+          center: LatLng(buildings[i].latitude,buildings[i].longitude),
           radius: 9,
           fillColor: distinctColor[i],
           strokeWidth: 3,
@@ -72,9 +72,11 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
         ),
       );
     }
-    new_latitude = new_latitude / buildings.length;
-    new_longitude = new_longitude / buildings.length;
-    newPosition = LatLng(new_longitude, new_latitude);
+    if (buildings.isNotEmpty) {
+      new_latitude = new_latitude / buildings.length;
+      new_longitude = new_longitude / buildings.length;
+      newPosition = LatLng(new_latitude,new_longitude);
+    }
     return circles;
   }
 
@@ -85,7 +87,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
         MarkerData(
           marker: Marker(
             markerId: MarkerId(buildings[i].buildingId.toString()),
-            position: LatLng(buildings[i].longitude, buildings[i].latitude),
+            position: LatLng(buildings[i].latitude,buildings[i].longitude),
             infoWindow: InfoWindow(
               title: "배송 상품 개수 : ${buildings[i].totalGoods}",
               snippet: "${buildings[i].buildingName}",

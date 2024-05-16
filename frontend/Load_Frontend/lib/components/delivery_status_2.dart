@@ -19,7 +19,6 @@ class DeliveryStatus2 extends StatefulWidget {
 }
 
 class _Container2State extends State<DeliveryStatus2> {
-
   String message = "적재 알고리즘을 위한 배송 상품이 준비중입니다";
   bool isLoading = true; // API 호출되었을 때 여부를 관리하는 변수 추가
 
@@ -29,64 +28,78 @@ class _Container2State extends State<DeliveryStatus2> {
   @override
   Widget build(BuildContext context) {
     WorkerStore ws = Provider.of<WorkerStore>(context, listen: true);
-    if (ws.isWorkerReady){
-      if (isCalled == false){
+    if (ws.isWorkerReady) {
+      if (isCalled == false) {
         isCalled = true;
         fetchDataFromAPI();
       }
-    }
-    else {
+    } else {
       message = "준비 중";
     }
     return Container(
       constraints: BoxConstraints(
-        minHeight: 150.0, // 최소 높이 설정
+        minHeight: 170.0, // 최소 높이 설정
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "적재 Status",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: widget.isHover ? Colors.white : primary), // StatefulWidget 클래스의 속성에 접근할 때는 "widget" 객체를 사용해야 됨.
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            message,
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: widget.isHover ? Colors.white : primary),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 18,
-          ),
+          Container(
+              width: double.infinity,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "적재 Status",
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w400,
+                          color: widget.isHover
+                              ? Colors.white
+                              : primary), // StatefulWidget 클래스의 속성에 접근할 때는 "widget" 객체를 사용해야 됨.
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      message,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: widget.isHover ? Colors.white : primary),
+                      textAlign: TextAlign.center,
+                    ),
+
+                  ])),
+    Container(
+    width:  double.infinity,
+    child:  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
           Center(
             child: isLoading
                 ? LoadingAnimationWidget.inkDrop(
-              color: widget.isHover ? Colors.white : primary,
-              size: 50,
-            )
+                    color: widget.isHover ? Colors.white : primary,
+                    size: 50,
+                  )
                 : MSHCheckbox(
-              size: 60,
-              value: isChecked,
-              colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
-                checkedColor: widget.isHover ? Colors.white : primary,
-              ),
-              style: MSHCheckboxStyle.stroke,
-              onChanged: (selected) {
-                setState(() {
-                  isChecked = selected;
-                });
-              },
-            ),
+                    size: 60,
+                    value: isChecked,
+                    colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
+                      checkedColor: widget.isHover ? Colors.white : primary,
+                    ),
+                    style: MSHCheckboxStyle.stroke,
+                    onChanged: (selected) {
+                      setState(() {
+                        isChecked = selected;
+                      });
+                    },
+                  ),
           ),
+      SizedBox(
+        height: 5,
+      )
+    ])),
         ],
       ),
     );
@@ -108,6 +121,5 @@ class _Container2State extends State<DeliveryStatus2> {
   void initState() {
     super.initState();
     // Call API to fetch initial data when widget is initialized
-
   }
 }
