@@ -34,17 +34,29 @@ const props = defineProps({
 onMounted(() => {
   var gradientLineChart = document.getElementById(props.id).getContext("2d");
 
+  // var gradientStroke1 = gradientLineChart.createLinearGradient(0, 230, 0, 50);
+
+  // gradientStroke1.addColorStop(1, "rgba(203,12,159,0.2)");
+  // gradientStroke1.addColorStop(0.2, "rgba(72,72,176,0.0)");
+  // gradientStroke1.addColorStop(0, "rgba(203,12,159,0)"); //purple colors
+
+  // var gradientStroke2 = gradientLineChart.createLinearGradient(0, 230, 0, 50);
+
+  // gradientStroke2.addColorStop(1, "rgba(20,23,39,0.2)");
+  // gradientStroke2.addColorStop(0.2, "rgba(72,72,176,0.0)");
+  // gradientStroke2.addColorStop(0, "rgba(20,23,39,0)"); //purple colors
   var gradientStroke1 = gradientLineChart.createLinearGradient(0, 230, 0, 50);
 
-  gradientStroke1.addColorStop(1, "rgba(203,12,159,0.2)");
-  gradientStroke1.addColorStop(0.2, "rgba(72,72,176,0.0)");
-  gradientStroke1.addColorStop(0, "rgba(203,12,159,0)"); //purple colors
+  gradientStroke1.addColorStop(1, "rgba(12, 159, 203, 0.2)");
+  gradientStroke1.addColorStop(0.2, "rgba(72, 176, 176, 0.0)");
+  gradientStroke1.addColorStop(0, "rgba(12, 159, 203, 0)"); //blue colors
 
   var gradientStroke2 = gradientLineChart.createLinearGradient(0, 230, 0, 50);
 
-  gradientStroke2.addColorStop(1, "rgba(20,23,39,0.2)");
-  gradientStroke2.addColorStop(0.2, "rgba(72,72,176,0.0)");
-  gradientStroke2.addColorStop(0, "rgba(20,23,39,0)"); //purple colors
+  gradientStroke2.addColorStop(1, "rgba(23, 39, 203, 0.2)");
+  gradientStroke2.addColorStop(0.2, "rgba(72, 72, 176, 0.0)");
+  gradientStroke2.addColorStop(0, "rgba(23, 39, 203, 0)"); //blue colors
+
 
   let chartStatus = Chart.getChart(props.id);
   if (chartStatus != undefined) {
@@ -61,7 +73,7 @@ onMounted(() => {
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 0,
-            borderColor: "#4BB543 ",
+            borderColor: "#4BB54",
             backgroundColor: gradientStroke1,
             // eslint-disable-next-line no-dupe-keys
             borderWidth: 3,
@@ -151,7 +163,7 @@ onMounted(() => {
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 0,
-            borderColor: "#4BB543 ",
+            borderColor: "#4B9EDB ",
             backgroundColor: gradientStroke1,
             // eslint-disable-next-line no-dupe-keys
             borderWidth: 3,

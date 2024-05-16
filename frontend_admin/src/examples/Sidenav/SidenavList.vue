@@ -32,8 +32,8 @@ const logout = () => {
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-item
-          to="/dashboard-default"
-          :class="getRoute() === 'dashboard-default' ? 'active' : ''"
+          to="/dashboard"
+          :class="getRoute() === 'dashboard' ? 'active' : ''"
           :navText="'Dashboard'"
         >
           <template v-slot:icon>
