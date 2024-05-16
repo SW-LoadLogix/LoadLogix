@@ -217,14 +217,14 @@ class LoginTexts extends ChangeNotifier {
   /// Custom value in the constructor is assigned to [_checkboxError].
   String get checkboxError => _checkboxError ?? _defaultCheckboxError;
 
-  static const String _defaultWelcome = 'L.O.A.D';
-  static const String _defaultWelcomeDescription = 'Load Optimized Algorithm Dive';
+  static const String _defaultWelcome = 'LOADLOGIX';
+  static const String _defaultWelcomeDescription = 'PROGRESS FOR SMART DELIVERY!';
   static const String _defaultSignUp = '회원가입';
   static const String _defaultSignUpFormTitle = '회원가입';
   static const String _defaultSignUpUseEmail = '또는 이메일을 사용하여 등록하세요:';
   static const String _defaultNotHaveAnAccount = '계정이 없으신가요?';
-  static const String _defaultWelcomeBack = 'L.O.A.D';
-  static const String _defaultWelcomeBackDescription = 'Load Optimized Algorithm Dive';
+  static const String _defaultWelcomeBack = 'LOADLOGIX';
+  static const String _defaultWelcomeBackDescription = 'PROGRESS FOR SMART DELIVERY!';
   static const String _defaultLogin = '로그인';
   static const String _defaultLoginFormTitle = '로그인';
   static const String _defaultLoginUseEmail = '또는 이메일 계정을 사용하세요:';
