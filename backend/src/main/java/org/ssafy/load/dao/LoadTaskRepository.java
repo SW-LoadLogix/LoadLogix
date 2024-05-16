@@ -26,4 +26,7 @@ public interface LoadTaskRepository extends JpaRepository<LoadTaskEntity, Intege
     @Query(value = "SELECT id FROM load_task WHERE area_status = TRUE AND complete = TRUE AND worker_status = TRUE AND DATE(created_at) = CURDATE() - INTERVAL :days DAY", nativeQuery = true)
     List<Integer> findLoadTaskIdsByCreatedAt(int days);
 
+    @Query(value = "SELECT id FROM load_task WHERE area_status = TRUE AND complete = TRUE AND worker_status = TRUE AND DATE(created_at) = CURDATE()", nativeQuery = true)
+    List<Integer> findAllLoadTaskIdsByCreatedAtIsToday();
+
 }
