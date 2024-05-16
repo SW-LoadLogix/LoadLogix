@@ -160,12 +160,21 @@ public class GoodsService {
 
     @Transactional(readOnly = true)
     public GoodsTotalResponse getDayGoodsCount() {
-        List<Object[]> results = goodsRepository.countGoodsByDateForLastSixDays();
-        return GoodsTotalResponse.of(results.stream()
-            .map(result -> new TotalDayGoods(
-                LocalDate.parse(result[0].toString()),
-                ((Number) result[1]).intValue()
-            )).toList());
+        List<TotalDayGoods> result = new ArrayList<>();
+        for (int day = 6; day >= 0; day--) {
+            List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByCreatedAt(day);
+            if (loadTaskList.isEmpty()) {
+                result.add(new TotalDayGoods(LocalDate.now().minusDays(day), 0));
+                continue;
+            }
+
+            int cnt = 0;
+            for(int i = 0; i<loadTaskList.size(); i++){
+                cnt += (int) goodsRepository.countByLoadTaskId(loadTaskList.get(i));
+            }
+            result.add(new TotalDayGoods(LocalDate.now().minusDays(day), cnt));
+        }
+        return GoodsTotalResponse.of(result);
     }
 
     @Transactional(readOnly = true)
@@ -264,7 +273,7 @@ public class GoodsService {
 
         List<TotalDayGoods> result = new ArrayList<>();
         for (int day = 6; day >= 0; day--) {
-            List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByCreatedAt(
+            List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByAreaIdAndCreatedAt(
                 area.getId(),
                 day);
             if (loadTaskList.isEmpty()) {
