@@ -36,7 +36,7 @@ const loginRequest = ref({
 const login = async () => {
   try {
     await authStore.login(loginRequest.value);
-    router.push("/");
+    router.push({ path: '/dashboard' });
   } catch (error) {
     console.log("로그인 실패 에러:", error);
     alert("아이디 또는 비밀번호가 일치하지 않습니다.");
