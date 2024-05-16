@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:load_frontend/services/user_service.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +8,7 @@ import '../models/worker_info_data.dart';
 import 'base_url.dart';
 
 class WorkerService {
-
-  /**
-   * Rest API method : GET
-   * URI : "worker/info"
-   * DTO : WorkerInfoResponse
-   **/
-
+  final baseUrl = dotenv.get("BASE_URL");
   Future<WorkerInfoData?> fetchWorkerInfo(String accessToken) async {
 
     try {
@@ -38,7 +33,8 @@ class WorkerService {
       }
 
     } catch (error) {
-      throw Exception("Failed to load Worker Info");
+      print("Failed to load Worker Info");
+      return null;
     }
   }
 
@@ -100,7 +96,8 @@ class WorkerService {
       }
     }
     catch (error) {
-      throw Exception("Failed to load Worker Ready");
+      print("Failed to load Worker Ready");
     }
+    return false;
   }
 }

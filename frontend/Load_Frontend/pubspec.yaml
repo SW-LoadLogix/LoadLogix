@@ -61,14 +61,12 @@ flutter:
     - assets/gif/트럭시뮬gif.gif
     - assets/gif/truckgif.gif
     - assets/gif/truck43.gif
+    - .env
 
   fonts:
     - family: IBMPlexMono
       fonts:
         - asset: assets/fonts/IBMPlexMono-Medium.ttf
-    - family: Nunito
-      fonts:
-        - asset: assets/fonts/nunito-Regular.ttf
     - family: NanumSquareNeo-dEb
       fonts:
         - asset: assets/fonts/NanumSquareNeo-dEb.ttf

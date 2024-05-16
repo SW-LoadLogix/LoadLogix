@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:load_frontend/stores/user_store.dart';
 
 //import 'dialog_builders.dart';
@@ -67,6 +68,7 @@ class LoginFunctions {
 
 
 class UserService{
+  final baseUrl = dotenv.get("BASE_URL");
   Future<LoginResponseResult?> LoginApiCall(LoginData loginData) async {
     await Future.delayed(const Duration(seconds: 2));
     try {

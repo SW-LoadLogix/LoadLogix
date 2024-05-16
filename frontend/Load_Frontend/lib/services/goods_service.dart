@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:load_frontend/models/good_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:load_frontend/views/box_simulation/box.dart';
@@ -11,6 +12,7 @@ import 'base_url.dart';
 bool isDebug = false;
 
 class GoodsService {
+  final baseUrl = dotenv.get("BASE_URL");
   Future<List<GoodsData>> getGoods(String accessToken) async {
     if (isDebug) {
       List<GoodsData> goods = [];
@@ -95,7 +97,8 @@ class GoodsService {
 
       return goods;
     } else {
-      throw Exception('Failed to load goods');
+      print('Failed to load goods');
+      return [];
     }
   }
 }

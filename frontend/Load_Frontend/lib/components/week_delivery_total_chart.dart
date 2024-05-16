@@ -22,13 +22,13 @@ class WeekDeliveryTotalChart extends StatefulWidget {
 class BarChartSample1State extends State<WeekDeliveryTotalChart> {
   int touchedIndex = -1;
   GoodsTotalDataWrapper _goodsTotalDataWrapper = GoodsTotalDataWrapper(amount: [
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
-    GoodsTotalData(date: DateTime.now(), total: 10),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
+    GoodsTotalData(date: DateTime.now(), total: 0),
   ]);
 
   @override

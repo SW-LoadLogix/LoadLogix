@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:load_frontend/models/building_fraction.dart';
 import 'package:load_frontend/models/goods_total_data.dart';
 
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'base_url.dart';
 
 class DeliveryService {
+  final baseUrl = dotenv.get("BASE_URL");
   Future<DeliveryData?> fetchDeliveryGoods(String accessToken) async {
 
     try {
@@ -29,7 +31,7 @@ class DeliveryService {
     return null;
   }
 
-  bool isDebug = true;
+  bool isDebug = false;
   Future<GoodsTotalDataWrapper?> fetchGoodsTotal(String accessToken) async {
     if (isDebug){
       List<GoodsTotalData> gtdl = [];
