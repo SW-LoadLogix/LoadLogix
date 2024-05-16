@@ -19,6 +19,7 @@ class DeliveryService {
         "Authorization": "Bearer $accessToken"
       });
 
+      print(response.body);
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         return DeliveryData.fromJson(responseBody['result']);
@@ -31,7 +32,7 @@ class DeliveryService {
     return null;
   }
 
-  bool isDebug = false;
+  bool isDebug = true;
   Future<GoodsTotalDataWrapper?> fetchGoodsTotal(String accessToken) async {
     if (isDebug){
       List<GoodsTotalData> gtdl = [];
@@ -60,12 +61,13 @@ class DeliveryService {
 
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
+        print(responseBody);
         return GoodsTotalDataWrapper.fromJson(responseBody);
       } else {
         return null;
       }
     } catch (error) {
-      print("Failed to load Delivery List");
+      print("Failed to load Delivery List2222");
     }
     return null;
   }

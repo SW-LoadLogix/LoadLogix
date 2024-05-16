@@ -9,7 +9,7 @@ import 'package:load_frontend/views/box_simulation/box.dart';
 import '../models/vector3.dart';
 import 'base_url.dart';
 
-bool isDebug = false;
+bool isDebug = true;
 
 class GoodsService {
   final baseUrl = dotenv.get("BASE_URL");

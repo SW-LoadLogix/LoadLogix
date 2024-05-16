@@ -25,8 +25,8 @@ class AreaService {
           buildingId: buildingData.buildingId,
           buildingName: buildingData.buildingName,
           totalGoods: buildingData.totalGoods,
-          latitude: buildingData.latitude,
-          longitude: buildingData.longitude,
+          latitude: buildingData.latitude,//
+          longitude: buildingData.longitude,//
         ));
       }
       return buildings;
