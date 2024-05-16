@@ -36,12 +36,12 @@ public class GoodsService {
         //기사 조회
         Optional<WorkerEntity> workerOptional = workerRepository.findById(workerId);
         WorkerEntity worker = workerOptional.orElseThrow(
-            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+                () -> new CommonException(ErrorCode.USER_NOT_FOUND));
 
         //구역 조회
         Optional<AreaEntity> areaOptional = Optional.ofNullable(worker.getArea());
         AreaEntity area = areaOptional.orElseThrow(
-            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+                () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         //가장 최근 적재 조회
         List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
@@ -55,7 +55,7 @@ public class GoodsService {
 
         for (GoodsEntity goodsEntity : goodsEntityList) {
             buildingGoodsEntityMap.computeIfAbsent(goodsEntity.getBuilding(),
-                k -> new ArrayList<>()).add(goodsEntity);
+                    k -> new ArrayList<>()).add(goodsEntity);
         }
 
         //응답 생성
@@ -66,32 +66,32 @@ public class GoodsService {
         for (BuildingEntity buildingEntity : buildingGoodsEntityMap.keySet()) {
             String topAddress = buildingEntity.getSidoName() + " " + buildingEntity.getGugunName();
             String buildingAddress =
-                buildingEntity.getDongName() + " " + buildingEntity.getZibunMain() + "-"
-                    + buildingEntity.getZibunSub();
+                    buildingEntity.getDongName() + " " + buildingEntity.getZibunMain() + "-"
+                            + buildingEntity.getZibunSub();
             int totalGoods = buildingGoodsEntityMap.get(buildingEntity).size();
             int totalPercentage = (int) ((double) totalGoods / total * 100);
             List<GoodsDetailResponse> goodsDetailResponseList = new ArrayList<>();
 
             for (GoodsEntity goodsEntity : buildingGoodsEntityMap.get(buildingEntity)) {
                 goodsDetailResponseList.add(
-                    new GoodsDetailResponse(
-                        goodsEntity.getId(),
-                        goodsEntity.getBoxType().getType().name(),
-                        goodsEntity.getBoxType().getHeight(),
-                        goodsEntity.getBoxType().getLength(),
-                        goodsEntity.getBoxType().getWidth(),
-                        goodsEntity.getWeight(),
-                        goodsEntity.getDetailAddress())
+                        new GoodsDetailResponse(
+                                goodsEntity.getId(),
+                                goodsEntity.getBoxType().getType().name(),
+                                goodsEntity.getBoxType().getHeight(),
+                                goodsEntity.getBoxType().getLength(),
+                                goodsEntity.getBoxType().getWidth(),
+                                goodsEntity.getWeight(),
+                                goodsEntity.getDetailAddress())
                 );
             }
 
             buildingDetailResponseList.add(
-                new BuildingDetailResponse(
-                    topAddress,
-                    buildingAddress,
-                    totalGoods,
-                    totalPercentage,
-                    goodsDetailResponseList)
+                    new BuildingDetailResponse(
+                            topAddress,
+                            buildingAddress,
+                            totalGoods,
+                            totalPercentage,
+                            goodsDetailResponseList)
             );
         }
         return new GoodsListResponse(areaName, total, buildingDetailResponseList);
@@ -101,11 +101,11 @@ public class GoodsService {
         //기사 조회
         Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
         WorkerEntity worker = workerEntityOptional.orElseThrow(
-            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+                () -> new CommonException(ErrorCode.USER_NOT_FOUND));
         //구역 조회
         Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
         AreaEntity area = areaOptionalEntity.orElseThrow(
-            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+                () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         //가장 최근 적재 조회
         List<Integer> loadTaskList = loadTaskRepository.findAllByWorkerCompletedTask(area.getId());
@@ -114,18 +114,18 @@ public class GoodsService {
         }
 
         List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
-            loadTaskList.getFirst());
+                loadTaskList.getFirst());
         List<SortedGoods> goods = goodsEntities.stream()
-            .map(g -> new SortedGoods(
-                g.getId(),
-                String.valueOf(g.getBoxType().getType()),
-                new Position(g.getX(), g.getY(), g.getZ()),
-                g.getWeight(),
-                g.getBuilding().getId(),
-                g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"
-                    + g.getBuilding().getZibunSub(),
-                g.getDetailAddress()
-            )).toList();
+                .map(g -> new SortedGoods(
+                        g.getId(),
+                        String.valueOf(g.getBoxType().getType()),
+                        new Position(g.getX(), g.getY(), g.getZ()),
+                        g.getWeight(),
+                        g.getBuilding().getId(),
+                        g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"
+                                + g.getBuilding().getZibunSub(),
+                        g.getDetailAddress()
+                )).toList();
         return new SortedGoodsResponse(goods);
     }
 
@@ -133,16 +133,16 @@ public class GoodsService {
     public void createGoods(GoodsCreateRequest goodsCreateRequest) {
         try {
             GoodsCreateResponse.from(goodsRepository.save(GoodsEntity.of(
-                null,
-                goodsCreateRequest.weight(),
-                goodsCreateRequest.detailAddress(),
-                null, null, null, null,
-                goodsCreateRequest.agentId(),
-                boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
-                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                buildingRepository.findById(goodsCreateRequest.buildingId())
-                    .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
-                null, null
+                    null,
+                    goodsCreateRequest.weight(),
+                    goodsCreateRequest.detailAddress(),
+                    null, null, null, null,
+                    goodsCreateRequest.agentId(),
+                    boxTypeRepository.findByType(BoxType.valueOf("L" + goodsCreateRequest.type()))
+                            .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                    buildingRepository.findById(goodsCreateRequest.buildingId())
+                            .orElseThrow(() -> new CommonException(ErrorCode.INVALID_DATA)),
+                    null, null
             )));
         } catch (Exception e) {
             throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -152,9 +152,9 @@ public class GoodsService {
     @Transactional(readOnly = true)
     public GoodsCountResponse getGoodsCount() {
         return new GoodsCountResponse(
-            goodsRepository.countAllGoodsByCreatedAtIsToday(),
-            goodsRepository.countStoredGoodsByCreatedAtIsToday(),
-            goodsRepository.countLoadedGoodsByCreatedAtIsToday()
+                goodsRepository.countAllGoodsByCreatedAtIsToday(),
+                goodsRepository.countStoredGoodsByCreatedAtIsToday(),
+                goodsRepository.countLoadedGoodsByCreatedAtIsToday()
         );
     }
 
@@ -181,18 +181,18 @@ public class GoodsService {
     public List<GoodsOutputResponse> getGoodsList() {
         List<GoodsEntity> goods = goodsRepository.findAllGoodsByCreatedAtIsToday();
         return goods.stream()
-            .map(good -> {
-                BuildingEntity building = good.getBuilding();
-                AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
+                .map(good -> {
+                    BuildingEntity building = good.getBuilding();
+                    AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
 
-                return new GoodsOutputResponse(
-                    area.getAreaName(),
-                    good.getDetailAddress(),
-                    area.getWorker().getName(),
-                    good.getWeight(),
-                    String.valueOf(good.getBoxType().getType()),
-                    good.getCreatedAt());
-            }).toList();
+                    return new GoodsOutputResponse(
+                            area.getAreaName(),
+                            good.getDetailAddress(),
+                            area.getWorker().getName(),
+                            good.getWeight(),
+                            String.valueOf(good.getBoxType().getType()),
+                            good.getCreatedAt());
+                }).toList();
     }
 
     @Transactional(readOnly = true)
@@ -203,18 +203,18 @@ public class GoodsService {
         for (int i = 0; i < loadTaskList.size(); i++) {
             LoadTaskEntity loadTask = loadTaskRepository.findById(loadTaskList.get(i)).get();
             List<GoodsEntity> goods = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
-                loadTaskList.get(i));
+                    loadTaskList.get(i));
 
             for (GoodsEntity good : goods) {
                 AreaEntity area = areaRepository.findById(good.getBuilding().getArea().getId())
-                    .get();
+                        .get();
                 result.add(new GoodsOutputResponse(
-                    area.getAreaName(),
-                    good.getDetailAddress(),
-                    area.getWorker().getName(),
-                    good.getWeight(),
-                    String.valueOf(good.getBoxType().getType()),
-                    loadTask.getCreatedAt()
+                        area.getAreaName(),
+                        good.getDetailAddress(),
+                        area.getWorker().getName(),
+                        good.getWeight(),
+                        String.valueOf(good.getBoxType().getType()),
+                        loadTask.getCreatedAt()
                 ));
             }
         }
@@ -223,19 +223,19 @@ public class GoodsService {
 
     @Transactional(readOnly = true)
     public List<BoxTypeResponse> getBoxTypeCount() {
-        List<Object[]> results = goodsRepository.countBoxTypeByCreatedAtIsToday();
-        return results.stream()
-            .map(result -> {
-                BoxTypeEntity boxType = boxTypeRepository.findById(((Number) result[0]).intValue())
-                    .get();
-                return new BoxTypeResponse(
+        List<BoxTypeResponse> result = new ArrayList<>();
+        for (int i = 1; i <= 6; i++) {
+            BoxTypeEntity boxType = boxTypeRepository.findByType(BoxType.valueOf("L" + i)).get();
+            int count = (int) goodsRepository.countBoxTypeByCreatedAtIsToday(boxType.getId());
+            result.add(new BoxTypeResponse(
                     boxType.getId(),
                     String.valueOf(boxType.getType()),
                     boxType.getHeight(),
                     boxType.getLength(),
                     boxType.getWidth(),
-                    ((Number) result[1]).longValue());
-            }).toList();
+                    count));
+        }
+        return result;
     }
 
     @Transactional(readOnly = true)
@@ -246,7 +246,7 @@ public class GoodsService {
         List<Object[]> goodsList = goodsRepository.countGoodsByBuildingIdAndCreatedAtIsToday();
         for (Object[] obj : goodsList) {
             Integer areaId = buildingRepository.findById(((Number) obj[0]).longValue()).get()
-                .getArea().getId();
+                    .getArea().getId();
             if (areaId == 1) {
                 cnt[1] += ((Number) obj[1]).longValue();
             } else if (areaId == 2 || areaId == 3) {
@@ -273,17 +273,17 @@ public class GoodsService {
         //기사 조회
         Optional<WorkerEntity> workerEntityOptional = workerRepository.findById(workerId);
         WorkerEntity worker = workerEntityOptional.orElseThrow(
-            () -> new CommonException(ErrorCode.USER_NOT_FOUND));
+                () -> new CommonException(ErrorCode.USER_NOT_FOUND));
         //구역 조회
         Optional<AreaEntity> areaOptionalEntity = Optional.ofNullable(worker.getArea());
         AreaEntity area = areaOptionalEntity.orElseThrow(
-            () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
+                () -> new CommonException(ErrorCode.AREA_NOT_FOUND));
 
         List<TotalDayGoods> result = new ArrayList<>();
         for (int day = 6; day >= 0; day--) {
             List<Integer> loadTaskList = loadTaskRepository.findLoadTaskIdsByAreaIdAndCreatedAt(
-                area.getId(),
-                day);
+                    area.getId(),
+                    day);
             if (loadTaskList.isEmpty()) {
                 result.add(new TotalDayGoods(LocalDate.now().minusDays(day), 0));
                 continue;
