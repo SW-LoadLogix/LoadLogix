@@ -70,7 +70,7 @@ public class WorkerService {
                 result.add(new WorkerResponse(worker.getName(), worker.getArea().getAreaName(), 0, false));
                 continue;
             }
-            int totalCount = (int) goodsRepository.countByLoadTaskId(loadTask.get().getId());
+            long totalCount = goodsRepository.countByLoadTaskId(loadTask.get().getId());
             if(!loadTask.get().getWorkerState() || !loadTask.get().getAreaStatus() || !loadTask.get().getComplete()){
                 result.add(new WorkerResponse(worker.getName(), worker.getArea().getAreaName(), totalCount, false));
                 continue;
