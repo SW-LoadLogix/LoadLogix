@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "goods")
+@Table(name = "goods", uniqueConstraints = @UniqueConstraint(columnNames = "agent_id"))
 @ToString
 @Getter
 @NoArgsConstructor
