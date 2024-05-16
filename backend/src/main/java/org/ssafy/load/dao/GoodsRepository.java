@@ -29,8 +29,8 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     @Query(value = "SELECT * FROM goods WHERE DATE(created_at) = CURDATE() AND load_task_id is not null", nativeQuery = true)
     List<GoodsEntity> findAllLoadedGoodsByCreatedAtIsToday();
 
-    @Query(value = "SELECT box_type_id as type, COUNT(*) as count FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY box_type_id", nativeQuery = true)
-    List<Object[]> countBoxTypeByCreatedAtIsToday();
+    @Query(value = "SELECT COUNT(*) FROM goods WHERE box_type_id=:boxTypeId AND DATE(created_at) = CURDATE()", nativeQuery = true)
+    long countBoxTypeByCreatedAtIsToday(Integer boxTypeId);
 
     @Query(value = "SELECT building_id, COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY building_id", nativeQuery = true)
     List<Object[]> countGoodsByBuildingIdAndCreatedAtIsToday();
