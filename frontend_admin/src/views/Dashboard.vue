@@ -245,7 +245,7 @@ getAreaInfoRequest();
                       <td class="text-sm align-middle">
                         <div class="text-center col">
                           <p class="mb-0 text-xs font-weight-bold">물품량</p>
-                          <h6 class="mb-0 text-sm">{{ box.totalCount }}</h6>
+                          <h6 class="mb-0 text-sm">{{ box.total_count }}</h6>
                         </div>
                       </td>
                     </tr>
