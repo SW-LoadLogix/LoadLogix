@@ -169,7 +169,7 @@ public class GoodsService {
             }
 
             int cnt = 0;
-            for(int i = 0; i<loadTaskList.size(); i++){
+            for (int i = 0; i < loadTaskList.size(); i++) {
                 cnt += (int) goodsRepository.countByLoadTaskId(loadTaskList.get(i));
             }
             result.add(new TotalDayGoods(LocalDate.now().minusDays(day), cnt));
@@ -188,7 +188,7 @@ public class GoodsService {
                 return new GoodsOutputResponse(
                     area.getAreaName(),
                     good.getDetailAddress(),
-                    area.getWorker().getId(),
+                    area.getWorker().getName(),
                     good.getWeight(),
                     String.valueOf(good.getBoxType().getType()),
                     good.getCreatedAt());
@@ -197,20 +197,28 @@ public class GoodsService {
 
     @Transactional(readOnly = true)
     public List<GoodsOutputResponse> getLoadedGoodsList() {
-        List<GoodsEntity> goods = goodsRepository.findAllLoadedGoodsByCreatedAtIsToday();
-        return goods.stream()
-            .map(good -> {
-                BuildingEntity building = good.getBuilding();
-                AreaEntity area = areaRepository.findById(building.getArea().getId()).get();
+        List<Integer> loadTaskList = loadTaskRepository.findAllLoadTaskIdsByCreatedAtIsToday();
+        List<GoodsOutputResponse> result = new ArrayList<>();
 
-                return new GoodsOutputResponse(
+        for (int i = 0; i < loadTaskList.size(); i++) {
+            LoadTaskEntity loadTask = loadTaskRepository.findById(loadTaskList.get(i)).get();
+            List<GoodsEntity> goods = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
+                loadTaskList.get(i));
+
+            for (GoodsEntity good : goods) {
+                AreaEntity area = areaRepository.findById(good.getBuilding().getArea().getId())
+                    .get();
+                result.add(new GoodsOutputResponse(
                     area.getAreaName(),
                     good.getDetailAddress(),
-                    area.getWorker().getId(),
+                    area.getWorker().getName(),
                     good.getWeight(),
                     String.valueOf(good.getBoxType().getType()),
-                    good.getCreatedAt());
-            }).toList();
+                    loadTask.getCreatedAt()
+                ));
+            }
+        }
+        return result;
     }
 
     @Transactional(readOnly = true)
@@ -282,7 +290,7 @@ public class GoodsService {
             }
 
             int cnt = 0;
-            for(int i = 0; i<loadTaskList.size(); i++){
+            for (int i = 0; i < loadTaskList.size(); i++) {
                 cnt += (int) goodsRepository.countByLoadTaskId(loadTaskList.get(i));
             }
             result.add(new TotalDayGoods(LocalDate.now().minusDays(day), cnt));
