@@ -61,8 +61,9 @@ public class AdminController {
     }
 
     @PutMapping("/settings")
-    public Response<String> setAreaCount(@RequestBody AreaSettingRequest areaSettingRequest) {
-        return Response.success(areaService.setAreaCount(areaSettingRequest));
+    public Response<Void> setAreaCount(@RequestBody List<AreaSettingRequest> areaSettingRequest) {
+        areaService.setAreaCount(areaSettingRequest);
+        return Response.success();
     }
 
     @GetMapping("/racks")

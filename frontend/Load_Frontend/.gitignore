@@ -163,3 +163,4 @@ $RECYCLE.BIN/
 *../../.history/
 
 api_key.js
+.env

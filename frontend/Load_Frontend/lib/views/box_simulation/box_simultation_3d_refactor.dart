@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
@@ -85,7 +84,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   OverlayEntry? _overlayEntry;
 
-  three.MeshPhongMaterial selectedMaterial = three.MeshPhongMaterial({
+  three.MeshPhysicalMaterial  selectedMaterial = three.MeshPhysicalMaterial ({
     "color": 0xFFFFFFFF,
     "flatShading": true,
     "transparent": true,
@@ -278,7 +277,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       await material.preload();
       print("material3");
       objLoader.setMaterials(material);
-      object = await objLoader.loadAsync('/assets/3dmodels/3d-model.obj');
+      object = await objLoader.loadAsync('assets/models3d/3d-model.obj');
       print("object");
 
       for (var child in object.children) {
@@ -642,16 +641,18 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     // camera.lookAt(three.Vector3(11110, 11110, 11110));
 
     // controls
-    camera.lookAt(three.Vector3(1000, 0, 0)); // (0, 0, 0) 좌표를 바라보도록 설정
 
     controls = three_jsm.OrbitControls(camera, _globalKey);
-
+    controls.target.set(truckSize.x/2.0, 0, truckSize.z/2.0);// (0, 0, 0) 좌표를 바라보도록 설정
+    //controls.offset.set(truckSize.x/2.0, 0, truckSize.z/2.0);
     controls.update();
     //controls.listenToKeyEvents( window );
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 
-
-
+    //window.addEventListener('resize', render());
+    //window.addEventListener('resize', (event) {
+    //  renderTarget.setSize((MediaQuery.of(context).size.width * dpr).toInt(), (MediaQuery.of(context).size.height * dpr).toInt());
+    //});
 
 
     controls.enableDamping =  true; // an animation loop is required when either damping or auto-rotation are enabled
@@ -680,15 +681,30 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     // world
 
-    makeInstanced(geometry, 0.6);
+    makeInstanced(geometry, 0.8);
     initBox();
 
     var dirLight1 = three.DirectionalLight(0xffffff);
-    dirLight1.position.set(25, 25, 25);
+    dirLight1.position.set(400, 400, 400);
+    scene.add(dirLight1);
+
+    var dirLight3 = three.DirectionalLight(0xffffff);
+    dirLight3.position.set(-400, -400, -400);
+    scene.add(dirLight1);
+
+    var dirLight4 = three.DirectionalLight(0xffffff);
+    dirLight4.position.set(-400, 400, 400);
+    scene.add(dirLight1);
+
+    var dirLight5 = three.DirectionalLight(0xffffff);
+    dirLight5.position.set(400, -400, 400);
+    scene.add(dirLight1);
+    var dirLight6 = three.DirectionalLight(0xffffff);
+    dirLight5.position.set(400, 400, -400);
     scene.add(dirLight1);
 
     var dirLight2 = three.DirectionalLight(0x000000);
-    dirLight2.position.set(-25, -25, -25);
+    dirLight2.position.set(-400, -400, -400);
     scene.add(dirLight2);
 
     var ambientLight = three.AmbientLight(0x777777);
@@ -725,6 +741,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   }
 
   _onTick(Duration elapsed) {
+
+    //controls.dispose();
+
+    controls.update();
     animate();
   }
 
@@ -733,13 +753,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       return;
     }
     onTickBox();
-    camera.lookAt(three.Vector3(1000, 0, 0));
-    controls.update();
     render();
   }
 
   three.Vector3 randomVector3(double maxX, double maxY, double maxZ) {
     Random random = Random();
+
+    // 각 축에 대해 0과 최대값 사이의 랜덤한 값 생성
     double x = random.nextDouble() * maxX;
     double y = random.nextDouble() * maxY;
     double z = random.nextDouble() * maxZ;
@@ -770,6 +790,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
     selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
 
+    selectedMesh.renderOrder = 9999;
     geometry = adjustBoxGeometryPivot(geometry, -0.5, -0.5, -0.5);
     matrix = three.Matrix4();
 
@@ -791,6 +812,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           three.Vector3(2, 2, 2),
           gGoods[i].goodsId,
           gGoods[i].buildingId,
+          //numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
           numberMapping[gGoods[i].buildingId]!));
     }
 
@@ -826,7 +848,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     scene.add(transparentEdgeMesh);
   }
 
-  static double lastCheckTransparantValue = 60.0;
+  static double lastCheckTransparantValue = 80.0;
 
   void createVisualRay(
       three.Vector2 pointer, three.Camera camera, three.Scene scene) {
@@ -865,6 +887,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   int lastcheck = 0;
 
   void onTickBox() {
+    if (boxes.isEmpty)
+      return;
     if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;
@@ -906,11 +930,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       scene.remove(meshes[i]);
     }
 
+    //loadTruck();
+
     matrix = three.Matrix4();
     for (int i = 0; i < 21; i++) {
       meshes[i] = three.InstancedMesh(geometry, materials[i], boxes.length);
     }
-    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length);
+    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length + 1);
     transparentEdgeMesh =
         three.InstancedMesh(geometry, transparentEdgeMaterial, boxes.length);
 
@@ -939,7 +965,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     matrix.setPosition(0, 0, 0);
     matrix.compose(three.Vector3(0, 0, 0), quaternion, truckSize);
-    edgeMesh.setMatrixAt(0, matrix.clone());
+    edgeMesh.setMatrixAt(boxes.length, matrix.clone());
 
     three.Vector3 bottomPannelsize = truckSize.clone();
     bottomPannelsize.y = 0.5;
@@ -1055,7 +1081,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
                     selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
+                selectedMesh.renderOrder = 9999;
                 scene.add(selectedMesh);
+                selectedMesh.renderOrder = 9999;
                 selectedEdgeMesh.position.set(
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
