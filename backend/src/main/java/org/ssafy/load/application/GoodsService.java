@@ -188,7 +188,7 @@ public class GoodsService {
                 return new GoodsOutputResponse(
                     area.getAreaName(),
                     good.getDetailAddress(),
-                    area.getWorker().getId(),
+                    area.getWorker().getName(),
                     good.getWeight(),
                     String.valueOf(good.getBoxType().getType()),
                     good.getCreatedAt());
@@ -206,7 +206,7 @@ public class GoodsService {
                 return new GoodsOutputResponse(
                     area.getAreaName(),
                     good.getDetailAddress(),
-                    area.getWorker().getId(),
+                    area.getWorker().getName(),
                     good.getWeight(),
                     String.valueOf(good.getBoxType().getType()),
                     good.getCreatedAt());
