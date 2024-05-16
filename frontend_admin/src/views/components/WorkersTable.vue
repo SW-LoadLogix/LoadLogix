@@ -1,26 +1,17 @@
 <script setup>
 import { ref } from 'vue';
 import {
-  getLoadedGoods
+  getWorkers
 } from "@/api/dashboard.js";
 
-const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-  return formattedDate;
+const workers = ref([]);
+const getWorkersRequest = async () => {
+  const { data } = await getWorkers();
+  workers.value = data.result;
+  console.log(workers.value);
 };
 
-const goods = ref([]);
-const getLoadedGoodsRequest = async () => {
-  const { data } = await getLoadedGoods();
-  goods.value = data.result;
-  for (let i = 0; i < goods.value.length; i++) {
-    goods.value[i].created_at = formatTimestamp(goods.value[i].created_at);
-  }
-  console.log(goods.value);
-};
-
-getLoadedGoodsRequest();
+getWorkersRequest();
 </script>
 <template>
   <div class="card mb-4">
@@ -36,57 +27,55 @@ getLoadedGoodsRequest();
               <th
                 class="align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                구역
+                 담당 기사
               </th>
               <th
                 class="align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
               >
-                주소
+                구역
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                담당 기사
+                할당 받은 택배
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                무게
-              </th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                박스 타입
-              </th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                입고 시각
+                상태
               </th>
             </tr>
           </thead>
           <!-- 리스트 시작 -->
           <tbody>
-            <tr v-for="good in goods" :key="good.worker_id">
-              <!-- 구역 -->
-              <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.area_name}}</p>
-              </td>
-              <!-- 주소 -->
-              <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{ good.address }}</p>
-              </td>
+            <tr v-for="worker in workers" :key="worker.name">
               <!-- 담당 기사 -->
               <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.worker_name}}</p>
+                <div class="d-flex px-2 py-1 justify-content-center">
+                  <div>
+                    <img
+                      src="../../assets/img/team-2.jpg"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    <p class="text-sm font-weight-bold mb-0">{{worker.name}}</p>
+                  </div>
+                </div>
               </td>
-              <!-- 무게 -->
+              <!-- 구역 -->
               <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.weight}}g</p>
+                <p class="text-sm font-weight-bold mb-0">{{ worker.area_name }}</p>
               </td>
-              <!-- 박스 타입 -->
+              <!-- 할당 받은 택배 -->
               <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{ good.box_type }}</p>
+                <p class="text-sm font-weight-bold mb-0">{{worker.total_count}}개</p>
               </td>
-              <!-- 입고 시각 -->
+              <!-- 상태 -->
               <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.created_at}}</p>
+                <span v-if="worker.ready" class="badge badge-sm bg-gradient-success">준비 완료</span>
+                <span v-else class="badge badge-sm bg-gradient-secondary">대기</span>
               </td>
             </tr>
           </tbody>
