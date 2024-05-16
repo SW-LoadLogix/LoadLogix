@@ -74,7 +74,7 @@ getLoadedGoodsRequest();
               </td>
               <!-- 담당 기사 -->
               <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.worker_id}}</p>
+                <p class="text-sm font-weight-bold mb-0">{{good.worker_name}}</p>
               </td>
               <!-- 무게 -->
               <td class="align-middle text-center">
