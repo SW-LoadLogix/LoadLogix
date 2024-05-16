@@ -156,7 +156,8 @@ class _MainLandingPage extends State<MainLandingPage> {
               children: [
                 ImageSlider(
                   imageUrls: [
-                    'https://via.placeholder.com/900x800/618777',
+                    // 'https://via.placeholder.com/900x800/618777',
+                    'https://images.pexels.com/photos/4484155/pexels-photo-4484155.jpeg',
                     'https://via.placeholder.com/900x800/618777',
                     'https://via.placeholder.com/900x800/618777',
                     'https://via.placeholder.com/900x800/618777',
@@ -164,10 +165,14 @@ class _MainLandingPage extends State<MainLandingPage> {
                 ),
                 ResponsiveIconGrid(
                   icons: [
-                    IconWithTitle(icon: Icons.home, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.search, title: 'Bbbbb', description: 'Bbbbb 설명설명설명\n설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.settings, title: 'Ccccc', description: 'Ccccc 설명설명설명\n설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.account_circle, title: 'Dddddd', description: 'Dddddd 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.conveyor_belt, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.forklift, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.local_shipping, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.view_in_ar, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.home, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.search, title: 'Bbbbb', description: 'Bbbbb 설명설명설명\n설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.settings, title: 'Ccccc', description: 'Ccccc 설명설명설명\n설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.account_circle, title: 'Dddddd', description: 'Dddddd 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
                   ],
                 ),
                 ImageDescriptionWidget(

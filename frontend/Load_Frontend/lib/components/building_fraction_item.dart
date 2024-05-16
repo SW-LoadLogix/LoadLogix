@@ -39,7 +39,7 @@ class BuildingItem extends StatelessWidget {
               final String url =
                   "https://maps.googleapis.com/maps/api/streetview"
                   "?size=400x300"
-                  "&location=${building.longitude},${building.latitude}"
+                  "&location=${building.latitude},${building.longitude}"
                   "&fov=$fov"
                   "&heading=$heading"
                   "&pitch=$pitch"
