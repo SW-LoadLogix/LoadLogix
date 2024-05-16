@@ -250,18 +250,31 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송 상세 주소',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     )),
-                width: 300),
+                width: 350),
+            GridColumn(
+                columnName: 'box_type',
+                label: Container(
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '배송상자 타입',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                    )),
+                width: 160),
             GridColumn(
                 columnName: 'boxHeight',
                 label: Container(
                     padding: EdgeInsets.all(8),
                     alignment: Alignment.center,
                     child: Text(
-                      '높이',
+                      '배송상자 높이(cm)',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                width: 100,
+                width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
             GridColumn(
                 columnName: 'boxLength',
@@ -269,10 +282,11 @@ class _OrderTableState extends State<DeliveryTable> {
                     padding: EdgeInsets.all(8),
                     alignment: Alignment.center,
                     child: Text(
-                      '길이',
+                      '배송상자 길이(cm)',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                width: 100,
+                width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
             GridColumn(
                 columnName: 'boxWidth',
@@ -280,10 +294,11 @@ class _OrderTableState extends State<DeliveryTable> {
                     padding: EdgeInsets.all(8),
                     alignment: Alignment.center,
                     child: Text(
-                      '폭',
+                      '배송상자 폭(cm)',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                width: 100,
+                width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
             GridColumn(
                 columnName: 'weight',
@@ -291,8 +306,9 @@ class _OrderTableState extends State<DeliveryTable> {
                     padding: EdgeInsets.all(8),
                     alignment: Alignment.center,
                     child: Text(
-                      '택배 무게 (g)',
+                      '배송상자 무게(g)',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 autoFitPadding: EdgeInsets.all(16)  )
               //width: 100),
@@ -316,6 +332,7 @@ class OrderDataSource extends DataGridSource {
 
 
         ),
+        DataGridCell<String>(columnName: 'boxType', value: good.boxType),
         DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
         DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
         DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
