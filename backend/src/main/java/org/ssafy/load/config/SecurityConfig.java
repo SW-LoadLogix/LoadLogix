@@ -21,8 +21,18 @@ public class SecurityConfig {
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/worker/info");
         filterRegistrationBean.addUrlPatterns("/worker/ready");
-        filterRegistrationBean.addUrlPatterns("/goods/*");
         filterRegistrationBean.addUrlPatterns("/car/*");
+        filterRegistrationBean.addUrlPatterns("/goods/*");
+        filterRegistrationBean.addUrlPatterns("/path");
+        filterRegistrationBean.addUrlPatterns("/admin/good-counts");
+        filterRegistrationBean.addUrlPatterns("/admin/settings");
+        filterRegistrationBean.addUrlPatterns("/admin/racks");
+        filterRegistrationBean.addUrlPatterns("/admin/day-counts");
+        filterRegistrationBean.addUrlPatterns("/admin/goods");
+        filterRegistrationBean.addUrlPatterns("/admin/types");
+        filterRegistrationBean.addUrlPatterns("/admin/workers");
+        filterRegistrationBean.addUrlPatterns("/admin/loads");
+        filterRegistrationBean.addUrlPatterns("/admin/area");
         return filterRegistrationBean;
     }
 }
