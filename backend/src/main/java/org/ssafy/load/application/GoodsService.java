@@ -226,7 +226,7 @@ public class GoodsService {
         List<BoxTypeResponse> result = new ArrayList<>();
         for (int i = 1; i <= 6; i++) {
             BoxTypeEntity boxType = boxTypeRepository.findByType(BoxType.valueOf("L" + i)).get();
-            int count = (int) goodsRepository.countBoxTypeByCreatedAtIsToday(boxType.getId());
+            long count = goodsRepository.countBoxTypeByCreatedAtIsToday(boxType.getId());
             result.add(new BoxTypeResponse(
                     boxType.getId(),
                     String.valueOf(boxType.getType()),
