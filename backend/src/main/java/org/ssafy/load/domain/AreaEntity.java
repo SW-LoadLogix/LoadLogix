@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.ssafy.load.dto.request.AreaSettingRequest;
 
 import java.util.List;
 
@@ -44,8 +45,10 @@ public class AreaEntity {
         return new AreaEntity(id, areaName, conveyNo, count, worker, loadTaskEntities);
     }
 
-    public void updateArea(int count) {
-        this.count = count;
+    public void updateArea(AreaSettingRequest areaSettingRequest) {
+        this.areaName = areaSettingRequest.areaName();
+        this.conveyNo = areaSettingRequest.conveyNo();
+        this.count = areaSettingRequest.count();
     }
 
 }

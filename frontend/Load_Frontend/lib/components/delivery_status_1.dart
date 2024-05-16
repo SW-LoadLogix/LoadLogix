@@ -19,32 +19,39 @@ class DeliveryStatus1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        minHeight: 150.0, // 최소 높이 설정
+        minHeight: 170.0, // 최소 높이 설정
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "최신 적재일",
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: isHover ? Colors.white : primary),
+          Container(
+            width:  double.infinity,
+            child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "최신 적재일",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
+                      color: isHover ? Colors.white : primary),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "2024년 05월 07일",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isHover ? Colors.white : primary),
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "2024년 05월 07일",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: isHover ? Colors.white : primary),
-          ),
-          SizedBox(
-            height: 30,
-          ),
+
+
           GestureDetector(
             onTap: () async {
               print("배송대기 버튼 클릭");

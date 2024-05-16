@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
@@ -376,14 +376,14 @@ class _MyAppState extends State<FallingBoxSimulate>
 
   @override
   void initState() {
-    Uri uri = Uri.parse(window.location.href);
-    String? jsonData = uri.queryParameters['data'];
-
-    if (jsonData != null) {
-      Map<String, dynamic> jsonMap = jsonDecode(jsonData);
-      boxesContainer = BoxesContainer.fromJson(jsonMap);
-      isTestingDebug = true;
-    }
+    // Uri uri = Uri.parse(window.location.href);
+    // String? jsonData = uri.queryParameters['data'];
+    //
+    // if (jsonData != null) {
+    //   Map<String, dynamic> jsonMap = jsonDecode(jsonData);
+    //   boxesContainer = BoxesContainer.fromJson(jsonMap);
+    //   isTestingDebug = true;
+    // }
 
     super.initState();
     WidgetsBinding.instance.addObserver(this as WidgetsBindingObserver);

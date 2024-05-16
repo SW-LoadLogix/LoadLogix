@@ -17,11 +17,11 @@ defineProps({
 });
 </script>
 <template>
-  <div class="card">
+  <div class="card" style="height: 100%;">
     <div class="p-3 pb-0 card-header">
       <h6 class="mb-0">{{ title }}</h6>
     </div>
-    <div class="p-3 card-body">
+    <div class="p-3 card-body" style="overflow: auto;">
       <ul :class="`list-group`">
         <li
           v-for="(
