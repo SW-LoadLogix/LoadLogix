@@ -1,5 +1,7 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth";
 
 import SidenavItem from "./SidenavItem.vue";
 import SidenavCard from "./SidenavCard.vue";
@@ -8,6 +10,18 @@ const getRoute = () => {
   const route = useRoute();
   const routeArr = route.path.split("/");
   return routeArr[1];
+};
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const isLogin = computed(() => !!authStore.token);
+
+const logout = () => {
+  if (!confirm('로그아웃 하시겠습니까?')) return;
+    authStore.logout();
+    console.log('로그아웃');
+    router.push({ path: '/' });
 };
 </script>
 <template>
@@ -52,11 +66,23 @@ const getRoute = () => {
         </h6>
       </li>
 
-      <li class="nav-item">
+      <li v-if="!isLogin" class="nav-item">
         <sidenav-item
           to="/signin"
           :class="getRoute() === 'signin' ? 'active' : ''"
-          :navText="'Sign In'"
+          :navText="'Login'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li v-else class="nav-item">
+        <sidenav-item
+          to="/"
+          :class="getRoute() === 'signin' ? 'active' : ''"
+          :navText="'Logout'"
+          @click="logout()"
         >
           <template v-slot:icon>
             <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
@@ -64,7 +90,7 @@ const getRoute = () => {
         </sidenav-item>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-item
           to="/signup"
           :class="getRoute() === 'signup' ? 'active' : ''"
@@ -74,7 +100,7 @@ const getRoute = () => {
             <i class="ni ni-collection text-info text-sm opacity-10"></i>
           </template>
         </sidenav-item>
-      </li>
+      </li> -->
     </ul>
   </div>
 
