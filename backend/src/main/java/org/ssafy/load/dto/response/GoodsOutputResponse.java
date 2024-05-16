@@ -7,8 +7,8 @@ public record GoodsOutputResponse(
     @JsonProperty("area_name")
     String areaName,
     String address,
-    @JsonProperty("worker_id")
-    Long workerId,
+    @JsonProperty("worker_name")
+    String workerName,
     int weight,
     @JsonProperty("box_type")
     String boxType,
