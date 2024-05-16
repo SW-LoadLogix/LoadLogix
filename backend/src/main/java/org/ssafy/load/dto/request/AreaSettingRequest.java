@@ -1,9 +1,15 @@
 package org.ssafy.load.dto.request;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record AreaSettingRequest(
-    List<Integer> count
+        @JsonProperty("area_id")
+        int areaId,
+        @JsonProperty("area_name")
+        String areaName,
+        @JsonProperty("convey_no")
+        int conveyNo,
+        int count
 ) {
 
 }

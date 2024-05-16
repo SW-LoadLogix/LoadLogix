@@ -1,3 +1,4 @@
+//import 'dart:html';
 import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
@@ -84,12 +85,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   OverlayEntry? _overlayEntry;
 
-  three.MeshPhongMaterial selectedMaterial = three.MeshPhongMaterial({
+  three.MeshPhysicalMaterial  selectedMaterial = three.MeshPhysicalMaterial ({
     "color": 0xFFFFFFFF,
     "flatShading": true,
     "transparent": true,
     "opacity": 0.8,
     "depthTest": false,
+    //'renderOrder': 1,
     //'vertexColors': true,
   });
   three.BoxGeometry selectedGeometry = three.BoxGeometry(1, 1, 1);
@@ -277,7 +279,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       await material.preload();
       print("material3");
       objLoader.setMaterials(material);
-      object = await objLoader.loadAsync('/assets/3dmodels/3d-model.obj');
+      object = await objLoader.loadAsync('assets/models3d/3d-model.obj');
       print("object");
 
       for (var child in object.children) {
@@ -413,6 +415,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   void _handleKeyEvent(KeyEvent event) {
     if (event.runtimeType == KeyDownEvent) {
+      return;
       double increment = 10; // 이동 거리 설정
 
       setState(() {
@@ -632,16 +635,29 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     //scene.fog = three.FogExp2(0xcccccc, 0.002);
 
     camera = three.PerspectiveCamera(60, width / height, 1, 20000000);
+
     camera.position.set(450, 200, 340);
+
+
+    //
+    // camera.lookAt(three.Vector3(11110, 11110, 11110));
 
     // controls
 
     controls = three_jsm.OrbitControls(camera, _globalKey);
+    controls.target.set(truckSize.x/2.0, 0, truckSize.z/2.0);// (0, 0, 0) 좌표를 바라보도록 설정
+    //controls.offset.set(truckSize.x/2.0, 0, truckSize.z/2.0);
+    controls.update();
     //controls.listenToKeyEvents( window );
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 
-    controls.enableDamping =
-        true; // an animation loop is required when either damping or auto-rotation are enabled
+    //window.addEventListener('resize', render());
+    //window.addEventListener('resize', (event) {
+    //  renderTarget.setSize((MediaQuery.of(context).size.width * dpr).toInt(), (MediaQuery.of(context).size.height * dpr).toInt());
+    //});
+
+
+    controls.enableDamping =  true; // an animation loop is required when either damping or auto-rotation are enabled
     controls.dampingFactor = 0.05;
 
     controls.screenSpacePanning = false;
@@ -650,6 +666,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     controls.maxDistance = 20000000;
 
     controls.maxPolarAngle = three.Math.pi / 2;
+
+    // controls.addEventListener('change', (_) {
+    //   renderer!.render(scene, camera);
+    // });
 
     // var floorGeometry = three.PlaneGeometry(10000, 10000); // 크기는 필요에 맞게 조절
     // var floorMaterial = three.MeshPhongMaterial({
@@ -663,15 +683,30 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     // world
 
-    makeInstanced(geometry, 0.6);
+    makeInstanced(geometry, 0.8);
     initBox();
 
     var dirLight1 = three.DirectionalLight(0xffffff);
-    dirLight1.position.set(25, 25, 25);
+    dirLight1.position.set(400, 400, 400);
+    scene.add(dirLight1);
+
+    var dirLight3 = three.DirectionalLight(0xffffff);
+    dirLight3.position.set(-400, -400, -400);
+    scene.add(dirLight1);
+
+    var dirLight4 = three.DirectionalLight(0xffffff);
+    dirLight4.position.set(-400, 400, 400);
+    scene.add(dirLight1);
+
+    var dirLight5 = three.DirectionalLight(0xffffff);
+    dirLight5.position.set(400, -400, 400);
+    scene.add(dirLight1);
+    var dirLight6 = three.DirectionalLight(0xffffff);
+    dirLight5.position.set(400, 400, -400);
     scene.add(dirLight1);
 
     var dirLight2 = three.DirectionalLight(0x000000);
-    dirLight2.position.set(-25, -25, -25);
+    dirLight2.position.set(-400, -400, -400);
     scene.add(dirLight2);
 
     var ambientLight = three.AmbientLight(0x777777);
@@ -708,6 +743,10 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   }
 
   _onTick(Duration elapsed) {
+
+    //controls.dispose();
+
+    controls.update();
     animate();
   }
 
@@ -721,8 +760,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   three.Vector3 randomVector3(double maxX, double maxY, double maxZ) {
     Random random = Random();
-
-    // 각 축에 대해 0과 최대값 사이의 랜덤한 값 생성
     double x = random.nextDouble() * maxX;
     double y = random.nextDouble() * maxY;
     double z = random.nextDouble() * maxZ;
@@ -741,7 +778,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       }
     }
 
-    return mapping; // 매핑 결과 반환
+    return mapping;
   }
 
   Map<int, int> numberMapping = {};
@@ -753,6 +790,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         adjustBoxGeometryPivot(selectedGeometry, -0.5, -0.5, -0.5);
     selectedMesh = three.Mesh(selectedGeometry, selectedMaterial);
 
+    selectedMesh.renderOrder = 9999;
     geometry = adjustBoxGeometryPivot(geometry, -0.5, -0.5, -0.5);
     matrix = three.Matrix4();
 
@@ -774,7 +812,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           three.Vector3(2, 2, 2),
           gGoods[i].goodsId,
           gGoods[i].buildingId,
-          //numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
           numberMapping[gGoods[i].buildingId]!));
     }
 
@@ -810,44 +847,33 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     scene.add(transparentEdgeMesh);
   }
 
-  static double lastCheckTransparantValue = 60.0;
+  static double lastCheckTransparantValue = 80.0;
 
   void createVisualRay(
       three.Vector2 pointer, three.Camera camera, three.Scene scene) {
-    // 광선 생성자 설정
     three.Raycaster raycaster = three.Raycaster();
     raycaster.setFromCamera(pointer, camera);
 
-    // 광선의 시작점과 끝점을 설정 (시작점은 카메라 위치, 끝점은 광선의 방향을 이용)
     three.Vector3 start = camera.position;
     three.Vector3 end = raycaster.ray.direction
         .clone()
         .multiplyScalar(500)
         .add(camera.position);
-
-    // 선 기하 생성
     three.BufferGeometry geometry = three.BufferGeometry();
     List<double> vertices = [start.x, start.y, start.z, end.x, end.y, end.z];
     geometry.setAttribute('position',
         three.Float32BufferAttribute(Float32Array.from(vertices), 3));
-
-    // 선 재질 설정
     three.LineBasicMaterial material =
         three.LineBasicMaterial({'color': 0xff0000});
 
-    // 선 객체 생성
     three.Line line = three.Line(geometry, material);
-
-    // 씬에 선 추가
     scene.add(line);
   }
 
   three.Vector2 worldToScreen(three.Vector3 worldCoords, three.Camera camera,
       double screenWidth, double screenHeight) {
-    // 월드 좌표를 카메라 관점의 좌표로 변환
     worldCoords.project(camera);
 
-    // 변환된 좌표를 스크린 좌표로 매핑
     return three.Vector2((worldCoords.x + 1) * screenWidth / 2,
         -(worldCoords.y - 1) * screenHeight / 2);
   }
@@ -860,6 +886,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   int lastcheck = 0;
 
   void onTickBox() {
+
     if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;
@@ -877,7 +904,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         SimulBox currentBox = boxes[gCurrentBoxIndex];
         currentBox.update();
         if (currentBox.isDone && gCurrentBoxIndex < boxes.length) {
-          gCurrentBoxIndex++; // 현재 상자 완료 시 다음 상자 시작
+          gCurrentBoxIndex++;
         }
       }
     } else {
@@ -888,7 +915,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         SimulBox currentBox = boxes[gCurrentBoxIndex];
         currentBox.update();
         if (currentBox.isDone && gCurrentBoxIndex >= 0) {
-          gCurrentBoxIndex--; // 현재 상자 완료 시 다음 상자 시작
+          gCurrentBoxIndex--;
         }
       }
     }
@@ -901,13 +928,11 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       scene.remove(meshes[i]);
     }
 
-    //loadTruck();
-
     matrix = three.Matrix4();
     for (int i = 0; i < 21; i++) {
       meshes[i] = three.InstancedMesh(geometry, materials[i], boxes.length);
     }
-    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length);
+    edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length + 1);
     transparentEdgeMesh =
         three.InstancedMesh(geometry, transparentEdgeMaterial, boxes.length);
 
@@ -936,7 +961,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     matrix.setPosition(0, 0, 0);
     matrix.compose(three.Vector3(0, 0, 0), quaternion, truckSize);
-    edgeMesh.setMatrixAt(0, matrix.clone());
+    edgeMesh.setMatrixAt(boxes.length, matrix.clone());
 
     three.Vector3 bottomPannelsize = truckSize.clone();
     bottomPannelsize.y = 0.5;
@@ -1044,6 +1069,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                       "side": three.DoubleSide,
                       'depthTest': false, // 깊이 테스트 비활성화
                       'depthWrite': false, // 깊이 버퍼에 쓰기 비활성화
+                      'wireframeLinewidth':10,
                       // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
                     }));
 
@@ -1052,7 +1078,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
                     selectedBox.currPosition.z + selectedBox.boxSize.z / 2.0);
+                selectedMesh.renderOrder = 9999;
                 scene.add(selectedMesh);
+                selectedMesh.renderOrder = 9999;
                 selectedEdgeMesh.position.set(
                     selectedBox.currPosition.x + selectedBox.boxSize.x / 2.0,
                     selectedBox.currPosition.y + selectedBox.boxSize.y / 2.0,
@@ -1067,31 +1095,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
             }
           }
         }
-
-        // if (found){
-        //   print (intersectedObject.name);
-        //   print (intersectedObject.toString());
-        //
-        //
-        //   clickedObject = intersectedObject.clone();// as three.InstancedMesh;
-        //
-        //   clickedObject.material = three.MeshPhongMaterial({
-        //     "color": 0xFF000000,
-        //     "flatShading": true,
-        //     "transparent": false,
-        //     //"opacity": 1.0,
-        //     //"wireframe": true,
-        //   });
-        //   //clickedObject.position.set(clickedObject.position.x, clickedObject.position.y + 1, clickedObject.position.z);
-        //   scene.add(clickedObject);
-        // }
-
-        //= intersects[1].object;
-
-        //scene.remove(intersectedObject);
-        // Now you can do something with the selected object
-        //print("Box clicked: ${intersectedObject.userData['id']}");
-        // Perform any other actions you need on the clicked object
       }
     }
 
@@ -1099,7 +1102,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       lastcheck = gCurrentBoxIndex;
       Provider.of<BoxStore>(context, listen: false)
           .setEveryThing(gCurrentBoxIndex, gBoxCount);
-    } //Overlay.of(context).
-    // _overlayEntry.
+    }
   }
 }

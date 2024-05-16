@@ -28,6 +28,12 @@ class HomePage extends StatelessWidget {
                     const ListTile(title: Text("나중에 바뀔겁니다.")),
                     ElevatedButton(
                       onPressed: () {
+                        AutoRouter.of(context).push(MainLandingRoute());
+                      },
+                      child: const Text('메인랜딩 페이지'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
                         AutoRouter.of(context).push(SignInUpRoute());
                       },
                       child: const Text('로그인 페이지로 이동'),

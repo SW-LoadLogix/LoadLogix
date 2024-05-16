@@ -15,8 +15,11 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
-    RedirectRoute(path: '/', redirectTo: '/home'),
-    AutoRoute(path: '/home',page: HomeRoute.page,initial: true),
+    //RedirectRoute(path: '/', redirectTo: '/home'),
+    AutoRoute(path: '/home',page: HomeRoute.page,initial: false),
+
+    RedirectRoute(path: '/', redirectTo: '/landing'),
+    AutoRoute(path: '/landing',page: MainLandingRoute.page, initial:  true),
     AutoRoute(
         path: '/dashboard',
         page: DashboardRoute.page
@@ -25,6 +28,7 @@ class AppRouter extends _$AppRouter {
         path: '/dashboard-simulation3d',
         page: DashboardSimulation3dRoute.page
     ),
+
     AutoRoute(path: '/sign-in-up',page: SignInUpRoute.page),
     AutoRoute(path: '/delivery-list',page: DeliveryListRoute.page),
     AutoRoute(path: '/set-truck-specifications',page: SetTruckSpecificationRoute.page),
