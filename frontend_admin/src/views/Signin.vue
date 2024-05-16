@@ -1,6 +1,9 @@
 <script setup>
+import { ref } from "vue";
 import { onBeforeUnmount, onBeforeMount } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth";
 import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
@@ -22,6 +25,23 @@ onBeforeUnmount(() => {
   store.state.showFooter = true;
   body.classList.add("bg-gray-100");
 });
+
+const authStore = useAuthStore();
+const router = useRouter();
+const loginRequest = ref({
+  id: "",
+  password: "",
+});
+
+const login = async () => {
+  try {
+    await authStore.login(loginRequest.value);
+    router.push("/");
+  } catch (error) {
+    console.log("로그인 실패 에러:", error);
+    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+  }
+};
 </script>
 <template>
   <div class="container top-0 position-sticky z-index-sticky">
@@ -45,18 +65,19 @@ onBeforeUnmount(() => {
             >
               <div class="card card-plain">
                 <div class="pb-0 card-header text-start">
-                  <h4 class="font-weight-bolder">Sign In</h4>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <h4 class="font-weight-bolder">관리자 로그인</h4>
+                  <p class="mb-0">아이디와 비밀번호를 입력하세요</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" @submit.prevent="login">
                     <div class="mb-3">
                       <argon-input
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
+                        id="id"
+                        type="id"
+                        placeholder="ID"
+                        name="id"
                         size="lg"
+                        v-model="loginRequest.id"
                       />
                     </div>
                     <div class="mb-3">
@@ -66,6 +87,7 @@ onBeforeUnmount(() => {
                         placeholder="Password"
                         name="password"
                         size="lg"
+                        v-model="loginRequest.password"
                       />
                     </div>
                     <argon-switch id="rememberMe" name="remember-me"
@@ -79,20 +101,11 @@ onBeforeUnmount(() => {
                         color="success"
                         fullWidth
                         size="lg"
-                        >Sign in</argon-button
+                        type="submit"
+                        >로그인</argon-button
                       >
                     </div>
                   </form>
-                </div>
-                <div class="px-1 pt-0 text-center card-footer px-lg-2">
-                  <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
-                    <a
-                      href="javascript:;"
-                      class="text-success text-gradient font-weight-bold"
-                      >Sign up</a
-                    >
-                  </p>
                 </div>
               </div>
             </div>
