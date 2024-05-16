@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #responsive_framework: ^1.4.0
+  responsive_framework: ^1.4.0
   animations: ^2.0.11
   sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
@@ -38,6 +38,8 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   google_maps_flutter_web: ^0.5.7
   syncfusion_flutter_charts: ^25.2.3+1
+  carousel_slider: ^4.2.1
+  visibility_detector: ^0.4.0+2
 
 
 
@@ -54,7 +56,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/3dmodels/3d-model.obj
+    - assets/models3d/3d-model.obj
     - assets/textures/truck.mtl
 
     - assets/gif/트럭시뮬gif.gif

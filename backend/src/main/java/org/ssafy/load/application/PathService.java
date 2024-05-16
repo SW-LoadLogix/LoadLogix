@@ -11,7 +11,7 @@ import org.ssafy.load.dao.PathTimeRepository;
 import org.ssafy.load.dao.WorkerRepository;
 import org.ssafy.load.domain.*;
 import org.ssafy.load.dto.response.PathResponse;
-import org.ssafy.load.util.PathOrderCal;
+import org.ssafy.load.util.PathOrderCalV2;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ public class PathService {
             pathTImeMatrix[desBuildingNum][srcBuildingNum] = pathTimeEntity.getDuration();
         }
 
-        PathOrderCal pathOrderCal = new PathOrderCal(pathTImeMatrix, size, buildingEntityList);
+        PathOrderCalV2 pathOrderCal = new PathOrderCalV2(pathTImeMatrix, size, buildingEntityList);
         return pathOrderCal.getPathOrder();
     }
 

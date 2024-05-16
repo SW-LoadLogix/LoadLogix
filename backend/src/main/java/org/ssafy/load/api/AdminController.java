@@ -61,12 +61,18 @@ public class AdminController {
     }
 
     @PutMapping("/settings")
-    public Response<String> setAreaCount(@RequestBody AreaSettingRequest areaSettingRequest) {
-        return Response.success(areaService.setAreaCount(areaSettingRequest));
+    public Response<Void> setAreaCount(@RequestBody List<AreaSettingRequest> areaSettingRequest) {
+        areaService.setAreaCount(areaSettingRequest);
+        return Response.success();
     }
 
     @GetMapping("/racks")
     public Response<List<RackStoreCountResponse>> getRackStoreGoodsCount(){
         return Response.success(goodsService.getRackStoreGoodsCount());
+    }
+
+    @GetMapping("/area")
+    public Response<List<AreaResponse>> getAreaInfo(){
+        return Response.success(areaService.getAreaInfo());
     }
 }

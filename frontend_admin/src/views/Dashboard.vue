@@ -4,55 +4,124 @@ import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import Carousel from "./components/Carousel.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 
-import US from "@/assets/img/icons/flags/US.png";
-import DE from "@/assets/img/icons/flags/DE.png";
-import GB from "@/assets/img/icons/flags/GB.png";
-import BR from "@/assets/img/icons/flags/BR.png";
+import L1 from "@/assets/img/boxes/L1.png";
+import L2 from "@/assets/img/boxes/L2.png";
+import L3 from "@/assets/img/boxes/L3.png";
+import L4 from "@/assets/img/boxes/L4.png";
+import L5 from "@/assets/img/boxes/L5.png";
+import L6 from "@/assets/img/boxes/L6.png";
+
 
 // import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 
+import { ref } from 'vue';
+import {
+  getGoodsCount, 
+  getDayGoodsCount,
+  getGoodsCountByBoxType,
+  getRackStoreGoodsCount,
+  initialSet,
+  getAreaInfo
+} from "@/api/dashboard.js";
 
-// // Todo api 테스트 , 테스트 후 삭제
-//import { onMounted } from 'vue';
-// import {getGoodsCount} from "@/api/dashboard.js";
+const totalGoods = ref(0);
+const enterGoods = ref(0);
+const releaseGoods = ref(0);
+const updateTime = ref(0);
 
-// onMounted(async () => {
-//   const { data } = await getGoodsCount();
-//   console.log(data);
-// });
-// ////////
+const chartData = ref({
+  labels: [],
+  datasets: []
+});
+let isLoadingChart = ref(false);
+let isLoadingBoxes = ref(false);
+let isLoadingStorage = ref(false);
+let isLoadingArea = ref(false);
 
-const sales = {
-  us: {
-    country: "United States",
-    sales: 2500,
-    value: "$230,900",
-    bounce: "29.9%",
-    flag: US,
-  },
-  germany: {
-    country: "Germany",
-    sales: "3.900",
-    value: "$440,000",
-    bounce: "40.22%",
-    flag: DE,
-  },
-  britain: {
-    country: "Great Britain",
-    sales: "1.400",
-    value: "$190,700",
-    bounce: "23.44%",
-    flag: GB,
-  },
-  brasil: {
-    country: "Brasil",
-    sales: "562",
-    value: "$143,960",
-    bounce: "32.14%",
-    flag: BR,
-  },
+
+const boxTypes = {
+  L1,L2,L3,L4,L5,L6
 };
+
+let boxes = [];
+let storage = [];
+let areaInfos = [];
+
+function transformToChartData(inputData) {
+  if (!inputData || !Array.isArray(inputData.amount)) {
+    return {
+      labels: [],
+      datasets: []
+    };
+  }
+
+  return {
+    labels: inputData.amount.map(item => item.date),
+    datasets: [
+      {
+        label: '출고량',
+        data: inputData.amount.map(item => item.total),
+      },
+    ],
+  };
+}
+
+function transformToStorageData(inputDataArray) {
+  return inputDataArray.map(inputData => ({
+    icon: {
+      component: 'ni ni-app',
+      background: 'dark',
+    },
+    label: `${inputData.rackLine}번 저장소` ,
+    description: `실시간 저장 물품 : ${inputData.totalCount}`,
+  }));
+}
+
+
+const getGoodsCountRequest = async () => {
+  // 물품 조회
+  const { data } = await getGoodsCount();
+  totalGoods.value = data.result.totalCount;
+  enterGoods.value = data.result.storeCount;
+  releaseGoods.value = data.result.loadCount;
+  updateTime.value = new Date().toLocaleTimeString();
+};
+
+const getDailyGoodsCountRequest = async () => {
+  const {data} = await getDayGoodsCount();
+  chartData.value = transformToChartData(data.result);
+  isLoadingChart.value = true;
+};
+
+const getBoxTypeRequest = async () => {
+  const {data} = await getGoodsCountByBoxType();
+  boxes = data.result;
+  isLoadingBoxes.value = true;
+};
+
+const getGoodsPerStoreRequest = async () => {
+  const {data} = await getRackStoreGoodsCount();
+  storage = transformToStorageData(data.result);
+  isLoadingStorage.value = true;
+}
+
+const setReleaseCountRequest = async () => {
+  await initialSet(areaInfos);
+}
+
+const getAreaInfoRequest = async () => {
+  const {data} = await getAreaInfo();
+  areaInfos = data.result;
+  isLoadingArea.value = true;
+}
+getGoodsCountRequest();
+getDailyGoodsCountRequest();
+getBoxTypeRequest();
+getGoodsPerStoreRequest();
+getAreaInfoRequest();
+
+
 </script>
 <template>
   <div class="py-4 container-fluid">
@@ -61,11 +130,9 @@ const sales = {
         <div class="row">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Today's Money"
-              value="$53,000"
-              description="<span
-                class='text-sm font-weight-bolder text-success'
-                >+55%</span> since yesterday"
+              title="TOTAL GOODS"
+              :value='`${totalGoods} 개`'
+              description="실시간 전체 물품 개수"
               :icon="{
                 component: 'ni ni-money-coins',
                 background: 'bg-gradient-primary',
@@ -75,11 +142,11 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Today's Users"
-              value="2,300"
-              description="<span
+              title="WAREHOUSING"
+              :value='`${enterGoods} 개`'
+              description="실시간<span
                 class='text-sm font-weight-bolder text-success'
-                >+3%</span> since last week"
+                >입고</span> 물품 개수"
               :icon="{
                 component: 'ni ni-world',
                 background: 'bg-gradient-danger',
@@ -89,11 +156,11 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="New Clients"
-              value="+3,462"
-              description="<span
+              title="Release Goods"
+              :value='`${releaseGoods} 개`'
+              description="실시간 <span
                 class='text-sm font-weight-bolder text-danger'
-                >-2%</span> since last quarter"
+                >출고</span> 물품 개수"
               :icon="{
                 component: 'ni ni-paper-diploma',
                 background: 'bg-gradient-success',
@@ -103,11 +170,9 @@ const sales = {
           </div>
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
-              title="Sales"
-              value="$103,430"
-              description="<span
-                class='text-sm font-weight-bolder text-success'
-                >+5%</span> than last month"
+              title="Update Time"
+              :value='`${updateTime}`'
+              description="물류 공장 현황 반영 시간"
               :icon="{
                 component: 'ni ni-cart',
                 background: 'bg-gradient-warning',
@@ -119,31 +184,12 @@ const sales = {
         <div class="row">
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
-            <div class="card z-index-2">
+            <div class="card z-index-2" v-if="isLoadingChart">
               <gradient-line-chart
                 id="chart-line"
-                title="Sales Overview"
-                description="<i class='fa fa-arrow-up text-success'></i>
-      <span class='font-weight-bold'>4% more</span> in 2021"
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: [
-                    {
-                      label: 'Mobile Apps',
-                      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    },
-                  ],
-                }"
+                title="Daily Shipping Volume"
+                description="물류 공장의 실시간 일별 출고량"
+                :chart=chartData
               />
             </div>
           </div>
@@ -151,47 +197,53 @@ const sales = {
             <carousel />
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4" v-if="isLoadingBoxes">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">
               <div class="p-3 pb-0 card-header">
                 <div class="d-flex justify-content-between">
-                  <h6 class="mb-2">Sales by Country</h6>
+                  <h6 class="mb-2">규격 별 물품 수</h6>
                 </div>
               </div>
               <div class="table-responsive">
                 <table class="table align-items-center">
                   <tbody>
-                    <tr v-for="(sale, index) in sales" :key="index">
+                    <tr v-for="(box, index) in boxes" :key="index">
                       <td class="w-30">
                         <div class="px-2 py-1 d-flex align-items-center">
                           <div>
-                            <img :src="sale.flag" alt="Country flag" />
+                            <img  style="max-width: 100px;" :src="boxTypes[box.type]" alt="Country flag" />
                           </div>
                           <div class="ms-4">
                             <p class="mb-0 text-xs font-weight-bold">
-                              Country:
+                              포장재 규격
                             </p>
-                            <h6 class="mb-0 text-sm">{{ sale.country }}</h6>
+                            <h6 class="mb-0 text-sm">{{ box.type }}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="text-center">
-                          <p class="mb-0 text-xs font-weight-bold">Sales:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.sales }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">너비</p>
+                          <h6 class="mb-0 text-sm">{{ box.width }}</h6>
                         </div>
                       </td>
                       <td>
                         <div class="text-center">
-                          <p class="mb-0 text-xs font-weight-bold">Value:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.value }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">높이</p>
+                          <h6 class="mb-0 text-sm">{{ box.height }}</h6>
                         </div>
                       </td>
                       <td class="text-sm align-middle">
                         <div class="text-center col">
-                          <p class="mb-0 text-xs font-weight-bold">Bounce:</p>
-                          <h6 class="mb-0 text-sm">{{ sale.bounce }}</h6>
+                          <p class="mb-0 text-xs font-weight-bold">길이</p>
+                          <h6 class="mb-0 text-sm">{{ box.length }}</h6>
+                        </div>
+                      </td>
+                      <td class="text-sm align-middle">
+                        <div class="text-center col">
+                          <p class="mb-0 text-xs font-weight-bold">물품량</p>
+                          <h6 class="mb-0 text-sm">{{ box.totalCount }}</h6>
                         </div>
                       </td>
                     </tr>
@@ -200,83 +252,39 @@ const sales = {
               </div>
             </div>
           </div>
-          <div class="col-lg-5">
-            <categories-list
-              :categories="[
-                {
-                  icon: {
-                    component: 'ni ni-mobile-button',
-                    background: 'dark',
-                  },
-                  label: 'Devices',
-                  description: '250 in stock <strong>346+ sold</strong>',
-                },
-                {
-                  icon: {
-                    component: 'ni ni-tag',
-                    background: 'dark',
-                  },
-                  label: 'Tickets',
-                  description: '123 closed <strong>15 open</strong>',
-                },
-                {
-                  icon: { component: 'ni ni-box-2', background: 'dark' },
-                  label: 'Error logs',
-                  description: '1 is active <strong>40 closed</strong>',
-                },
-                {
-                  icon: { component: 'ni ni-satisfied', background: 'dark' },
-                  label: 'Happy Users',
-                  description: '+ 430',
-                },
-              ]"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="py-4 container-fluid">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Profile</p>
-                <argon-button color="success" size="sm" class="ms-auto"
-                  >Settings</argon-button
-                >
+          <div class="col-lg-5" style="height: 305px;" v-if=isLoadingStorage>
+              <categories-list
+                title = "실시간 물류 창고 저장소 현황"
+                :categories=storage
+              />
+            <div class="py-4">
+            <div class="row">
+              <div class="col-md-12" style="height: 350px;">
+                <div class="card" style="height: 100%;">
+                  <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">
+                      <p class="mb-0" style="font-weight: 900;">구역 당 물품 할당</p>
+                      <argon-button @click="setReleaseCountRequest" color="success" size="sm" class="ms-auto"
+                        >SAVE</argon-button>
+                    </div>
+                  </div>
+                  <div class="card-body" v-if="isLoadingArea" style="overflow: auto;">
+                    <div class="row-md-12" v-for="(area, index) in areaInfos" :key="index" style="display: flex; align-items: center; gap: 10px;">
+                      
+                        <label style="flex: 1; margin: 10px 0;" for="example-text-input" class="form-control-label">{{area.area_name}}</label>
+                        <input style="flex: 1; margin: 10px 10px 10px 0;" class="form-control" type="text" :value=area.count v-model="area.count" />
+                        <label style="flex: 1.5; margin: 10px 0;" for="example-text-input" class="form-control-label">Convey-Line</label>
+                        <input style="flex: 0.5; margin: 10px 0;" class="form-control" type="text" :value=area.convey_no v-model="area.convey_no" />
+                      
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="card-body">
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Username</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Email address</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >First name</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Last name</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-            </div>
           </div>
-
-        </div>
-
+        
+          </div>
+         </div>
       </div>
     </div>
   </div>
