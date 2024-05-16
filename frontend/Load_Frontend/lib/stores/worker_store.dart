@@ -11,11 +11,11 @@ class WorkerStore extends ChangeNotifier {
 
   WorkerInfoData workerInfo = WorkerInfoData(
   name : "a",
-  areaName : 'b',
-  conveyNo : 3,
-  carHeight: 4,
-  carLength: 5,
-  carWidth:6,
+  areaName : 'bbbbbbbbb',
+  conveyNo : 333,
+  carHeight: 400,
+  carLength: 500,
+  carWidth: 600,
   );
   bool isWorkerReady = false;
 

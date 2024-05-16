@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
@@ -91,7 +90,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     "transparent": true,
     "opacity": 0.8,
     "depthTest": false,
-    //'renderOrder': 1,
     //'vertexColors': true,
   });
   three.BoxGeometry selectedGeometry = three.BoxGeometry(1, 1, 1);
@@ -760,6 +758,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   three.Vector3 randomVector3(double maxX, double maxY, double maxZ) {
     Random random = Random();
+
+    // 각 축에 대해 0과 최대값 사이의 랜덤한 값 생성
     double x = random.nextDouble() * maxX;
     double y = random.nextDouble() * maxY;
     double z = random.nextDouble() * maxZ;
@@ -812,6 +812,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           three.Vector3(2, 2, 2),
           gGoods[i].goodsId,
           gGoods[i].buildingId,
+          //numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
           numberMapping[gGoods[i].buildingId]!));
     }
 
@@ -886,7 +887,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   int lastcheck = 0;
 
   void onTickBox() {
-
+    if (boxes.isEmpty)
+      return;
     if (lastCheckTransparantValue != transparencyValuePercent) {
       for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;
@@ -927,6 +929,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     for (int i = 0; i < 21; i++) {
       scene.remove(meshes[i]);
     }
+
+    //loadTruck();
 
     matrix = three.Matrix4();
     for (int i = 0; i < 21; i++) {
@@ -1069,7 +1073,6 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
                       "side": three.DoubleSide,
                       'depthTest': false, // 깊이 테스트 비활성화
                       'depthWrite': false, // 깊이 버퍼에 쓰기 비활성화
-                      'wireframeLinewidth':10,
                       // 'renderOrder': 1000  // 다른 객체들보다 나중에 렌더링되도록 순서 설정
                     }));
 

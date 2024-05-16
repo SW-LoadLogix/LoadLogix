@@ -34,6 +34,7 @@ const chartData = ref({
   labels: [],
   datasets: []
 });
+let isLoadingCount = ref(false);
 let isLoadingChart = ref(false);
 let isLoadingBoxes = ref(false);
 let isLoadingStorage = ref(false);
@@ -73,8 +74,8 @@ function transformToStorageData(inputDataArray) {
       component: 'ni ni-app',
       background: 'dark',
     },
-    label: `${inputData.rackLine}번 저장소` ,
-    description: `실시간 저장 물품 : ${inputData.totalCount}`,
+    label: `${inputData.rack_line}번 저장소` ,
+    description: `실시간 저장 물품 : ${inputData.total_count}`,
   }));
 }
 
@@ -82,10 +83,11 @@ function transformToStorageData(inputDataArray) {
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
-  totalGoods.value = data.result.totalCount;
-  enterGoods.value = data.result.storeCount;
-  releaseGoods.value = data.result.loadCount;
+  totalGoods.value = data.result.total_count;
+  enterGoods.value = data.result.store_count;
+  releaseGoods.value = data.result.load_count;
   updateTime.value = new Date().toLocaleTimeString();
+  isLoadingCount.value = true;
 };
 
 const getDailyGoodsCountRequest = async () => {
@@ -127,7 +129,7 @@ getAreaInfoRequest();
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <div class="row">
+        <div class="row" v-if="isLoadingCount">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
               title="TOTAL GOODS"
