@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../constaints.dart';
 
 SfRangeValues _heightFloorValues = SfRangeValues(0.0, 100.0);
-double transparencyValuePercent = 60.0;
+double transparencyValuePercent = 80.0;
 double boxStepPercent = 50.0;
 double heightFloorValuesLowPercent = 0.0;
 double heightFloorValuesHighPercent = 100.0;

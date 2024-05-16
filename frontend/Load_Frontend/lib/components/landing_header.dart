@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../constaints.dart';
+import '../routes/app_router.dart';
 
 class LandingHeader extends StatelessWidget {
   final double opacity;
@@ -23,7 +25,8 @@ class LandingHeader extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-
+            AutoRouter.of(context).popUntilRouteWithPath('/landing');
+            AutoRouter.of(context).push(SignInUpRoute());
           },
           child: Text(
             '로그인',

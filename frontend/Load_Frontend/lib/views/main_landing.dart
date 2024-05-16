@@ -103,6 +103,7 @@
 
 
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:load_frontend/components/charts.dart';
 import 'package:load_frontend/components/status_list.dart';
@@ -118,6 +119,7 @@ import '../components/image_slider.dart';
 import '../components/landing_header.dart';
 import '../components/responsive_icon_grid.dart';
 import '../components/start_service.dart';
+import '../routes/app_router.dart';
 import '../services/area_service.dart';
 import '../stores/delivery_store.dart';
 import '../stores/user_store.dart';
@@ -200,7 +202,14 @@ class _MainLandingPage extends State<MainLandingPage> {
                       '설명설명설명1123123132312313123123123123123123123123123123123\n',
                   imageLeft: false,
                 ),
-                StartServiceWidget(onPressed: () { print("서비스 시작 눌렀어용.."); },),
+                StartServiceWidget(
+                  onPressed: () {
+                    // AutoRoute(path: '/sign-in-up',page: SignInUpRoute.page),
+                    print("서비스 시작 눌렀어용..");
+                    AutoRouter.of(context).popUntilRouteWithPath('/landing');
+                    AutoRouter.of(context).push(SignInUpRoute());
+                  },
+                ),
               ],
             ),
           ),
