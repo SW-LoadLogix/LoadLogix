@@ -25,4 +25,8 @@ class WorkerInfoData{
   factory WorkerInfoData.fromJson(Map<String, dynamic> json) =>
       _$WorkerInfoDataFromJson(json);
   Map<String, dynamic> toJson() => _$WorkerInfoDataToJson(this);
+  @override
+  String toString(){
+    return("WorkerInfoData(name: $name, areaName: $areaName, conveyNo: $conveyNo, carHeight: $carHeight, carLength: $carLength, carWidth: $carWidth)");
+  }
 }

@@ -19,6 +19,7 @@ class DeliveryService {
         "Authorization": "Bearer $accessToken"
       });
 
+      print(response.body);
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         return DeliveryData.fromJson(responseBody['result']);
@@ -60,12 +61,13 @@ class DeliveryService {
 
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
-        return GoodsTotalDataWrapper.fromJson(responseBody);
+        print(responseBody);
+        return GoodsTotalDataWrapper.fromJson(responseBody['result']);
       } else {
         return null;
       }
     } catch (error) {
-      print("Failed to load Delivery List");
+      print("Failed to load Delivery List2222 error: $error");
     }
     return null;
   }

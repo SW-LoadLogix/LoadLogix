@@ -7,9 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:load_frontend/views/box_simulation/box.dart';
 
 import '../models/vector3.dart';
+import '../views/box_simulation/box_simulation_gobal_setting.dart';
 import 'base_url.dart';
 
-bool isDebug = false;
+bool isDebug = true;
 
 class GoodsService {
   final baseUrl = dotenv.get("BASE_URL");
@@ -32,13 +33,15 @@ class GoodsService {
             goods.add(GoodsData(
                 goodsId: goodsId++,
                 type: type,
-                position: Vector3(x.toDouble() * 280 / 6.0 * gScale, y.toDouble()* 160 / 6.0* gScale, z.toDouble()* 160 / 6.0* gScale),
+                position: Vector3(x.toDouble() * gtruckWidth / 6.0 * gScale, y.toDouble()* gtruckHeight / 6.0* gScale, z.toDouble()* gtruckLength / 6.0* gScale),
                 //position: Vector3(x.toDouble(), y as double, z as double),
 
                 weight: random.nextInt(1000),
                 buildingId: buildingId,
                 buildingName: 'Building Name ${buildingId}',
                 detailAddress: '서울시 강남구 삼성동 123-456'));
+            // if (goods.length == 10)
+            //   return goods;
           }
         }
       }
@@ -68,33 +71,6 @@ class GoodsService {
             buildingName: goodsData.buildingName,
             detailAddress: goodsData.detailAddress));
       }
-
-        //goods.add(GoodsData.fromJson(i));
-
-
-      // Random random = Random();
-      // int goodsId = 0;
-      // for (int x = 0; x < 6; x++) {
-      //   for (int y = 0; y < 6; y++) {
-      //     for (int z = 0; z < 6; z++) {
-      //       String type = 'L${random.nextInt(6) + 1}';  // Random type between S1 and S6
-      //
-      //       goods.add(GoodsData(
-      //           goodsId: goodsId,
-      //           type: type,
-      //           position: Vector3(x.toDouble() * 280 / 6.0 * gScale, y.toDouble()* 160 / 6.0* gScale, z.toDouble()* 160 / 6.0* gScale),
-      //           //position: Vector3(x.toDouble(), y as double, z as double),
-      //
-      //           weight: random.nextInt(1000),
-      //           buildingId: random.nextInt(5),
-      //           buildingName: 'Building Name ${goodsId++}',
-      //           detailAddress: '서울시 강남구 삼성동 123-456'));
-      //     }
-      //   }
-      // }
-
-
-
       return goods;
     } else {
       print('Failed to load goods');
