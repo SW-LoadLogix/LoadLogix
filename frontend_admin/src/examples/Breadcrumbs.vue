@@ -18,7 +18,7 @@ defineProps({
 </script>
 <template>
   <nav aria-label="breadcrumb">
-    <ol
+    <!-- <ol
       class="px-0 pt-1 pb-0 mb-0 bg-transparent breadcrumb"
       :class="`' me-sm-6' ${
         isNavFixed ? 'text-dark' : 'text-white'
@@ -39,12 +39,13 @@ defineProps({
       >
         {{ currentPage }}
       </li>
-    </ol>
-    <h6
+    </ol> -->
+    <p
       class="mb-0 font-weight-bolder"
       :class="isNavFixed ? 'text-dark' : 'text-white'"
+      style="font-size: 2rem;"
     >
-      {{ currentDirectory }}
-    </h6>
+      물류 통계 현황
+  </p>
   </nav>
 </template>
