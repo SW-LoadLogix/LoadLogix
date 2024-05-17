@@ -829,7 +829,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
           //numberMapping[gGoods[i].buildingId]!,//gGoods[i].buildingId,
           numberMapping[gGoods[i].buildingId]!));
     }
-
+    print ("boxes.length = ${boxes.length}");
     for (int i = 0; i < boxes.length; i++) {
       boxes[i].init();
     }
