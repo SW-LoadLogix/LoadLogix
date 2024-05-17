@@ -7,8 +7,7 @@ import Signin from "../views/Signin.vue";
 const routes = [
   {
     path: "/",
-    name: "/",
-    redirect: "/dashboard",
+    redirect: "/signin",
   },
   {
     path: "/dashboard",
