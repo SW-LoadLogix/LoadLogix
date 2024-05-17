@@ -41,6 +41,9 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
+  scrollBehavior() {
+    return { top: 0 }; // 항상 최상단으로 스크롤
+  }
 });
 
 export default router;
