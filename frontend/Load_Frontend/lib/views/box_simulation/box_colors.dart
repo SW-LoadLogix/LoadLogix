@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-  List<Color> distinctColors = [    Color(0xFFFF6347), // 토마토색
+  const List<Color> distinctColors = [    Color(0xFFFF6347), // 토마토색
     Color(0xFF4682B4), // 강철청색
     Color(0xFF3CB371), // 중간해초록
     Color(0xFFFFD700), // 금색
