@@ -1,7 +1,8 @@
 <script setup>
 import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
-import Carousel from "./components/Carousel.vue";
+// import Carousel from "../views/components/Carousel.vue";
+import Carousel2 from "../views/components/Carousel2.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 
 import L1 from "@/assets/img/boxes/L1.png";
@@ -183,7 +184,7 @@ getAreaInfoRequest();
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-0">
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
             <div class="card z-index-2" v-if="isLoadingChart">
@@ -195,11 +196,12 @@ getAreaInfoRequest();
               />
             </div>
           </div>
-          <div class="col-lg-5">
-            <carousel />
+          <div class="col-lg-5" style="object-fit: cover; ">
+            <!-- <carousel /> -->
+            <carousel2 />
           </div>
         </div>
-        <div class="row mt-4" v-if="isLoadingBoxes">
+        <div class="row no-margin-top" v-if="isLoadingBoxes">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">
               <div class="p-3 pb-0 card-header">
