@@ -6,7 +6,7 @@ boxSize = [(22, 22, 9), (27, 27, 15),(35, 35, 10), (34,34, 21), (41,41, 28), (48
 start = time.time()
 
 box = Bin(
-    WHD=(170,370,210),
+    WHD=(160,286,170),
     max_weight=250
 )
 
@@ -225,13 +225,13 @@ for box in packer.bins:
     boxes_data = []
     for item in box.items:
         box_info = {
-            "name": item.name,
-            "endPosition": [{"x": float(item.position[0] ), "y": float(item.position[1]), "z": float(item.position[2])}],
-            "size": [{"x": float(item.width), "y": float(item.height), "z": float(item.depth)}]
+            #"name": item.name,
+            "position": {"x": float(item.position[0] ), "y": float(item.position[1]), "z": float(item.position[2])},
+            "size": {"x": float(item.width), "y": float(item.height), "z": float(item.depth)}
         }
         boxes_data.append(box_info)
-    result = {"boxes": boxes_data}
-    print(result)
+    #result = {"boxes": boxes_data}
+    print(boxes_data)
     # json_result = json.dumps(result, indent=4)
     # print(json_result)
 

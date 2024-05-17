@@ -23,9 +23,10 @@ class SimulBox {
       this.boxSize, this.goodsId, this.buildingId,this.boxColorId);
 
   void setSize() {
-    // boxSize =
-    //      three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
-    // return;
+
+    //boxSize =
+    //     three.Vector3(280 / 6 * gScale, 160 / 6 * gScale, 160 / 6 * gScale);
+
     if (type == 'L1') {
       boxSize = three.Vector3(22 * gScale,9 * gScale, 22 * gScale);
     } else if (type == 'L2') {
