@@ -32,7 +32,7 @@ class DeliveryService {
     return null;
   }
 
-  bool isDebug = true;
+  bool isDebug = false;
   Future<GoodsTotalDataWrapper?> fetchGoodsTotal(String accessToken) async {
     if (isDebug){
       List<GoodsTotalData> gtdl = [];
@@ -62,12 +62,12 @@ class DeliveryService {
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         print(responseBody);
-        return GoodsTotalDataWrapper.fromJson(responseBody);
+        return GoodsTotalDataWrapper.fromJson(responseBody['result']);
       } else {
         return null;
       }
     } catch (error) {
-      print("Failed to load Delivery List2222");
+      print("Failed to load Delivery List2222 error: $error");
     }
     return null;
   }

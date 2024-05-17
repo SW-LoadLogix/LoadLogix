@@ -19,6 +19,9 @@ class AreaService {
     if (response.statusCode == 200) {
       List<BuildingData> buildings = [];
       var data = json.decode(response.body);
+
+      if (data['result'] == null) return [];
+
       for (var i in data['result']) {
         BuildingData buildingData = BuildingData.fromJson(i);
         buildings.add(BuildingData(

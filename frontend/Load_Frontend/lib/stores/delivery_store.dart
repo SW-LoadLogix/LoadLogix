@@ -13,6 +13,9 @@ class DeliveryStore extends ChangeNotifier {
   );
 
   Future<void> getDeliveryServiceFromApi(String tokken) async{
-    deliveryData = (await DeliveryService().fetchDeliveryGoods(tokken))!;
-    notifyListeners();
+    var DeliveryData = await deliveryService.fetchDeliveryGoods(tokken);
+    if (DeliveryData != null){
+      deliveryData = DeliveryData;
+      notifyListeners();
+    }
 }}
