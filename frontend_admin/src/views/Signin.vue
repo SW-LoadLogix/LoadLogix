@@ -4,9 +4,7 @@ import { onBeforeUnmount, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/auth";
-import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
-import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 const body = document.getElementsByTagName("body")[0];
 
@@ -44,17 +42,6 @@ const login = async () => {
 };
 </script>
 <template>
-  <div class="container top-0 position-sticky z-index-sticky">
-    <div class="row">
-      <div class="col-12">
-        <navbar
-          isBlur="blur  border-radius-lg my-3 py-2 start-0 end-0 mx-4 shadow"
-          v-bind:darkMode="true"
-          isBtn="bg-gradient-success"
-        />
-      </div>
-    </div>
-  </div>
   <main class="mt-0 main-content">
     <section>
       <div class="page-header min-vh-100">
@@ -90,11 +77,7 @@ const login = async () => {
                         v-model="loginRequest.password"
                       />
                     </div>
-                    <argon-switch id="rememberMe" name="remember-me"
-                      >Remember me</argon-switch
-                    >
-
-                    <div class="text-center">
+                    <div class="text-center" style="margin-top: -20px;">
                       <argon-button
                         class="mt-4"
                         variant="gradient"
@@ -123,11 +106,10 @@ const login = async () => {
                 <h4
                   class="mt-5 text-white font-weight-bolder position-relative"
                 >
-                  "Attention is the new currency"
+                  "LOADLOGIX"
                 </h4>
                 <p class="text-white position-relative">
-                  The more effortless the writing looks, the more effort the
-                  writer actually put into the process.
+                  스마트 물류의 시작
                 </p>
               </div>
             </div>

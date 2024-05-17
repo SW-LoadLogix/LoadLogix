@@ -4,6 +4,17 @@ import {
   getGoods
 } from "@/api/dashboard.js";
 
+// import L1 from "@/assets/img/boxes/L1.png";
+// import L2 from "@/assets/img/boxes/L2.png";
+// import L3 from "@/assets/img/boxes/L3.png";
+// import L4 from "@/assets/img/boxes/L4.png";
+// import L5 from "@/assets/img/boxes/L5.png";
+// import L6 from "@/assets/img/boxes/L6.png";
+
+// const boxTypes = {
+//   L1,L2,L3,L4,L5,L6
+// };
+
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
@@ -34,6 +45,11 @@ getGoodsRequest();
           <thead>
             <tr>
               <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                담당 기사
+              </th>
+              <th
                 class="align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
                 구역
@@ -42,11 +58,6 @@ getGoodsRequest();
                 class="align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
               >
                 주소
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                담당 기사
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -64,6 +75,10 @@ getGoodsRequest();
           <!-- 리스트 시작 -->
           <tbody>
             <tr v-for="good in goods" :key="good.worker_id">
+              <!-- 담당 기사 -->
+              <td class="align-middle text-center">
+                <p class="text-sm font-weight-bold mb-0">{{good.worker_name}}</p>
+              </td>
               <!-- 구역 -->
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{good.area_name}}</p>
@@ -72,10 +87,6 @@ getGoodsRequest();
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{ good.address }}</p>
               </td>
-              <!-- 담당 기사 -->
-              <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.worker_id}}</p>
-              </td>
               <!-- 무게 -->
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{good.weight}}g</p>
@@ -83,6 +94,9 @@ getGoodsRequest();
               <!-- 박스 타입 -->
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{ good.box_type }}</p>
+                <!-- <div>
+                  <img  style="max-width: 100px;" :src="boxTypes[good.box_type]" alt="Country flag" />
+                </div> -->
               </td>
               <!-- 입고 시각 -->
               <td class="align-middle text-center">
