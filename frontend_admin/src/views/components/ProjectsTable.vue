@@ -34,6 +34,11 @@ getLoadedGoodsRequest();
           <thead>
             <tr>
               <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                담당 기사
+              </th>
+              <th
                 class="align-middle text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
                 구역
@@ -46,24 +51,23 @@ getLoadedGoodsRequest();
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                담당 기사
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
                 무게
               </th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 박스 타입
               </th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                입고 시각
+                출고 시각
               </th>
             </tr>
           </thead>
           <!-- 리스트 시작 -->
           <tbody>
             <tr v-for="good in goods" :key="good.worker_id">
+              <!-- 담당 기사 -->
+              <td class="align-middle text-center">
+                <p class="text-sm font-weight-bold mb-0">{{good.worker_name}}</p>
+              </td>
               <!-- 구역 -->
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{good.area_name}}</p>
@@ -71,10 +75,6 @@ getLoadedGoodsRequest();
               <!-- 주소 -->
               <td class="align-middle text-center">
                 <p class="text-sm font-weight-bold mb-0">{{ good.address }}</p>
-              </td>
-              <!-- 담당 기사 -->
-              <td class="align-middle text-center">
-                <p class="text-sm font-weight-bold mb-0">{{good.worker_name}}</p>
               </td>
               <!-- 무게 -->
               <td class="align-middle text-center">

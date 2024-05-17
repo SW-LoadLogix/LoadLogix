@@ -189,7 +189,7 @@ getAreaInfoRequest();
             <div class="card z-index-2" v-if="isLoadingChart">
               <gradient-line-chart
                 id="chart-line"
-                title="Daily Shipping Volume"
+                title="Daily Loading Volume"
                 description="물류 공장의 실시간 일별 출고량"
                 :chart=chartData
               />
@@ -216,7 +216,7 @@ getAreaInfoRequest();
                           <div>
                             <img  style="max-width: 100px;" :src="boxTypes[box.type]" alt="Country flag" />
                           </div>
-                          <div class="ms-4">
+                          <div class="ms-4 text-center">
                             <p class="mb-0 text-xs font-weight-bold">
                               포장재 규격
                             </p>
