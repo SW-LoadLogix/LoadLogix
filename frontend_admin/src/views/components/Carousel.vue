@@ -1,32 +1,55 @@
 <template>
-  <div class="card card-carousel overflow-hidden h-100 p-0">
-    <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-      <div class="carousel-inner border-radius-lg h-100">
-        <div v-for="(slide, index) in slides" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" :style="{ backgroundImage: 'url(' + slide.src + ')', backgroundSize: 'cover' }">
-          <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-            <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-              <i :class="slide.iconClass + ' text-dark opacity-10'"></i>
-            </div>
-            <h5 class="text-white mb-1">{{ slide.title }}</h5>
-            <p>{{ slide.description }}</p>
-          </div>
-        </div>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 95%; margin: 0">
+    <ol class="carousel-indicators">
+      <li v-for="(slide, index) in slides" :key="index" :data-target="carouselExampleIndicators" :data-slide-to="index" :class="{ active: index === currentIndex }"></li>
+    </ol>
+    <div class="carousel-inner" style="height: 100%;margin-bottom: 0px;">
+      <div class="carousel-item" :class="{ active: index === currentIndex }" v-for="(slide, index) in slides" :key="index" style="height:100%">
+        <img
+          style="height: 100%; border-radius: 15px;"
+          :src="slide.src" class="d-block w-100" :alt="'slide-' + (index + 1)">
       </div>
-      <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
+    <a class="carousel-control-prev" href="#" role="button" @click.prevent="prevSlide">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#" role="button" @click.prevent="nextSlide">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 </template>
+
 <script setup>
+import { ref } from 'vue';
+const carouselExampleIndicators = ref('carouselExampleIndicators');
+
 const slides = [
-  { src: require('@/assets/img/carousel-1.jpg'), iconClass: 'ni ni-camera-compact', title: 'Get started with Argon', description: "There's nothing I really wanted to do in life that I wasn't able to get good at." },
-  { src: require('@/assets/img/carousel-2.jpg'), iconClass: 'ni ni-bulb-61', title: 'Faster way to create web pages', description: "That's my skill. I'm not really specifically talented at anything except for the ability to learn." },
-  { src: require('@/assets/img/carousel-3.jpg'), iconClass: 'ni ni-trophy', title: 'Share with us your design tips!', description: "Don't be afraid to be wrong because you can't learn anything from a compliment." }
+  { src: require('../../assets/img/simulation1.png') },
+  { src: require('../../assets/img/simulation2.png') },
+  { src: require('../../assets/img/simulation3.png') },
+  { src: require('../../assets/img/simulation4.png') }
 ];
+const currentIndex = ref(0);
+
+const prevSlide = () => {
+  currentIndex.value = (currentIndex.value - 1 + slides.length) % slides.length;
+  resetSlideInterval();
+};
+
+const nextSlide = () => {
+  currentIndex.value = (currentIndex.value + 1) % slides.length;
+  resetSlideInterval();
+};
+
+// 자동으로 슬라이드 변경을 위한 타이머 설정
+let slideInterval = setInterval(nextSlide, 4000);
+
+// 사용자가 수동으로 슬라이드를 변경할 때 타이머 재설정
+const resetSlideInterval = () => {
+  clearInterval(slideInterval);
+  slideInterval = setInterval(nextSlide, 5000);
+};
+
 </script>
