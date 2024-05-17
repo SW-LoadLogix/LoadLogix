@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:load_frontend/constaints.dart';
+import 'package:load_frontend/routes/app_router.dart';
 import 'package:load_frontend/views/building.dart';
+import 'package:load_frontend/views/pages.dart';
 
 import '../views/box_simulation_3d.dart';
 import '../views/dashboard.dart';
@@ -82,10 +85,12 @@ class TopBar extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DashboardPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => DashboardPage()),
+                // );
+                AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+                AutoRouter.of(context).push(DashboardRoute());
               },
             ),
             IconButton(
@@ -94,10 +99,12 @@ class TopBar extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DashboardSimulation3dPage())
-                );
+                AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+                AutoRouter.of(context).push(DashboardSimulation3dRoute());
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => DashboardSimulation3dPage())
+                // );
               },
             ),
             this.showDesktop
@@ -112,6 +119,8 @@ class TopBar extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => BuildingPage()),
                       );
+                      // AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+                      // AutoRouter.of(context).push(DashboardSimulation3dRoute());
                     },
                   )
           ])

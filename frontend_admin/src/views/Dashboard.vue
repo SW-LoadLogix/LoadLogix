@@ -21,6 +21,8 @@ import {
   getDayGoodsCount,
   getGoodsCountByBoxType,
   getRackStoreGoodsCount,
+  initialSet,
+  getAreaInfo
 } from "@/api/dashboard.js";
 
 const totalGoods = ref(0);
@@ -32,9 +34,11 @@ const chartData = ref({
   labels: [],
   datasets: []
 });
+let isLoadingCount = ref(false);
 let isLoadingChart = ref(false);
 let isLoadingBoxes = ref(false);
 let isLoadingStorage = ref(false);
+let isLoadingArea = ref(false);
 
 
 const boxTypes = {
@@ -42,8 +46,9 @@ const boxTypes = {
 };
 
 let boxes = [];
-
 let storage = [];
+let areaInfos = [];
+
 function transformToChartData(inputData) {
   if (!inputData || !Array.isArray(inputData.amount)) {
     return {
@@ -69,8 +74,8 @@ function transformToStorageData(inputDataArray) {
       component: 'ni ni-app',
       background: 'dark',
     },
-    label: `${inputData.rackLine}번 저장소` ,
-    description: `실시간 저장 물품 : ${inputData.totalCount}`,
+    label: `${inputData.rack_line}번 저장소` ,
+    description: `실시간 저장 물품 : ${inputData.total_count}`,
   }));
 }
 
@@ -78,10 +83,11 @@ function transformToStorageData(inputDataArray) {
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
-  totalGoods.value = data.result.totalCount;
-  enterGoods.value = data.result.storeCount;
-  releaseGoods.value = data.result.loadCount;
+  totalGoods.value = data.result.total_count;
+  enterGoods.value = data.result.store_count;
+  releaseGoods.value = data.result.load_count;
   updateTime.value = new Date().toLocaleTimeString();
+  isLoadingCount.value = true;
 };
 
 const getDailyGoodsCountRequest = async () => {
@@ -98,14 +104,24 @@ const getBoxTypeRequest = async () => {
 
 const getGoodsPerStoreRequest = async () => {
   const {data} = await getRackStoreGoodsCount();
-  console.log(data);
   storage = transformToStorageData(data.result);
   isLoadingStorage.value = true;
+}
+
+const setReleaseCountRequest = async () => {
+  await initialSet(areaInfos);
+}
+
+const getAreaInfoRequest = async () => {
+  const {data} = await getAreaInfo();
+  areaInfos = data.result;
+  isLoadingArea.value = true;
 }
 getGoodsCountRequest();
 getDailyGoodsCountRequest();
 getBoxTypeRequest();
 getGoodsPerStoreRequest();
+getAreaInfoRequest();
 
 
 </script>
@@ -113,7 +129,7 @@ getGoodsPerStoreRequest();
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <div class="row">
+        <div class="row" v-if="isLoadingCount">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
               title="TOTAL GOODS"
@@ -229,7 +245,7 @@ getGoodsPerStoreRequest();
                       <td class="text-sm align-middle">
                         <div class="text-center col">
                           <p class="mb-0 text-xs font-weight-bold">물품량</p>
-                          <h6 class="mb-0 text-sm">{{ box.totalCount }}</h6>
+                          <h6 class="mb-0 text-sm">{{ box.total_count }}</h6>
                         </div>
                       </td>
                     </tr>
@@ -238,56 +254,39 @@ getGoodsPerStoreRequest();
               </div>
             </div>
           </div>
-          <div class="col-lg-5" v-if=isLoadingStorage>
-            <categories-list
-              :categories=storage
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="py-4 container-fluid">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Profile</p>
-                <argon-button color="success" size="sm" class="ms-auto"
-                  >Settings</argon-button
-                >
+          <div class="col-lg-5" style="height: 305px;" v-if=isLoadingStorage>
+              <categories-list
+                title = "실시간 물류 창고 저장소 현황"
+                :categories=storage
+              />
+            <div class="py-4">
+            <div class="row">
+              <div class="col-md-12" style="height: 350px;">
+                <div class="card" style="height: 100%;">
+                  <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">
+                      <p class="mb-0" style="font-weight: 900;">구역 당 물품 할당</p>
+                      <argon-button @click="setReleaseCountRequest" color="success" size="sm" class="ms-auto"
+                        >SAVE</argon-button>
+                    </div>
+                  </div>
+                  <div class="card-body" v-if="isLoadingArea" style="overflow: auto;">
+                    <div class="row-md-12" v-for="(area, index) in areaInfos" :key="index" style="display: flex; align-items: center; gap: 10px;">
+                      
+                        <label style="flex: 1; margin: 10px 0;" for="example-text-input" class="form-control-label">{{area.area_name}}</label>
+                        <input style="flex: 1; margin: 10px 10px 10px 0;" class="form-control" type="text" :value=area.count v-model="area.count" />
+                        <label style="flex: 1.5; margin: 10px 0;" for="example-text-input" class="form-control-label">Convey-Line</label>
+                        <input style="flex: 0.5; margin: 10px 0;" class="form-control" type="text" :value=area.convey_no v-model="area.convey_no" />
+                      
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="card-body">
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Username</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Email address</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >First name</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Last name</label
-                  >
-                  <input class="form-control" type="text" value="" />
-                </div>
-            </div>
           </div>
-
-        </div>
-
+        
+          </div>
+         </div>
       </div>
     </div>
   </div>

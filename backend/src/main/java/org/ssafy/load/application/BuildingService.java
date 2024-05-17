@@ -5,14 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssafy.load.common.dto.ErrorCode;
 import org.ssafy.load.common.exception.CommonException;
-import org.ssafy.load.dao.AreaRepository;
-import org.ssafy.load.dao.BuildingJoinArea;
-import org.ssafy.load.dao.BuildingRepository;
-import org.ssafy.load.dao.PathTimeRepository;
+import org.ssafy.load.dao.*;
 import org.ssafy.load.domain.AreaEntity;
 import org.ssafy.load.domain.BuildingEntity;
+import org.ssafy.load.domain.GoodsEntity;
 import org.ssafy.load.domain.PathTimeEntity;
 import org.ssafy.load.dto.Coordinate;
+import org.ssafy.load.dto.PathResult;
 import org.ssafy.load.dto.request.BuildingRegistRequest;
 import org.ssafy.load.dto.request.anylogic.AreaAndBuilding;
 import org.ssafy.load.dto.request.anylogic.InputSettingResponse;
@@ -30,6 +29,7 @@ public class BuildingService {
     private final PathTimeRepository pathTimeRepository;
     private final PathTimeCal pathTimeCal;
     private final BuildingJoinArea buildingJoinArea;
+    private final GoodsRepository goodsRepository;
 
     @Transactional
     public void registBuilding(BuildingRegistRequest buildingRegistRequest) {
@@ -64,8 +64,8 @@ public class BuildingService {
                     .append("-")
                     .append(desBuilding.getZibunSub()).toString();
 
-            int duration = pathTimeCal.getPathTime(sourceAddress, desAddress);
-            pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, duration));
+            PathResult pathResult = pathTimeCal.getPathTime(sourceAddress, desAddress);
+            pathTimeRepository.save(PathTimeEntity.createNewEntity(srcBuilding, desBuilding, pathResult.duration(), pathResult.distance()));
         }
     }
     @Transactional
@@ -79,7 +79,14 @@ public class BuildingService {
 
         List<AreaAndBuilding> queryResponse = buildingJoinArea.getBuildingIdAndAreaId();
 
-        return InputSettingResponse.of(goodsCountPerArea, queryResponse);
+        // agent 마지막 id 조회
+        GoodsEntity lastGoodsEntity = goodsRepository.findFirstByOrderByIdDesc().orElse(null);
+        long agentId = 0L;
+        if (lastGoodsEntity != null) {
+            agentId= lastGoodsEntity.getAgentId();
+        }
+
+        return InputSettingResponse.of(goodsCountPerArea, queryResponse, agentId);
     }
 
 }

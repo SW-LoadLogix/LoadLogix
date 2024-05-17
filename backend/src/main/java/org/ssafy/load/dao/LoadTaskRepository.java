@@ -21,7 +21,14 @@ public interface LoadTaskRepository extends JpaRepository<LoadTaskEntity, Intege
     @Query("SELECT lt FROM LoadTaskEntity lt WHERE lt.area.id = :areaId and lt.areaStatus = true and lt.complete = true and lt.workerState = true ORDER BY lt.createdAt DESC")
     List<LoadTaskEntity> findByWorkerCompletedTask(int areaId);
     @Query(value = "SELECT id FROM load_task WHERE area_id = :areaId AND area_status = TRUE AND complete = TRUE AND worker_status = TRUE AND DATE(created_at) = CURDATE() - INTERVAL :days DAY", nativeQuery = true)
-    List<Integer> findLoadTaskIdsByCreatedAt(int areaId, int days);
+    List<Integer> findLoadTaskIdsByAreaIdAndCreatedAt(int areaId, int days);
 
+    @Query(value = "SELECT id FROM load_task WHERE area_status = TRUE AND complete = TRUE AND worker_status = TRUE AND DATE(created_at) = CURDATE() - INTERVAL :days DAY", nativeQuery = true)
+    List<Integer> findLoadTaskIdsByCreatedAt(int days);
 
+    @Query(value = "SELECT id FROM load_task WHERE area_status = TRUE AND complete = TRUE AND worker_status = TRUE AND DATE(created_at) = CURDATE()", nativeQuery = true)
+    List<Integer> findAllLoadTaskIdsByCreatedAtIsToday();
+
+    @Query(value = "SELECT * FROM load_task WHERE area_id =:areaId AND DATE(created_at) = CURDATE() ORDER BY created_at DESC LIMIT 1", nativeQuery = true)
+    Optional<LoadTaskEntity> findLatestLoadTask(int areaId);
 }

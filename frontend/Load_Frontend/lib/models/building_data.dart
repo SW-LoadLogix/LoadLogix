@@ -25,5 +25,8 @@ class BuildingData{
   factory BuildingData.fromJson(Map<String, dynamic> json) => _$BuildingDataFromJson(json);
   Map<String, dynamic> toJson() => _$BuildingDataToJson(this);
 
-
+  @override
+  String toString(){
+    return("BuildingData(buildingId: $buildingId, buildingName: $buildingName, latitude: $latitude, longitude: $longitude, totalGoods: $totalGoods)");
+  }
 }
