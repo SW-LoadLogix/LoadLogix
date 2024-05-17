@@ -50,7 +50,7 @@ getWorkersRequest();
                     <td class="align-middle text-center">
                       <div class="d-flex px-2 py-1 justify-content-center">
                         <div>
-                          <img src="../../assets/img/jungin.jpg" class="avatar avatar-sm me-3" alt="user1" />
+                          <img src="../../assets/img/profile.png" class="avatar avatar-sm me-3" alt="user" />
                         </div>
                         <div class="d-flex flex-column justify-content-center">
                           <p class="text-sm font-weight-bold mb-0">{{ worker.name }}</p>
