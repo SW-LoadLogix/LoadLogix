@@ -78,7 +78,7 @@ class Chart extends StatelessWidget {
       var currBuilding = dt.buildings[i];
       paiChartSelectionData.add(
           PieChartSectionData(
-            color:distinctColor[i],
+            color:distinctColor[i%distinctColor.length],
             value: currBuilding.totalGoods as double,
             showTitle: true,
             radius: 65 * currBuilding.totalPercentage / maxPercent,
