@@ -15,8 +15,6 @@ List<Color> generateDistinctColors(int count) {
   return colors;
 }
 
-List<Color> distinctColor = generateDistinctColors(20);
-
 class MyGoogleMap extends StatefulWidget {
   const MyGoogleMap({Key? key}) : super(key: key);
 
@@ -32,6 +30,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   Set<Circle> _circles = {}; 
   List<MarkerData> _customMarkers = [];
   bool _mapControllerInitialized = false;
+  List<Color> distinctColor = [];// distinctColor를 동적으로 생성하기 위해 리스트 초기화
 
   @override
   void initState() {
@@ -45,6 +44,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     List<BuildingData> buildingdata = await areaService.getBuildingPriority(userStore.token);
     setState(() {
       _buildingData = buildingdata;
+      distinctColor = generateDistinctColors(buildingdata.length); // 건물 데이터의 길이에 맞게 색상 생성
       _circles = _markCircles(buildingdata);
       _customMarkers = _getCustomMarkers(buildingdata);
       if (_mapControllerInitialized) {
@@ -106,7 +106,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       child:
           Text(
             building.buildingName,
-            style: TextStyle(fontSize: 3, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
           ),
     );
   }
@@ -122,7 +122,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   void _moveCamera(LatLng target) {
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: target, zoom:19.0),
+        CameraPosition(target: target, zoom:13.0),
       ),
     );
   }

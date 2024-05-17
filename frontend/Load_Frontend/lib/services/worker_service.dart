@@ -9,14 +9,11 @@ import 'base_url.dart';
 
 class WorkerService {
   final baseUrl = dotenv.get("BASE_URL");
+
   Future<WorkerInfoData?> fetchWorkerInfo(String accessToken) async {
-
     try {
-      final response = await http.get(
-        Uri.parse('${baseUrl}/api/worker/info'), headers: {
-          "Authorization": "Bearer $accessToken"
-        });
-
+      final response = await http.get(Uri.parse('${baseUrl}/api/worker/info'),
+          headers: {"Authorization": "Bearer $accessToken"});
 
       var responseBody = json.decode(response.body);
 
@@ -31,14 +28,14 @@ class WorkerService {
       } else {
         return null;
       }
-
     } catch (error) {
       print("Failed to load Worker Info");
       return null;
     }
   }
 
-  Future<String> changeCarInfo(String accessToken, int carWidth, int carLength, int carHeight) async {
+  Future<String> changeCarInfo(
+      String accessToken, int carWidth, int carLength, int carHeight) async {
     try {
       var url = Uri.parse('${baseUrl}/api/car/change');
       var data = {
@@ -54,34 +51,22 @@ class WorkerService {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);
-        if (responseData['result']['width'] == carWidth){
-          print("트럭 정보 변경 성공");
-          return "success";
-        }
-        else{
-          print("트럭 정보 변경 실패");
-          return "fail";
-        }
-        print(responseData.toString());
-        // LoginResponseWrapperData loginResponseWrapperData = LoginResponseWrapperData.fromJson(responseData);
-        // print(loginResponseWrapperData.toString());
-
-
+        print("트럭 정보 변경 성공");
+        return "success";
       } else {
-        print('Failed to create a post');
+        print("트럭 정보 변경 실패");
+        return "fail";
       }
     } catch (e) {
       print('Caught error: $e');
-    }return "fail";
+    }
+    return "fail";
   }
 
-  Future <bool> isWorkerReadyApi(String accessToken) async {
+  Future<bool> isWorkerReadyApi(String accessToken) async {
     try {
-      final response = await http.put(
-          Uri.parse('${baseUrl}/api/worker/ready'), headers: {
-        "Authorization": "Bearer $accessToken"
-      });
+      final response = await http.put(Uri.parse('${baseUrl}/api/worker/ready'),
+          headers: {"Authorization": "Bearer $accessToken"});
 
       var responseBody = json.decode(response.body);
       print(responseBody);
@@ -90,12 +75,10 @@ class WorkerService {
           return true;
         else
           return false;
-      }
-      else {
+      } else {
         return false;
       }
-    }
-    catch (error) {
+    } catch (error) {
       print("Failed to load Worker Ready");
     }
     return false;

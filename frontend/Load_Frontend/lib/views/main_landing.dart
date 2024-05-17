@@ -156,22 +156,27 @@ class _MainLandingPage extends State<MainLandingPage> {
               children: [
                 ImageSlider(
                   imageUrls: [
-                    'https://via.placeholder.com/900x800/618777',
-                    'https://via.placeholder.com/900x800/618777',
-                    'https://via.placeholder.com/900x800/618777',
-                    'https://via.placeholder.com/900x800/618777',
+                    // 'https://via.placeholder.com/900x800/618777',
+                    'assets/images/landing_001.jpeg',
+                    'assets/images/landing_002.jpeg',
+                    'assets/images/landing_003.jpeg',
+                    'assets/images/landing_004.jpeg',
                   ],
                 ),
                 ResponsiveIconGrid(
                   icons: [
-                    IconWithTitle(icon: Icons.home, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.search, title: 'Bbbbb', description: 'Bbbbb 설명설명설명\n설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.settings, title: 'Ccccc', description: 'Ccccc 설명설명설명\n설명설명설명설명\n설명끝'),
-                    IconWithTitle(icon: Icons.account_circle, title: 'Dddddd', description: 'Dddddd 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.conveyor_belt, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.forklift, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.local_shipping, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    IconWithTitle(icon: Icons.view_in_ar, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.home, title: 'Aaaaaa', description: 'Aaaaaa 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.search, title: 'Bbbbb', description: 'Bbbbb 설명설명설명\n설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.settings, title: 'Ccccc', description: 'Ccccc 설명설명설명\n설명설명설명설명\n설명끝'),
+                    // IconWithTitle(icon: Icons.account_circle, title: 'Dddddd', description: 'Dddddd 설명설명설명\n설명설명설명설명설명설명\n설명끝'),
                   ],
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'https://via.placeholder.com/600',
+                  imageUrl: 'assets/images/sample100-600x600_1.jpg',
                   description: '컴포넌트 1번 설명설명 설명설명 설명 설명설명 설명 뭐시기\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
@@ -179,7 +184,7 @@ class _MainLandingPage extends State<MainLandingPage> {
                   imageLeft: true,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'https://via.placeholder.com/601',
+                  imageUrl: 'assets/images/sample100-600x600_2.jpg',
                   description: '컴포넌트 2번 설명설명 설명설명 설명 설명설명 설명 뭐시기\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
@@ -187,7 +192,7 @@ class _MainLandingPage extends State<MainLandingPage> {
                   imageLeft: false,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'https://via.placeholder.com/604',
+                  imageUrl: 'assets/images/sample100-600x600_3.jpg',
                   description: '컴포넌트 3번 설명설명 설명설명 설명 설명설명 설명 뭐시기\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
@@ -195,7 +200,7 @@ class _MainLandingPage extends State<MainLandingPage> {
                   imageLeft: true,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'https://via.placeholder.com/603',
+                  imageUrl: 'assets/images/sample100-600x600_4.jpg',
                   description: '컴포넌트 4번 설명설명 설명설명 설명 설명설명 설명 뭐시기\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'
                       '설명설명설명1123123132312313123123123123123123123123123123123\n'

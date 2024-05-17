@@ -39,13 +39,15 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
 
   Future<void> fetchGoodsTotalDataWrapperFromService() async{
     UserStore us = Provider.of<UserStore>(context, listen: false);
-    GoodsTotalDataWrapper goodsTotalDataWrapper = (await DeliveryService().fetchGoodsTotal(us.token))!;
-    setState(()  {
-      _goodsTotalDataWrapper = goodsTotalDataWrapper;
-      print (_goodsTotalDataWrapper);
-    });
-
-
+    try{
+      GoodsTotalDataWrapper goodsTotalDataWrapper = (await DeliveryService().fetchGoodsTotal(us.token))!;
+      setState(()  {
+        _goodsTotalDataWrapper = goodsTotalDataWrapper;
+        print (_goodsTotalDataWrapper);
+      });
+    }catch(e){
+      print (e);
+    }
   }
 
   @override

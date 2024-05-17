@@ -62,12 +62,14 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
   }
 
   List<Widget> _buildImageLeft(BuildContext context) {
+    bool isNetwork = widget.imageUrl.startsWith('http');
     return [
       Flexible(
         flex: 4,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Image.network(widget.imageUrl, width: double.infinity),
+          child: isNetwork ? Image.network(widget.imageUrl, width: double.infinity):
+          Image.asset(widget.imageUrl, width: double.infinity),
         ),
       ),
       Flexible(
@@ -81,6 +83,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
   }
 
   List<Widget> _buildImageRight(BuildContext context) {
+    bool isNetwork = widget.imageUrl.startsWith('http');
     return [
       Flexible(
         flex: 6,
@@ -93,7 +96,8 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
         flex: 4,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Image.network(widget.imageUrl, width: double.infinity),
+          child: isNetwork ? Image.network(widget.imageUrl, width: double.infinity):
+          Image.asset(widget.imageUrl, width: double.infinity),
         ),
       ),
     ];

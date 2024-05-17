@@ -19,14 +19,17 @@ class AreaService {
     if (response.statusCode == 200) {
       List<BuildingData> buildings = [];
       var data = json.decode(response.body);
+
+      if (data['result'] == null) return [];
+
       for (var i in data['result']) {
         BuildingData buildingData = BuildingData.fromJson(i);
         buildings.add(BuildingData(
           buildingId: buildingData.buildingId,
           buildingName: buildingData.buildingName,
           totalGoods: buildingData.totalGoods,
-          latitude: buildingData.latitude,
-          longitude: buildingData.longitude,
+          latitude: buildingData.latitude,//
+          longitude: buildingData.longitude,//
         ));
       }
       return buildings;
