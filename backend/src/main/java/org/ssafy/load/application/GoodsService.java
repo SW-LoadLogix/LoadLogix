@@ -50,7 +50,7 @@ public class GoodsService {
         }
 
         //task에 할당된 상품 조회
-        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskList.getFirst());
+        List<GoodsEntity> goodsEntityList = goodsRepository.findAllByLoadTaskIdOrderByOrderingDesc(loadTaskList.getFirst());
         Map<BuildingEntity, List<GoodsEntity>> buildingGoodsEntityMap = new HashMap<>();
 
         for (GoodsEntity goodsEntity : goodsEntityList) {
