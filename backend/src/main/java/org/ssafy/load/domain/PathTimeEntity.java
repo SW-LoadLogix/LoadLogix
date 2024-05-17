@@ -25,21 +25,24 @@ public class PathTimeEntity {
     @JoinColumn(name = "building_id2")
     private BuildingEntity building2;
     private int duration;
+    private int distance;
 
     public static PathTimeEntity of(
             Long id,
             BuildingEntity building1,
             BuildingEntity building2,
-            int duration
+            int duration,
+            int distance
     ) {
-        return new PathTimeEntity(id, building1, building2, duration);
+        return new PathTimeEntity(id, building1, building2, duration, distance);
     }
 
     public static PathTimeEntity createNewEntity(
             BuildingEntity srcBuilding,
             BuildingEntity desBuilding,
-            int duration
+            int duration,
+            int distance
     ) {
-        return PathTimeEntity.of(null, srcBuilding, desBuilding, duration);
+        return PathTimeEntity.of(null, srcBuilding, desBuilding, duration, distance);
     }
 }

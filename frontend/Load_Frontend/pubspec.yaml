@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  responsive_framework: ^1.4.0
+  #responsive_framework: ^1.4.0
   animations: ^2.0.11
   sidebarx: ^0.17.1
   cupertino_icons: ^1.0.6
@@ -40,6 +40,7 @@ dependencies:
   syncfusion_flutter_charts: ^25.2.3+1
   carousel_slider: ^4.2.1
   visibility_detector: ^0.4.0+2
+  custom_map_markers: ^0.0.2
 
 
 
@@ -56,27 +57,23 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/3dmodels/3d-model.obj
+    - assets/models3d/3d-model.obj
     - assets/textures/truck.mtl
 
     - assets/gif/트럭시뮬gif.gif
     - assets/gif/truckgif.gif
     - assets/gif/truck43.gif
+    - .env
 
   fonts:
-    - family: AlumniSansPinstripe
-      fonts:
-        - asset: assets/fonts/AlumniSansPinstripe-Regular.ttf
     - family: IBMPlexMono
       fonts:
         - asset: assets/fonts/IBMPlexMono-Medium.ttf
-    - family: Nunito
-      fonts:
-        - asset: assets/fonts/nunito-Regular.ttf
-    - family: NanumSquareNeo-eHv
-      fonts:
-        - asset: assets/fonts/NanumSquareNeo-eHv.ttf
     - family: NanumSquareNeo-dEb
       fonts:
         - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+    - family: Cafe24Simplehae-v2.0
+      fonts:
+        - asset: assets/fonts/Cafe24Simplehae-v2.0.ttf
+
 

@@ -3,20 +3,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:load_frontend/services/area_service.dart';
 import 'package:load_frontend/stores/user_store.dart';
 import 'package:provider/provider.dart';
-
+import 'package:custom_map_markers/custom_map_markers.dart';
 import '../models/building_data.dart';
 
 List<Color> generateDistinctColors(int count) {
   List<Color> colors = [];
-  for (int i = 0; i < 20; i++) {
-    // Colors 클래스에 정의된 색상 중 랜덤하게 선택하여 리스트에 추가
+  for (int i = 0; i < count; i++) {
     Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
     colors.add(color);
   }
   return colors;
 }
 
-List<Color> distinctColor = generateDistinctColors(20);
 class MyGoogleMap extends StatefulWidget {
   const MyGoogleMap({Key? key}) : super(key: key);
 
@@ -27,11 +25,12 @@ class MyGoogleMap extends StatefulWidget {
 class _MyGoogleMapState extends State<MyGoogleMap> {
   late GoogleMapController mapController;
   LatLng _center = LatLng(36.36405586, 127.3561363);
-  late LatLng newPosition;
+  LatLng newPosition = LatLng(36.36405586, 127.3561363);
   List<BuildingData> _buildingData = [];
-  Set<Circle> _circles = {};
-  Set<Marker> _markers = {};
+  Set<Circle> _circles = {}; 
+  List<MarkerData> _customMarkers = [];
   bool _mapControllerInitialized = false;
+  List<Color> distinctColor = [];// distinctColor를 동적으로 생성하기 위해 리스트 초기화
 
   @override
   void initState() {
@@ -45,9 +44,9 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     List<BuildingData> buildingdata = await areaService.getBuildingPriority(userStore.token);
     setState(() {
       _buildingData = buildingdata;
+      distinctColor = generateDistinctColors(buildingdata.length); // 건물 데이터의 길이에 맞게 색상 생성
       _circles = _markCircles(buildingdata);
-      _markers = _getMarkers(buildingdata);
-      // 카메라 이동은 맵 컨트롤러가 초기화된 후에 실행합니다.
+      _customMarkers = _getCustomMarkers(buildingdata);
       if (_mapControllerInitialized) {
         _moveCamera(newPosition);
       }
@@ -65,44 +64,56 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       circles.add(
         Circle(
           circleId: CircleId(buildings[i].buildingId.toString()),
-          center: LatLng(buildings[i].longitude, buildings[i].latitude),
-          radius: 9, // 반지름 (미터)
-          fillColor: distinctColor[i], // 원 내부 색상
-          strokeWidth: 3, // 원 외곽선 두께
-          strokeColor: Colors.black, // 원 외곽선 색상
+          center: LatLng(buildings[i].latitude,buildings[i].longitude),
+          radius: 9,
+          fillColor: distinctColor[i],
+          strokeWidth: 3,
+          strokeColor: Colors.transparent,
         ),
       );
     }
-    new_latitude = new_latitude / buildings.length;
-    new_longitude = new_longitude / buildings.length;
-    newPosition = LatLng(new_longitude, new_latitude);
+    if (buildings.isNotEmpty) {
+      new_latitude = new_latitude / buildings.length;
+      new_longitude = new_longitude / buildings.length;
+      newPosition = LatLng(new_latitude,new_longitude);
+    }
     return circles;
   }
 
-  //마커 표시
-  Set<Marker> _getMarkers(List<BuildingData> buildings) {
-    Set<Marker> markers = {};
-
+  List<MarkerData> _getCustomMarkers(List<BuildingData> buildings) {
+    List<MarkerData> markers = [];
     for (int i = 0; i < buildings.length; i++) {
-
       markers.add(
-        Marker(
-          markerId: MarkerId(buildings[i].buildingId.toString()),
-          position: LatLng(buildings[i].longitude, buildings[i].latitude),
-          infoWindow: InfoWindow(
-            title: "${buildings[i].buildingName}",
-            snippet: "배송 상품 개수 : ${buildings[i].totalGoods}",
-          ), // InfoWi
+        MarkerData(
+          marker: Marker(
+            markerId: MarkerId(buildings[i].buildingId.toString()),
+            position: LatLng(buildings[i].latitude,buildings[i].longitude),
+            infoWindow: InfoWindow(
+              title: "배송 상품 개수 : ${buildings[i].totalGoods}",
+              snippet: "${buildings[i].buildingName}",
+            ),
+          ),
+          child: _customMarkerWidget(buildings[i]),
         ),
       );
     }
     return markers;
   }
 
+  Widget _customMarkerWidget(BuildingData building) {
+    return Container(
+      color: Colors.white.withOpacity(0.3),
+      child:
+          Text(
+            building.buildingName,
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+          ),
+    );
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
     _mapControllerInitialized = true;
-    // 맵 컨트롤러가 초기화된 후에 카메라 이동을 시도합니다.
     if (_buildingData.isNotEmpty) {
       _moveCamera(newPosition);
     }
@@ -111,7 +122,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   void _moveCamera(LatLng target) {
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: target, zoom: 18.0),
+        CameraPosition(target: target, zoom:13.0),
       ),
     );
   }
@@ -122,14 +133,19 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       aspectRatio: 1.5,
       child: MaterialApp(
         home: Scaffold(
-          body: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 15.0,
-            ),
-            circles: _circles,
-            markers: _markers,
+          body: CustomGoogleMapMarkerBuilder(
+            customMarkers: _customMarkers,
+            builder: (BuildContext context, Set<Marker>? markers) {
+              return GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 15.0,
+                ),
+                circles: _circles,
+                markers: markers ?? Set<Marker>(),
+              );
+            },
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const apiUrl = process.env.VUE_APP_API_URL+'/admin';
+const apiUrl = process.env.VUE_APP_API_URL;
 
 export const useAuthStore = defineStore(
   "auth",
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore(
 
       token.value = data.result.token; //토큰 정보 저장
 
-      const decoded = jwtDecode(token); //토큰에서 유저정보 추출하여 유저정보 저장
+      const decoded = jwtDecode(token.value); //토큰에서 유저정보 추출하여 유저정보 저장
       console.log("디코딩된 토큰 정보 :", decoded);
       user.value.id = decoded.id;
       user.value.name = decoded.name;

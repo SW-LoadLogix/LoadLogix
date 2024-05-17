@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:load_frontend/routes/app_router.dart';
 import 'package:load_frontend/stores/delivery_store.dart';
 import 'package:load_frontend/stores/box_store.dart';
@@ -13,8 +14,10 @@ import 'package:load_frontend/themes/theme_version2.dart';
 
 
 
-void main() {
+void main() async{
   setPathUrlStrategy();  // 주소창에서 # 제거
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
