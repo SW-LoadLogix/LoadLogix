@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
+import Workers from "../views/components/WorkersTable.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/tables",
     name: "Tables",
     component: Tables,
+  },
+  {
+    path: "/workers",
+    name: "Workers",
+    component: Workers,
   },
   {
     path: "/signin",

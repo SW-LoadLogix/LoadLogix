@@ -34,7 +34,7 @@ const darkMode = computed(() => store.state.darkMode);
       <router-link
         class="m-0 navbar-brand"
         style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;"
-        to="/"
+        to="/dashboard"
       >
         <img
           :src="loadLogixLogo"

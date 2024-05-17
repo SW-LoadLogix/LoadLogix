@@ -1,11 +1,11 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed} from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "@/store/auth";
 import Breadcrumbs from "../Breadcrumbs.vue";
 
-const showMenu = ref(false);
+// const showMenu = ref(false);
 const store = useStore();
 const isRTL = computed(() => store.state.isRTL);
 
@@ -20,13 +20,13 @@ const currentDirectory = computed(() => {
 });
 
 const minimizeSidebar = () => store.commit("sidebarMinimize");
-const toggleConfigurator = () => store.commit("toggleConfigurator");
+// const toggleConfigurator = () => store.commit("toggleConfigurator");
 
-const closeMenu = () => {
-  setTimeout(() => {
-    showMenu.value = false;
-  }, 100);
-};
+// const closeMenu = () => {
+//   setTimeout(() => {
+//     showMenu.value = false;
+//   }, 100);
+// };
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -68,18 +68,25 @@ const logout = () => {
           class="pe-md-3 d-flex align-items-center"
           :class="isRTL ? 'me-md-auto' : 'ms-md-auto'"
         >
-          <div class="input-group">
-            <!-- <span class="input-group-text text-body">
+          <!-- <div class="input-group">
+            <span class="input-group-text text-body">
               <i class="fas fa-search" aria-hidden="true"></i>
             </span>
             <input
               type="text"
               class="form-control"
               :placeholder="isRTL ? 'أكتب هنا...' : 'Type here...'"
-            /> -->
-          </div>
+            />
+          </div> -->
         </div>
         <ul class="navbar-nav justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <div
+              class="px-0 nav-link font-weight-bold text-white" style="margin-right: 15px;"
+            >
+              <span class="d-sm-inline d-none">관리자님 안녕하세요!</span>
+            </div>
+          </li>
           <li class="nav-item d-flex align-items-center">
             <div
               class="px-0 nav-link font-weight-bold text-white"
@@ -103,7 +110,7 @@ const logout = () => {
               </div>
             </a>
           </li>
-          <li class="px-3 nav-item d-flex align-items-center">
+          <!-- <li class="px-3 nav-item d-flex align-items-center">
             <a class="p-0 nav-link text-white" @click="toggleConfigurator">
               <i class="cursor-pointer fa fa-cog fixed-plugin-button-nav"></i>
             </a>
@@ -231,7 +238,7 @@ const logout = () => {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
