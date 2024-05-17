@@ -44,7 +44,6 @@ public class SimulationController {
         System.out.println("SSE 연결");
         System.out.println("클라이언트 IP: " + clientIp);
         System.out.println("User-Agent: " + userAgent);
-        return sseService.createEmitter("1");
         return sseService.createEmitter(userAgent);
     }
 
