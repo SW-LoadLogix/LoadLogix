@@ -7,9 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:load_frontend/views/box_simulation/box.dart';
 
 import '../models/vector3.dart';
+import '../views/box_simulation/box_simulation_gobal_setting.dart';
 import 'base_url.dart';
 
-bool isDebug = false;
+bool isDebug = true;
 
 class GoodsService {
   final baseUrl = dotenv.get("BASE_URL");
@@ -32,7 +33,7 @@ class GoodsService {
             goods.add(GoodsData(
                 goodsId: goodsId++,
                 type: type,
-                position: Vector3(x.toDouble() * 280 / 6.0 * gScale, y.toDouble()* 160 / 6.0* gScale, z.toDouble()* 160 / 6.0* gScale),
+                position: Vector3(x.toDouble() * gtruckWidth / 6.0 * gScale, y.toDouble()* gtruckHeight / 6.0* gScale, z.toDouble()* gtruckLength / 6.0* gScale),
                 //position: Vector3(x.toDouble(), y as double, z as double),
 
                 weight: random.nextInt(1000),
