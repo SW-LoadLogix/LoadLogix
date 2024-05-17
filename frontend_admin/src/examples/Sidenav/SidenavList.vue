@@ -46,12 +46,24 @@ const logout = () => {
         <sidenav-item
           to="/tables"
           :class="getRoute() === 'tables' ? 'active' : ''"
-          :navText="'Tables'"
+          :navText="'실시간 입고/출고'"
         >
           <template v-slot:icon>
             <i
               class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"
             ></i>
+          </template>
+        </sidenav-item>
+      </li>
+
+      <li class="nav-item">
+        <sidenav-item
+          to="/workers"
+          :class="getRoute() === 'billing' ? 'active' : ''"
+          :navText="'배송기사 리스트'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>
@@ -65,23 +77,11 @@ const logout = () => {
           ACCOUNT PAGES
         </h6>
       </li>
-
-      <li v-if="!isLogin" class="nav-item">
-        <sidenav-item
-          to="/signin"
-          :class="getRoute() === 'signin' ? 'active' : ''"
-          :navText="'Login'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-      <li v-else class="nav-item">
+      <li v-if="isLogin" class="nav-item">
         <sidenav-item
           to="/"
           :class="getRoute() === 'signin' ? 'active' : ''"
-          :navText="'Logout'"
+          :navText="'로그아웃'"
           @click="logout()"
         >
           <template v-slot:icon>
@@ -89,18 +89,6 @@ const logout = () => {
           </template>
         </sidenav-item>
       </li>
-
-      <!-- <li class="nav-item">
-        <sidenav-item
-          to="/signup"
-          :class="getRoute() === 'signup' ? 'active' : ''"
-          :navText="'Sign Up'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-collection text-info text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li> -->
     </ul>
   </div>
 
