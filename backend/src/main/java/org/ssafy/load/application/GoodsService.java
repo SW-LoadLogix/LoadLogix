@@ -50,7 +50,7 @@ public class GoodsService {
         }
 
         //task에 할당된 상품 조회
-        List<GoodsEntity> goodsEntityList = goodsRepository.findByLoadTask(loadTaskList.getFirst());
+        List<GoodsEntity> goodsEntityList = goodsRepository.findAllByLoadTaskIdOrderByOrderingDesc(loadTaskList.getFirst());
         Map<BuildingEntity, List<GoodsEntity>> buildingGoodsEntityMap = new HashMap<>();
 
         for (GoodsEntity goodsEntity : goodsEntityList) {
@@ -113,7 +113,7 @@ public class GoodsService {
             throw new CommonException(ErrorCode.LOAD_TASK_NOT_FOUND);
         }
 
-        List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(
+        List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingDesc(
                 loadTaskList.getFirst());
         List<SortedGoods> goods = goodsEntities.stream()
                 .map(g -> new SortedGoods(

@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingAsc(Integer loadTaskId);
+    List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingDesc(Integer loadTaskId);
     @Query("select goods from GoodsEntity goods join fetch goods.building join fetch goods.boxType join goods.loadTask where goods.loadTask.id = :loadTaskId")
     List<GoodsEntity> findByLoadTask(int loadTaskId);
 
