@@ -19,7 +19,7 @@ class DeliveryService {
         "Authorization": "Bearer $accessToken"
       });
 
-      print(response.body);
+      // print(response.body);
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
         return DeliveryData.fromJson(responseBody['result']);
