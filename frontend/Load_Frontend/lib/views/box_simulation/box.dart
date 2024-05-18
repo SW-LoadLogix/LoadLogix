@@ -39,6 +39,10 @@ class SimulBox {
       boxSize = three.Vector3(41 * gScale,28 * gScale, 41 * gScale);
     } else if (type == 'L6') {
       boxSize = three.Vector3(48 * gScale,34 * gScale, 48 * gScale);
+    } else if (type == 'S1'){
+      boxSize = three.Vector3(100 * gScale,10 * gScale,100 * gScale);
+    } else if (type == 'S2'){
+      boxSize = three.Vector3(10 * gScale,50 * gScale,10 * gScale);
     }
   }
 

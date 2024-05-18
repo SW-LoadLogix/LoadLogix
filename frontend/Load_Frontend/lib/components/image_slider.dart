@@ -22,7 +22,7 @@ class ImageSlider extends StatelessWidget {
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         autoPlayCurve: Curves.fastOutSlowIn,
         pauseAutoPlayOnTouch: true,
-        viewportFraction: 0.99,
+        viewportFraction: 1,
       ),
       items: imageUrls.map((imageUrl) {
         bool isNetwork = imageUrl.startsWith('http');
