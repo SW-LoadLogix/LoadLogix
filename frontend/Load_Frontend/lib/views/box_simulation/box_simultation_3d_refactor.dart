@@ -291,9 +291,9 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
 
 
-      truckSize.x = gtruckWidth;
+      truckSize.x = gtruckLength;
 
-      truckSize.z = gtruckLength;
+      truckSize.z = gtruckWidth;//gtruckLength;
 
       truckSize.y = gtruckHeight;
 

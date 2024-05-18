@@ -212,6 +212,18 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
               return '100';
             } else if (value == 150) {
               return '150';
+            } else if (value == 200) {
+              return '200';
+            } else if (value == 250) {
+              return '250';
+            } else if (value == 300) {
+              return '300';
+            } else if (value == 350) {
+              return '350';
+            } else if (value == 400) {
+              return '400';
+            } else if (value == 450) {
+              return '450';
             } else {
               return '';
             }
