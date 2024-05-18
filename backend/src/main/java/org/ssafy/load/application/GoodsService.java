@@ -119,7 +119,7 @@ public class GoodsService {
                 .map(g -> new SortedGoods(
                         g.getId(),
                         String.valueOf(g.getBoxType().getType()),
-                        new Position(g.getX(), g.getY(), g.getZ()),
+                        new Position(g.getX(), g.getZ(), g.getY()),
                         g.getWeight(),
                         g.getBuilding().getId(),
                         g.getBuilding().getDongName() + " " + g.getBuilding().getZibunMain() + "-"

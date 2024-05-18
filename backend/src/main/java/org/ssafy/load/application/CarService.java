@@ -32,7 +32,7 @@ public class CarService {
         }
 
         //사용자 입력 받게끔 수정 필요, 지금은 1톤 적재량(1000000g)으로 설정
-        car.updateCar(carChangeRequest.carHeight(), carChangeRequest.carLength(), carChangeRequest.carWidth(), 1000000);
+        car.updateCar(carChangeRequest.carLength(), carChangeRequest.carHeight(), carChangeRequest.carWidth(), 1000000);
         return CarResponse.from(car);
     }
 }
