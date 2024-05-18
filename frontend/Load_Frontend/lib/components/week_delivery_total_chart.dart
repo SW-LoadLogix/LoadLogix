@@ -124,25 +124,25 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
               String weekDay;
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = 'Monday';
+                  weekDay = _goodsTotalDataWrapper.amount[0].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[0].date.day.toString()+"일";
                   break;
                 case 1:
-                  weekDay = 'Tuesday';
+                  weekDay = _goodsTotalDataWrapper.amount[1].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[1].date.day.toString()+"일";
                   break;
                 case 2:
-                  weekDay = 'Wednesday';
+                  weekDay = _goodsTotalDataWrapper.amount[2].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[2].date.day.toString()+"일";
                   break;
                 case 3:
-                  weekDay = 'Thursday';
+                  weekDay = _goodsTotalDataWrapper.amount[3].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[3].date.day.toString()+"일";
                   break;
                 case 4:
-                  weekDay = 'Friday';
+                  weekDay = _goodsTotalDataWrapper.amount[4].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[4].date.day.toString()+"일";
                   break;
                 case 5:
-                  weekDay = 'Saturday';
+                  weekDay = _goodsTotalDataWrapper.amount[5].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[5].date.day.toString()+"일";
                   break;
                 case 6:
-                  weekDay = 'Sunday';
+                  weekDay = _goodsTotalDataWrapper.amount[6].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[6].date.day.toString()+"일";
                   break;
                 default:
                   throw Error();
@@ -178,19 +178,31 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
-                return 'Mon';
+                return _goodsTotalDataWrapper.amount[0].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[0].date.day.toString()+"일";
+
               case 1:
-                return 'Tue';
+                return _goodsTotalDataWrapper.amount[1].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[1].date.day.toString()+"일";
+
+
               case 2:
-                return 'Wed';
+                return _goodsTotalDataWrapper.amount[2].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[2].date.day.toString()+"일";
+
+
               case 3:
-                return 'Thur';
+                return _goodsTotalDataWrapper.amount[3].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[3].date.day.toString()+"일";
+
+
               case 4:
-                return 'Frid';
+                return _goodsTotalDataWrapper.amount[4].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[4].date.day.toString()+"일";
+
+
               case 5:
-                return 'Sat';
+                return _goodsTotalDataWrapper.amount[5].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[5].date.day.toString()+"일";
+
+
               case 6:
-                return 'Sun';
+                return _goodsTotalDataWrapper.amount[6].date.month.toString()+"월 "+_goodsTotalDataWrapper.amount[6].date.day.toString()+"일";
+
               default:
                 return '';
             }
@@ -212,18 +224,6 @@ class BarChartSample1State extends State<WeekDeliveryTotalChart> {
               return '100';
             } else if (value == 150) {
               return '150';
-            } else if (value == 200) {
-              return '200';
-            } else if (value == 250) {
-              return '250';
-            } else if (value == 300) {
-              return '300';
-            } else if (value == 350) {
-              return '350';
-            } else if (value == 400) {
-              return '400';
-            } else if (value == 450) {
-              return '450';
             } else {
               return '';
             }
