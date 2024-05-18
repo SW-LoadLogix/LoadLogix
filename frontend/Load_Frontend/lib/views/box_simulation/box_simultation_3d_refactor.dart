@@ -108,7 +108,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     "wireframe": true,
   });
   late three.InstancedMesh edgeMesh =
-  three.InstancedMesh(geometry, edgeMaterial, 100);
+  three.InstancedMesh(geometry, edgeMaterial, 300);
   late three.MeshPhongMaterial transparentEdgeMaterial =
   three.MeshPhongMaterial({
     "color": 0x00000000,
@@ -118,7 +118,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     "wireframe": true,
   });
   late three.InstancedMesh transparentEdgeMesh =
-  three.InstancedMesh(geometry, transparentEdgeMaterial, 100);
+  three.InstancedMesh(geometry, transparentEdgeMaterial, 300);
 
   //이것 하나만 가지고 전체 mesh를 관리
   three.BoxGeometry geometry = three.BoxGeometry(1, 1, 1);
@@ -194,7 +194,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     for (var box in boxes) {
       double boxHeight = box.currPosition.y;
-      if (boxHeight > maxHeight) maxHeight = boxHeight + box.boxSize.y;
+      if (boxHeight + box.boxSize.y > maxHeight) maxHeight = boxHeight + box.boxSize.y;
       if (boxHeight < minHeight) minHeight = boxHeight;
     }
     return {'minHeight': minHeight, 'maxHeight': maxHeight};
@@ -205,6 +205,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     double totalMinHeight = heightExtremes['minHeight']!;
     double totalMaxHeight = heightExtremes['maxHeight']!;
+
+    // heightFloorValuesLowPercent 및 heightFloorValuesHighPercent가 유효한지 확인
+    if (heightFloorValuesLowPercent < 0) heightFloorValuesLowPercent = 0;
+    if (heightFloorValuesLowPercent > 100) heightFloorValuesLowPercent = 100;
+    if (heightFloorValuesHighPercent < 0) heightFloorValuesHighPercent = 0;
+    if (heightFloorValuesHighPercent > 100) heightFloorValuesHighPercent = 100;
 
     double minHeight = totalMinHeight +
         (totalMaxHeight - totalMinHeight) *
@@ -220,8 +226,8 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   }
 
   makeInstanced(geometry, double opacity) {
-    for (int i = 0; i < 102; i++) {
-      if (i == 101) {
+    for (int i = 0; i < 21; i++) {
+      if (i == 20) {
         opacity = 0.4;
       }
       materials.add(three.MeshPhongMaterial({
@@ -249,15 +255,14 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
   three.Vector3 truckSize =
   three.Vector3(280 * gScale, 160 * gScale, 160 * gScale);
-  static late three.Object3D object = three.Object3D();
-  static late three.Texture texture;
-  bool done = false;
-  static late MTLLoader mtlLoader;
+  late three.Object3D object = three.Object3D();
+  late three.Texture texture;
+  late MTLLoader mtlLoader;
   static late MaterialCreator material;
-  static bool isLoaded = false; // 상태 플래그
-  static OBJLoader objLoader = OBJLoader(null);
+  bool isLoaded = false; // 상태 플래그
+  OBJLoader objLoader = OBJLoader(null);
 
-  List<String> allowedMaterialNames = [
+  static const List<String> allowedMaterialNames = [
     'wire_087224198',
     'wire_028089177',
     'wire_143224087',
@@ -284,14 +289,13 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       print("object");
 
 
-      var userInfo = await Provider.of<WorkerStore>(context,listen: false).workerInfo;
 
-      truckSize = three.Vector3(
-          userInfo.carWidth as double?,
-          userInfo.carHeight as double?,
-          userInfo.carLength as double?
-      );
 
+      truckSize.x = gtruckWidth;
+
+      truckSize.z = gtruckLength;
+
+      truckSize.y = gtruckHeight;
 
 
       for (var child in object.children) {
@@ -378,18 +382,22 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
   void _showOverlay(BuildContext context) {
     overlayKey = GlobalKey<VideoControlsOverlayState>();
 
+    if (_overlayEntry != null) {
+      _overlayEntry!.remove();
+    }
     _overlayEntry = OverlayEntry(
       builder: (context) => VideoControlsOverlay(
         onClose: _removeOverlay,
         overlayKey: overlayKey,
       ),
     );
-    Overlay.of(context)?.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
   }
 
   void _removeOverlay() {
+
     _overlayEntry?.remove();
-    _overlayEntry = null;
+    _overlayEntry = null;;
   }
 
   @override
@@ -406,6 +414,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       }
     }
     _removeOverlay();
+
 
     three3dRender.dispose();
     WidgetsBinding.instance.removeObserver(this);
@@ -464,6 +473,12 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     final Size _size = MediaQuery.of(context).size;
     final bool _isDesktop = _size.width >= screenLg;
     final bool _isMobile = _size.width < screenSm;
+
+    WorkerStore workerStore = Provider.of<WorkerStore>(context, listen: false);
+    truckSize.x = workerStore.gtruckLength.toDouble();
+    truckSize.y = workerStore.gtruckHeight.toDouble();
+    truckSize.z = workerStore.gtruckWidth.toDouble();
+    print ("truckSize: ${truckSize.x}, ${truckSize.y}, ${truckSize.z}");
 
     if (_isDesktop) {
       gCurrTopBarHeight = topBarHeight;
@@ -657,7 +672,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     // controls
 
     controls = three_jsm.OrbitControls(camera, _globalKey);
-    controls.target.set(truckSize.x/2.0, 0, truckSize.z/2.0);// (0, 0, 0) 좌표를 바라보도록 설정
+    //controls.target.set(truckSize.x/2.0, 0, truckSize.z/2.0);// (0, 0, 0) 좌표를 바라보도록 설정
     //controls.offset.set(truckSize.x/2.0, 0, truckSize.z/2.0);
     controls.update();
     //controls.listenToKeyEvents( window );
@@ -749,7 +764,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 //     var ambientLight = three.AmbientLight(0x404040); // 더 어두운 색상으로 변경
 //     scene.add(ambientLight);
 
-    await loadTruck();
+    loadTruck();
 
     _ticker = createTicker(_onTick)..start();
   }
@@ -758,6 +773,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     //controls.dispose();
 
+    controls.target.set(truckSize.x/2.0, 0, truckSize.z/2.0);// (0, 0, 0) 좌표를 바라보도록 설정
     controls.update();
     animate();
   }
@@ -835,7 +851,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     }
 
     /* 처음에 한번 집어 넣어줘야함 */
-    for (int i = 0; i < 102; i++) {
+    for (int i = 0; i < 21; i++) {
       meshes.add(three.InstancedMesh(geometry, materials[i], boxes.length));
     }
     edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length);
@@ -855,7 +871,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       meshes[box.boxColorId].setMatrixAt(i, matrix.clone());
     }
 
-    for (int i = 0; i < 102; i++) {
+    for (int i = 0; i < 21; i++) {
       scene.add(meshes[i]);
     }
     scene.add(edgeMesh);
@@ -905,7 +921,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       return;
     }
     if (lastCheckTransparantValue != transparencyValuePercent) {
-      for (int i = 0; i < 100; i++) {
+      for (int i = 0; i < 20; i++) {
         materials[i].opacity = transparencyValuePercent / 100.0;
       }
       lastCheckTransparantValue = transparencyValuePercent;
@@ -941,14 +957,14 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
 
     scene.remove(edgeMesh);
     scene.remove(transparentEdgeMesh);
-    for (int i = 0; i <102; i++) {
+    for (int i = 0; i <21; i++) {
       scene.remove(meshes[i]);
     }
 
     //loadTruck();
 
     matrix = three.Matrix4();
-    for (int i = 0; i < 102; i++) {
+    for (int i = 0; i < 21; i++) {
       meshes[i] = three.InstancedMesh(geometry, materials[i], boxes.length + 40);
     }
     edgeMesh = three.InstancedMesh(geometry, edgeMaterial, boxes.length + 40);
@@ -986,22 +1002,22 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
     bottomPannelsize.y = 0.5;
     matrix.setPosition(0, -0.5, 0);
     matrix.compose(three.Vector3(0, -0.5, 0), quaternion, bottomPannelsize);
-    meshes[101].setMatrixAt(0, matrix.clone());
+    meshes[20].setMatrixAt(0, matrix.clone());
 
     bottomPannelsize = truckSize.clone();
     bottomPannelsize.x = 0.5;
     matrix.setPosition(-0.5, -0.5, 0);
     matrix.compose(three.Vector3(-0.5, 0, 0), quaternion, bottomPannelsize);
-    meshes[101].setMatrixAt(1, matrix.clone());
+    meshes[20].setMatrixAt(1, matrix.clone());
 
     bottomPannelsize = truckSize.clone();
     bottomPannelsize.z = 0.5;
     matrix.setPosition(0, 0, -0.5);
     matrix.compose(three.Vector3(0, 0, -0.5), quaternion, bottomPannelsize);
-    meshes[101].setMatrixAt(2, matrix.clone());
+    meshes[20].setMatrixAt(2, matrix.clone());
     bottomPannelsize = truckSize.clone();
 
-    for (int i = 0; i < 102; i++) {
+    for (int i = 0; i < 21; i++) {
       scene.add(meshes[i]);
     }
     scene.add(edgeMesh);
