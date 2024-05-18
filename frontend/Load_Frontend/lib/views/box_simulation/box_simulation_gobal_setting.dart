@@ -9,6 +9,6 @@ int gBoxCount = 0; // 전체 상자 개수
 bool gIsPause = false;
 double gPlaySpeed = 1.0;
 
-int gtruckWidth = 280;
-int gtruckLength = 160;
-int gtruckHeight = 160;
+double gtruckWidth = 280;
+double gtruckLength = 160;
+double gtruckHeight = 160;
