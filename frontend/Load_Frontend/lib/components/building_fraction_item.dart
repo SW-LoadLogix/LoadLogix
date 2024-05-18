@@ -45,7 +45,7 @@ class BuildingItem extends StatelessWidget {
                   "&heading=$heading"
                   "&pitch=$pitch"
                   "&key=$apiKey";
-              final String fIndexStr = "F${(++currIndex).toString().padLeft(3, '0')}";
+              final String fIndexStr = "F${(currIndex++).toString().padLeft(3, '0')}";
               // print (url);
               //
               // Completer<Size> completer = Completer<Size>();
