@@ -1122,12 +1122,12 @@ thread.start();
 					<TargetEmbeddedObjectReference>
 						<PackageName><![CDATA[load_merge]]></PackageName>
 						<ClassName><![CDATA[Main]]></ClassName>
-						<ItemName><![CDATA[convey]]></ItemName>
+						<ItemName><![CDATA[toTruckZone]]></ItemName>
 					</TargetEmbeddedObjectReference>
 					<TargetConnectableItemReference>
 						<PackageName><![CDATA[com.anylogic.libraries.material_handling]]></PackageName>
 						<ClassName><![CDATA[Convey]]></ClassName>
-						<ItemName><![CDATA[in]]></ItemName>
+						<ItemName><![CDATA[outRedirect]]></ItemName>
 					</TargetConnectableItemReference>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
@@ -1135,7 +1135,7 @@ thread.start();
 						<Point><X>30</X><Y>70</Y></Point>
 						<Point><X>-250</X><Y>70</Y></Point>
 						<Point><X>-250</X><Y>-250</Y></Point>
-						<Point><X>-220</X><Y>-280</Y></Point>
+						<Point><X>-330</X><Y>-270</Y></Point>
 					</Points>
 				</Connector>
 				<Connector>
@@ -4666,6 +4666,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -6209,7 +6212,7 @@ try{
 						<Parameter>
 							<Name><![CDATA[targetConveyor]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[conveyor22]]></Code>
+								<Code><![CDATA[conveyor15]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -6911,6 +6914,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -8333,15 +8339,21 @@ try{
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[30*settingGoodsCountPerArea.get(1)]]></Code>
+								<Code><![CDATA[5*settingGoodsCountPerArea.get(1)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[100]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -9071,15 +9083,21 @@ try{
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[30*settingGoodsCountPerArea.get(2)]]></Code>
+								<Code><![CDATA[5*settingGoodsCountPerArea.get(2)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[100]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -9809,15 +9827,21 @@ try{
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[30*settingGoodsCountPerArea.get(3)]]></Code>
+								<Code><![CDATA[5*settingGoodsCountPerArea.get(3)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[100]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -10547,15 +10571,21 @@ try{
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[30*settingGoodsCountPerArea.get(4)]]></Code>
+								<Code><![CDATA[5*settingGoodsCountPerArea.get(4)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[100]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -10913,6 +10943,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -11840,6 +11873,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -12164,6 +12200,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -12952,6 +12991,9 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[sourceType]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.SOURCE_CURRENT_POSITION]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[sourcePositionOnConveyor]]></Name>
@@ -13204,6 +13246,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -13447,6 +13492,9 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[sourceType]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.SOURCE_CURRENT_POSITION]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[sourcePositionOnConveyor]]></Name>
@@ -13478,7 +13526,7 @@ try{
 						<Parameter>
 							<Name><![CDATA[targetConveyor]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[conveyor22]]></Code>
+								<Code><![CDATA[conveyor34]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -13699,6 +13747,9 @@ try{
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -13942,9 +13993,15 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[300]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -14053,9 +14110,15 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[300]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -14164,9 +14227,15 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[300]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -14275,9 +14344,15 @@ try{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[capacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[300]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -15250,6 +15325,9 @@ System.out.println("저장된 물품 / 구역1: "+goodsPerArea[1].toString());]]
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -18662,6 +18740,9 @@ if(agent.areaId==9) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -18776,6 +18857,9 @@ if(agent.areaId==9) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -18890,6 +18974,9 @@ if(agent.areaId==9) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -19004,6 +19091,9 @@ if(agent.areaId==9) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -19118,6 +19208,9 @@ if(agent.areaId==9) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[maximumCapacity]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[entityLocation]]></Name>
@@ -27486,9 +27579,17 @@ if(agent.areaId==9) {
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[maxSpeed]]></Name>
+								<Value Class="CodeUnitValue">
+									<Code><![CDATA[10]]></Code>
+									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+								</Value>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[initialSpeed]]></Name>
+								<Value Class="CodeUnitValue">
+									<Code><![CDATA[10]]></Code>
+									<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+								</Value>
 							</Parameter>
 							<Parameter>
 								<Name><![CDATA[acceleration]]></Name>
@@ -29020,10 +29121,13 @@ if(agent.areaId==9) {
 					<Points>
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 						<Point><X>25</X><Y>7.47939721852737E-15</Y><Z>0</Z></Point>
-						<Point><X>25</X><Y>7.47939721852737E-15</Y><Z>0</Z></Point>
-						<Point><X>95</X><Y>2.8421709430404007E-14</Y><Z>0</Z></Point>
-						<Point><X>70</X><Y>2.094231221187664E-14</Y><Z>0</Z></Point>
-						<Point><X>70</X><Y>2.094231221187664E-14</Y><Z>0</Z></Point>
+						<Point><X>25</X><Y>7.479397218527368E-15</Y><Z>0</Z></Point>
+						<Point><X>55.75</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>30.75</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>80.75</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>95</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>70</X><Y>0</Y><Z>0</Z></Point>
+						<Point><X>70</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
 
 
@@ -29682,10 +29786,10 @@ if(agent.areaId==9) {
 					<Points>
 						<Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 						<Point><X>0</X><Y>25</Y><Z>0</Z></Point>
-						<Point><X>0.08210169300300751</X><Y>-24.999865185876622</Y><Z>0</Z></Point>
-						<Point><X>0.3120041044408026</X><Y>-95.00486851318044</Y><Z>0</Z></Point>
-						<Point><X>0.2299024114377951</X><Y>-70.00500332730383</Y><Z>0</Z></Point>
-						<Point><X>0.3120041044408026</X><Y>14.995131486819547</Y><Z>0</Z></Point>
+						<Point><X>0.08210049933389371</X><Y>-24.999865189796704</Y><Z>0</Z></Point>
+						<Point><X>0.312</X><Y>-95.005</Y><Z>0</Z></Point>
+						<Point><X>0.2298995006661063</X><Y>-70.00513481020329</Y><Z>0</Z></Point>
+						<Point><X>0.312</X><Y>14.995</Y><Z>0</Z></Point>
 					</Points>
 
 
@@ -31904,7 +32008,7 @@ if(agent.areaId==9) {
 				<Group>
 					<Id>1715907455607</Id>
 					<Name><![CDATA[group1]]></Name>
-					<X>1580</X><Y>1760</Y>
+					<X>1580</X><Y>1700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32580,7 +32684,7 @@ box3D.setColor("MA_material_28", randomColor2); ]]></Body>
 						</ColorMapping>
 					</ColorTable>
 					<AutoScale>true</AutoScale>
-					<Scale>1.0</Scale>
+					<Scale>0.5</Scale>
 					<Rotation>0.0</Rotation>
 					<AxisOrder>XYZ_AXIS_ORDER</AxisOrder>
 					<ApplyShading>true</ApplyShading>
@@ -34406,7 +34510,7 @@ public class SSEListener implements Runnable {
 
                     //LoadStartRequest data = objectMapper.readValue(json, LoadStartRequest.class);
 
-                	//System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
+                	System.out.println("Received AreaData: area_id=" + loadStartResponse.getAreaId() + ", conveyNo=" + loadStartResponse.getConveyNo()+", vehicle=" + loadStartResponse.getReadyVehicle()+ ",agentIds="+loadStartResponse.getAgentIds().toString());
 
                 	// 차량 준비
                 	if(loadStartResponse.getReadyVehicle()) {
