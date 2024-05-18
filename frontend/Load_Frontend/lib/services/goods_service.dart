@@ -25,29 +25,34 @@ class GoodsService {
       int goodsId = 0;
 
 
-      List<dynamic> array =[{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 0.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 0.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 41.0, 'y': 41.0, 'z': 28.0}}, {'position': {'x': 48.0, 'y': 0.0, 'z': 28.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 0.0, 'z': 62.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 0.0, 'z': 28.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 0.0, 'z': 62.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}]
-;
+       //List<dynamic> array =[{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+      // {'position': {'x': 0.0, 'y': 0.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+      // {'position': {'x': 0.0, 'y': 0.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+      // List<dynamic> array = [{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}},
+      //   {'position': {'x': 0.0, 'y': 0.0, 'z': 10.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}},
+      //   {'position': {'x': 0.0, 'y': 0.0, 'z': 20.0}, 'size': {'x': 10.0, 'y': 10.0, 'z': 50.0}}];
+
+      //List<dynamic> array =[{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 34.0, 'y': 34.0, 'z': 21.0}}, {'position': {'x': 0.0, 'y': 0.0, 'z': 21.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}}, {'position': {'x': 34.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}}];
+      //[{'position': {'x': 48.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 41.0, 'y': 41.0, 'z': 28.0}}, {'position': {'x': 48.0, 'y': 0.0, 'z': 28.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 0.0, 'z': 62.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 0.0, 'z': 28.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 0.0, 'z': 62.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 48.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 0.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 48.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}, {'position': {'x': 96.0, 'y': 96.0, 'z': 68.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}];
+
+      List<dynamic> array = [{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 34.0, 'y': 34.0, 'z': 21.0}},
+        {'position': {'x': 0.0, 'y': 0.0, 'z': 21.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+        {'position': {'x': 48.0, 'y': 0.0, 'z': 21.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+        {'position': {'x': 96.0, 'y': 0.0, 'z': 21.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+        {'position': {'x': 144.0, 'y': 0.0, 'z': 21.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+        {'position': {'x': 34.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 34.0, 'y': 34.0, 'z': 21.0}},
+        {'position': {'x': 68.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 34.0, 'y': 34.0, 'z': 21.0}},
+        {'position': {'x': 0.0, 'y': 34.0, 'z': 0.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}},
+        {'position': {'x': 0.0, 'y': 34.0, 'z': 10.0}, 'size': {'x': 100.0, 'y': 100.0, 'z': 10.0}}];
+
+
+      // List<dynamic> array =      [{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}},
+      //   {'position': {'x': 0.0, 'y': 0.0, 'z': 34.0}, 'size': {'x': 48.0, 'y': 48.0, 'z': 34.0}}];
 
 
 
-      /*
-
-
-       if (type == 'L1') {
-      boxSize = three.Vector3(22 * gScale,9 * gScale, 22 * gScale);
-    } else if (type == 'L2') {
-      boxSize = three.Vector3(27 * gScale,15 * gScale, 27 * gScale);
-    } else if (type == 'L3') {
-      boxSize = three.Vector3(35 * gScale,10 * gScale, 35 * gScale);
-    } else if (type == 'L4') {
-      boxSize = three.Vector3(34 * gScale, 21 * gScale, 34 * gScale);
-    } else if (type == 'L5') {
-      boxSize = three.Vector3(41 * gScale,28 * gScale, 41 * gScale);
-    } else if (type == 'L6') {
-      boxSize = three.Vector3(48 * gScale,34 * gScale, 48 * gScale);
-    }
-       */
-
+      // [{'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 'size': {'x': 22.0, 'y': 22.0, 'z': 9.0}},
+      //   {'position': {'x': 0.0, 'y': 22.0, 'z': 0.0}, 'size': {'x': 22.0, 'y': 22.0, 'z': 9.0}}]
 
       print ("arraysize: ${array.length}");
       print("array : $array");
@@ -55,7 +60,7 @@ class GoodsService {
         var obj = array[i];
         print(obj);
         String type = "L1";
-        if (obj['size']?['x'] == 48) {
+        if (obj['size']?['x'] == 48.0) {
           type = 'L6';
         } else if (obj['size']?['x'] == 41) {
           type = 'L5';
@@ -67,16 +72,22 @@ class GoodsService {
           type = 'L2';
         } else if (obj['size']?['x'] == 22) {
           type = 'L1';
+        }else if (obj['size']?['x'] == 100.0 && obj['size']?['y'] == 100.0  &&obj['size']?['z'] == 10.0) {
+          type = 'S1';
         }
+        else if (obj['size']?['x'] == 10.0 && obj['size']?['y'] == 10.0  &&obj['size']?['z'] == 50.0) {
+          type = 'S2';
+        }
+
 
         goods.add(
             GoodsData(
             goodsId: goodsId++,
             type: type,
             position: Vector3(
-                (obj['position']?['x'] as double) * gScale,
+                (obj['position']?['y'] as double) * gScale,
                 (obj['position']?['z'] as double) * gScale,
-                (obj['position']?['y'] as double) * gScale),
+                (obj['position']?['x'] as double) * gScale),
             weight: random.nextInt(1000),
             buildingId: random.nextInt(10),
             buildingName: 'Building Name ${random.nextInt(10)}',
@@ -126,13 +137,13 @@ class GoodsService {
             goodsId: goodsData.goodsId,
             type: goodsData.type,
             position: Vector3(
-                goodsData.position.x.toDouble() * gScale,//* 280 / 6.0 * gScale,
+                goodsData.position.y.toDouble() * gScale,//* 280 / 6.0 * gScale,
                 goodsData.position.z.toDouble() * gScale,//* 160 / 6.0 * gScale,
-                goodsData.position.y.toDouble() * gScale),//* 160 / 6.0 * gScale),
+                goodsData.position.x.toDouble() * gScale),//* 160 / 6.0 * gScale),
             //position: Vector3(x.toDouble(), y as double, z as double),
 
             weight: goodsData.weight,
-            buildingId: goodsData.buildingId,
+            buildingId: random.nextInt(19),//goodsData.buildingId,
             buildingName: goodsData.buildingName,
             detailAddress: goodsData.detailAddress));
       }
