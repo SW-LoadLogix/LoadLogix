@@ -1,5 +1,6 @@
 package org.ssafy.load.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,14 @@ public class SimulationController {
     }
 
     @GetMapping(value = "/start", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter streamSse() {return sseService.createEmitter("1");
+    public SseEmitter streamSse(HttpServletRequest request) {
+        System.out.println("-----------------------SSE 연결 ------------------------");
+        String clientIp = request.getRemoteAddr();
+        String userAgent = request.getHeader("User-Agent");
+        System.out.println("SSE 연결");
+        System.out.println("클라이언트 IP: " + clientIp);
+        System.out.println("User-Agent: " + userAgent);
+        return sseService.createEmitter(userAgent);
     }
 
     @PostMapping("/goods")

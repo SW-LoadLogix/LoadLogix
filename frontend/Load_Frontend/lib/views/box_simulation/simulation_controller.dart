@@ -45,7 +45,7 @@ class _SimulationControllerState extends State<SimulationController> {
           Container(
             alignment: Alignment.center,
             height: 24,
-            child: Text('Box Floor Height'),
+            child: Text('택배 적재 높이별 보기'),
           ),
           SfRangeSlider(
             min: 0.0,
@@ -68,7 +68,7 @@ class _SimulationControllerState extends State<SimulationController> {
           Container(
             alignment: Alignment.center,
             height: 24,
-            child: Text('Transparency'),
+            child: Text('투명도'),
           ),
           SfSlider(
             min: 0.0,
@@ -86,26 +86,26 @@ class _SimulationControllerState extends State<SimulationController> {
             },
           ),
           Container(height: 10),
-          Container(
-            alignment: Alignment.center,
-            height: 24,
-            child: Text('Simulation Speed'),
-          ),
-          SfSlider(
-            min: 0,
-            max: 100,
-            value: boxStepPercent,
-            interval: 20,
-            showTicks: true,
-            showLabels: true,
-            enableTooltip: true,
-            minorTicksPerInterval: 1,
-            onChanged: (dynamic newValue) {
-              setState(() {
-                boxStepPercent = newValue;
-              });
-            },
-          ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   height: 24,
+          //   child: Text('Simulation Speed'),
+          // ),
+          // SfSlider(
+          //   min: 0,
+          //   max: 100,
+          //   value: boxStepPercent,
+          //   interval: 20,
+          //   showTicks: true,
+          //   showLabels: true,
+          //   enableTooltip: true,
+          //   minorTicksPerInterval: 1,
+          //   onChanged: (dynamic newValue) {
+          //     setState(() {
+          //       boxStepPercent = newValue;
+          //     });
+          //   },
+          // ),
           Container(height: 10),
         ]));
   }

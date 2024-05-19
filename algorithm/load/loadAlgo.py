@@ -18,6 +18,7 @@ while (True):
             #로컬테스트
             # url = 'http://localhost:8081/api/load'
             #백서버
+            #url = 'http://loadlogix.store/api/load/task'
             url = 'http://docker-compose-spring-1:8081/api/load/task'
             for event in event_stream(url):
                 start = time.time()
@@ -129,8 +130,8 @@ while (True):
                     # 로컬테스트
                     # post_url = 'http://localhost:8081/api/load'
                     # 백서버
+                    #post_url = 'http://loadlogix.store/api/load/task/result'
                     post_url = 'http://docker-compose-spring-1:8081/api/load/task/result'
-
                     # POST 요청 보내기
                     response = requests.post(post_url, data=loadResponse, headers={'Content-Type': 'application/json'})
                     if response.status_code == 200:
