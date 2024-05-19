@@ -39,7 +39,16 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 
-  <script src="../api_key.js"></script>
+  <!-- <script src="../api_key.js"></script> -->
+  <script>
+    fetch('/env')
+      .then(response => response.json())
+      .then(env => {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${env.googleMapsApiKey}`;
+        document.head.appendChild(script);
+      });
+  </script>
 
 </head>
 <body>
