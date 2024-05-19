@@ -12,17 +12,17 @@
 
 ### 📍 Backend
 
-|<div style="text-align: center;">![신예지](/etc/assets/신예지.png)</div>|<div style="text-align: center;">![정건준](/etc/assets/정건준.jpg)</div>|<div style="text-align: center;">![백성욱](/etc/assets/백성욱.jpg)</div>|<div style="text-align: center;">![윤정인]()</div>|
+|<div style="text-align: center;">![신예지](/etc/assets/신예지.png)</div>|<div style="text-align: center;">![정건준](/etc/assets/정건준.jpg)</div>|<div style="text-align: center;">![백성욱](/etc/assets/백성욱.jpg)</div>|<div style="text-align: center;">![윤정인](/etc/assets/윤정인.jpg)</div>|
 |:--:|:--:|:--:|:--:|
 |팀장 신예지|정건준|백성욱|윤정인|
 |PM<br>Anylogic 로직 및 UI 구현<br> 백엔드 공통 코드 작성, 리팩토링<br>백엔드 API 개발<br>Vue 관리자 페이지 프론트 개발|백엔드 총괄<br>경로 알고리즘 구현 및 최적화<br>백엔드 개발 및 리팩토링<br>적재/경로 알고리즘 연동 API<br>CI / CD|CI / CD<br>적재 알고리즘 구현 및 최적화<br>파이썬 자바 통신 구현<br>백엔드 적재 API 구현|Anylogic UI 설계<br>백엔드 API 개발<br>Vue 관리자 페이지 프론트 개발<br>UCC|
 
 ### 📍 Frontend
 
-|<div style="text-align: center;">![김보경](/etc/assets/김보경.jpg)</div>|<div style="text-align: center;">![류진호](/etc/assets/류진호.jpg)</div>|<div style="text-align: center;">![문경림]()</div>|
+|<div style="text-align: center;">![김보경](/etc/assets/김보경.jpg)</div>|<div style="text-align: center;">![류진호](/etc/assets/류진호.jpg)</div>|<div style="text-align: center;">![문경림](/etc/assets/문경림.jpg)</div>|
 |:--:|:--:|:--:|
 |김보경|류진호|문경림|
-|프론트엔드 리드<br>컴포넌트 설계<br>UI/UX 디자인<br>대시보드 페이지 구현<br>JIRA 일정관리<br>프론트엔드, 애니로직, 백엔드 API 통신 연결|프론트엔드 개발 및 리펙토링<br>프론트 프로젝트 골조 작성<br>3D 페이지 시뮬레이션 구현<br>API 통신 구조 및 스토어 구조 구현<br>랜딩 컴포넌트, 및 페이지 전체 컴포넌트 구현|와이어 프레임 구성 및 작성<br>할당받은 택배 적재 , 화물차량 규격 개발<br>랜딩 페이지 구현|
+|프론트엔드 리드<br>컴포넌트 설계<br>UI/UX 디자인<br>대시보드 페이지 구현<br>JIRA 일정관리<br>프론트엔드, 애니로직, 백엔드 API 통신 연결|프론트엔드 개발 및 리펙토링<br>프론트 프로젝트 골조 작성<br>3D 페이지 시뮬레이션 구현<br>API 통신 구조 및 스토어 구조 구현<br>랜딩 컴포넌트, 및 페이지 전체 컴포넌트 구현|와이어 프레임 구성 및 작성<br>할당받은 택배 적재 기능, 화물차량 규격 기능 개발<br>랜딩 페이지 구현|
 
 
 ## 🌀 프로젝트 기획 배경
