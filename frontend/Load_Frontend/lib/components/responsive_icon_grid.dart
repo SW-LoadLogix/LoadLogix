@@ -22,7 +22,7 @@ class ResponsiveIconGrid extends StatelessWidget {
         } else if (constraints.maxWidth >= 600) {
           return GridView.count(
             crossAxisCount: 2,
-            childAspectRatio: 3,
+            childAspectRatio: 2.5,
             children: icons,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),

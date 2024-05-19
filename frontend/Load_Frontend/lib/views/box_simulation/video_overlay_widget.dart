@@ -34,7 +34,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
     setState(() {
       _currentItem = gCurrItem;
       _totalItems = gTotalItems;
-      _currentValue = _currentItem / (_totalItems as double) * 100;
+      _currentValue = _currentItem / _totalItems * 100;
       if (_currentValue > 100)
         _currentValue = 100.0;
       else if (_currentValue < 0) _currentValue = 0.0;
@@ -147,7 +147,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
                       alignment: Alignment.topLeft,
                       height: 40,
                       child: Text('       ${_currentValue.round()}%',
-                          style: TextStyle(fontSize: 12)),
+                          style: TextStyle(fontSize: 16)),
                     ),
                   ),
                   Expanded(
@@ -181,7 +181,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text("Speed:", style: TextStyle(fontSize: 10)),
+                        Text("재생 속도:", style: TextStyle(fontSize: 16)),
                         SizedBox(width: 5),
                         Container(
                           width: 100,
@@ -199,7 +199,7 @@ class VideoControlsOverlayState extends State<VideoControlsOverlay> {
                             },
                           ),
                         ),
-                        Text("Reverse:", style: TextStyle(fontSize: 10)),
+                        Text("되감기:", style: TextStyle(fontSize: 16)),
                         Transform.scale(
                           scale: 0.5,
                           child: Switch(

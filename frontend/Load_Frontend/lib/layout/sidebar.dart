@@ -7,7 +7,7 @@ import '../model.dart';
 final List<MenuItem> menuItems = [
   MenuItem('홈', Icons.home_outlined),
   MenuItem('배송관리 대시보드', Icons.dashboard_outlined),
-  MenuItem('Simulation 3d', Icons.threed_rotation),
+  MenuItem('적재 시뮬레이션', Icons.threed_rotation),
   // MenuItem('Contact', Icons.contact_mail),
 ];
 
@@ -28,28 +28,7 @@ class SideBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Center(
-            child:
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8), color: primaryAncient),
-              width: 100,
-              height: 45,
-              child: Center(
-                child: Text(
-                  'LOAD',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          Center(
-            child: Image.asset('assets/images/logo3.png'),
+            child: Image.asset('assets/images/loadlogix.png'),
           ),
           SizedBox(
             height: 24,

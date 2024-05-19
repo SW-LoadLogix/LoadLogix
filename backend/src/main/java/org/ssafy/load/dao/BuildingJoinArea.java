@@ -14,7 +14,11 @@ public class BuildingJoinArea {
     private EntityManager entityManager;
 
     public List<AreaAndBuilding> getBuildingIdAndAreaId(){
-        String jpql = "SELECT b.id, a.id FROM BuildingEntity b LEFT JOIN AreaEntity a ON b.area.id = a.id";
+        String jpql = "SELECT b.id, a.id " +
+                "FROM BuildingEntity b " +
+                "LEFT JOIN AreaEntity a ON b.area.id = a.id " +
+                "WHERE NOT (b.sidoName = '대전광역시' AND b.zibunMain = 124 AND b.zibunSub = 0)";
+
         List<Object[]> rows = entityManager.createQuery(jpql).getResultList();
         List<AreaAndBuilding> areaAndBuildings = new ArrayList<>();
         for(Object[] row : rows){

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../constaints.dart';
+
 class ImageSlider extends StatelessWidget {
   final List<String> imageUrls;
 
@@ -20,18 +22,22 @@ class ImageSlider extends StatelessWidget {
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         autoPlayCurve: Curves.fastOutSlowIn,
         pauseAutoPlayOnTouch: true,
-        viewportFraction: 1.0,
+        viewportFraction: 1,
       ),
       items: imageUrls.map((imageUrl) {
+        bool isNetwork = imageUrl.startsWith('http');
+
         return Builder(
           builder: (BuildContext context) {
             return Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 0.0),
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: primary,
               ),
-              child: Image.network(imageUrl, fit: BoxFit.cover),
+              child: isNetwork ?
+              Image.network(imageUrl, fit: BoxFit.cover) :
+              Image.asset(imageUrl, fit: BoxFit.cover)
             );
           },
         );

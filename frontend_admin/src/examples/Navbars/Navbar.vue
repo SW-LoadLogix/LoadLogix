@@ -1,10 +1,11 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed} from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth";
 import Breadcrumbs from "../Breadcrumbs.vue";
 
-const showMenu = ref(false);
+// const showMenu = ref(false);
 const store = useStore();
 const isRTL = computed(() => store.state.isRTL);
 
@@ -19,13 +20,30 @@ const currentDirectory = computed(() => {
 });
 
 const minimizeSidebar = () => store.commit("sidebarMinimize");
-const toggleConfigurator = () => store.commit("toggleConfigurator");
+// const toggleConfigurator = () => store.commit("toggleConfigurator");
 
-const closeMenu = () => {
-  setTimeout(() => {
-    showMenu.value = false;
-  }, 100);
+// const closeMenu = () => {
+//   setTimeout(() => {
+//     showMenu.value = false;
+//   }, 100);
+// };
+
+const authStore = useAuthStore();
+const router = useRouter();
+const isLogin = computed(() => !!authStore.token);
+
+const moveSignIn = () => {
+  console.log('로그인 페이지로 이동');
+  router.push({ name: 'Signin' });
 };
+
+const logout = () => {
+  if (!confirm('로그아웃 하시겠습니까?')) return;
+    authStore.logout();
+    console.log('로그아웃');
+    router.push({ path: '/' });
+};
+
 </script>
 <template>
   <nav
@@ -50,7 +68,7 @@ const closeMenu = () => {
           class="pe-md-3 d-flex align-items-center"
           :class="isRTL ? 'me-md-auto' : 'ms-md-auto'"
         >
-          <div class="input-group">
+          <!-- <div class="input-group">
             <span class="input-group-text text-body">
               <i class="fas fa-search" aria-hidden="true"></i>
             </span>
@@ -59,19 +77,24 @@ const closeMenu = () => {
               class="form-control"
               :placeholder="isRTL ? 'أكتب هنا...' : 'Type here...'"
             />
-          </div>
+          </div> -->
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'Signin' }"
-              class="px-0 nav-link font-weight-bold text-white"
-              target="_blank"
+            <div
+              class="px-0 nav-link font-weight-bold text-white" style="margin-right: 15px;"
             >
-              <i class="fa fa-user" :class="isRTL ? 'ms-sm-2' : 'me-sm-2'"></i>
-              <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none">Sign In</span>
-            </router-link>
+              <span class="d-sm-inline d-none">관리자님 안녕하세요!</span>
+            </div>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <div
+              class="px-0 nav-link font-weight-bold text-white"
+            >
+              <i class="fa fa-user me-sm-2"></i>
+              <span v-if="isLogin" class="d-sm-inline d-none" style="cursor: pointer;" @click="logout()">로그아웃</span>
+              <span v-else class="d-sm-inline d-none" style="cursor: pointer;" @click="moveSignIn()">로그인</span>
+            </div>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -87,7 +110,7 @@ const closeMenu = () => {
               </div>
             </a>
           </li>
-          <li class="px-3 nav-item d-flex align-items-center">
+          <!-- <li class="px-3 nav-item d-flex align-items-center">
             <a class="p-0 nav-link text-white" @click="toggleConfigurator">
               <i class="cursor-pointer fa fa-cog fixed-plugin-button-nav"></i>
             </a>
@@ -215,7 +238,7 @@ const closeMenu = () => {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

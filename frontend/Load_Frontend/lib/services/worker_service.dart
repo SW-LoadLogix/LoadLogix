@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:load_frontend/services/user_service.dart';
 import 'package:provider/provider.dart';
@@ -7,21 +8,12 @@ import '../models/worker_info_data.dart';
 import 'base_url.dart';
 
 class WorkerService {
-
-  /**
-   * Rest API method : GET
-   * URI : "worker/info"
-   * DTO : WorkerInfoResponse
-   **/
+  final baseUrl = dotenv.get("BASE_URL");
 
   Future<WorkerInfoData?> fetchWorkerInfo(String accessToken) async {
-
     try {
-      final response = await http.get(
-        Uri.parse('http://43.201.116.59:8081/api/worker/info'), headers: {
-          "Authorization": "Bearer $accessToken"
-        });
-
+      final response = await http.get(Uri.parse('${baseUrl}/api/worker/info'),
+          headers: {"Authorization": "Bearer $accessToken"});
 
       var responseBody = json.decode(response.body);
 
@@ -36,15 +28,16 @@ class WorkerService {
       } else {
         return null;
       }
-
     } catch (error) {
-      throw Exception("Failed to load Worker Info");
+      print("Failed to load Worker Info");
+      return null;
     }
   }
 
-  Future<String> changeCarInfo(String accessToken, int carWidth, int carLength, int carHeight) async {
+  Future<String> changeCarInfo(
+      String accessToken, int carWidth, int carLength, int carHeight) async {
     try {
-      var url = Uri.parse('http://43.201.116.59:8081/api/car/change');
+      var url = Uri.parse('${baseUrl}/api/car/change');
       var data = {
         'car_width': carWidth,
         'car_length': carLength,
@@ -58,34 +51,22 @@ class WorkerService {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);
-        if (responseData['result']['width'] == carWidth){
-          print("트럭 정보 변경 성공");
-          return "success";
-        }
-        else{
-          print("트럭 정보 변경 실패");
-          return "fail";
-        }
-        print(responseData.toString());
-        // LoginResponseWrapperData loginResponseWrapperData = LoginResponseWrapperData.fromJson(responseData);
-        // print(loginResponseWrapperData.toString());
-
-
+        print("트럭 정보 변경 성공");
+        return "success";
       } else {
-        print('Failed to create a post');
+        print("트럭 정보 변경 실패");
+        return "fail";
       }
     } catch (e) {
       print('Caught error: $e');
-    }return "fail";
+    }
+    return "fail";
   }
 
-  Future <bool> isWorkerReadyApi(String accessToken) async {
+  Future<bool> isWorkerReadyApi(String accessToken) async {
     try {
-      final response = await http.put(
-          Uri.parse('http://43.201.116.59:8081/api/worker/ready'), headers: {
-        "Authorization": "Bearer $accessToken"
-      });
+      final response = await http.put(Uri.parse('${baseUrl}/api/worker/ready'),
+          headers: {"Authorization": "Bearer $accessToken"});
 
       var responseBody = json.decode(response.body);
       print(responseBody);
@@ -94,13 +75,12 @@ class WorkerService {
           return true;
         else
           return false;
-      }
-      else {
+      } else {
         return false;
       }
+    } catch (error) {
+      print("Failed to load Worker Ready");
     }
-    catch (error) {
-      throw Exception("Failed to load Worker Ready");
-    }
+    return false;
   }
 }

@@ -2,8 +2,10 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/logo-ct-dark.png";
-import logoWhite from "@/assets/img/logo-ct.png";
+// import logo from "@/assets/img/logo-ct-dark.png";
+// import logoWhite from "@/assets/img/logo-ct.png";
+import loadLogixLogo from "@/assets/img/logos/logo.png";
+
 
 const store = useStore();
 const layout = computed(() => store.state.layout);
@@ -25,21 +27,20 @@ const darkMode = computed(() => store.state.darkMode);
       } ${sidebarType}`"
     id="sidenav-main"
   >
-    <div class="sidenav-header">
-      <i
-        class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none"
-        aria-hidden="true"
-        id="iconSidenav"
-      ></i>
-
-      <router-link class="m-0 navbar-brand" to="/">
+  <div
+      class="sidenav-header"
+      style="display: flex; align-items: center; justify-content: center; height: 100px;"
+    >
+      <router-link
+        class="m-0 navbar-brand"
+        style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;"
+        to="/dashboard"
+      >
         <img
-          :src="darkMode || sidebarType === 'bg-default' ? logoWhite : logo"
-          class="navbar-brand-img h-100"
-          alt="main_logo"
+          :src="loadLogixLogo"
+          style="max-width: 100%; max-height: 100%; object-fit: contain;"
+          alt="LOADLOGIX"
         />
-
-        <span class="ms-2 font-weight-bold me-2">Argon Dashboard 2</span>
       </router-link>
     </div>
 

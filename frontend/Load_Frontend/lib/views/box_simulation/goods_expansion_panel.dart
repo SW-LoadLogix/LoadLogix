@@ -24,7 +24,7 @@ class GoodsExpansionPanel extends StatelessWidget {
                 goodsStore.toggleAll(checked ?? false);
               },
             ),
-            Text(allChecked ? "Deselect All" : "Select All"),
+            Text(allChecked ? "전체 해제" : "전체 선택"),
           ],
         ),
         ...groupedGoods.entries.map((entry) {
@@ -48,8 +48,8 @@ class GoodsExpansionPanel extends StatelessWidget {
                       goodsStore.toggleGood(buildingId, good.goodsId);
                     },
                   ),
-                  title: Text("Goods ID ${good.goodsId}"),
-                  subtitle: Text('Type: ${good.type}, Weight: ${good.weight}'),
+                  title: Text("배송물품 ID ${good.goodsId}"),
+                  subtitle: Text('배송상자 타입: ${good.type}, 배송물품 무게: ${good.weight}'),
                 ),
               );
             }).toList(),

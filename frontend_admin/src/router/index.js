@@ -3,15 +3,15 @@ import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
+import Workers from "../views/components/WorkersTable.vue";
 
 const routes = [
   {
     path: "/",
-    name: "/",
-    redirect: "/dashboard-default",
+    redirect: "/signin",
   },
   {
-    path: "/dashboard-default",
+    path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
   },
@@ -19,6 +19,11 @@ const routes = [
     path: "/tables",
     name: "Tables",
     component: Tables,
+  },
+  {
+    path: "/workers",
+    name: "Workers",
+    component: Workers,
   },
   {
     path: "/signin",
@@ -36,6 +41,9 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
+  scrollBehavior() {
+    return { top: 0 }; // 항상 최상단으로 스크롤
+  }
 });
 
 export default router;
