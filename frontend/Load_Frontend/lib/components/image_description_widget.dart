@@ -7,6 +7,7 @@ class ImageDescriptionWidget extends StatefulWidget {
   final String description;
   final bool imageLeft;
 
+
   ImageDescriptionWidget({
     required this.imageUrl,
     required this.title,
@@ -20,6 +21,7 @@ class ImageDescriptionWidget extends StatefulWidget {
 
 class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
   double _opacity = 0.0;
+  late Image image;
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction >= 0.5) {
@@ -33,6 +35,24 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
       });
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    bool isNetwork = widget.imageUrl.startsWith('http');
+    image = isNetwork
+        ? Image.network(widget.imageUrl, width: double.infinity)
+        : Image.asset(widget.imageUrl, width: double.infinity);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(image.image, context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +104,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 ),
               ],
             ),
-            child: isNetwork
-                ? Image.network(widget.imageUrl, width: double.infinity)
-                : Image.asset(widget.imageUrl, width: double.infinity),
+            child: image,
           ),
         ),
       ),
@@ -180,9 +198,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 ),
               ],
             ),
-            child: isNetwork
-                ? Image.network(widget.imageUrl, width: double.infinity)
-                : Image.asset(widget.imageUrl, width: double.infinity),
+            child: image,
           ),
         ),
       ),
