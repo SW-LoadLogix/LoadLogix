@@ -513,7 +513,7 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
         FloatingActionButton(
           heroTag: "State",
           key: Key("State"),
-          child: const Text("State"),
+          child: const Text("재생바"),
           onPressed: () {
             showOverlayWidget();
           },

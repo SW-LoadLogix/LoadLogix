@@ -189,14 +189,18 @@
 //   _OrderTableState createState() => _OrderTableState();
 // }
 
+import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:load_frontend/services/area_service.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import '../models/building_data.dart';
 import '../models/building_fraction.dart';
 import '../models/delivery_data.dart';
 import '../stores/delivery_store.dart';
+import '../stores/user_store.dart';
 
 class _OrderTableState extends State<DeliveryTable> {
   late OrderDataSource orderDataSource;
@@ -212,8 +216,11 @@ class _OrderTableState extends State<DeliveryTable> {
     DeliveryData dt =
         Provider.of<DeliveryStore>(context, listen: true).deliveryData;
 
+    List<BuildingData> buildingDatas =
+        Provider.of<DeliveryStore>(context, listen: false).buildingPriority;
     // dt를 기반으로 orderDataSource 초기화
-    orderDataSource = OrderDataSource(buildings: dt.buildings);
+    orderDataSource =
+        OrderDataSource(buildings: dt.buildings, buildingDatas: buildingDatas);
 
     return Container(
       height: 400,
@@ -230,7 +237,7 @@ class _OrderTableState extends State<DeliveryTable> {
           allowMultiColumnSorting: true,
           allowExpandCollapseGroup: true,
           groupCaptionTitleFormat:
-          '{ColumnName} : {Key} - {ItemsCount} Item(s)',
+              '{ColumnName} : {Key} - {ItemsCount} Item(s)',
           columns: <GridColumn>[
             GridColumn(
                 columnName: 'goods_id',
@@ -238,7 +245,7 @@ class _OrderTableState extends State<DeliveryTable> {
                     padding: EdgeInsets.all(8),
                     alignment: Alignment.center,
                     child: Text(
-                      'ID',
+                      '배송 순서',
                       overflow: TextOverflow.ellipsis,
                     )),
                 width: 60),
@@ -250,7 +257,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송 상세 주소',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     )),
                 width: 350),
             GridColumn(
@@ -261,7 +269,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 타입',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160),
             GridColumn(
@@ -272,7 +281,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 높이(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -284,7 +294,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 길이(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -296,7 +307,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 폭(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -308,10 +320,11 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 무게(g)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                autoFitPadding: EdgeInsets.all(16)  )
-              //width: 100),
+                autoFitPadding: EdgeInsets.all(16))
+            //width: 100),
           ],
         ),
       ),
@@ -324,21 +337,49 @@ class OrderDataSource extends DataGridSource {
   List<DataGridRow> dataGridRows = [];
   List<String> groupingColumnNames = ['building_address'];
 
-  OrderDataSource({required List<Buildings> buildings}) {
-    dataGridRows = buildings.expand((building) {
-      return building.goods.map((good) => DataGridRow(cells: [
-        DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
-        DataGridCell<String>(columnName: 'detail_address', value:building.topAddress + ' ' + building.buildingAddress + ' ' + good.detailAddress
+  OrderDataSource(
+      {required List<Buildings> buildings,
+        required List<BuildingData> buildingDatas}) {
+    dataGridRows = buildings
+        .expand((building) {
+
+      int? matchingIndex;
+      for (int i = 0; i < buildingDatas.length; i++) {
+        print("building.buildingAddress  : ${building.buildingAddress} , buildingName: ${buildingDatas[i].buildingName}");
+        if (building.buildingAddress.contains(buildingDatas[i].buildingName)) {
+          matchingIndex = i;
+          break;
+        }
+      }
+      return building.goods.map((good) {
+        // buildingDatas에서 buildingName과 good.detailAddress가 일치하는 인덱스를 찾음
 
 
-        ),
-        DataGridCell<String>(columnName: 'boxType', value: good.boxType),
-        DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
-        DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
-        DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
-        DataGridCell<int>(columnName: 'weight', value: good.weight),
-      ]));
-    }).toList().cast<DataGridRow>();
+        // matchingIndex가 null이면 기본 값 설정
+        String formattedIndex = matchingIndex != null
+            ? "F${matchingIndex.toString().padLeft(3, '0')}"
+            : "F${good.goodsId.toString().padLeft(3, '0')}";
+
+        return DataGridRow(cells: [
+          DataGridCell<String>(
+              columnName: 'goods_id', value: formattedIndex),
+          DataGridCell<String>(
+              columnName: 'detail_address',
+              value: building.topAddress +
+                  ' ' +
+                  building.buildingAddress +
+                  ' ' +
+                  good.detailAddress),
+          DataGridCell<String>(columnName: 'boxType', value: good.boxType),
+          DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
+          DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
+          DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
+          DataGridCell<int>(columnName: 'weight', value: good.weight),
+        ]);
+      }).toList();
+    })
+        .toList()
+        .cast<DataGridRow>();
   }
 
   @override

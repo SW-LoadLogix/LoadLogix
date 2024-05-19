@@ -47,7 +47,7 @@ class _DashboardSimulation3dPageState extends State<DashboardSimulation3dPage> {
 
 
     return MainLayout(
-        topBarTitle: '3D Simulation Dashboard',
+        topBarTitle: '3D 적재 시뮬레이션',
         isFixed: true,
         child: Container(
             child: BoxSimulation3dSecondPage()
