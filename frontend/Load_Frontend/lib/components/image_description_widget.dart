@@ -97,11 +97,12 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           child: Container(
             width: 450,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.title,
                   style: TextStyle(
-                    fontSize: 24, // 여기에서 텍스트 크기를 조절합니다.
+                    fontSize: 35, // 여기에서 텍스트 크기를 조절합니다.
                     height: 1.5,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff618777),
@@ -111,7 +112,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 Text(
                   widget.description,
                   style: TextStyle(
-                    fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                    fontSize: 17, // 여기에서 텍스트 크기를 조절합니다.
                     height: 1.5,
                     fontWeight: FontWeight.w200,
                     color: Color(0xff618777),
@@ -135,11 +136,12 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           child: Container(
             width: 450,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.title,
                   style: TextStyle(
-                    fontSize: 24, // 여기에서 텍스트 크기를 조절합니다.
+                    fontSize: 35, // 여기에서 텍스트 크기를 조절합니다.
                     height: 1.5,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff618777),
@@ -149,7 +151,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 Text(
                   widget.description,
                   style: TextStyle(
-                    fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                    fontSize: 17, // 여기에서 텍스트 크기를 조절합니다.
                     height: 1.5,
                     fontWeight: FontWeight.w200,
                     color: Color(0xff618777),
