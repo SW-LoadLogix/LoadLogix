@@ -3,7 +3,7 @@ import 'package:three_dart/three_dart.dart' as three;
 
 import 'box_simulation_gobal_setting.dart';
 
-double boxStep = 10.0;
+double boxStep = 5.0;
 double gScale = 1.0;
 
 class SimulBox {
