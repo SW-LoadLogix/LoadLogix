@@ -28,7 +28,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   LatLng newPosition = LatLng(36.36405586, 127.3561363);
   List<BuildingData> _buildingData = [];
   Set<Circle> _circles = {};
-  Set<Polyline> _polylines = {}; // Polyline set 추가
+  // Set<Polyline> _polylines = {}; // Polyline set 추가
   List<MarkerData> _customMarkers = [];
   bool _mapControllerInitialized = false;
   List<Color> distinctColor = [];// distinctColor를 동적으로 생성하기 위해 리스트 초기화
@@ -49,7 +49,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       distinctColor = generateDistinctColors(buildingdata.length); // 건물 데이터의 길이에 맞게 색상 생성
       _circles = _markCircles(buildingdata);
       _customMarkers = _getCustomMarkers(buildingdata);
-      _polylines = _createPolyline(buildingdata); // Polyline 생성
+      // _polylines = _createPolyline(buildingdata); // Polyline 생성
       if (_mapControllerInitialized) {
         _moveCamera(newPosition);
       }
@@ -83,23 +83,23 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     return circles;
   }
 
-  Set<Polyline> _createPolyline(List<BuildingData> buildings) {
-    Set<Polyline> polylines = {};
-    for (int i = 0; i < buildings.length - 1; i++) {
-      polylines.add(
-        Polyline(
-          polylineId: PolylineId(buildings[i].buildingId.toString()),
-          points: [
-            LatLng(buildings[i].latitude, buildings[i].longitude),
-            LatLng(buildings[i + 1].latitude, buildings[i + 1].longitude),
-          ],
-          color: Colors.blue,
-          width: 3,
-        ),
-      );
-    }
-    return polylines;
-  }
+  // Set<Polyline> _createPolyline(List<BuildingData> buildings) {
+  //   Set<Polyline> polylines = {};
+  //   for (int i = 0; i < buildings.length - 1; i++) {
+  //     polylines.add(
+  //       Polyline(
+  //         polylineId: PolylineId(buildings[i].buildingId.toString()),
+  //         points: [
+  //           LatLng(buildings[i].latitude, buildings[i].longitude),
+  //           LatLng(buildings[i + 1].latitude, buildings[i + 1].longitude),
+  //         ],
+  //         color: Colors.blue,
+  //         width: 3,
+  //       ),
+  //     );
+  //   }
+  //   return polylines;
+  // }
 
   List<MarkerData> _getCustomMarkers(List<BuildingData> buildings) {
     List<MarkerData> markers = [];
@@ -167,7 +167,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
                 ),
                 circles: _circles,
                 markers: markers ?? Set<Marker>(),
-                polylines: _polylines, // Polyline 추가
+                // polylines: _polylines, // Polyline 추가
               );
             },
           ),
