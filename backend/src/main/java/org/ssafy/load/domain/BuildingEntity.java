@@ -41,10 +41,10 @@ public class BuildingEntity {
     private int buildingMain;  // 건물본번
     @Column(name="building_sub")
     private int buildingSub;  // 건물부번
-    @Column(name="latitude")
-    private Double latitude;
     @Column(name="longitude")
     private Double longitude;
+    @Column(name="latitude")
+    private Double latitude;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
@@ -65,8 +65,8 @@ public class BuildingEntity {
             Long loadCode,
             int buildingMain,
             int buildingSub,
-            double latitude,
             double longitude,
+            double latitude,
             AreaEntity area,
             List<GoodsEntity> goodsEntities
     ){
@@ -81,8 +81,8 @@ public class BuildingEntity {
                 loadCode,
                 buildingMain,
                 buildingSub,
-                latitude,
                 longitude,
+                latitude,
                 area,
                 goodsEntities
         );

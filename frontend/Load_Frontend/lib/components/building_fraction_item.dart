@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class BuildingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // DeliveryData dt = Provider.of<DeliveryStore>(context, listen: true).deliveryData;
     AreaService areaService = AreaService();
     UserStore userStore = Provider.of<UserStore>(context, listen: false);
+    int currIndex = 0;
     return FutureBuilder<List<BuildingData>>(
       future: areaService.getBuildingPriority(userStore.token),
       builder: (context, snapshot) {
@@ -44,6 +45,16 @@ class BuildingItem extends StatelessWidget {
                   "&heading=$heading"
                   "&pitch=$pitch"
                   "&key=$apiKey";
+              final String fIndexStr = "F${(currIndex++).toString().padLeft(3, '0')}";
+              // print (url);
+              //
+              // Completer<Size> completer = Completer<Size>();
+              //
+              // Image.network(url).image.resolve(ImageConfiguration()).addListener(
+              //   ImageStreamListener((ImageInfo info, bool _) {
+              //     completer.complete(Size(info.image.width.toDouble(), info.image.height.toDouble()));
+              //   }),
+              // );
 
               return Container(
                 padding: EdgeInsets.all(16),
@@ -72,6 +83,16 @@ class BuildingItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
+                            fIndexStr,
+                            //"택배개수: ${building.totalGoods.toString()}개",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
                             building.buildingName,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -83,15 +104,6 @@ class BuildingItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            "택배개수: ${building.totalGoods.toString()}개",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontStyle: FontStyle.italic,
-                              fontSize: 14,
-                            ),
                           ),
                         ],
                       ),

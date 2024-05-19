@@ -24,7 +24,7 @@ defineProps({
     v-show="layout !== 'landing'"
     class="card card-plain shadow-none"
     id="sidenavCard"
-    style="margin-top: 100px;"
+    style="margin-top: 190px;"
   >
 
 

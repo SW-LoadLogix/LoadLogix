@@ -17,7 +17,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8084", "http://localhost:8082")
+                .allowedOrigins("http://localhost:8080", "http://localhost:8082", "https://loadlogix.store", "https://loadlogix.store/admin")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS","PATCH")
                 .exposedHeaders("Custom-Header")
                 .allowCredentials(true)
