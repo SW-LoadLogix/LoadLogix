@@ -619,10 +619,210 @@ class PieTooltipPosition extends StatefulWidget {
   _PieTooltipPositionState createState() => _PieTooltipPositionState();
 }
 
+// class _PieTooltipPositionState extends State<PieTooltipPosition> {
+//   _PieTooltipPositionState();
+//
+//   List<String>? _tooltipPositionList;
+//   late String _selectedTooltipPosition;
+//   late TooltipPosition _tooltipPosition;
+//   late double duration;
+//
+//   @override
+//   void initState() {
+//     _selectedTooltipPosition = 'auto';
+//     _tooltipPosition = TooltipPosition.auto;
+//     duration = 1;
+//     _tooltipPositionList = <String>['auto', 'pointer'].toList();
+//     super.initState();
+//   }
+//
+//   // @override
+//   // Widget buildSettings(BuildContext context) {
+//   //   return StatefulBuilder(
+//   //       builder: (BuildContext context, StateSetter stateSetter) {
+//   //         return ListView(
+//   //           shrinkWrap: true,
+//   //           children: <Widget>[
+//   //             // Row(
+//   //             //   children: <Widget>[
+//   //             //     Text('Tooltip position',
+//   //             //         style: TextStyle(
+//   //             //           color: Colors.black,
+//   //             //           fontSize: 16,
+//   //             //         )),
+//   //             //     Container(
+//   //             //       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+//   //             //       height: 50,
+//   //             //       alignment: Alignment.bottomLeft,
+//   //             //       child: DropdownButton<String>(
+//   //             //           dropdownColor: Colors.white,
+//   //             //           focusColor: Colors.transparent,
+//   //             //           underline:
+//   //             //           Container(color: const Color(0xFFBDBDBD), height: 1),
+//   //             //           value: _selectedTooltipPosition,
+//   //             //           items: _tooltipPositionList!.map((String value) {
+//   //             //             return DropdownMenuItem<String>(
+//   //             //                 value: (value != null) ? value : 'auto',
+//   //             //                 child: Text(value,
+//   //             //                     style: TextStyle(color: Colors.black)));
+//   //             //           }).toList(),
+//   //             //           onChanged: (dynamic value) {
+//   //             //             setState(() {
+//   //             //               onPositionTypeChange(value.toString());
+//   //             //               stateSetter(() {});
+//   //             //             });
+//   //             //           }),
+//   //             //     ),
+//   //             //   ],
+//   //             // ),
+//   //             Row(
+//   //               children: <Widget>[
+//   //                 // Text('Hide delay',
+//   //                 //     style: TextStyle(fontSize: 10.0, color: Colors.black)),
+//   //                 Container(
+//   //                   //padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+//   //                   child: CustomDirectionalButtons(
+//   //                     minValue: 1,
+//   //                     maxValue: 10,
+//   //                     initialValue: duration,
+//   //                     onChanged: (double val) => setState(() {
+//   //                       duration = val;
+//   //                     }),
+//   //                     step: 2,
+//   //                     loop: true,
+//   //                     iconColor: Colors.black,
+//   //                     style: TextStyle(fontSize: 10.0, color: Colors.black),
+//   //                   ),
+//   //                 ),
+//   //               ],
+//   //             ),
+//   //           ],
+//   //         );
+//   //       });
+//   // }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     //final goodsStore = Provider.of<GoodsStore>(context, listen: true);
+//
+//     //final groupedGoods= Provider.of<GoodsStore>(context, listen: true).getgoodsGroupedByBuildingId();
+//
+//     return _buildPieTooltipPositionChart();
+//   }
+//
+//   SfCircularChart _buildPieTooltipPositionChart() {
+//     return SfCircularChart(
+//       margin: const EdgeInsets.all(10),
+//       // backgroundColor: Colors.white,
+//       // borderWidth: ,
+//       // borderColor: ,
+//
+//       // title: ChartTitle(
+//       //     text: false
+//       //         ? ''
+//       //         : 'Various countries population density and area'),
+//       legend: Legend(
+//           textStyle: TextStyle(
+//             fontSize: 10,
+//           ),
+//           position: LegendPosition.right,
+//           isVisible: false ? false : true,
+//           padding: 5,
+//           itemPadding: 5,
+//           isResponsive: false,
+//           alignment: ChartAlignment.center,
+//           orientation: LegendItemOrientation.vertical,
+//           overflowMode: LegendItemOverflowMode.scroll),
+//       series: _getPieSeries(),
+//
+//       /// To enabe the tooltip and its behaviour.
+//       tooltipBehavior: TooltipBehavior(
+//         enable: true,
+//         tooltipPosition: _tooltipPosition,
+//         duration: duration * 1000,
+//       ),
+//     );
+//   }
+//
+//   List<PieSeries<ChartSampleData, String>> _getPieSeries() {
+//     final goodsStore = Provider.of<GoodsStore>(context, listen: false);
+//
+//     Map<int, List<GoodsData>> groupedGoods =
+//         context.watch<GoodsStore>().goodsGroupedByBuildingId;
+//     final ggoods = goodsStore.goods;
+//     final buildingChecked = goodsStore.buildingChecked;
+//
+//     List<ChartSampleData> data = [];
+//
+//
+//     if (groupedGoods.isNotEmpty) {
+//       groupedGoods.forEach((key, value) {
+//         if (buildingChecked.isEmpty) return;
+//         if (buildingChecked[key] == false) return;
+//         if (goodsStore.numberMapping.isEmpty) return;
+//         double percent = (value.length / ggoods.length) * 100;
+//         data.add(
+//             ChartSampleData(
+//                 x: value[0].buildingName,
+//                 y: value.length,
+//                 percent: percent,
+//                 pointColor: distinctColors[ goodsStore.numberMapping[key]!]
+//             )
+//         );
+//       });
+//     }
+//
+//
+//     data.sort((a, b) => b.percent!.compareTo(a.percent!));
+//
+//     if (data.isNotEmpty) {
+//       double highestPercent = data[0].percent!;
+//       for (int i = 0; i < data.length; i++) {
+//         data[i].percent = (data[i].percent! / highestPercent) * 100;
+//         data[i].text = '${data[i].percent!.toStringAsFixed(0)}%';
+//       }
+//     }
+//
+//     return <PieSeries<ChartSampleData, String>>[
+//       PieSeries<ChartSampleData, String>(
+//           dataSource: data,
+//           xValueMapper: (ChartSampleData data, _) => data.x as String,
+//           yValueMapper: (ChartSampleData data, _) => data.y,
+//           dataLabelMapper: (ChartSampleData data, _) => data.y.toString() as String,
+//           startAngle: 100,
+//           endAngle: 100,
+//           pointRadiusMapper: (ChartSampleData data, _) => data.text,
+//           pointColorMapper: (ChartSampleData data, _) => data.pointColor,
+//           dataLabelSettings: const DataLabelSettings(
+//               isVisible: true, labelPosition: ChartDataLabelPosition.inside))
+//     ];
+//   }
+//
+//   void onPositionTypeChange(String item) {
+//     _selectedTooltipPosition = item;
+//     if (_selectedTooltipPosition == 'auto') {
+//       _tooltipPosition = TooltipPosition.auto;
+//     }
+//     if (_selectedTooltipPosition == 'pointer') {
+//       _tooltipPosition = TooltipPosition.pointer;
+//     }
+//     setState(() {
+//       /// update the tooltip position changes
+//     });
+//   }
+//
+//   @override
+//   void dispose() {
+//     _tooltipPositionList!.clear();
+//     super.dispose();
+//   }
+// }
+
+
 class _PieTooltipPositionState extends State<PieTooltipPosition> {
   _PieTooltipPositionState();
 
-  List<String>? _tooltipPositionList;
+  late List<String> _tooltipPositionList;
   late String _selectedTooltipPosition;
   late TooltipPosition _tooltipPosition;
   late double duration;
@@ -632,110 +832,30 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
     _selectedTooltipPosition = 'auto';
     _tooltipPosition = TooltipPosition.auto;
     duration = 1;
-    _tooltipPositionList = <String>['auto', 'pointer'].toList();
+    _tooltipPositionList = <String>['auto', 'pointer'];
     super.initState();
   }
 
-  // @override
-  // Widget buildSettings(BuildContext context) {
-  //   return StatefulBuilder(
-  //       builder: (BuildContext context, StateSetter stateSetter) {
-  //         return ListView(
-  //           shrinkWrap: true,
-  //           children: <Widget>[
-  //             // Row(
-  //             //   children: <Widget>[
-  //             //     Text('Tooltip position',
-  //             //         style: TextStyle(
-  //             //           color: Colors.black,
-  //             //           fontSize: 16,
-  //             //         )),
-  //             //     Container(
-  //             //       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-  //             //       height: 50,
-  //             //       alignment: Alignment.bottomLeft,
-  //             //       child: DropdownButton<String>(
-  //             //           dropdownColor: Colors.white,
-  //             //           focusColor: Colors.transparent,
-  //             //           underline:
-  //             //           Container(color: const Color(0xFFBDBDBD), height: 1),
-  //             //           value: _selectedTooltipPosition,
-  //             //           items: _tooltipPositionList!.map((String value) {
-  //             //             return DropdownMenuItem<String>(
-  //             //                 value: (value != null) ? value : 'auto',
-  //             //                 child: Text(value,
-  //             //                     style: TextStyle(color: Colors.black)));
-  //             //           }).toList(),
-  //             //           onChanged: (dynamic value) {
-  //             //             setState(() {
-  //             //               onPositionTypeChange(value.toString());
-  //             //               stateSetter(() {});
-  //             //             });
-  //             //           }),
-  //             //     ),
-  //             //   ],
-  //             // ),
-  //             Row(
-  //               children: <Widget>[
-  //                 // Text('Hide delay',
-  //                 //     style: TextStyle(fontSize: 10.0, color: Colors.black)),
-  //                 Container(
-  //                   //padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-  //                   child: CustomDirectionalButtons(
-  //                     minValue: 1,
-  //                     maxValue: 10,
-  //                     initialValue: duration,
-  //                     onChanged: (double val) => setState(() {
-  //                       duration = val;
-  //                     }),
-  //                     step: 2,
-  //                     loop: true,
-  //                     iconColor: Colors.black,
-  //                     style: TextStyle(fontSize: 10.0, color: Colors.black),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    //final goodsStore = Provider.of<GoodsStore>(context, listen: true);
-
-    //final groupedGoods= Provider.of<GoodsStore>(context, listen: true).getgoodsGroupedByBuildingId();
-
     return _buildPieTooltipPositionChart();
   }
 
   SfCircularChart _buildPieTooltipPositionChart() {
     return SfCircularChart(
       margin: const EdgeInsets.all(10),
-      // backgroundColor: Colors.white,
-      // borderWidth: ,
-      // borderColor: ,
-
-      // title: ChartTitle(
-      //     text: false
-      //         ? ''
-      //         : 'Various countries population density and area'),
       legend: Legend(
-          textStyle: TextStyle(
-            fontSize: 10,
-          ),
-          position: LegendPosition.right,
-          isVisible: false ? false : true,
-          padding: 5,
-          itemPadding: 5,
-          isResponsive: false,
-          alignment: ChartAlignment.center,
-          orientation: LegendItemOrientation.vertical,
-          overflowMode: LegendItemOverflowMode.scroll),
+        textStyle: TextStyle(fontSize: 10),
+        position: LegendPosition.right,
+        isVisible: true,
+        padding: 5,
+        itemPadding: 5,
+        isResponsive: false,
+        alignment: ChartAlignment.center,
+        orientation: LegendItemOrientation.vertical,
+        overflowMode: LegendItemOverflowMode.scroll,
+      ),
       series: _getPieSeries(),
-
-      /// To enabe the tooltip and its behaviour.
       tooltipBehavior: TooltipBehavior(
         enable: true,
         tooltipPosition: _tooltipPosition,
@@ -745,116 +865,69 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
   }
 
   List<PieSeries<ChartSampleData, String>> _getPieSeries() {
-    final goodsStore = Provider.of<GoodsStore>(context, listen: false);
+    final goodsStore = context.read<GoodsStore>();
 
-    Map<int, List<GoodsData>> groupedGoods =
-        context.watch<GoodsStore>().goodsGroupedByBuildingId;
+    Map<int, List<GoodsData>> groupedGoods = goodsStore.goodsGroupedByBuildingId;
     final ggoods = goodsStore.goods;
     final buildingChecked = goodsStore.buildingChecked;
 
     List<ChartSampleData> data = [];
 
-
     if (groupedGoods.isNotEmpty) {
       groupedGoods.forEach((key, value) {
-        if (buildingChecked.isEmpty) return;
-        if (buildingChecked[key] == false) return;
-        if (goodsStore.numberMapping.isEmpty) return;
+        if (buildingChecked.isEmpty || buildingChecked[key] == false || goodsStore.numberMapping.isEmpty) return;
         double percent = (value.length / ggoods.length) * 100;
-        data.add(
-            ChartSampleData(
-                x: value[0].buildingName,
-                y: value.length,
-                percent: percent,
-                pointColor: distinctColors[ goodsStore.numberMapping[key]!]
-            )
-        );
+        data.add(ChartSampleData(
+          x: value[0].buildingName,
+          y: value.length,
+          percent: percent,
+          pointColor: distinctColors[goodsStore.numberMapping[key]!],
+        ));
       });
     }
-
 
     data.sort((a, b) => b.percent!.compareTo(a.percent!));
 
     if (data.isNotEmpty) {
       double highestPercent = data[0].percent!;
-      for (int i = 0; i < data.length; i++) {
-        data[i].percent = (data[i].percent! / highestPercent) * 100;
-        data[i].text = '${data[i].percent!.toStringAsFixed(0)}%';
+      for (var datum in data) {
+        datum.percent = (datum.percent! / highestPercent) * 100;
+        datum.text = '${datum.percent!.toStringAsFixed(0)}%';
       }
     }
 
     return <PieSeries<ChartSampleData, String>>[
       PieSeries<ChartSampleData, String>(
-          dataSource: data,
-          xValueMapper: (ChartSampleData data, _) => data.x as String,
-          yValueMapper: (ChartSampleData data, _) => data.y,
-          dataLabelMapper: (ChartSampleData data, _) => data.y.toString() as String,
-          startAngle: 100,
-          endAngle: 100,
-          pointRadiusMapper: (ChartSampleData data, _) => data.text,
-          pointColorMapper: (ChartSampleData data, _) => data.pointColor,
-          dataLabelSettings: const DataLabelSettings(
-              isVisible: true, labelPosition: ChartDataLabelPosition.inside))
-    ];
-
-    return <PieSeries<ChartSampleData, String>>[
-      PieSeries<ChartSampleData, String>(
-          dataSource: <ChartSampleData>[
-            ChartSampleData(x: '봉명동 446-1', y: 46, text: '100%'),
-            ChartSampleData(x: '봉명동 446-2', y: 27, text: '100%'),
-            ChartSampleData(x: '봉명동 446-3', y: 26, text: '100%'),
-            ChartSampleData(x: '봉명동 446-4', y: 19, text: '100%'),
-            ChartSampleData(x: '봉명동 446-5', y: 17, text: '100%'),
-            ChartSampleData(x: '봉명동 446-6', y: 12, text: '100%'),
-            ChartSampleData(x: '봉명동 446-7', y: 10, text: '100%'),
-            ChartSampleData(x: '봉명동 446-8', y: 9, text: '100%'),
-            ChartSampleData(x: '봉명동 446-9', y: 8, text: '100%'),
-            ChartSampleData(x: '봉명동 446-10', y: 8, text: '100%'),
-            ChartSampleData(x: '봉명동 446-11', y: 8, text: '100%'),
-            ChartSampleData(x: '봉명동 446-12', y: 8, text: '100%'),
-            ChartSampleData(x: '봉명동 446-13', y: 7, text: '100%'),
-            ChartSampleData(x: '봉명동 446-14', y: 7, text: '100%'),
-            ChartSampleData(x: '봉명동 446-15', y: 6, text: '100%'),
-            ChartSampleData(x: '봉명동 446-16', y: 6, text: '100%'),
-            ChartSampleData(x: '봉명동 446-17', y: 5, text: '100%'),
-            ChartSampleData(x: '봉명동 446-18', y: 5, text: '100%'),
-            ChartSampleData(x: '봉명동 446-19', y: 4, text: '100%')
-
-            // ChartSampleData(x: 'Argentina', y: 505370, text: '45%'),
-            // ChartSampleData(x: 'Belgium', y: 551500, text: '53.7%'),
-            // ChartSampleData(x: 'Cuba', y: 312685, text: '59.6%'),
-            // ChartSampleData(x: 'Dominican', y: 350000, text: '72.5%'),
-            // ChartSampleData(x: 'Egypt', y: 301000, text: '85.8%'),
-            // ChartSampleData(x: 'Kazakhstan', y: 300000, text: '90.5%'),
-            // ChartSampleData(x: 'Somalia', y: 357022, text: '95.6%')
-          ],
-          xValueMapper: (ChartSampleData data, _) => data.x as String,
-          yValueMapper: (ChartSampleData data, _) => data.y,
-          dataLabelMapper: (ChartSampleData data, _) => data.x as String,
-          startAngle: 100,
-          endAngle: 100,
-          pointRadiusMapper: (ChartSampleData data, _) => data.text,
-          dataLabelSettings: const DataLabelSettings(
-              isVisible: false, labelPosition: ChartDataLabelPosition.outside))
+        dataSource: data,
+        xValueMapper: (ChartSampleData data, _) => data.x as String,
+        yValueMapper: (ChartSampleData data, _) => data.y,
+        dataLabelMapper: (ChartSampleData data, _) => data.y.toString(),
+        startAngle: 100,
+        endAngle: 100,
+        pointRadiusMapper: (ChartSampleData data, _) => data.text,
+        pointColorMapper: (ChartSampleData data, _) => data.pointColor,
+        dataLabelSettings: const DataLabelSettings(
+          isVisible: true,
+          labelPosition: ChartDataLabelPosition.inside,
+        ),
+      ),
     ];
   }
 
   void onPositionTypeChange(String item) {
-    _selectedTooltipPosition = item;
-    if (_selectedTooltipPosition == 'auto') {
-      _tooltipPosition = TooltipPosition.auto;
-    }
-    if (_selectedTooltipPosition == 'pointer') {
-      _tooltipPosition = TooltipPosition.pointer;
-    }
     setState(() {
-      /// update the tooltip position changes
+      _selectedTooltipPosition = item;
+      if (_selectedTooltipPosition == 'auto') {
+        _tooltipPosition = TooltipPosition.auto;
+      } else if (_selectedTooltipPosition == 'pointer') {
+        _tooltipPosition = TooltipPosition.pointer;
+      }
     });
   }
 
   @override
   void dispose() {
-    _tooltipPositionList!.clear();
+    _tooltipPositionList.clear();
     super.dispose();
   }
 }
