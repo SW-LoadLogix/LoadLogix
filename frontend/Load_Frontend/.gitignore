@@ -161,3 +161,7 @@ $RECYCLE.BIN/
 ../../.history/
 *../../.history/
 *../../.history/
+
+
+.env
+api_key.js
