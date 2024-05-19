@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:load_frontend/services/area_service.dart';
@@ -9,7 +11,7 @@ import '../models/building_data.dart';
 List<Color> generateDistinctColors(int count) {
   List<Color> colors = [];
   for (int i = 0; i < count; i++) {
-    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
+    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.8);
     colors.add(color);
   }
   return colors;
@@ -64,6 +66,16 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       new_latitude += buildings[i].latitude;
       new_longitude += buildings[i].longitude;
 
+      circles.add(
+        Circle(
+          circleId: CircleId(buildings[i].buildingId.toString()+"black"),
+          center: LatLng(buildings[i].latitude,buildings[i].longitude),
+          radius: 10,
+          fillColor: Colors.black,
+          strokeWidth: 3,
+          strokeColor: Colors.transparent,
+        ),
+      );
       circles.add(
         Circle(
           circleId: CircleId(buildings[i].buildingId.toString()),
@@ -125,7 +137,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
 
     final String fIndexStr = "F${(index).toString().padLeft(3, '0')}";
     return Container(
-      color: Colors.white.withOpacity(0.3),
+      //color: Colors.white.withOpacity(0.5),
       child:
           Text(
             fIndexStr,
@@ -134,8 +146,22 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     );
   }
 
+  void _setMapStyle() async {
+    String style = jsonEncode([
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      }
+    ]);
+    mapController.setMapStyle(style);
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _setMapStyle();
     _mapControllerInitialized = true;
     if (_buildingData.isNotEmpty) {
       _moveCamera(newPosition);

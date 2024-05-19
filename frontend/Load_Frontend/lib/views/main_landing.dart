@@ -51,11 +51,33 @@ class _MainLandingPage extends State<MainLandingPage> {
               crossAxisAlignment: CrossAxisAlignment.start, // 추가된 코드
               children: [
                 ImageSlider(
-                  imageUrls: [
-                    'assets/images/ai5.webp',
-                    'assets/images/ai7.webp',
-                    'assets/images/ai6.webp',
-                    'assets/images/ai4.webp',
+                  legends: [
+                    ImageSliderLegends(
+                        imageUrl: 'assets/images/Group 59.png',//'assets/images/ai5.webp',
+                        title: 'LoadLogix 시뮬레이션',
+                        description:
+                            '현명한 적재 시스템을 지향합니다.\n'
+                            'LoadLogix는 물류센터의 물류 과정을 시뮬레이션하여\n'
+                            '효율적인 물류 시스템을 구축합니다.\n'),
+                    ImageSliderLegends(
+                        imageUrl: 'assets/images/Group 63.png',//'assets/images/ai7.webp',
+                        title: 'LoadLogix 경로 최적화 알고리즘',
+                        description:
+                          '배송기사의 경로를 최적화하여\n'
+                          '배송 시간과 비용을 최소화 합니다.\n'
+                          'LoadLogix는 효율적인 배송 경로를 제공하여\n'
+                          '배송 과정을 더욱 신속하고 효율적으로 만들어 줍니다.\n'
+                    ),
+                    ImageSliderLegends(
+                        imageUrl: 'assets/images/Group 60.png',//'assets/images/ai6.webp',
+                        title: '배송관리 스마트 대시보드',
+                        description:
+                        '배송기사 스마트 대시보드는 배송 과정의 필요한 모든 정보를 제공합니다.\n'
+                        '스마트 대시보드에서는 배송 상품에 대한 종합 정보를 확인할 수 있으며\n'
+                        '배송관련 통계 데이터를 그래프, 지도, 표 등 다양한 방식으로 제공합니다/\n'
+                        '대시보드 데이터는 실시간으로 업데이트되며 언제든지 데이터를 확인할 수 있습니다.\n'
+                    ),
+                    //ImageSliderLegends(imageUrl: 'assets/images/ai4.webp', title: 'title', description: 'description'),
                   ],
                 ),
                 ResponsiveIconGrid(
