@@ -14,6 +14,8 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingDesc(Integer loadTaskId);
     @Query("select goods from GoodsEntity goods join fetch goods.building join fetch goods.boxType join goods.loadTask where goods.loadTask.id = :loadTaskId")
     List<GoodsEntity> findByLoadTask(int loadTaskId);
+    @Query("select count(goods.id) from GoodsEntity goods join goods.building building where goods.loadTask.id = :taskId and building.id = :buildingId")
+    Integer getGoodsCount(int taskId, Long buildingId);
 
     @Query(value = "SELECT COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE()", nativeQuery = true)
     long countAllGoodsByCreatedAtIsToday();
