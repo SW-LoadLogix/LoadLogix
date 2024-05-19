@@ -3,11 +3,13 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class ImageDescriptionWidget extends StatefulWidget {
   final String imageUrl;
+  final String title;
   final String description;
   final bool imageLeft;
 
   ImageDescriptionWidget({
     required this.imageUrl,
+    required this.title,
     required this.description,
     this.imageLeft = true, // 기본값으로 이미지가 왼쪽에 위치하도록 설정
   });
@@ -94,22 +96,35 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Container(
             width: 450,
-            child: Text(
-              widget.description,
-              style: TextStyle(
-                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
-                height: 1.5,
-                fontWeight: FontWeight.w200,
-                color: Color(0xff618777),
-              ),
-              // overflow: TextOverflow.ellipsis,
-            ),
+            child: Column(
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 24, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            )
           ),
         ),
       ),
     ];
   }
-
   List<Widget> _buildImageRight(BuildContext context) {
     bool isNetwork = widget.imageUrl.startsWith('http');
     return [
@@ -119,15 +134,29 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Container(
             width: 450,
-            child: Text(
-              widget.description,
-              style: TextStyle(
-                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
-                height: 1.5,
-                fontWeight: FontWeight.w200,
-                color: Color(0xff618777),
-              ),
-            ),
+            child: Column(
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 24, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff618777),
+                  ),
+                ),
+              ],
+            )
           ),
         ),
       ),
