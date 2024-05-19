@@ -257,8 +257,7 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송 상세 주소',
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     )),
                 width: 350),
             GridColumn(
@@ -269,8 +268,7 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 타입',
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160),
             GridColumn(
