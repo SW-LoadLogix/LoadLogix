@@ -55,7 +55,7 @@ class SimSidebarPage extends StatelessWidget {
                         child: Center(
                             child: SafeArea(
                         child: Text(
-                          'Simulation Control',
+                          '시뮬레이션 컨트롤 센터',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
@@ -106,7 +106,7 @@ class SimSidebarPage extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Buildings : ${groupedGoods.keys.length}',
+                                  '총 구역 개수 : ${groupedGoods.keys.length}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600),
@@ -178,7 +178,7 @@ class SimSidebarPage extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'Goods: ${goodsStore.goods.length}',
+                                          '총 배송 물품 개수: ${goodsStore.goods.length}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600),
@@ -223,7 +223,7 @@ class SimSidebarPage extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'Control',
+                                          '제어 센터',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600),
