@@ -34,8 +34,8 @@ while (True):
                     taskId = event_data['result']['task_id']
                     # print(event_data)
                     box = Bin(
-                        WHD=(event_data['result']['car']['width'], event_data['result']['car']['height'],
-                             event_data['result']['car']['depth']),
+                        WHD=(event_data['result']['car']['width'], event_data['result']['car']['depth'],
+                             event_data['result']['car']['height']),
                         max_weight=event_data['result']['car']['max_weight']
                     )
                     packer.addBin(box)
@@ -51,7 +51,8 @@ while (True):
                         # print(item['goods_id'],"를 추가완료")
 
                     # print(deliverOrder)
-                    packer.pack2(
+                    packer.pack3(
+                        0.6,
                         number_of_decimals=0
                     )
                     # json 형식으로 만들기
