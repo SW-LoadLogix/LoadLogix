@@ -829,8 +829,8 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
 
   @override
   void initState() {
-    _selectedTooltipPosition = 'auto';
-    _tooltipPosition = TooltipPosition.auto;
+    _selectedTooltipPosition = 'pointer';
+    _tooltipPosition = TooltipPosition.pointer;
     duration = 1;
     _tooltipPositionList = <String>['auto', 'pointer'];
     super.initState();
@@ -844,7 +844,7 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
   SfCircularChart _buildPieTooltipPositionChart() {
     return SfCircularChart(
       margin: const EdgeInsets.all(10),
-      legend: Legend(
+      legend: const Legend(
         textStyle: TextStyle(fontSize: 10),
         position: LegendPosition.right,
         isVisible: true,
@@ -864,6 +864,56 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
     );
   }
 
+  // List<PieSeries<ChartSampleData, String>> _getPieSeries() {
+  //   final goodsStore = context.read<GoodsStore>();
+  //
+  //   Map<int, List<GoodsData>> groupedGoods = goodsStore.goodsGroupedByBuildingId;
+  //   final ggoods = goodsStore.goods;
+  //   final buildingChecked = goodsStore.buildingChecked;
+  //
+  //   List<ChartSampleData> data = [];
+  //
+  //   if (groupedGoods.isNotEmpty) {
+  //     groupedGoods.forEach((key, value) {
+  //       if (buildingChecked.isEmpty || buildingChecked[key] == false || goodsStore.numberMapping.isEmpty) return;
+  //       double percent = (value.length / ggoods.length) * 100;
+  //       data.add(ChartSampleData(
+  //         x: value[0].buildingName,
+  //         y: value.length,
+  //         percent: percent,
+  //         pointColor: distinctColors[goodsStore.numberMapping[key]!],
+  //       ));
+  //     });
+  //   }
+  //
+  //   data.sort((a, b) => b.percent!.compareTo(a.percent!));
+  //
+  //   if (data.isNotEmpty) {
+  //     double highestPercent = data[0].percent!;
+  //     for (var datum in data) {
+  //       datum.percent = (datum.percent! / highestPercent) * 100;
+  //       datum.text = '${datum.percent!.toStringAsFixed(0)}%';
+  //     }
+  //   }
+  //
+  //   return <PieSeries<ChartSampleData, String>>[
+  //     PieSeries<ChartSampleData, String>(
+  //       dataSource: data,
+  //       xValueMapper: (ChartSampleData data, _) => data.x,
+  //       yValueMapper: (ChartSampleData data, _) => data.y,
+  //       dataLabelMapper: (ChartSampleData data, _) => data.y.toString(),
+  //       startAngle: 100,
+  //       endAngle: 100,
+  //       pointRadiusMapper: (ChartSampleData data, _) => data.text,
+  //       pointColorMapper: (ChartSampleData data, _) => data.pointColor,
+  //       dataLabelSettings: const DataLabelSettings(
+  //         isVisible: true,
+  //         labelPosition: ChartDataLabelPosition.inside,
+  //       ),
+  //     ),
+  //   ];
+  // }
+
   List<PieSeries<ChartSampleData, String>> _getPieSeries() {
     final goodsStore = context.read<GoodsStore>();
 
@@ -875,13 +925,20 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
 
     if (groupedGoods.isNotEmpty) {
       groupedGoods.forEach((key, value) {
-        if (buildingChecked.isEmpty || buildingChecked[key] == false || goodsStore.numberMapping.isEmpty) return;
+        if (buildingChecked.isEmpty || !buildingChecked.containsKey(key) || !buildingChecked[key]! || goodsStore.numberMapping.isEmpty) return;
+
+        if (value.isEmpty || value[0].buildingName == null) return;
+
         double percent = (value.length / ggoods.length) * 100;
+
+        int? colorIndex = goodsStore.numberMapping[key];
+        if (colorIndex == null || colorIndex < 0 || colorIndex >= distinctColors.length) return;
+
         data.add(ChartSampleData(
-          x: value[0].buildingName,
+          x: value[0].buildingName!,
           y: value.length,
           percent: percent,
-          pointColor: distinctColors[goodsStore.numberMapping[key]!],
+          pointColor: distinctColors[colorIndex],
         ));
       });
     }
@@ -899,7 +956,7 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
     return <PieSeries<ChartSampleData, String>>[
       PieSeries<ChartSampleData, String>(
         dataSource: data,
-        xValueMapper: (ChartSampleData data, _) => data.x as String,
+        xValueMapper: (ChartSampleData data, _) => data.x,
         yValueMapper: (ChartSampleData data, _) => data.y,
         dataLabelMapper: (ChartSampleData data, _) => data.y.toString(),
         startAngle: 100,
@@ -907,12 +964,14 @@ class _PieTooltipPositionState extends State<PieTooltipPosition> {
         pointRadiusMapper: (ChartSampleData data, _) => data.text,
         pointColorMapper: (ChartSampleData data, _) => data.pointColor,
         dataLabelSettings: const DataLabelSettings(
-          isVisible: true,
+          isVisible: false,
           labelPosition: ChartDataLabelPosition.inside,
         ),
       ),
     ];
   }
+
+
 
   void onPositionTypeChange(String item) {
     setState(() {
