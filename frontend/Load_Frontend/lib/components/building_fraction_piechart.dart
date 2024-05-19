@@ -12,7 +12,7 @@ List<Color> generateDistinctColors(int count) {
   List<Color> colors = [];
   for (int i = 0; i < 20; i++) {
     // Colors 클래스에 정의된 색상 중 랜덤하게 선택하여 리스트에 추가
-    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
+    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.5);
     colors.add(color);
   }
   return colors;
