@@ -143,7 +143,7 @@ class GoodsService {
             //position: Vector3(x.toDouble(), y as double, z as double),
 
             weight: goodsData.weight,
-            buildingId: random.nextInt(19),//goodsData.buildingId,
+            buildingId: goodsData.buildingId,
             buildingName: goodsData.buildingName,
             detailAddress: goodsData.detailAddress));
       }

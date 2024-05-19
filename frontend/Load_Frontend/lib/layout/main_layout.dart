@@ -25,7 +25,7 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
     final _showDesktop = _size.width >= screenXxl;
-    final _isSimulationPage = topBarTitle == '3D Simulation Dashboard';
+    final _isSimulationPage = topBarTitle == '3D 적재 시뮬레이션';
     final _isMobile = _size.width < screenSm;
 
     return Scaffold(
