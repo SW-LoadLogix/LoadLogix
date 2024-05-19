@@ -1,9 +1,9 @@
 /**
- * Goods
- */	
+ * GoodsDto
+ */
 
 public class GoodsDto {
-	
+
 	int id;
 	int width;
 	int length;
@@ -11,9 +11,9 @@ public class GoodsDto {
 	int height;
 	int userId;
 	int areaId;
-	
+
 	public GoodsDto() {}
-	
+
 	public GoodsDto(int id, int width, int length, int height, int weight, int userId, int areaId) {
 		this.id = id;
 		this.width = width;
@@ -22,8 +22,8 @@ public class GoodsDto {
 		this.weight = weight;
 		this.userId = userId;
 		this.areaId = areaId;
-	}	
-	
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -45,13 +45,13 @@ public class GoodsDto {
 	public int getAreaId() {
 		return areaId;
 	}
-	
-	
+
+
 	@Override
 	public String toString() {
 		return "GoodsDto [id=" + id + ", width=" + width + ", length=" + length + ", height="
 				+ height + ", weight=" + weight + ", userId=" + userId + ", aearId=" + areaId + "]";
 	}
-    
+
 
 }
