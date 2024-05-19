@@ -15,12 +15,8 @@ class LandingHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.home, color: Colors.white),
-            SizedBox(width: 10),
-            Text(
-              'LOADLOGIX',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-            ),
+            SizedBox(width: 30),
+            Image.asset("assets/images/logotouse.png", width: 200, height: 200,),
           ],
         ),
         TextButton(
