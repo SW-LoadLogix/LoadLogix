@@ -35,7 +35,7 @@ class BuildingItem extends StatelessWidget {
           int totalGoodsSum = buildings.fold(0, (sum, building) => sum + building.totalGoods);
           return Column(
             children: buildings.map((building) {
-              final String apiKey = dotenv.get("GOOGLE_MAPS_API_KEY"); // BuildingData 모델에 apiKey 필드를 추가해야 함
+              final String apiKey = ${GOOGLE_MAPS_API_KEY}; // BuildingData 모델에 apiKey 필드를 추가해야 함
               final double percentage = (building.totalGoods / totalGoodsSum) * 100;
               final String url =
                   "https://maps.googleapis.com/maps/api/streetview"
