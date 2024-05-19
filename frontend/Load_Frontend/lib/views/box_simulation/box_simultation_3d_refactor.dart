@@ -493,20 +493,28 @@ class _BoxSimulation3dSecondPage extends State<BoxSimulation3dSecondPage>
       gCurrSideBarWidth = sideBarMobileWidth;
       gCurrRightSideBarWidth = rightSideBarDesktopWidth;
     }
-    return Scaffold(
-      body: Focus(
-        focusNode: _focusNode,
-        autofocus: true,
-        onKeyEvent: (node, event) {
-          _handleKeyEvent(event);
-          return KeyEventResult.handled;
+    return
+      // Scaffold(
+      // body: Focus(
+      //   focusNode: _focusNode,
+      //   autofocus: true,
+      //   onKeyEvent: (node, event) {
+      //     _handleKeyEvent(event);
+      //     return KeyEventResult.handled;
+      //   },
+      //   child: Builder(
+      //     builder: (BuildContext context) {
+      //       initSize(context);
+      //       return _build(context);
+      //     },
+      //   ),
+      // ),
+    Scaffold(
+      body: Builder(
+        builder: (BuildContext context) {
+          initSize(context);
+          return _build(context);
         },
-        child: Builder(
-          builder: (BuildContext context) {
-            initSize(context);
-            return _build(context);
-          },
-        ),
       ),
       floatingActionButton:
       Column(mainAxisAlignment: MainAxisAlignment.end, children: [
