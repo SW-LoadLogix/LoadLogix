@@ -78,7 +78,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     if (buildings.isNotEmpty) {
       new_latitude = new_latitude / buildings.length;
       new_longitude = new_longitude / buildings.length;
-      newPosition = LatLng(new_latitude,new_longitude);
+      newPosition = LatLng(buildings[1].latitude,buildings[1].longitude);
     }
     return circles;
   }
@@ -145,7 +145,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   void _moveCamera(LatLng target) {
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: target, zoom:15.0),
+        CameraPosition(target: target, zoom:17.0),
       ),
     );
   }

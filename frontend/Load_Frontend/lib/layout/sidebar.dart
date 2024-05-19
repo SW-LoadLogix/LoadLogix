@@ -7,7 +7,7 @@ import '../model.dart';
 final List<MenuItem> menuItems = [
   MenuItem('홈', Icons.home_outlined),
   MenuItem('배송관리 대시보드', Icons.dashboard_outlined),
-  MenuItem('Simulation 3d', Icons.threed_rotation),
+  MenuItem('적재 시뮬레이션', Icons.threed_rotation),
   // MenuItem('Contact', Icons.contact_mail),
 ];
 
