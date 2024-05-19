@@ -189,7 +189,6 @@
 //   _OrderTableState createState() => _OrderTableState();
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -230,7 +229,7 @@ class _OrderTableState extends State<DeliveryTable> {
           allowMultiColumnSorting: true,
           allowExpandCollapseGroup: true,
           groupCaptionTitleFormat:
-          '{ColumnName} : {Key} - {ItemsCount} Item(s)',
+              '{ColumnName} : {Key} - {ItemsCount} Item(s)',
           columns: <GridColumn>[
             GridColumn(
                 columnName: 'goods_id',
@@ -250,7 +249,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송 상세 주소',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     )),
                 width: 350),
             GridColumn(
@@ -261,7 +261,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 타입',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160),
             GridColumn(
@@ -272,7 +273,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 높이(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -284,7 +286,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 길이(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -296,7 +299,8 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 폭(cm)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
                 width: 160,
                 autoFitPadding: EdgeInsets.all(16)),
@@ -308,10 +312,11 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송상자 무게(g)',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                     )),
-                autoFitPadding: EdgeInsets.all(16)  )
-              //width: 100),
+                autoFitPadding: EdgeInsets.all(16))
+            //width: 100),
           ],
         ),
       ),
@@ -325,20 +330,29 @@ class OrderDataSource extends DataGridSource {
   List<String> groupingColumnNames = ['building_address'];
 
   OrderDataSource({required List<Buildings> buildings}) {
-    dataGridRows = buildings.expand((building) {
-      return building.goods.map((good) => DataGridRow(cells: [
-        DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
-        DataGridCell<String>(columnName: 'detail_address', value:building.topAddress + ' ' + building.buildingAddress + ' ' + good.detailAddress
-
-
-        ),
-        DataGridCell<String>(columnName: 'boxType', value: good.boxType),
-        DataGridCell<int>(columnName: 'boxHeight', value: good.boxHeight),
-        DataGridCell<int>(columnName: 'boxLength', value: good.boxLength),
-        DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
-        DataGridCell<int>(columnName: 'weight', value: good.weight),
-      ]));
-    }).toList().cast<DataGridRow>();
+    dataGridRows = buildings
+        .expand((building) {
+          return building.goods.map((good) => DataGridRow(cells: [
+                DataGridCell<int>(columnName: 'goods_id', value: good.goodsId),
+                DataGridCell<String>(
+                    columnName: 'detail_address',
+                    value: building.topAddress +
+                        ' ' +
+                        building.buildingAddress +
+                        ' ' +
+                        good.detailAddress),
+                DataGridCell<String>(
+                    columnName: 'boxType', value: good.boxType),
+                DataGridCell<int>(
+                    columnName: 'boxHeight', value: good.boxHeight),
+                DataGridCell<int>(
+                    columnName: 'boxLength', value: good.boxLength),
+                DataGridCell<int>(columnName: 'boxWidth', value: good.boxWidth),
+                DataGridCell<int>(columnName: 'weight', value: good.weight),
+              ]));
+        })
+        .toList()
+        .cast<DataGridRow>();
   }
 
   @override
