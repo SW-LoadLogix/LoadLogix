@@ -14,7 +14,7 @@ class ImageSlider extends StatelessWidget {
     //child: Image.network(imageUrl, width: MediaQuery.of(context).size.width * 0.4),
     return CarouselSlider(
       options: CarouselOptions(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height * 0.75,
         autoPlay: true,
         enlargeCenterPage: false, // 이미지가 작아지지 않도록 설정
         aspectRatio: 16 / 9,

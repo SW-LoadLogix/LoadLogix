@@ -53,11 +53,11 @@ class _IconWithTitleState extends State<IconWithTitle> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.title, style: TextStyle(fontSize: 16, color: _isHovered ? Colors.white : Colors.black)),
+                      Text(widget.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: _isHovered ? Colors.white : Colors.black54)),
                       if (_isHovered) // Show description only when hovered or clicked
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
-                          child: Text(widget.description, style: TextStyle(fontSize: 14, color: Colors.white)),
+                          child: Text(widget.description, style: TextStyle(fontSize: 18, color: Colors.white)),
                         ),
                     ],
                   ),
