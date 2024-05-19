@@ -247,8 +247,9 @@ class _OrderTableState extends State<DeliveryTable> {
                     child: Text(
                       '배송 순서',
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     )),
-                width: 60),
+                width: 100),
             GridColumn(
                 columnName: 'detail_address',
                 label: Container(

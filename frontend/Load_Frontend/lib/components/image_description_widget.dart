@@ -3,11 +3,14 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class ImageDescriptionWidget extends StatefulWidget {
   final String imageUrl;
+  final String title;
   final String description;
   final bool imageLeft;
 
+
   ImageDescriptionWidget({
     required this.imageUrl,
+    required this.title,
     required this.description,
     this.imageLeft = true, // 기본값으로 이미지가 왼쪽에 위치하도록 설정
   });
@@ -18,6 +21,7 @@ class ImageDescriptionWidget extends StatefulWidget {
 
 class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
   double _opacity = 0.0;
+  late Image image;
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction >= 0.5) {
@@ -31,6 +35,24 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
       });
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    bool isNetwork = widget.imageUrl.startsWith('http');
+    image = isNetwork
+        ? Image.network(widget.imageUrl, width: double.infinity)
+        : Image.asset(widget.imageUrl, width: double.infinity);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(image.image, context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +104,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 ),
               ],
             ),
-            child: isNetwork
-                ? Image.network(widget.imageUrl, width: double.infinity)
-                : Image.asset(widget.imageUrl, width: double.infinity),
+            child: image,
           ),
         ),
       ),
@@ -94,22 +114,36 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Container(
             width: 450,
-            child: Text(
-              widget.description,
-              style: TextStyle(
-                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
-                height: 1.5,
-                fontWeight: FontWeight.w200,
-                color: Color(0xff618777),
-              ),
-              // overflow: TextOverflow.ellipsis,
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 35, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    fontSize: 17, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            )
           ),
         ),
       ),
     ];
   }
-
   List<Widget> _buildImageRight(BuildContext context) {
     bool isNetwork = widget.imageUrl.startsWith('http');
     return [
@@ -119,15 +153,30 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Container(
             width: 450,
-            child: Text(
-              widget.description,
-              style: TextStyle(
-                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
-                height: 1.5,
-                fontWeight: FontWeight.w200,
-                color: Color(0xff618777),
-              ),
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 35, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff618777),
+                  ),
+                  // overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    fontSize: 17, // 여기에서 텍스트 크기를 조절합니다.
+                    height: 1.5,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff618777),
+                  ),
+                ),
+              ],
+            )
           ),
         ),
       ),
@@ -149,9 +198,7 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
                 ),
               ],
             ),
-            child: isNetwork
-                ? Image.network(widget.imageUrl, width: double.infinity)
-                : Image.asset(widget.imageUrl, width: double.infinity),
+            child: image,
           ),
         ),
       ),
