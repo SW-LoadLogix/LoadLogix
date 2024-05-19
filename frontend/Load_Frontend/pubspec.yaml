@@ -64,6 +64,7 @@ flutter:
     - assets/gif/truckgif.gif
     - assets/gif/truck43.gif
     - .env
+    - assets/api_key.js
 
   fonts:
     - family: IBMPlexMono
