@@ -1,66 +1,41 @@
-# LOADLOGIX
+# 🚚 LOADLOGIX 
 
-![logo.jpg](./etc/assets/logo.jpg)
+![logo.jpg](./etc/assets/logo2.png)
 
-## 프로젝트 개요
+## 🌀 프로젝트 개요
+### LOADLOGIX 는 배송기사를 위한 물류 적재 최적화 통합 서비스입니다 
+<h3><strong>삼성 청년 SW 아카데미 자율 프로젝트</strong></h3>
 
-삼성 청년 SW 아카데미 자율 프로젝트
+<strong>📅 2024.04.08 - 2024.05.20 (43일)</strong>
 
-2024.04.08 ~ 2024.05.20 (43일)
+## 🌀 팀원
 
-## 팀원
+### 📍 Frontend
 
-### Frontend
+|![류진호](/etc/assets/류진호.jpg)|![김보경](/etc/assets/김보경.jpg)|![문경림]()|
+|:--:|:--:|:--:|
+|류진호|김보경|문경림|
+|프론트엔드 & 3D|프론트엔드 리더|프론트엔드|
+|프론트엔드 개발 및 리펙토링<br>프론트 프로젝트 골조 작성<br>3D 페이지 시뮬레이션 구현<br>API 통신 구조 및 스토어 구조 구현<br>랜딩 컴포넌트, 및 페이지 전체 컴포넌트 구현|프론트엔드 컴포넌트 설계<br>UI/UX 디자인<br>대시보드 페이지 구현<br>JIRA 일정관리<br>프론트엔드, 애니로직, 백엔드 API 통신 연결|와이어 프레임 구성 및 작성<br>할당받은 택배 적재 , 화물차량 규격 개발<br>랜딩 페이지 구현|
 
-- **류진호**
-    - 프론트엔드 개발 및 리펙토링
-    - 프론트 프로젝트 골조 작성
-    - 3D 페이지 시뮬레이션 구현
-    - API 통신 구조 및 스토어 구조 구현
-    - 랜딩 컴포넌트, 및 페이지 전체 컴포넌트 구현
-- **김보경**
-    - 프론트엔드 팀장 일정관리
-    - UI/UX 디자인 와이어프레임 작성
-    - 대시보드 페이지 컴포넌트 구조 작성 및 구현
-    - 애니로직, 백엔드 API 통신 연결
-- **문경림**
-    - 와이어 프레임 구성 및 작성
-    - 할당받은 택배 적재 , 화물차량 규격 개발
-    - 랜딩 페이지 구현
+### 📍 Backend
 
-### Backend
+|![신예지](/etc/assets/신예지.png)|![정건준](/etc/assets/정건준.jpg)|![백성욱](/etc/assets/백성욱.jpg)|![윤정인]()|
+|:--:|:--:|:--:|:--:|
+|신예지|정건준|백성욱|윤정인|
+|팀장 & 백엔드|백엔드 & 인프라|백엔드 & 인프라|백엔드 & 애니로직|
+|PM<br>Anylogic과 백엔드 연동, 로직 및 UI 구현<br>공통 코드 작성, 리팩토링<br>시뮬레이션 연동 API, 프론트 연동 API<br>Vue 관리자 페이지 프론트 개발|경로 알고리즘 구현 및 최적화<br>백엔드 개발 및 리팩토링<br>적재/경로 알고리즘 연동 API<br>인프라|CI / CD<br>적재 알고리즘 구현<br>파이썬 자바 통신 구현<br>알고리즘 리드, 적재 알고리즘 구현 및 최적화<br>백엔드 적재 API 구현<br>인프라|Anylogic UI 설계<br>공통 코드 작성, 리팩토링<br>관리자 페이지 연동 API, 프론트 연동 API<br>Vue 관리자 페이지 프론트 개발|
 
-- **신예지**
-    - 팀장, PM
-    - Anylogic과 백엔드 연동, 로직 및 UI 구현
-    - 공통 코드 작성, 리팩토링, 시뮬레이션 연동 API, 프론트 연동 API 등 백엔드 개발
-    - Vue 관리자 페이지 프론트 개발
-- **정건준**
-    - 경로 알고리즘 구현 및 최적화
-    - 백엔드 개발 및 리팩토링, 적재/경로 알고리즘 연동 API
-    - 인프라
-- **백성욱**
-    - CI / CD
-    - 적재 알고리즘 구현
-    - 파이썬 자바 통신 구현
-    - 알고리즘 리드, 적재 알고리즘 구현 및 최적화
-    - 백엔드 적재 API 구현
-    - 인프라
-- **윤정인**
-    - Anylogic UI 설계
-    - 공통 코드 작성, 리팩토링, 관리자 페이지 연동 API, 프론트 연동 API 등 백엔드 개발
-    - Vue 관리자 페이지 프론트 개발
-
-## 프로젝트 기획 배경
+## 🌀 프로젝트 기획 배경
 
 현재, 물류 공장에서 일하시는 택배 기사님들은 많은 시간을 소요하여 물건을 화물차에 테트리스처럼 쌓아 올립니다.
 
 - 택배 기사님 나름대로의 정리 방식이 있습니다.
-- 정리 기준 : 주소 (동, 건물), 규격, 무게를 고려하여 물건을 쌓아 올립니다.
+- 정리 기준 [주소 (동, 건물), 규격, 무게] 를 고려하여 물건을 쌓아 올립니다.
 
 따라서 LOADLOGIX는 배송 기사에게 할당 된 택배들의 우선순위를 설정하여 컨베이어 벨트에서 차례대로 내보내고, 트럭에 적재하는 3D 시뮬레이션을 보여주어 물건을 분류하고 쌓는 시간을 줄입니다.
 
-## 프로젝트 목표
+## 🌀 프로젝트 목표
 
 LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완벽한 스마트 물류 적재 시스템을 구축하는 것이었습니다.
 
@@ -68,64 +43,89 @@ LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완
 2. **알고리즘  :** 3D Bin Packing 알고리즘으로 택배들의 주소, 규격, 무게 등을 고려해 배송기사 트럭에 적재할수 있는 최적의 시나리오를 연산합니다.
 3. **3D 모델링 :** Three.dart를 사용해 알고리즘 연산이 된 택배들을 적재한 모습을 3D로 나타내어 배송 기사들에게 효율적인 가이드라인을 제시합니다.
 
-## 주요기능
+## 🌀 주요기능
 
-## 개발환경
+### 배송기사 페이지
 
-### Frontend
+- **📍 스마트 배송 관리 대시보드**
+    - 배송대기 버튼을 통해 애니로직의 배송상품 적재 준비 상태를 확인할 수 있습니다.
+    - 애니로직에서 적재 준비가 완료된 경우 3D 적재 시뮬레이션을 확인할 수 있습니다.
+    - 배송기사 관련 정보를 확인할 수 있습니다.
+    - 최근 7일 간 배송상품 개수를 그래프로 제공합니다.
+    - 지도상에서 구역의 방문 순서를 볼 수 있습니다.
+    - 당일 할당받은 배송상품을 방문 순서별로 조회할 수 있습니다.
+    - 배송기사에게 할당된 구역의 정보가 표시됩니다.
+    
+- **📍 3D 적재 시뮬레이션**
+    - 알고리즘을 통해 적재된 데이터를 3D로 확인할 수 있습니다.
+    - 시뮬레이션 컨트롤 센터에서 구역별 통계 데이터를 조회할 수 있습니다.
+    - 구역별, 상품별로 필터링해서 선택된 상품만을 3D로 조회할 수 있습니다.
+    - 시뮬레이션 화면에서 레이트레이싱을 통해 상품을 선택하여 세부 정보를 확인할 수 있습니다.
+    - 제어 센터에서 적재 높이, 투명도 조절을 통해  적재 상태를 볼 수 있습니다.
+    - 하단의 재생바 오버레이를 통해 재생, 일시정지, 재생속도 조절, 되감기 기능을 사용해 시뮬레이션의 상태를 조절할 수 있습니다.
 
-- Flutter
-    - Flutter 3.19.5
-    - Dart 3.3.3
-    - DevTools 2.31.1
-    - Three_dart 0.0.16
-    - Google
-    - Google_maps_flutter 2.2.8
-    - Google_maps_flutter_web: ^0.5.7
+### 관리자 페이지
 
-### Backend
+## 🌀 개발환경
 
-- Java
-    - Java OpenJDK 21
-    - Spring Boot 3.2.5
-        - Spring Data JPA
-        - Lombok
-    - Gradle 8.7
+### 📍 Frontend
 
-### Database
+<p><strong>Flutter</strong></p>
+    <div>
+    <img src="https://img.shields.io/badge/Flutter 3.19.5-02569B?style=for-the-badge&logo=Flutter&logoColor=white">
+    <img src="https://img.shields.io/badge/Dart 3.3.3-0175C2?style=for-the-badge&logo=Dart&logoColor=white">
+    <img src="https://img.shields.io/badge/DevTools 2.31.1-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white">
+    <img src="https://img.shields.io/badge/Three_dart 0.0.16-0175C2?style=for-the-badge&logo=Dart&logoColor=white">
+    <img src="https://img.shields.io/badge/Google_maps_flutter 2.2.8-4285F4?style=for-the-badge&logo=Google Maps&logoColor=white">
+    <img src="https://img.shields.io/badge/Google_maps_flutter_web: ^0.5.7-4285F4?style=for-the-badge&logo=Google Maps&logoColor=white">
+    </div>
 
-- MySQL 8.0.34
+### 📍 Backend
 
-### **UI / UX**
+<p><strong>Java</strong></p>
+    <div>
+    <img src="https://img.shields.io/badge/Java OpenJDK 21-000000?style=for-the-badge&logo=OpenJDK&logoColor=white">
+    <img src="https://img.shields.io/badge/Spring Boot 3.2.5-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+    <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+    <img src="https://img.shields.io/badge/Lombok-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+    <img src="https://img.shields.io/badge/Gradle 8.7-02303A?style=for-the-badge&logo=Gradle&logoColor=white">
+    </div>
 
-- Figma
+### 📍 Database
+<img src="https://img.shields.io/badge/MySQL 8.0.34-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 
-### **IDE**
+### 📍 UI / UX
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
 
-- IntelliJ IDEA 2023.3.3
-- Visual Studio Code 1.89.1
+### 📍 IDE
+<div>
+<img src="https://img.shields.io/badge/IntelliJ IDEA 2023.3.3-000000?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white">
+<img src="https://img.shields.io/badge/Visual Studio Code 1.89.1-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
 
-### **INFRA**
+</div>
 
-- Jenkins
-- Docker
-- Docker-compose
-- NginX
-- Potainer
+### 📍 INFRA
+<div>
+<img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white">
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+<img src="https://img.shields.io/badge/Docker-compose-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+<img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
+<img src="https://img.shields.io/badge/Potainer-13BEF9?style=for-the-badge&logo=Portainer&logoColor=white">
+</div>
 
-### **형상 / 이슈관리**
+### 📍 형상 / 이슈관리
+<div>
+<img src="https://img.shields.io/badge/Gitlab-FC6D26?style=for-the-badge&logo=GitLab&logoColor=white">
+<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white">
+</div>
 
-- Gitlab
-- Jira
+### 📍 기타 툴
+<img src="https://img.shields.io/badge/Postman 11.1.2-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
 
-### **기타 툴**
-
-- Postman 11.1.2
-
-## ERD
+## 🌀 ERD
 
 ![erd.PNG](./etc/assets/erd.png)
 
-## 서비스 아키텍처
+## 🌀 서비스 아키텍처
 
 ![Untitled](./etc/assets/service_architecture.png)
