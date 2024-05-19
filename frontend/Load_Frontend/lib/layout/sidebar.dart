@@ -28,7 +28,7 @@ class SideBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Center(
-            child: Image.asset('assets/images/loadlogix.png'),
+            child: Image.asset('assets/images/logotouse.png'),
           ),
           SizedBox(
             height: 24,

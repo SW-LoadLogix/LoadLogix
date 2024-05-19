@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:load_frontend/services/area_service.dart';
@@ -9,7 +11,7 @@ import '../models/building_data.dart';
 List<Color> generateDistinctColors(int count) {
   List<Color> colors = [];
   for (int i = 0; i < count; i++) {
-    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.3);
+    Color color = Colors.primaries[i % Colors.primaries.length].withOpacity(0.8);
     colors.add(color);
   }
   return colors;
@@ -28,7 +30,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
   LatLng newPosition = LatLng(36.36405586, 127.3561363);
   List<BuildingData> _buildingData = [];
   Set<Circle> _circles = {};
-  Set<Polyline> _polylines = {}; // Polyline set 추가
+  // Set<Polyline> _polylines = {}; // Polyline set 추가
   List<MarkerData> _customMarkers = [];
   bool _mapControllerInitialized = false;
   List<Color> distinctColor = [];// distinctColor를 동적으로 생성하기 위해 리스트 초기화
@@ -49,7 +51,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       distinctColor = generateDistinctColors(buildingdata.length); // 건물 데이터의 길이에 맞게 색상 생성
       _circles = _markCircles(buildingdata);
       _customMarkers = _getCustomMarkers(buildingdata);
-      _polylines = _createPolyline(buildingdata); // Polyline 생성
+      // _polylines = _createPolyline(buildingdata); // Polyline 생성
       if (_mapControllerInitialized) {
         _moveCamera(newPosition);
       }
@@ -64,6 +66,16 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       new_latitude += buildings[i].latitude;
       new_longitude += buildings[i].longitude;
 
+      circles.add(
+        Circle(
+          circleId: CircleId(buildings[i].buildingId.toString()+"black"),
+          center: LatLng(buildings[i].latitude,buildings[i].longitude),
+          radius: 10,
+          fillColor: Colors.black,
+          strokeWidth: 3,
+          strokeColor: Colors.transparent,
+        ),
+      );
       circles.add(
         Circle(
           circleId: CircleId(buildings[i].buildingId.toString()),
@@ -83,23 +95,23 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     return circles;
   }
 
-  Set<Polyline> _createPolyline(List<BuildingData> buildings) {
-    Set<Polyline> polylines = {};
-    for (int i = 0; i < buildings.length - 1; i++) {
-      polylines.add(
-        Polyline(
-          polylineId: PolylineId(buildings[i].buildingId.toString()),
-          points: [
-            LatLng(buildings[i].latitude, buildings[i].longitude),
-            LatLng(buildings[i + 1].latitude, buildings[i + 1].longitude),
-          ],
-          color: Colors.blue,
-          width: 3,
-        ),
-      );
-    }
-    return polylines;
-  }
+  // Set<Polyline> _createPolyline(List<BuildingData> buildings) {
+  //   Set<Polyline> polylines = {};
+  //   for (int i = 0; i < buildings.length - 1; i++) {
+  //     polylines.add(
+  //       Polyline(
+  //         polylineId: PolylineId(buildings[i].buildingId.toString()),
+  //         points: [
+  //           LatLng(buildings[i].latitude, buildings[i].longitude),
+  //           LatLng(buildings[i + 1].latitude, buildings[i + 1].longitude),
+  //         ],
+  //         color: Colors.blue,
+  //         width: 3,
+  //       ),
+  //     );
+  //   }
+  //   return polylines;
+  // }
 
   List<MarkerData> _getCustomMarkers(List<BuildingData> buildings) {
     List<MarkerData> markers = [];
@@ -125,7 +137,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
 
     final String fIndexStr = "F${(index).toString().padLeft(3, '0')}";
     return Container(
-      color: Colors.white.withOpacity(0.3),
+      //color: Colors.white.withOpacity(0.5),
       child:
           Text(
             fIndexStr,
@@ -134,8 +146,22 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     );
   }
 
+  void _setMapStyle() async {
+    String style = jsonEncode([
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      }
+    ]);
+    mapController.setMapStyle(style);
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _setMapStyle();
     _mapControllerInitialized = true;
     if (_buildingData.isNotEmpty) {
       _moveCamera(newPosition);
@@ -167,7 +193,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
                 ),
                 circles: _circles,
                 markers: markers ?? Set<Marker>(),
-                polylines: _polylines, // Polyline 추가
+                // polylines: _polylines, // Polyline 추가
               );
             },
           ),

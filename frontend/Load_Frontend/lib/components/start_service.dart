@@ -36,13 +36,6 @@ class _StartServiceWidgetState extends State<StartServiceWidget> {
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(0),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black.withOpacity(0.3),
-            //     blurRadius: 10,
-            //     offset: Offset(0, 5),
-            //   ),
-            // ],
           ),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -51,7 +44,7 @@ class _StartServiceWidgetState extends State<StartServiceWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "현명한 적재 알고리즘의 시작",
+                  "Progress For Smart Delivery!",
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
