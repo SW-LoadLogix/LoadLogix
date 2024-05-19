@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../constaints.dart';
 
 SfRangeValues _heightFloorValues = SfRangeValues(0.0, 100.0);
-double transparencyValuePercent = 60.0;
+double transparencyValuePercent = 80.0;
 double boxStepPercent = 50.0;
 double heightFloorValuesLowPercent = 0.0;
 double heightFloorValuesHighPercent = 100.0;
@@ -45,7 +45,7 @@ class _SimulationControllerState extends State<SimulationController> {
           Container(
             alignment: Alignment.center,
             height: 24,
-            child: Text('Box Floor Height'),
+            child: Text('택배 적재 높이별 보기'),
           ),
           SfRangeSlider(
             min: 0.0,
@@ -68,7 +68,7 @@ class _SimulationControllerState extends State<SimulationController> {
           Container(
             alignment: Alignment.center,
             height: 24,
-            child: Text('Transparency'),
+            child: Text('투명도'),
           ),
           SfSlider(
             min: 0.0,
@@ -86,26 +86,26 @@ class _SimulationControllerState extends State<SimulationController> {
             },
           ),
           Container(height: 10),
-          Container(
-            alignment: Alignment.center,
-            height: 24,
-            child: Text('Simulation Speed'),
-          ),
-          SfSlider(
-            min: 0,
-            max: 100,
-            value: boxStepPercent,
-            interval: 20,
-            showTicks: true,
-            showLabels: true,
-            enableTooltip: true,
-            minorTicksPerInterval: 1,
-            onChanged: (dynamic newValue) {
-              setState(() {
-                boxStepPercent = newValue;
-              });
-            },
-          ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   height: 24,
+          //   child: Text('Simulation Speed'),
+          // ),
+          // SfSlider(
+          //   min: 0,
+          //   max: 100,
+          //   value: boxStepPercent,
+          //   interval: 20,
+          //   showTicks: true,
+          //   showLabels: true,
+          //   enableTooltip: true,
+          //   minorTicksPerInterval: 1,
+          //   onChanged: (dynamic newValue) {
+          //     setState(() {
+          //       boxStepPercent = newValue;
+          //     });
+          //   },
+          // ),
           Container(height: 10),
         ]));
   }

@@ -66,14 +66,21 @@ public class LoadTaskService {
                         return false;
                     }
                     LoadTaskEntity loadTaskEntity = loadTaskEntityOptional.get();
+                    loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
 
-                    // 관련 물품 얻기
-                    List<GoodsEntity> goodsEntities =  loadTaskEntity.getGoodsEntities();
+                    // 적재 역순 (오름차순)으로 goods 정렬
+                    List<GoodsEntity> goodsEntities = goodsRepository.findAllByLoadTaskIdOrderByOrderingAsc(loadTaskEntity.getId());
                     List<Long> agentIds = new ArrayList<>();
                     for(GoodsEntity goodsEntity: goodsEntities){
                         agentIds.add(goodsEntity.getAgentId());
                     }
-                    loadTaskRepository.save(loadTaskEntity.withUpdatedWorkerState(true));
+
+                    // 관련 물품 얻기
+                    //List<GoodsEntity> goodsEntities =  loadTaskEntity.getGoodsEntities();
+//                    List<Long> agentIds = new ArrayList<>();
+//                    for(GoodsEntity goodsEntity: goodsEntities){
+//                        agentIds.add(goodsEntity.getAgentId());
+//                    }
                     sseService.sendEvent("1", LoadStartResponse.of(
                             areaId,
                             conveyNo,

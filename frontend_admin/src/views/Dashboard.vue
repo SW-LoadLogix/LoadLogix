@@ -1,7 +1,7 @@
 <script setup>
 import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
-import Carousel from "./components/Carousel.vue";
+import Carousel from "../views/components/Carousel.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 
 import L1 from "@/assets/img/boxes/L1.png";
@@ -34,6 +34,7 @@ const chartData = ref({
   labels: [],
   datasets: []
 });
+let isLoadingCount = ref(false);
 let isLoadingChart = ref(false);
 let isLoadingBoxes = ref(false);
 let isLoadingStorage = ref(false);
@@ -73,8 +74,8 @@ function transformToStorageData(inputDataArray) {
       component: 'ni ni-app',
       background: 'dark',
     },
-    label: `${inputData.rackLine}번 저장소` ,
-    description: `실시간 저장 물품 : ${inputData.totalCount}`,
+    label: `${inputData.rack_line}번 저장소` ,
+    description: `실시간 저장 물품 : ${inputData.total_count}`,
   }));
 }
 
@@ -82,10 +83,11 @@ function transformToStorageData(inputDataArray) {
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
-  totalGoods.value = data.result.totalCount;
-  enterGoods.value = data.result.storeCount;
-  releaseGoods.value = data.result.loadCount;
+  totalGoods.value = data.result.total_count;
+  enterGoods.value = data.result.store_count;
+  releaseGoods.value = data.result.load_count;
   updateTime.value = new Date().toLocaleTimeString();
+  isLoadingCount.value = true;
 };
 
 const getDailyGoodsCountRequest = async () => {
@@ -127,7 +129,7 @@ getAreaInfoRequest();
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <div class="row">
+        <div class="row" v-if="isLoadingCount">
           <div class="col-lg-3 col-md-6 col-12">
             <mini-statistics-card
               title="TOTAL GOODS"
@@ -181,23 +183,23 @@ getAreaInfoRequest();
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-0">
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
             <div class="card z-index-2" v-if="isLoadingChart">
               <gradient-line-chart
                 id="chart-line"
-                title="Daily Shipping Volume"
+                title="Daily Loading Volume"
                 description="물류 공장의 실시간 일별 출고량"
                 :chart=chartData
               />
             </div>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-5" style="object-fit: cover; height: 450px">
             <carousel />
           </div>
         </div>
-        <div class="row mt-4" v-if="isLoadingBoxes">
+        <div class="row no-margin-top" v-if="isLoadingBoxes">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">
               <div class="p-3 pb-0 card-header">
@@ -214,7 +216,7 @@ getAreaInfoRequest();
                           <div>
                             <img  style="max-width: 100px;" :src="boxTypes[box.type]" alt="Country flag" />
                           </div>
-                          <div class="ms-4">
+                          <div class="ms-4 text-center">
                             <p class="mb-0 text-xs font-weight-bold">
                               포장재 규격
                             </p>
@@ -243,7 +245,7 @@ getAreaInfoRequest();
                       <td class="text-sm align-middle">
                         <div class="text-center col">
                           <p class="mb-0 text-xs font-weight-bold">물품량</p>
-                          <h6 class="mb-0 text-sm">{{ box.totalCount }}</h6>
+                          <h6 class="mb-0 text-sm">{{ box.total_count }}</h6>
                         </div>
                       </td>
                     </tr>

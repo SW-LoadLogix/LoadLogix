@@ -151,10 +151,10 @@ class Auth extends ChangeNotifier {
   String? username;
 
   /// Email user entered in the text controller.
-  String? email = 'ssafy1@gmail.com';
+  String? email = 'loadlogix1@gmail.com';
 
   /// Password text in the text controller.
-  String? password = 'Asdf1234!!';
+  String? password = '@Loadlogix123';
 
   /// Confirm password text in the text controller.
   String? confirmPassword;

@@ -1,5 +1,7 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth";
 
 import SidenavItem from "./SidenavItem.vue";
 import SidenavCard from "./SidenavCard.vue";
@@ -8,6 +10,18 @@ const getRoute = () => {
   const route = useRoute();
   const routeArr = route.path.split("/");
   return routeArr[1];
+};
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const isLogin = computed(() => !!authStore.token);
+
+const logout = () => {
+  if (!confirm('로그아웃 하시겠습니까?')) return;
+    authStore.logout();
+    console.log('로그아웃');
+    router.push({ path: '/' });
 };
 </script>
 <template>
@@ -18,8 +32,8 @@ const getRoute = () => {
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-item
-          to="/dashboard-default"
-          :class="getRoute() === 'dashboard-default' ? 'active' : ''"
+          to="/dashboard"
+          :class="getRoute() === 'dashboard' ? 'active' : ''"
           :navText="'Dashboard'"
         >
           <template v-slot:icon>
@@ -32,12 +46,24 @@ const getRoute = () => {
         <sidenav-item
           to="/tables"
           :class="getRoute() === 'tables' ? 'active' : ''"
-          :navText="'Tables'"
+          :navText="'실시간 입고/출고'"
         >
           <template v-slot:icon>
             <i
               class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"
             ></i>
+          </template>
+        </sidenav-item>
+      </li>
+
+      <li class="nav-item">
+        <sidenav-item
+          to="/workers"
+          :class="getRoute() === 'billing' ? 'active' : ''"
+          :navText="'배송기사 리스트'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>
@@ -51,27 +77,15 @@ const getRoute = () => {
           ACCOUNT PAGES
         </h6>
       </li>
-
-      <li class="nav-item">
+      <li v-if="isLogin" class="nav-item">
         <sidenav-item
-          to="/signin"
+          to="/"
           :class="getRoute() === 'signin' ? 'active' : ''"
-          :navText="'Sign In'"
+          :navText="'로그아웃'"
+          @click="logout()"
         >
           <template v-slot:icon>
             <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-
-      <li class="nav-item">
-        <sidenav-item
-          to="/signup"
-          :class="getRoute() === 'signup' ? 'active' : ''"
-          :navText="'Sign Up'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-collection text-info text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>

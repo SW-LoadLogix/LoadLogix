@@ -37,10 +37,10 @@ class _DashboardPageState extends State<DashboardPage> {
     DeliveryStore deliveryStore = Provider.of<DeliveryStore>(context, listen: false);
     deliveryStore.getDeliveryServiceFromApi(userStore.token);
     print(deliveryStore.deliveryData.toString());
-    // AreaService().getBuildingPriority(userStore.token);
+    deliveryStore.getBuildingPriorityFromApi(userStore.token);
 
     return MainLayout(
-        topBarTitle: 'Dashboard',
+        topBarTitle: '스마트 배송 관리 대시보드',
         isFixed: false,
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

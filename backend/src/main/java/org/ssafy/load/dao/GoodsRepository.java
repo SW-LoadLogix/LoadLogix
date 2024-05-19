@@ -11,8 +11,11 @@ import java.util.Optional;
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingAsc(Integer loadTaskId);
+    List<GoodsEntity> findAllByLoadTaskIdOrderByOrderingDesc(Integer loadTaskId);
     @Query("select goods from GoodsEntity goods join fetch goods.building join fetch goods.boxType join goods.loadTask where goods.loadTask.id = :loadTaskId")
     List<GoodsEntity> findByLoadTask(int loadTaskId);
+    @Query("select count(goods.id) from GoodsEntity goods join goods.building building where goods.loadTask.id = :taskId and building.id = :buildingId")
+    Integer getGoodsCount(int taskId, Long buildingId);
 
     @Query(value = "SELECT COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE()", nativeQuery = true)
     long countAllGoodsByCreatedAtIsToday();
@@ -23,17 +26,14 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     @Query(value = "SELECT COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() and load_task_id is not null", nativeQuery = true)
     long countLoadedGoodsByCreatedAtIsToday();
 
-    @Query(value = "SELECT DATE(created_at) as date, COUNT(*) as count FROM goods WHERE DATE(created_at) >= CURDATE() - INTERVAL 6 DAY AND DATE(created_at) <= CURDATE() GROUP BY DATE(created_at) ORDER BY date", nativeQuery = true)
-    List<Object[]> countGoodsByDateForLastSixDays();
-
     @Query(value = "SELECT * FROM goods WHERE DATE(created_at) = CURDATE()", nativeQuery = true)
     List<GoodsEntity> findAllGoodsByCreatedAtIsToday();
 
     @Query(value = "SELECT * FROM goods WHERE DATE(created_at) = CURDATE() AND load_task_id is not null", nativeQuery = true)
     List<GoodsEntity> findAllLoadedGoodsByCreatedAtIsToday();
 
-    @Query(value = "SELECT box_type_id as type, COUNT(*) as count FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY box_type_id", nativeQuery = true)
-    List<Object[]> countBoxTypeByCreatedAtIsToday();
+    @Query(value = "SELECT COUNT(*) FROM goods WHERE box_type_id=:boxTypeId AND DATE(created_at) = CURDATE()", nativeQuery = true)
+    long countBoxTypeByCreatedAtIsToday(Integer boxTypeId);
 
     @Query(value = "SELECT building_id, COUNT(*) FROM goods WHERE DATE(created_at) = CURDATE() GROUP BY building_id", nativeQuery = true)
     List<Object[]> countGoodsByBuildingIdAndCreatedAtIsToday();
@@ -41,4 +41,6 @@ public interface GoodsRepository extends JpaRepository<GoodsEntity, Long> {
     List<GoodsEntity> findAllByAgentId(long agentId);
 
     long countByLoadTaskId(Integer loadTaskId);
+
+    Optional<GoodsEntity> findFirstByOrderByIdDesc();
 }
