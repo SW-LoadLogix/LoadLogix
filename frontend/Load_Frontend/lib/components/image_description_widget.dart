@@ -19,13 +19,13 @@ class ImageDescriptionWidget extends StatefulWidget {
 class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
   double _opacity = 0.0;
 
-
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction >= 0.5) { // 80% 이상 보일 때
+    if (info.visibleFraction >= 0.5) {
+      // 80% 이상 보일 때
       setState(() {
         _opacity = 1.0;
       });
-    } else if (info.visibleFraction  == 0) {
+    } else if (info.visibleFraction == 0) {
       setState(() {
         _opacity = 0.0;
       });
@@ -68,15 +68,43 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
         flex: 4,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: isNetwork ? Image.network(widget.imageUrl, width: double.infinity):
-          Image.asset(widget.imageUrl, width: double.infinity),
+          child: Container(
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.circular(20), // 모서리 둥글기 반지름 설정
+              // border:
+              //     Border.all(color: Colors.white, width: 3), // 흰색 테두리, 너비는 3픽셀
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5), // 그림자 색상, 반투명
+                  spreadRadius: 5, // 그림자 범위 확장
+                  blurRadius: 5, // 그림자 블러 효과
+                  offset: Offset(0, 0), // 그림자의 위치 조정
+                ),
+              ],
+            ),
+            child: isNetwork
+                ? Image.network(widget.imageUrl, width: double.infinity)
+                : Image.asset(widget.imageUrl, width: double.infinity),
+          ),
         ),
       ),
       Flexible(
         flex: 6,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Text(widget.description),
+          child: Container(
+            width: 450,
+            child: Text(
+              widget.description,
+              style: TextStyle(
+                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                height: 1.5,
+                fontWeight: FontWeight.w200,
+                color: Color(0xff618777),
+              ),
+              // overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ),
       ),
     ];
@@ -89,15 +117,42 @@ class _ImageDescriptionWidgetState extends State<ImageDescriptionWidget> {
         flex: 6,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Text(widget.description),
+          child: Container(
+            width: 450,
+            child: Text(
+              widget.description,
+              style: TextStyle(
+                fontSize: 15, // 여기에서 텍스트 크기를 조절합니다.
+                height: 1.5,
+                fontWeight: FontWeight.w200,
+                color: Color(0xff618777),
+              ),
+            ),
+          ),
         ),
       ),
       Flexible(
         flex: 4,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: isNetwork ? Image.network(widget.imageUrl, width: double.infinity):
-          Image.asset(widget.imageUrl, width: double.infinity),
+          child: Container(
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.circular(20), // 모서리 둥글기 반지름 설정
+              // border:
+              //     Border.all(color: Colors.white, width: 3), // 흰색 테두리, 너비는 3픽셀
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5), // 그림자 색상, 반투명
+                  spreadRadius: 5, // 그림자 범위 확장
+                  blurRadius: 5, // 그림자 블러 효과
+                  offset: Offset(0, 0), // 그림자의 위치 조정
+                ),
+              ],
+            ),
+            child: isNetwork
+                ? Image.network(widget.imageUrl, width: double.infinity)
+                : Image.asset(widget.imageUrl, width: double.infinity),
+          ),
         ),
       ),
     ];
