@@ -9,6 +9,8 @@ class UserStore extends ChangeNotifier {
         this.token = token;
         notifyListeners();
     }
+
+
     void deleteToken() {
         this.token = '';
         notifyListeners();
