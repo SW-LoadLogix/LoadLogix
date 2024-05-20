@@ -26,10 +26,17 @@ class BuildingItem extends StatelessWidget {
     List<BuildingData> deliveryData =
         Provider.of<DeliveryStore>(context, listen: true).buildingPriority;
 
-    int currIndex = 0;
+    List<BuildingData> subList = [];
+    if (deliveryData.isNotEmpty){
+      subList= deliveryData.sublist(1, deliveryData.length);
+    }
+
+
+    int currIndex = 1;
     return Column(
       children: [
-        ...deliveryData.map((building) {
+        ...subList.map((building) {
+
           final String apiKey = dotenv
               .get("GOOGLE_MAPS_API_KEY"); // BuildingData 모델에 apiKey 필드를 추가해야 함
           // final double percentage = (building.totalGoods / totalGoodsSum) * 100;
