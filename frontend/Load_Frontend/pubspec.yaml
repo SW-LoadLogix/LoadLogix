@@ -56,10 +56,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/l1.png
-    - assets/images/l3.png
-    - assets/images/l6.png
-    - assets/images/l5.png
     - assets/models3d/3d-model.obj
     - assets/textures/truck.mtl
 
