@@ -40,6 +40,11 @@ class _MainLandingPage extends State<MainLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isLogin = Provider.of<UserStore>(context,listen: true).token.isNotEmpty;
+    print (isLogin);
+
+
     return LandingLayout(
       header: LandingHeader(),
       child: Column(
@@ -131,9 +136,16 @@ class _MainLandingPage extends State<MainLandingPage> {
                 StartServiceWidget(
                   onPressed: () {
                     // AutoRoute(path: '/sign-in-up',page: SignInUpRoute.page),
-                    print("서비스 시작 눌렀어용..");
-                    AutoRouter.of(context).popUntilRouteWithPath('/landing');
-                    AutoRouter.of(context).push(SignInUpRoute());
+
+                    if (isLogin){
+                      AutoRouter.of(context).popUntilRouteWithPath('/sign-in-up');
+                      AutoRouter.of(context).push(DashboardRoute());
+
+                    }
+                    else{
+                      AutoRouter.of(context).popUntilRouteWithPath('/landing');
+                      AutoRouter.of(context).push(SignInUpRoute());
+                    }
                   },
                 ),
               ],

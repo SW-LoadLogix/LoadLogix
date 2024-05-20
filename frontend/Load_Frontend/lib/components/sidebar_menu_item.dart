@@ -25,11 +25,11 @@ class _MenuItemState extends State<SideBarMenuItem> {
       onTap: () {
         switch(widget.item.name){
           case '홈':
-            AutoRouter.of(context).popUntilRouteWithPath('/landing');
+            AutoRouter.of(context).popUntilRouteWithPath('/sign-in-up');
             AutoRouter.of(context).push(MainLandingRoute());
             break;
           case '배송관리 대시보드':
-            AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+            AutoRouter.of(context).popUntilRouteWithPath('/sign-in-up');
             AutoRouter.of(context).push(DashboardRoute());
             break;
           case '적재 시뮬레이션':
