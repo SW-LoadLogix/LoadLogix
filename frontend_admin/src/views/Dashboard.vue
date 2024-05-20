@@ -83,9 +83,9 @@ function transformToStorageData(inputDataArray) {
 const getGoodsCountRequest = async () => {
   // 물품 조회
   const { data } = await getGoodsCount();
-  totalGoods.value = data.result.total_count;
-  enterGoods.value = data.result.store_count;
-  releaseGoods.value = data.result.load_count;
+  totalGoods.value = data.result.total_count.toLocaleString();
+  enterGoods.value = data.result.store_count.toLocaleString();
+  releaseGoods.value = data.result.load_count.toLocaleString();
   updateTime.value = new Date().toLocaleTimeString();
   isLoadingCount.value = true;
 };
