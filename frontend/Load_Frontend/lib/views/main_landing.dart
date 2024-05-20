@@ -108,21 +108,21 @@ class _MainLandingPage extends State<MainLandingPage> {
                   imageLeft: true,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'assets/images/l6.png',
+                  imageUrl: 'assets/images/l6.PNG',
                   title: '3D 시뮬레이션',
                   description:
                   '3D 시뮬레이션은 택배 적재 과정을 시각적으로 보여줌으로써 \n트럭 내부의 택배 적재 과정을 직관적으로 보여줍니다.\n택배의 크기와 무게, 배송 경로를 고려하여 \n최적의 적재 방법을 계산하고, \n그 결과를 3D 모델로 직관적으로 표현합니다.',
                   imageLeft: false,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'assets/images/l3.png',
+                  imageUrl: 'assets/images/l3.PNG',
                   title: '경로 알고리즘',
                   description:
                       '경로 최적화 알고리즘은 \n배송 시간과 운영 비용을 최소화하기 위해 개발되었습니다. \n가장 효율적인 배송 경로를 제공하여 \n배송 과정을 더욱 신속하고 효율적으로 만들어 줍니다. \n특히 복잡한 도시 환경에서 그 가치를 발휘하여, \n배송 과정을 보다 원활하게 만들어줍니다.',
                   imageLeft: true,
                 ),
                 ImageDescriptionWidget(
-                  imageUrl: 'assets/images/l5.png',
+                  imageUrl: 'assets/images/l5.PNG',
                   title: '배송기사 대시보드',
                   description:
                       '배송기사님을 위한 대시보드는 \n배송 과정의 중추적인 도구입니다. \n배송기사님은 배송 상품을 경로 순으로 확인할 수 있으며, \n배송지 경로를 지도로 제공합니다. \n최근 일주일간의 배송 활동을 그래픽으로 표현하여, \n배송 라이프스타일 관리를 도와줍니다.',
