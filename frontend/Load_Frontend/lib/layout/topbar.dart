@@ -89,7 +89,7 @@ class TopBar extends StatelessWidget {
                 //   context,
                 //   MaterialPageRoute(builder: (context) => DashboardPage()),
                 // );
-                AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+                AutoRouter.of(context).popUntilRouteWithPath('/sign-in-up');
                 AutoRouter.of(context).push(DashboardRoute());
               },
             ),
@@ -99,7 +99,7 @@ class TopBar extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                AutoRouter.of(context).popUntilRouteWithPath('/dashboard');
+                AutoRouter.of(context).popUntilRouteWithPath('/sign-in-up');
                 AutoRouter.of(context).push(DashboardSimulation3dRoute());
                 // Navigator.push(
                 //     context,

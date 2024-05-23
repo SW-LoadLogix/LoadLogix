@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constaints.dart';
 import '../routes/app_router.dart';
+import '../stores/user_store.dart';
 
 class LandingHeader extends StatelessWidget {
   final double opacity;
@@ -10,6 +12,8 @@ class LandingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLogin = Provider.of<UserStore>(context,listen: true).token.isNotEmpty;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,12 +25,21 @@ class LandingHeader extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            AutoRouter.of(context).popUntilRouteWithPath('/landing');
-            AutoRouter.of(context).push(SignInUpRoute());
+            if (isLogin){
+              Provider.of<UserStore>(context, listen: false).deleteToken();
+              AutoRouter.of(context).popUntilRoot();
+            }else{
+              AutoRouter.of(context).popUntilRouteWithPath('/landing');
+              AutoRouter.of(context).push(SignInUpRoute());
+            }
           },
-          child: Text(
+          child: !isLogin ?Text(
             '로그인',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white)
+          ):
+            Text(
+            '로그아웃',
+            style: TextStyle(color: Colors.white)
           ),
         ),
       ],
