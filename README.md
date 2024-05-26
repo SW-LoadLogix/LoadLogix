@@ -175,7 +175,7 @@ LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완
             <img src="https://img.shields.io/badge/Gradle 8.7-02303A?style=for-the-badge&logo=Gradle&logoColor=white">
             <img src="https://img.shields.io/badge/MySQL 8.0.34-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
             <img src="https://img.shields.io/badge/PYTHON 3.9-3776AB?style=for-the-badge&logo=Python&logoColor=white">
-            <img src="https://img.shields.io/badge/Anylogic-2496ED?style=for-the-badge&logo=Anylogic&logoColor=white">
+            <img src="https://img.shields.io/badge/Anylogic 8.9-2496ED?style=for-the-badge&logo=Anylogic&logoColor=white">
         </td>
     </tr>
     <tr>
