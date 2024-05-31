@@ -19,18 +19,17 @@
 ## 🌀 팀원
 
 ### 📍 BACKEND
-
-|![신예지](/etc/assets/신예지.png)|![정건준](/etc/assets/정건준.jpg)|![백성욱](/etc/assets/백성욱.jpg)|![윤정인](/etc/assets/윤정인.jpg)|
-|:-:|:-:|:-:|:-:|
 |팀장 신예지|정건준|백성욱|윤정인|
+|:-:|:-:|:-:|:-:|
+|![신예지](/etc/assets/신예지.png)|![정건준](/etc/assets/정건준.jpg)|![백성욱](/etc/assets/백성욱.jpg)|![윤정인](/etc/assets/윤정인.jpg)|
 |PM<br>Anylogic 통신/기능/UI 구현<br> 백엔드 공통 코드 작성<br>백엔드 API 개발<br>Vue 관리자 페이지 프론트 개발|경로 알고리즘 구현 및 최적화<br>API / ERD 명세 총괄<br>백엔드 API 개발 및 리팩토링<br>CI / CD|적재 알고리즘 구현 및 최적화<br>CI / CD<br>파이썬 자바 통신 구현<br>백엔드 적재 API 구현<br>시스템 아키텍처 명세|Anylogic UI 설계<br>백엔드 API 개발<br>Vue 관리자 페이지 프론트 개발<br>UCC|
 
 ### 📍 FRONTEND
 
-|![김보경](/etc/assets/김보경.jpg)|![류진호](/etc/assets/류진호.jpg)|![문경림](/etc/assets/문경림.jpg)|
-|:-:|:-:|:-:|
 |김보경|류진호|문경림|
-|프론트엔드 리드<br>대시보드 기능 구현<br>프론트 API 요청 구현<br>컴포넌트 설계<br>UI/UX 디자인|3D 페이지 시뮬레이션 구현<br>컴포넌트 및 골조 구현<br>프론트 코드 리펙토링<br>프론트 API 통신 구조 및 스토어 구조 구현<br>|와이어 프레임 구성 및 작성<br>배송리스트 UI / 차량 규격 모달 UI 구현<br>랜딩 페이지 이미지 적용|
+|:-:|:-:|:-:|
+|![김보경](/etc/assets/김보경.jpg)|![류진호](/etc/assets/류진호.jpg)|![문경림](/etc/assets/문경림.jpg)|
+|프론트엔드 리드<br>대시보드 기능 구현<br>프론트 응답 요청 구현<br>컴포넌트 설계<br>UI/UX 디자인|3D 페이지 시뮬레이션 구현<br>컴포넌트 및 골조 구현<br>프론트 코드 리펙토링<br>프론트 응답 구조 및 스토어 구조 구현<br>|와이어 프레임 구성 및 작성<br>배송리스트 UI / 차량 규격 모달 UI 구현<br>랜딩 페이지 이미지 적용|
 
 
 ## 🌀 프로젝트 기획 배경
@@ -67,7 +66,7 @@ LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완
         - 휴리스틱 알고리즘 적용
         - 구역의 수 N을 높여도 한정된 시간 안에 최적과 근접한 경로를 구할 수 있음   
 
-    ![경로알고리즘](./etc/assets/경로알고리즘.png)
+    ![경로알고리즘](./etc/assets/경로알고리즘.PNG)
 
 
 ### 2️⃣ 적재 알고리즘
@@ -91,7 +90,8 @@ LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완
 
     **📍 SUB 터미널에 물품 저장**
     1. 데이터를 생성을 위해 시뮬레이터 내에서 실 배송지, 무게, 물품의 규격을 랜덤하게 생성했습니다. 생성된 물품들은 파란색 철골 구조물인 저장소에 저장됩니다.
-    ![물류 공장 물품 store](./etc/assets/anylogic_store.gif)
+    
+        ![물류 공장 물품 store](./etc/assets/anylogic_store.gif)
 
     2. 저장된 물품은 경로/적재 알고리즘을 적재 순서가 결정됩니다. 이 결과를 기반으로 저장소에서 물품을 꺼내어 적재 순서대로 컨베이어벨트로 보냅니다.
     ![물류 공장 물품 pick](./etc/assets/anylogic_pick.gif)
@@ -151,17 +151,6 @@ LOADLOGIX의 목표는 시뮬레이터, 알고리즘, 3D 모델링을 통한 완
 ## 🌀 개발환경
 
 
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: center;
-    }
-</style>
 
 <table>
     <tr>
